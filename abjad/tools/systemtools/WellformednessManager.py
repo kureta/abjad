@@ -290,7 +290,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
@@ -366,7 +366,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	2 beamed long notes
                 0 /	1 discontiguous spanners
                 0 /	3 duplicate ids
@@ -402,7 +402,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	2 beamed long notes
                 0 /	1 discontiguous spanners
                 0 /	3 duplicate ids
@@ -536,7 +536,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
@@ -589,7 +589,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations(
+                >>> print(agent.tabulate_wellformedness(
                 ...     allow_percussion_clef=True,
                 ...     ))
                 0 /	0 beamed long notes
@@ -622,7 +622,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations(
+                >>> print(agent.tabulate_wellformedness(
                 ...     allow_percussion_clef=False,
                 ...     ))
                 0 /	0 beamed long notes
@@ -698,7 +698,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
@@ -811,7 +811,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
@@ -880,7 +880,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
@@ -970,7 +970,7 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> print(agent.tabulate_well_formedness_violations())
+                >>> print(agent.tabulate_wellformedness())
                 0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids

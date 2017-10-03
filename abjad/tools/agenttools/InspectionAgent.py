@@ -1459,11 +1459,11 @@ class InspectionAgent(abctools.AbjadObject):
         result = '\n'.join(result)
         return result
 
-    def tabulate_well_formedness_violations(
+    def tabulate_wellformedness(
         self,
         allow_percussion_clef=None,
         ):
-        r'''Tabulates well-formedness violations.
+        r'''Tabulates well-formedness.
 
         ..  container:: example
 
@@ -1487,7 +1487,7 @@ class InspectionAgent(abctools.AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(staff)
-                >>> result = agent.tabulate_well_formedness_violations()
+                >>> result = agent.tabulate_wellformedness()
 
             ::
 
