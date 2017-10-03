@@ -1365,7 +1365,31 @@ class InspectionAgent(abctools.AbjadObject):
             return True
         return False
 
-    def is_well_formed(self):
+    def is_well_formed(
+        self,
+        check_beamed_long_notes=True,
+        check_discontiguous_spanners=True,
+        check_duplicate_ids=True,
+        check_empty_containers=True,
+        check_intermarked_hairpins=True,
+        check_misdurated_measures=True,
+        check_misfilled_measures=True,
+        check_mismatched_enchained_hairpins=True,
+        check_mispitched_ties=True,
+        check_misrepresented_flags=True,
+        check_missing_parents=True,
+        check_nested_measures=True,
+        check_notes_on_wrong_clef=True,
+        check_out_of_range_notes=True,
+        check_overlapping_beams=True,
+        check_overlapping_glissandi=True,
+        check_overlapping_hairpins=True,
+        check_overlapping_octavation_spanners=True,
+        check_overlapping_ties=True,
+        check_overlapping_trill_spanners=True,
+        check_short_hairpins=True,
+        check_tied_rests=True,
+        ):
         r'''Is true when client is well-formed. Otherwise false.
 
         ..  container:: example
@@ -1389,11 +1413,42 @@ class InspectionAgent(abctools.AbjadObject):
                 >>> abjad.inspect(staff).is_well_formed()
                 False
 
+        ..  container:: example
+
+            Checks can be turned off:
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 [ d' e' f'4. ]")
+
+            ::
+
+                >>> abjad.inspect(staff[:3]).is_well_formed(
+                ...     check_beamed_long_notes=False,
+                ...     )
+                True
+
+            ::
+
+                >>> abjad.inspect(staff[-1]).is_well_formed(
+                ...     check_beamed_long_notes=False,
+                ...     )
+                True
+
+            ::
+
+                >>> abjad.inspect(staff).is_well_formed(
+                ...     check_beamed_long_notes=False,
+                ...     )
+                True
+
         Returns false.
         '''
         import abjad
         manager = abjad.WellformednessManager()
         for violators, total, check_name in manager(self.client):
+            if eval(check_name) is not True:
+                continue
             if violators:
                 return False
         return True
@@ -1462,6 +1517,28 @@ class InspectionAgent(abctools.AbjadObject):
     def tabulate_wellformedness(
         self,
         allow_percussion_clef=None,
+        check_beamed_long_notes=True,
+        check_discontiguous_spanners=True,
+        check_duplicate_ids=True,
+        check_empty_containers=True,
+        check_intermarked_hairpins=True,
+        check_misdurated_measures=True,
+        check_misfilled_measures=True,
+        check_mismatched_enchained_hairpins=True,
+        check_mispitched_ties=True,
+        check_misrepresented_flags=True,
+        check_missing_parents=True,
+        check_nested_measures=True,
+        check_notes_on_wrong_clef=True,
+        check_out_of_range_notes=True,
+        check_overlapping_beams=True,
+        check_overlapping_glissandi=True,
+        check_overlapping_hairpins=True,
+        check_overlapping_octavation_spanners=True,
+        check_overlapping_ties=True,
+        check_overlapping_trill_spanners=True,
+        check_short_hairpins=True,
+        check_tied_rests=True,
         ):
         r'''Tabulates well-formedness.
 
@@ -1517,6 +1594,42 @@ class InspectionAgent(abctools.AbjadObject):
 
             Beamed long notes are not well-formed.
 
+        ..  container:: example
+
+            Checks can be turned off:
+
+            ::
+
+                >>> agent = abjad.inspect(staff)
+                >>> result = agent.tabulate_wellformedness(
+                ...     check_overlapping_beams=False, 
+                ...     check_overlapping_glissandi=False, 
+                ...     check_overlapping_hairpins=False, 
+                ...     check_overlapping_octavation_spanners=False, 
+                ...     check_overlapping_ties=False, 
+                ...     check_overlapping_trill_spanners=False, 
+                ...     )
+
+            ::
+
+                >>> print(result)
+                1 /	1 beamed long notes
+                0 /	1 discontiguous spanners
+                0 /	5 duplicate ids
+                0 /	1 empty containers
+                0 /	0 intermarked hairpins
+                0 /	0 misdurated measures
+                0 /	0 misfilled measures
+                0 /	0 mismatched enchained hairpins
+                0 /	0 mispitched ties
+                0 /	4 misrepresented flags
+                0 /	5 missing parents
+                0 /	0 nested measures
+                0 /	4 notes on wrong clef
+                0 /	4 out of range notes
+                0 /	0 short hairpins
+                0 /	0 tied rests
+
         Returns string.
         '''
         import abjad
@@ -1526,6 +1639,8 @@ class InspectionAgent(abctools.AbjadObject):
         triples = manager(self.client)
         strings = []
         for violators, total, check_name in triples:
+            if eval(check_name) is not True:
+                continue
             violator_count = len(violators)
             string = '{} /\t{} {}'
             check_name = check_name.replace('check_', '')
