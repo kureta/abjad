@@ -1249,8 +1249,7 @@ class InspectionAgent(abctools.AbjadObject):
             ::
 
                 >>> print(result)
-                1 /	4 beamed quarter notes
-                0 /	1 conflicting clefs
+                1 /	1 beamed quarter notes
                 0 /	1 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -1269,6 +1268,7 @@ class InspectionAgent(abctools.AbjadObject):
                 0 /	0 overlapping hairpins
                 0 /	0 overlapping octavation spanners
                 0 /	0 overlapping ties
+                0 /     0 overlapping trill spanners
                 0 /	0 short hairpins
                 0 /	0 tied rests
 
