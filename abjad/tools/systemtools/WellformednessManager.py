@@ -82,14 +82,31 @@ class WellformednessManager(AbjadObject):
 
     ### PUBLIC METHODS ###
 
-    def check_beamed_quarter_notes(self, argument=None):
-        r'''Checks to make sure there are no beamed quarter notes.
+    def check_beamed_long_notes(self, argument=None):
+        r'''Checks beamed long notes.
 
-        Returns list of beamed quarter notes and count of all quarter notes in
-        `argument`.
+        ..  container:: example
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d' e' f'4.")
+                >>> abjad.attach(abjad.Beam(), staff[:])
+
+            ::
+
+                >>> manager = abjad.WellformednessManager()
+                >>> violators, total = manager.check_beamed_long_notes(staff)
+                >>> violators
+                [Note("f'4.")]
+
+        Returns pair.
+
+        First item in pair is list of beamed long notes.
+
+        Second item in pair is count of all long notes in `argument`.
         '''
         import abjad
-        violators, total = [], 0
+        violators, total = [], set()
         smart_beams = (
             abjad.DuratedComplexBeam,
             abjad.MultipartBeam,
@@ -97,16 +114,16 @@ class WellformednessManager(AbjadObject):
         for leaf in abjad.iterate(argument).by_leaf():
             if leaf.written_duration < abjad.Duration(1, 4):
                 continue
-            total += 1
+            total.add(leaf)
             beams = abjad.inspect(leaf).get_spanners(abjad.Beam)
             for beam in beams:
                 if isinstance(beam, smart_beams):
                     continue
                 violators.append(leaf)
-        return violators, total
+        return violators, len(total)
 
     def check_discontiguous_spanners(self, argument=None):
-        r'''Checks for discontiguous spanners.
+        r'''Checks discontiguous spanners.
 
         There are now two different types of spanner. Most spanners demand that
         spanner components be logical-voice-contiguous. But a few special
@@ -130,7 +147,7 @@ class WellformednessManager(AbjadObject):
         return violators, len(spanners)
 
     def check_duplicate_ids(self, argument=None):
-        r'''Checks to make sure there are no components with duplicated IDs.
+        r'''Checks duplicate IDs.
 
         Returns violators and total.
         '''
@@ -147,7 +164,7 @@ class WellformednessManager(AbjadObject):
         return violators, len(total_ids)
 
     def check_empty_containers(self, argument=None):
-        r'''Checks to make sure there are no empty containers in score.
+        r'''Checks empty containers.
 
         ..  container:: example
 
@@ -171,18 +188,9 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> manager = abjad.WellformednessManager()
-                >>> result = manager.check_empty_containers(staff)
-                >>> violators, total = result
-
-            ::
-
-                >>> '{} total containers'.format(total)
-                '2 total containers'
-
-            ::
-
-                >>> '{} empty container'.format(len(violators))
-                '1 empty container'
+                >>> violators, total = manager.check_empty_containers(staff)
+                >>> violators
+                [Container()]
 
         Returns list of empty containers and count of all containers in
         `argument`.
@@ -196,8 +204,7 @@ class WellformednessManager(AbjadObject):
         return violators, len(containers)
 
     def check_intermarked_hairpins(self, argument=None):
-        r'''Checks to make sure there are no hairpins with intervening dynamic
-        marks.
+        r'''Checks intermarked hairpins.
 
         ..  container:: example
 
@@ -220,25 +227,16 @@ class WellformednessManager(AbjadObject):
             ::
 
                 >>> manager = abjad.WellformednessManager()
-                >>> result = manager.check_intermarked_hairpins(staff)
-                >>> violators, total = result
-
-            ::
-
-                >>> '{} total hairpin'.format(total)
-                '1 total hairpin'
-
-            ::
-
-                >>> '{} intermarked hairpin'.format(len(violators))
-                '1 intermarked hairpin'
+                >>> violators, total = manager.check_intermarked_hairpins(staff)
+                >>> violators
+                [Hairpin("c'4, d'4, e'4, f'4")]
 
         Returns violators and total.
         '''
         import abjad
         violators, hairpins = [], set()
         descendants = abjad.inspect(argument).get_descendants()
-        hairpins = descendants._get_spanners(abjad.Hairpin)
+        hairpins = abjad.inspect(descendants).get_spanners(abjad.Hairpin)
         for hairpin in hairpins:
             if 2 < len(hairpin.leaves):
                 for leaf in hairpin.leaves[1:-1]:
@@ -248,38 +246,33 @@ class WellformednessManager(AbjadObject):
         return violators, len(hairpins)
 
     def check_misdurated_measures(self, argument=None):
-        r'''Checks to make sure there are no misdurated measures in score.
+        r'''Checks misdurated measures.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total, bad = 0, 0
+        violators, total = [], set()
         for measure in abjad.iterate(argument).by_class(abjad.Measure):
+            total.add(measure)
             time_signature = measure.time_signature
             if time_signature is not None:
-                if measure._get_preprolated_duration() != \
-                    time_signature.duration:
+                duration = measure._get_preprolated_duration()
+                if duration != time_signature.duration:
                     violators.append(measure)
-                    bad += 1
-            total += 1
-        return violators, total
+        return violators, len(total)
 
     def check_misfilled_measures(self, argument=None):
-        r'''Checks that time signature duration equals measure contents
-        duration for every measure.
+        r'''Checks misfilled measures.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total, bad = 0, 0
+        violators, total = [], set()
         for measure in abjad.iterate(argument).by_class(abjad.Measure):
+            total.add(measure)
             if measure.is_misfilled:
                 violators.append(measure)
-                bad += 1
-            total += 1
-        return violators, total
+        return violators, len(total)
 
     def check_mismatched_enchained_hairpins(self, argument=None):
         r'''Checks mismatched enchained hairpins.
@@ -298,7 +291,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	4 beamed quarter notes
+                0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /     1 empty containers
@@ -326,12 +319,11 @@ class WellformednessManager(AbjadObject):
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        all_hairpins = set()
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf():
             hairpins = abjad.inspect(leaf).get_spanners(abjad.Hairpin)
             hairpins = list(hairpins)
-            all_hairpins.update(hairpins)
+            total.update(hairpins)
             if len(hairpins) <= 1:
                 continue
             if 2 < len(hairpins):
@@ -357,11 +349,10 @@ class WellformednessManager(AbjadObject):
             else:
                 violators.append(first_hairpin)
                 violators.append(second_hairpin)
-        total = len(all_hairpins)
-        return violators, total
+        return violators, len(total)
 
     def check_mispitched_ties(self, argument=None):
-        r'''Checks for mispitched notes.
+        r'''Checks mispitched notes.
 
         ..  container:: example
 
@@ -376,7 +367,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	2 beamed quarter notes
+                0 /	2 beamed long notes
                 0 /	1 discontiguous spanners
                 0 /	3 duplicate ids
                 0 /     1 empty containers
@@ -412,7 +403,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	2 beamed quarter notes
+                0 /	2 beamed long notes
                 0 /	1 discontiguous spanners
                 0 /	3 duplicate ids
                 0 /     1 empty containers
@@ -440,16 +431,15 @@ class WellformednessManager(AbjadObject):
         Returns violator ties together with total number of ties.
         '''
         import abjad
-        violators = set()
-        all_spanners = set()
+        violators, ties = [], set()
         for leaf in abjad.iterate(argument).by_leaf(pitched=True):
-            spanners = abjad.inspect(leaf).get_spanners(abjad.Tie)
-            if not spanners:
+            ties_ = abjad.inspect(leaf).get_spanners(abjad.Tie)
+            if not ties_:
                 continue
-            all_spanners.update(spanners)
-            spanner = spanners.pop()
+            ties.update(ties_)
+            tie = ties_.pop()
             written_pitches = []
-            for leaf in spanner:
+            for leaf in tie:
                 if isinstance(leaf, abjad.Note):
                     written_pitches.append(leaf.written_pitch)
                 elif isinstance(leaf, abjad.Chord):
@@ -457,21 +447,19 @@ class WellformednessManager(AbjadObject):
                 else:
                     raise TypeError(leaf)
             if not abjad.mathtools.all_are_equal(written_pitches):
-                violators.add(spanner)
-        violators = list(violators)
-        total = len(all_spanners)
-        return violators, total
+                if tie not in violators:
+                    violators.append(tie)
+        return violators, len(ties)
 
     def check_misrepresented_flags(self, argument=None):
-        r'''Checks to make sure there are no misrepresented flags in score.
+        r'''Checks misrepresented flags.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf():
-            total += 1
+            total.add(leaf)
             flags = leaf.written_duration.flag_count
             left = getattr(abjad.setting(leaf), 'stem_left_beam_count', None)
             right = getattr(abjad.setting(leaf), 'stem_right_beam_count', None)
@@ -485,39 +473,38 @@ class WellformednessManager(AbjadObject):
                     (right < flags and left not in (flags, None))):
                     if leaf not in violators:
                         violators.append(leaf)
-        return violators, total
+        return violators, len(total)
 
     def check_missing_parents(self, argument=None):
-        r'''Checks to make sure there are no components in score with missing
-        parent.
+        r'''Checks missing parents.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         components = abjad.iterate(argument).by_class()
         for i, component in enumerate(components):
+            total.add(component)
             if 0 < i:
-                if component._parent is None:
+                if abjad.inspect(component).get_parentage().parent is None:
                     violators.append(component)
-        total = i + 1
-        return violators, total
+        return violators, len(total)
 
     def check_nested_measures(self, argument=None):
-        r'''Checks to make sure there are no nested measures in score.
+        r'''Checks nested measures.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         for measure in abjad.iterate(argument).by_class(abjad.Measure):
-            parentage = abjad.inspect(measure).get_parentage(include_self=False)
+            total.add(measure)
+            parentage = abjad.inspect(measure).get_parentage(
+                include_self=False,
+                )
             if parentage.get_first(abjad.Measure):
                 violators.append(measure)
-            total += 1
-        return violators, total
+        return violators, len(total)
 
     def check_notes_on_wrong_clef(self, argument=None):
         r'''Checks notes and chords on wrong clef.
@@ -550,7 +537,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	0 beamed quarter notes
+                0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -605,7 +592,7 @@ class WellformednessManager(AbjadObject):
                 >>> print(agent.tabulate_well_formedness_violations(
                 ...     allow_percussion_clef=True,
                 ...     ))
-                0 /	0 beamed quarter notes
+                0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -638,7 +625,7 @@ class WellformednessManager(AbjadObject):
                 >>> print(agent.tabulate_well_formedness_violations(
                 ...     allow_percussion_clef=False,
                 ...     ))
-                0 /	0 beamed quarter notes
+                0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -664,10 +651,9 @@ class WellformednessManager(AbjadObject):
         Returns true or false.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf():
-            total += 1
+            total.add(leaf)
             instrument = abjad.inspect(leaf).get_effective(abjad.Instrument)
             if instrument is None:
                 continue
@@ -681,11 +667,10 @@ class WellformednessManager(AbjadObject):
                 allowable_clefs.append(abjad.Clef('percussion'))
             if clef not in allowable_clefs:
                 violators.append(leaf)
-        return violators, total
+        return violators, len(total)
 
     def check_out_of_range_notes(self, argument=None):
-        r'''Checks to make sure notes and chords are within traditional
-        instrument ranges.
+        r'''Checks out-of-range notes.
 
         ..  container:: example
 
@@ -714,7 +699,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	0 beamed quarter notes
+                0 /	0 beamed long notes
                 0 /	0 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -740,20 +725,18 @@ class WellformednessManager(AbjadObject):
         Returns true or false.
         '''
         import abjad
-        violators = []
-        all_pitched_leaves = []
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf(pitched=True):
-            all_pitched_leaves.append(leaf)
+            total.add(leaf)
             instrument = abjad.inspect(leaf).get_effective(abjad.Instrument)
             if instrument is None:
                 continue
             if leaf not in instrument.pitch_range:
                 violators.append(leaf)
-        total = len(all_pitched_leaves)
-        return violators, total
+        return violators, len(total)
 
     def check_overlapping_beams(self, argument=None):
-        r'''Checks to make sure there are no overlapping beams in score.
+        r'''Checks overlapping beams.
 
         ..  container:: example
 
@@ -779,8 +762,11 @@ class WellformednessManager(AbjadObject):
 
                 >>> manager = abjad.WellformednessManager()
                 >>> violators, total = manager.check_overlapping_beams(staff)
-                >>> '{} overlapping beams'.format(total)
-                '2 overlapping beams'
+                >>> for beam in sorted(violators):
+                ...     beam
+                ...
+                Beam("c'8, d'8, e'8")
+                Beam("e'8, f'8")
 
             (Enchained beams are not well-formed either.)
 
@@ -788,20 +774,18 @@ class WellformednessManager(AbjadObject):
         total beams in score.
         '''
         import abjad
-        violators = []
-        all_beams = set()
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf():
             beams = abjad.inspect(leaf).get_spanners(abjad.Beam)
-            all_beams.update(beams)
+            total.update(beams)
             if 1 < len(beams):
                 for beam in beams:
                     if beam not in violators:
                         violators.append(beam)
-        total = len(all_beams)
-        return violators, total
+        return violators, len(total)
 
     def check_overlapping_glissandi(self, argument=None):
-        r'''Checks to make sure there are no overlapping glissandi in score.
+        r'''Checks overlapping glissandi.
 
         Returns violators and total.
         '''
@@ -812,7 +796,7 @@ class WellformednessManager(AbjadObject):
             )
 
     def check_overlapping_hairpins(self, argument=None):
-        r'''Checks to make sure there are no overlapping hairpins in score.
+        r'''Checks overlapping hairpins.
 
         ..  container:: example
 
@@ -828,7 +812,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	4 beamed quarter notes
+                0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /     1 empty containers
@@ -862,27 +846,24 @@ class WellformednessManager(AbjadObject):
             )
 
     def check_overlapping_octavation_spanners(self, argument=None):
-        r'''Checks to make sure there are no overlapping octavation spanners in
-        score.
+        r'''Checks overlapping octavation spanners.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        all_spanners = set()
+        violators, total = [], set()
         prototype = abjad.OctavationSpanner
         for leaf in abjad.iterate(argument).by_leaf():
             spanners = abjad.inspect(leaf).get_spanners(prototype)
-            all_spanners.update(spanners)
+            total.update(spanners)
             if 1 < len(spanners):
                 for spanner in spanners:
                     if spanner not in violators:
                         violators.append(spanner)
-        total = len(all_spanners)
-        return violators, total
+        return violators, len(total)
 
     def check_overlapping_ties(self, argument=None):
-        r'''Checks to make sure there are no overlapping ties in score.
+        r'''Checks overlapping ties.
 
         ..  container:: example
 
@@ -900,7 +881,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	4 beamed quarter notes
+                0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /     1 empty containers
@@ -926,18 +907,18 @@ class WellformednessManager(AbjadObject):
         Returns violators and count of total ties.
         '''
         import abjad
-        total = set()
-        violators = set()
+        violators, total = [], set()
         for leaf in abjad.iterate(argument).by_leaf():
-            spanners = leaf._get_spanners(abjad.Tie)
+            spanners = abjad.inspect(leaf).get_spanners(abjad.Tie)
             total.update(spanners)
             if 1 < len(spanners):
-                violators.update(spanners)
+                for spanner in spanners:
+                    if spanner not in violators:
+                        violators.append(spanner)
         return violators, len(total)
 
     def check_overlapping_trill_spanners(self, argument=None):
-        r'''Checks to make sure there are no overlapping trill spanners in
-        score.
+        r'''Checks overlapping trill spanners.
 
         ..  container:: example
 
@@ -990,7 +971,7 @@ class WellformednessManager(AbjadObject):
 
                 >>> agent = abjad.inspect(staff)
                 >>> print(agent.tabulate_well_formedness_violations())
-                0 /	4 beamed quarter notes
+                0 /	4 beamed long notes
                 0 /	2 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -1024,31 +1005,30 @@ class WellformednessManager(AbjadObject):
             )
 
     def check_short_hairpins(self, argument=None):
-        r'''Checks to make sure that hairpins span at least two leaves.
+        r'''Checks short hairpins.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         descendants = abjad.inspect(argument).get_descendants()
         hairpins = abjad.inspect(descendants).get_spanners(abjad.Hairpin)
         for hairpin in hairpins:
+            total.add(hairpin)
             if len(hairpin.leaves) <= 1:
-                violators.append(hairpin)
-            total += 1
-        return violators, total
+                if hairpin not in violators:
+                    violators.append(hairpin)
+        return violators, len(total)
 
     def check_tied_rests(self, argument=None):
-        r'''Checks to make sure there are no tied rests.
+        r'''Checks tied rests.
 
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        total = 0
+        violators, total = [], set()
         for rest in abjad.iterate(argument).by_leaf(abjad.Rest):
+            total.add(rest)
             if abjad.inspect(rest).has_spanner(abjad.Tie):
                 violators.append(rest)
-            total += 1
-        return violators, total
+        return violators, len(total)

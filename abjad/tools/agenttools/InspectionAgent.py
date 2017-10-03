@@ -184,7 +184,7 @@ class InspectionAgent(abctools.AbjadObject):
                 >>> abjad.inspect(staff).get_badly_formed_components()
                 [Note("d'4")]
 
-            Beamed quarter notes are not well-formed.
+            Beamed long notes are not well-formed.
 
         Returns list.
         '''
@@ -1492,7 +1492,7 @@ class InspectionAgent(abctools.AbjadObject):
             ::
 
                 >>> print(result)
-                1 /	1 beamed quarter notes
+                1 /	1 beamed long notes
                 0 /	1 discontiguous spanners
                 0 /	5 duplicate ids
                 0 /	1 empty containers
@@ -1515,7 +1515,7 @@ class InspectionAgent(abctools.AbjadObject):
                 0 /	0 short hairpins
                 0 /	0 tied rests
 
-            Beamed quarter notes are not well-formed.
+            Beamed long notes are not well-formed.
 
         Returns string.
         '''
