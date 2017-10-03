@@ -981,10 +981,10 @@ class Selection(object):
         crossing_spanners = self._get_crossing_spanners()
         components_including_children = select(self).by_class()
         for crossing_spanner in list(crossing_spanners):
-            spanner_components = crossing_spanner._components[:]
+            spanner_components = crossing_spanner.leaves[:]
             for component in components_including_children:
                 if component in spanner_components:
-                    crossing_spanner._components.remove(component)
+                    crossing_spanner._leaves.remove(component)
                     component._spanners.discard(crossing_spanner)
 
     ### PUBLIC METHODS ###

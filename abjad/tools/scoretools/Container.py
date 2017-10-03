@@ -1615,8 +1615,8 @@ class Container(Component):
         self._music.reverse()
         self._update_later(offsets=True)
         spanners = self._get_descendants()._get_spanners()
-        for s in spanners:
-            s._components.sort(key=lambda x: x._get_timespan().start_offset)
+        for spanner in spanners:
+            spanner._leaves.sort(key=lambda x: x._get_timespan().start_offset)
 
     ### PUBLIC PROPERTIES ###
 

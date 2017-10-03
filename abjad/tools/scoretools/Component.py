@@ -207,7 +207,7 @@ class Component(AbjadObject):
     def _detach_spanners(self, prototype=None):
         spanners = self._get_spanners(prototype=prototype)
         for spanner in spanners:
-            spanner._sever_all_components()
+            spanner._sever_all_leaves()
         return spanners
 
     def _extract(self, scale_contents=False):
