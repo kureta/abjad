@@ -119,7 +119,7 @@ class WellformednessManager(AbjadObject):
         import abjad
         violators = []
         descendants = abjad.inspect(argument).get_descendants()
-        spanners = descendants._get_spanners()
+        spanners = abjad.inspect(descendants).get_spanners()
         for spanner in spanners:
             if spanner._contiguity_constraint == 'logical voice':
                 if not abjad.Selection._all_in_same_logical_voice(
@@ -1031,7 +1031,8 @@ class WellformednessManager(AbjadObject):
         import abjad
         violators = []
         total = 0
-        hairpins = argument._get_descendants()._get_spanners(abjad.Hairpin)
+        descendants = abjad.inspect(argument).get_descendants()
+        hairpins = abjad.inspect(descendants).get_spanners(abjad.Hairpin)
         for hairpin in hairpins:
             if len(hairpin.leaves) <= 1:
                 violators.append(hairpin)

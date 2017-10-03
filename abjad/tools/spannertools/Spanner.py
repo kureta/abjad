@@ -452,10 +452,10 @@ class Spanner(AbjadObject):
     def _get_timespan(self, in_seconds=False):
         import abjad
         if len(self):
-            start_offset = self[0]._get_timespan(
-                in_seconds=in_seconds)._start_offset
-            stop_offset = self[-1]._get_timespan(
-                in_seconds=in_seconds)._stop_offset
+            timespan_ = self[0]._get_timespan(in_seconds=in_seconds)
+            start_offset = timespan_.start_offset
+            timespan_ = self[-1]._get_timespan(in_seconds=in_seconds)
+            stop_offset = timespan_.stop_offset
         else:
             start_offset = abjad.Duration(0)
             stop_offset = abjad.Duration(0)
