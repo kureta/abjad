@@ -150,7 +150,7 @@ class LogicalTie(Selection):
         except MissingSpannerError:
             assert self.is_trivial
             return abjad.select(self[0])
-        selection = tie._get_leaves()
+        selection = tie.leaves
         assert isinstance(selection, abjad.Selection)
         return selection
 

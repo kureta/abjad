@@ -103,11 +103,11 @@ class Spanner(AbjadObject):
         return state
 
     def __len__(self):
-        r'''Gets number of components in spanner.
+        r'''Gets number of leaves in spanner.
 
         Returns nonnegative integer.
         '''
-        return len(self.components)
+        return len(self.leaves)
 
     def __lt__(self, argument):
         r'''Is true when spanner is less than `argument`. Otherwise false.
@@ -315,7 +315,7 @@ class Spanner(AbjadObject):
         result = self._copy(self[:])
         self._block_all_components()
         spanner._block_all_components()
-        result._extend(spanner.components)
+        result._extend(spanner.leaves)
         return [(self, spanner, result)]
 
     def _get_basic_lilypond_format_bundle(self, leaf):
@@ -407,16 +407,6 @@ class Spanner(AbjadObject):
             matching_indicators = [x.indicator for x in matching_indicators]
         matching_indicators = tuple(matching_indicators)
         return matching_indicators
-
-    def _get_leaves(self):
-        import abjad
-        result = []
-        for component in self._components:
-            for node in abjad.iterate(component).depth_first():
-                if isinstance(node, abjad.Leaf):
-                    result.append(node)
-        result = abjad.select(result)
-        return result
 
     def _get_lilypond_format_bundle(self, leaf):
         bundle = self._get_basic_lilypond_format_bundle(leaf)
@@ -529,16 +519,14 @@ class Spanner(AbjadObject):
             return False
 
     def _is_interior_leaf(self, leaf):
-        leaves = self._get_leaves()
-        if leaf not in leaves:
+        if leaf not in self.leaves:
             return False
-        if len(leaves) < 3:
+        if len(self.leaves) < 3:
             return False
-        leaf_count = len(leaves)
+        leaf_count = len(self.leaves)
         first_index = 0
         last_index = leaf_count - 1
-        leaves = list(leaves)
-        leaf_index = leaves.index(leaf)
+        leaf_index = list(self.leaves).index(leaf)
         if first_index < leaf_index < last_index:
             return True
         return False
@@ -658,7 +646,7 @@ class Spanner(AbjadObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def components(self):
+    def leaves(self):
         r'''Gets leaves in spanner.
 
         Returns selection of leaves.

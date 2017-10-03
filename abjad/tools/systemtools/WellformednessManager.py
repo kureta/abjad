@@ -56,8 +56,8 @@ class WellformednessManager(AbjadObject):
             spanners.update(spanners_)
             if 1 < len(spanners_):
                 if len(spanners_) == 2:
-                    common_leaves = set(spanners_[0].components)
-                    common_leaves &= set(spanners_[1].components)
+                    common_leaves = set(spanners_[0].leaves)
+                    common_leaves &= set(spanners_[1].leaves)
                     if len(common_leaves) == 1:
                         leaf = list(common_leaves)[0]
                         if ((spanners_[0]._is_my_first_leaf(leaf) and
@@ -240,8 +240,8 @@ class WellformednessManager(AbjadObject):
         descendants = abjad.inspect(argument).get_descendants()
         hairpins = descendants._get_spanners(abjad.Hairpin)
         for hairpin in hairpins:
-            if 2 < len(hairpin.components):
-                for leaf in hairpin.components[1:-1]:
+            if 2 < len(hairpin.leaves):
+                for leaf in hairpin.leaves[1:-1]:
                     if abjad.inspect(leaf).get_indicators(abjad.Dynamic):
                         violators.append(hairpin)
                         break
@@ -806,28 +806,10 @@ class WellformednessManager(AbjadObject):
         Returns violators and total.
         '''
         import abjad
-        violators = []
-        all_spanners = set()
-        for leaf in abjad.iterate(argument).by_leaf():
-            glissandi = abjad.inspect(leaf).get_spanners(abjad.Glissando)
-            glissandi = list(glissandi)
-            all_spanners.update(glissandi)
-            if 1 < len(glissandi):
-                if len(glissandi) == 2:
-                    common_leaves = set(glissandi[0]._get_leaves())
-                    common_leaves &= set(glissandi[1]._get_leaves())
-                    if len(common_leaves) == 1:
-                        leaf = list(common_leaves)[0]
-                        if ((glissandi[0]._is_my_first_leaf(leaf) and
-                            glissandi[1]._is_my_last_leaf(leaf)) or
-                            (glissandi[1]._is_my_first_leaf(leaf) and
-                            glissandi[0]._is_my_last_leaf(leaf))):
-                            break
-                for glissando in glissandi:
-                    if glissando not in violators:
-                        violators.append(glissando)
-        total = len(all_spanners)
-        return violators, total
+        return self._check_overlapping_spanners(
+            argument=argument,
+            prototype=abjad.Glissando,
+            )
 
     def check_overlapping_hairpins(self, argument=None):
         r'''Checks to make sure there are no overlapping hairpins in score.
@@ -1051,7 +1033,7 @@ class WellformednessManager(AbjadObject):
         total = 0
         hairpins = argument._get_descendants()._get_spanners(abjad.Hairpin)
         for hairpin in hairpins:
-            if len(hairpin._get_leaves()) <= 1:
+            if len(hairpin.leaves) <= 1:
                 violators.append(hairpin)
             total += 1
         return violators, total
