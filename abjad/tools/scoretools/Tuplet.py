@@ -336,7 +336,7 @@ class Tuplet(Container):
         if not self.is_redundant:
             return
         leaves = []
-        logical_ties = select(self).by_logical_tie(parentage_mask=self)
+        logical_ties = select(self).by_logical_tie()
         durations = [_.get_duration() for _ in logical_ties]
         for i, logical_tie in enumerate(logical_ties):
             duration = durations[i]
@@ -819,7 +819,6 @@ class Tuplet(Container):
         tuplets). Second, the durations of all leaves contained in the tuplet
         must be able to be rewritten without a tuplet bracket.
 
-
         ..  container:: example
 
             Redudant tuplet:
@@ -895,8 +894,12 @@ class Tuplet(Container):
 
         Returns true or false.
         '''
-        logical_ties = iterate(self).by_logical_tie(parentage_mask=self)
-        return all(_.get_duration().is_assignable for _ in logical_ties)
+        import abjad
+        leaves = list(iterate(self).by_leaf())
+        for logical_tie in abjad.iterate(leaves).by_logical_tie():
+            if not logical_tie.get_duration().is_assignable:
+                return False
+        return True
 
     @property
     def is_trivial(self):

@@ -22,25 +22,17 @@ class ItemSelectorCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Gets item from `argument`.
+        r'''Call callback on `argument`.
 
         Returns item.
         '''
-        import abjad
-        result = self._get_item(argument)
-        return result
-
-    ### PRIVATE METHODS ###
-
-    def _get_item(self, argument):
-        result = argument.__getitem__(self.item)
-        return result
+        return argument.__getitem__(self.item)
 
     ### PUBLIC PROPERTIES ###
 
     @property
     def item(self):
-        r'''Gets item selector callback item.
+        r'''Gets item.
 
         Returns integer.
         '''

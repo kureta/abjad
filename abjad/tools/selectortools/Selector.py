@@ -174,7 +174,7 @@ class Selector(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Calls selector on `argument`.
+        r'''Calls selector callbacks on `argument`.
 
         Returns selection.
         '''

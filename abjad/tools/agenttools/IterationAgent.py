@@ -1794,85 +1794,80 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("e'8")])
                     LogicalTie([Note("f'8")])
 
+        ..  container:: example
+
+            Regression: returns at least one logical tie even when note all
+            leaves in logical tie are passed as input:
+
+            ..  container:: example
+
+                ::
+
+                    >>> voice = abjad.Voice("c'8 [ ~ c' ~ c' d' ]")
+                    >>> show(voice) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(voice)
+                    \new Voice {
+                        c'8 ~ [
+                        c'8 ~
+                        c'8
+                        d'8 ]
+                    }
+
+            ..  container:: example
+
+                ::
+
+                    >>> selection = voice[:2]
+                    >>> for lt in abjad.iterate(selection).by_logical_tie():
+                    ...     lt
+                    ...
+                    LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])
+
+            ..  container:: example expression
+
+                ::
+
+                    >>> expression = abjad.iterate()
+                    >>> expression = expression.by_logical_tie()
+                    >>> selection = voice[:2]
+                    >>> for logical_tie in expression(selection):
+                    ...     logical_tie
+                    ...
+                    LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])
+
         Returns generator.
         '''
-        from abjad.tools import selectiontools
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        nontrivial = bool(nontrivial)
-        prototype = scoretools.Leaf
         if pitched:
-            prototype = (scoretools.Chord, scoretools.Note)
-
+            prototype = (abjad.Chord, abjad.Note)
+        else:
+            prototype = abjad.Leaf
+        yielded_logical_ties = set()
         def _closure():
-            leaf, yielded = None, False
-            if not reverse:
-                for leaf in self.by_class(
-                    prototype=prototype,
-                    with_grace_notes=with_grace_notes,
-                    ):
-                    yielded = False
-                    tie_spanners = leaf._get_spanners(spannertools.Tie)
-                    if (not tie_spanners or
-                        tuple(tie_spanners)[0]._is_my_last_leaf(leaf)):
-                        logical_tie = leaf._get_logical_tie()
-                        if parentage_mask:
-                            logical_tie = selectiontools.LogicalTie(
-                                x for x in logical_tie
-                                if parentage_mask in x._get_parentage()
-                                )
-                            if not logical_tie:
-                                continue
-                        if not nontrivial or not logical_tie.is_trivial:
-                            yielded = True
-                            yield logical_tie
-                if leaf is not None and not yielded:
-                    if (tie_spanners and
-                        tuple(tie_spanners)[0]._is_my_first_leaf(leaf)):
-                        logical_tie = leaf._get_logical_tie()
-                        if parentage_mask:
-                            logical_tie = selectiontools.LogicalTie(
-                                x for x in logical_tie
-                                if parentage_mask in x._get_parentage()
-                                )
-                            if not logical_tie:
-                                return
-                        if not nontrivial or not logical_tie.is_trivial:
-                            yield logical_tie
-            else:
-                for leaf in self.by_class(
-                    prototype,
-                    reverse=True,
-                    with_grace_notes=with_grace_notes,
-                    ):
-                    yielded = False
-                    tie_spanners = leaf._get_spanners(spannertools.Tie)
-                    if (not(tie_spanners) or
-                        tuple(tie_spanners)[0]._is_my_first_leaf(leaf)):
-                        logical_tie = leaf._get_logical_tie()
-                        if parentage_mask:
-                            logical_tie = selectiontools.LogicalTie(
-                                x for x in logical_tie
-                                if parentage_mask in x._get_parentage()
-                                )
-                            if not logical_tie:
-                                continue
-                        if not nontrivial or not logical_tie.is_trivial:
-                            yielded = True
-                            yield logical_tie
-                if leaf is not None and not yielded:
-                    if (tie_spanners and
-                        tuple(tie_spanners)[0]._is_my_last_leaf(leaf)):
-                        logical_tie = leaf._get_logical_tie()
-                        if parentage_mask:
-                            logical_tie = selectiontools.LogicalTie(
-                                x for x in logical_tie
-                                if parentage_mask in x._get_parentage()
-                                )
-                            if not logical_tie:
-                                return
-                        if not nontrivial or not logical_tie.is_trivial:
-                            yield logical_tie
+            for leaf in self.by_class(
+                prototype=prototype,
+                reverse=reverse,
+                with_grace_notes=with_grace_notes,
+                ):
+                logical_tie = abjad.inspect(leaf).get_logical_tie()
+                if parentage_mask:
+                    leaves = []
+                    for leaf in logical_tie:
+                        parentage = abjad.inspect(leaf).get_parentage()
+                        if parentage_mask in parentage:
+                            leaves.append(leaf)
+                    logical_tie = abjad.LogicalTie(leaves)
+                    if not logical_tie:
+                        continue
+                if not bool(nontrivial) or not logical_tie.is_trivial:
+                    if logical_tie not in yielded_logical_ties:
+                        yielded_logical_ties.add(logical_tie)
+                        yield logical_tie
         return _closure()
 
     def by_logical_voice(

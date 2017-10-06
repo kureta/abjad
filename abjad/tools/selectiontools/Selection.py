@@ -1141,7 +1141,6 @@ class Selection(object):
         nontrivial=False,
         pitched=False,
         reverse=False,
-        parentage_mask=None,
         with_grace_notes=False,
         ):
         r'''Select components by logical tie.
@@ -1184,7 +1183,6 @@ class Selection(object):
             nontrivial=nontrivial,
             pitched=pitched,
             reverse=reverse,
-            parentage_mask=parentage_mask,
             with_grace_notes=with_grace_notes,
             )
         return Selection(iterator)
