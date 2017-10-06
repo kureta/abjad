@@ -57,14 +57,17 @@ class PrototypeSelectorCallback(AbjadValueObject):
     def __call__(self, argument, rotation=None):
         r'''Iterates `argument`.
 
-        Returns tuple of selections.
+        Returns selection.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
+        import abjad
+        #assert isinstance(argument, collections.Iterable), repr(argument)
         result = []
         prototype = self.prototype
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
-        for subexpr in argument:
+        #for subexpr in argument:
+        if True:
+            subexpr = argument
             subresult = iterate(subexpr).by_class(prototype)
             subresult = select(subresult)
             if subresult:
@@ -80,11 +83,13 @@ class PrototypeSelectorCallback(AbjadValueObject):
                         subresult,
                         self.tail,
                         )
-                if self.flatten:
-                    result.extend(subresult)
-                else:
-                    result.append(subresult)
-        return tuple(result)
+                #if self.flatten:
+                #    result.extend(subresult)
+                #else:
+                #    result.append(subresult)
+                result.extend(subresult)
+        #return tuple(result)
+        return abjad.Selection(result)
 
     ### PRIVATE METHODS ###
 

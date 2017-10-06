@@ -290,6 +290,8 @@ class LabelAgent(abctools.AbjadObject):
         elif isinstance(self._client, abjad.selectiontools.LogicalTie):
             target = [self._client]
         elif isinstance(self._client, abjad.Selection):
+            target = [self._client]
+        elif isinstance(self._client, list):
             target = self._client
         else:
             raise TypeError(self._client)

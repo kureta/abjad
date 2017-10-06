@@ -33,21 +33,20 @@ class LengthSelectorCallback(AbjadValueObject):
     def __call__(self, argument, rotation=None):
         r'''Iterates iterable `argument`.
 
-        Returns tuple in which each item is a selection or component.
+        Returns list in which each item is a selection or component.
         '''
-        from abjad.tools import selectortools
-        assert isinstance(argument, collections.Iterable), repr(argument)
+        import abjad
         inequality = self.length
-        if not isinstance(inequality, selectortools.LengthInequality):
-            inequality = selectortools.LengthInequality(
+        if not isinstance(inequality, abjad.LengthInequality):
+            inequality = abjad.LengthInequality(
                 length=inequality,
                 operator_string='==',
                 )
         result = []
-        for subexpr in argument:
-            if inequality(subexpr):
-                result.append(subexpr)
-        return tuple(result)
+        for item in argument:
+            if inequality(item):
+                result.append(item)
+        return result
 
     ### PUBLIC PROPERTIES ###
 

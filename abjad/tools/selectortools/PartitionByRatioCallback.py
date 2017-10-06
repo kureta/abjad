@@ -27,23 +27,18 @@ class PartitionByRatioCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Calls ratio selector callback on iterable `argument`.
+        r'''Calls callback on `argument`.
 
-        Returns tuple of selections.
+        Returns list of selections.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
-        assert len(argument) == 1, repr(argument)
-        assert isinstance(argument[0], selectiontools.Selection), repr(argument)
-        selection = argument[0]
-        counts = mathtools.partition_integer_by_ratio(
-            len(selection),
+        import abjad
+        counts = abjad.mathtools.partition_integer_by_ratio(
+            len(argument),
             self.ratio,
             )
-        selections = datastructuretools.Sequence(selection).partition_by_counts(
-            counts=counts,
-            )
-        selections = [selectiontools.Selection(_) for _ in selections]
-        return tuple(selections)
+        parts = abjad.Sequence(argument).partition_by_counts(counts=counts)
+        selections = [abjad.Selection(_) for _ in parts]
+        return selections
 
     ### PUBLIC PROPERTIES ###
 

@@ -1,4 +1,3 @@
-import collections
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -28,42 +27,23 @@ class ExtraLeafSelectorCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates tuple `argument`.
+        r'''Calls callback on `argument`.
 
-        Returns tuple in which each item is a selection or component.
+        Returns selection.
         '''
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        from abjad.tools.topleveltools import select
-        assert isinstance(argument, collections.Iterable), repr(argument)
-        result = []
-        for subexpr in argument:
-            if isinstance(subexpr, scoretools.Leaf):
-                subexpr = selectiontools.Selection([subexpr])
-            subresult = []
-            if self.with_previous_leaf:
-                if isinstance(subexpr[0], selectiontools.LogicalTie):
-                    first_leaf = subexpr[0].head
-                else:
-                    first_leaf = subexpr[0]
-                previous_leaf = first_leaf._get_leaf(-1)
-                if previous_leaf is not None:
-                    subresult.append(previous_leaf)
-            if isinstance(subexpr, selectiontools.Selection):
-                subresult.extend(subexpr)
-            else:
-                subresult.append(subexpr)
-            if self.with_next_leaf:
-                if isinstance(subexpr[-1], selectiontools.LogicalTie):
-                    last_leaf = subexpr[-1].tail
-                else:
-                    last_leaf = subexpr[-1]
-                next_leaf = last_leaf._get_leaf(1)
-                if next_leaf is not None:
-                    subresult.append(next_leaf)
-            subresult = select(subresult)
-            result.append(subresult)
-        return tuple(result)
+        import abjad
+        selection = []
+        leaves = abjad.select(argument).by_leaf()
+        if self.with_previous_leaf:
+            previous_leaf = leaves[0]._get_leaf(-1)
+            if previous_leaf is not None:
+                selection.append(previous_leaf)
+        selection.extend(leaves)
+        if self.with_next_leaf:
+            next_leaf = leaves[-1]._get_leaf(1)
+            if next_leaf is not None:
+                selection.append(next_leaf)
+        return abjad.Selection(selection)
 
     ### PUBLIC PROPERTIES ###
 

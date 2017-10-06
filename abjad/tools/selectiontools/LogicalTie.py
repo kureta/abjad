@@ -71,7 +71,7 @@ class LogicalTie(Selection):
                 if not ties:
                     tie = abjad.Tie()
                     if all(tie._attachment_test(_) for _ in self):
-                        attach(tie, abjad.select(self))
+                        attach(tie, self.leaves)
                 self[-1]._splice(extra_leaves, grow_spanners=True)
         else:
             durations = maker(0, new_written_duration)

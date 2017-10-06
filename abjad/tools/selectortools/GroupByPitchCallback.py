@@ -29,20 +29,20 @@ class GroupByPitchCallback(AbjadValueObject):
         argument,
         rotation=None,
         ):
-        r'''Calls selector callback on iterable `argument`.
+        r'''Calls callback on `argument`.
 
-        Returns tuple of selections.
+        Returns list of selections.
         '''
         import abjad
-        assert isinstance(argument, collections.Iterable), repr(argument)
-        if len(argument) == 1 and isinstance(argument[0], abjad.Selection):
-            selection = argument[0]
-        else:
-            selection = abjad.select(argument)
+#        if len(argument) == 1 and isinstance(argument[0], abjad.Selection):
+#            selection = argument[0]
+#        else:
+#            selection = abjad.select(argument)
+        selection = abjad.Selection(argument)
         selections = selection.group_by(self._get_written_pitches)
         selections = self._map_contiguity(selections)
-        selections = [selectiontools.Selection(_) for _ in selections]
-        return tuple(selections)
+        selections = [abjad.Selection(_) for _ in selections]
+        return selections
 
     ### PRIVATE METHODS ###
 
@@ -63,10 +63,10 @@ class GroupByPitchCallback(AbjadValueObject):
             return None
 
     def _map_contiguity(self, selections):
-        from abjad.tools import selectortools
+        import abjad
         if self.allow_discontiguity:
             return selections
-        selector = selectortools.ContiguitySelectorCallback()
+        selector = abjad.ContiguitySelectorCallback()
         result = []
         for selection in selections:
             parts = selector(selection)

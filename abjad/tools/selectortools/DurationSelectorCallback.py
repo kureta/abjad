@@ -52,27 +52,28 @@ class DurationSelectorCallback(AbjadValueObject):
                 operator_string='==',
                 )
         result = []
-        for subexpr in argument:
+        for item in argument:
             if not self.preprolated:
-                if isinstance(subexpr, scoretools.Component):
-                    duration = subexpr._get_duration()
+                if isinstance(item, scoretools.Component):
+                    duration = item._get_duration()
                 else:
-                    duration = subexpr.get_duration()
+                    duration = item.get_duration()
             else:
-                if isinstance(subexpr, scoretools.Component):
-                    subexpr._update_now(offsets=True)
-                    duration = subexpr._get_preprolated_duration()
+                if isinstance(item, scoretools.Component):
+                    item._update_now(offsets=True)
+                    duration = item._get_preprolated_duration()
                 else:
                     durations = []
-                    for x in subexpr:
+                    for x in item:
                         if isinstance(x, scoretools.Component):
                             x._update_now(offsets=True)
                         duration = x._get_preprolated_duration()
                         durations.append(x._get_preprolated_duration())
                     duration = sum(durations)
             if inequality(duration):
-                result.append(subexpr)
-        return tuple(result)
+                result.append(item)
+        #return tuple(result)
+        return result
 
     ### PUBLIC PROPERTIES ###
 

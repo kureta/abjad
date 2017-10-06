@@ -31,18 +31,19 @@ class RunSelectorCallback(AbjadValueObject):
     def __call__(self, argument, rotation=None):
         r'''Iterates `argument`.
 
-        Returns tuple of selections.
+        Returns list of runs.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
+        import abjad
         result = []
         prototype = self.prototype
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
-        for subexpr in argument:
-            for run in iterate(subexpr).by_run(prototype):
-                run = selectiontools.Selection(run)
-                result.append(run)
-        return tuple(result)
+        for run in iterate(argument).by_run(prototype):
+            assert isinstance(run, abjad.Selection)
+            #run = selectiontools.Selection(run)
+            result.append(run)
+        #return tuple(result)
+        return result
 
     ### PUBLIC PROPERTIES ###
 

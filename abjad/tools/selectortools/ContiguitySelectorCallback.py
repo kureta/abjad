@@ -15,25 +15,27 @@ class ContiguitySelectorCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates tuple `argument`.
+        r'''Iterates `argument`.
+
+        Returns list of selections.
         '''
-        result = []
-        subresult = []
-        subresult.extend(argument[:1])
-        for subexpr in argument[1:]:
+        import abjad
+        selections, selection = [], []
+        selection.extend(argument[:1])
+        for item in argument[1:]:
             try:
-                that_timespan = subresult[-1]._get_timespan()
+                this_timespan = selection[-1]._get_timespan()
             except AttributeError:
-                that_timespan = subresult[-1].get_timespan()
+                this_timespan = selection[-1].get_timespan()
             try:
-                this_timespan = subexpr._get_timespan()
+                that_timespan = item._get_timespan()
             except AttributeError:
-                this_timespan = subexpr.get_timespan()
-            if that_timespan.stop_offset == this_timespan.start_offset:
-                subresult.append(subexpr)
+                that_timespan = item.get_timespan()
+            if this_timespan.stop_offset == that_timespan.start_offset:
+                selection.append(item)
             else:
-                result.append(select(subresult))
-                subresult = [subexpr]
-        if subresult:
-            result.append(select(subresult))
-        return tuple(result)
+                selections.append(abjad.Selection(selection))
+                selection = [item]
+        if selection:
+            selections.append(abjad.Selection(selection))
+        return selections

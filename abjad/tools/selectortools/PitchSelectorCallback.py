@@ -33,21 +33,22 @@ class PitchSelectorCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates tuple `argument`.
+        r'''Calls callback on `argument`.
 
-        Returns tuple in which each item is a selection or component.
+        Returns selection.
         '''
+        import abjad
         if not self.pitches:
             return ()
         result = []
-        for subexpr in argument:
+        for item in argument:
             pitch_set = pitchtools.PitchSet.from_selection(
-                subexpr,
+                item,
                 item_class=pitchtools.NumberedPitch,
                 )
             if self.pitches.intersection(pitch_set):
-                result.append(subexpr)
-        return tuple(result)
+                result.append(item)
+        return abjad.Selection(result)
 
     ### PUBLIC PROPERTIES ###
 

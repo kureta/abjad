@@ -34,7 +34,13 @@ class Selection(object):
     ### INITIALIZER ###
 
     def __init__(self, music=None):
+        import abjad
         music = self._coerce_music(music)
+        for item in music:
+            if isinstance(item, abjad.LogicalTie):
+                continue
+            if isinstance(item, abjad.Selection):
+                raise Exception(f'selections can not nest: {music!r}.')
         self._music = tuple(music)
 
     ### SPECIAL METHODS ###
@@ -92,9 +98,7 @@ class Selection(object):
         '''
         result = self._music.__getitem__(argument)
         if isinstance(result, tuple):
-            selection = type(self)()
-            selection._music = result[:]
-            result = selection
+            result = Selection(result)
         return result
 
     def __getstate__(self):
@@ -430,17 +434,19 @@ class Selection(object):
 
     @staticmethod
     def _coerce_music(music):
+        import abjad
         if music is None:
-            music = ()
-        elif isinstance(music, Selection):
-            music = tuple(music)
-        elif isinstance(music, collections.Sequence):
-            music = tuple(music)
-        elif isinstance(music, types.GeneratorType):
-            music = tuple(music)
+            return []
+        elif isinstance(music, abjad.Component):
+            return [music]
+        elif isinstance(music, abjad.LogicalTie):
+            return [music]
         else:
-            music = (music,)
-        return music
+            items = []
+            for item in music:
+                items_ = Selection._coerce_music(item)
+                items.extend(items_)
+            return items
 
     def _copy(self, n=1, include_enclosing_containers=False):
         r'''Copies components in selection and fractures crossing spanners.
@@ -1228,8 +1234,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_run(prototype=prototype)
-        return Selection(iterator)
+        import abjad
+        return abjad.iterate(self).by_run(prototype=prototype)
 
     def by_timeline(self, prototype=None, reverse=False):
         r'''Select components by timeline.

@@ -37,17 +37,18 @@ def select(argument=None):
             >>> abjad.select()
             Selector()
 
-    Returns selection when `argument` is not none.
-
     Returns selector when `argument` is none.
+
+    Returns selection when `argument` is not none.
     '''
     import abjad
     if argument is None:
         return abjad.Selector()
-    elif isinstance(argument, abjad.Component):
-        return abjad.Selection(argument)
-    elif hasattr(argument, '_music'):
-        return abjad.Selection(argument._music)
-    elif isinstance(argument, abjad.Spanner):
-        return abjad.Selection(argument.leaves)
+#    elif isinstance(argument, abjad.Component):
+#        return abjad.Selection(argument)
+#    elif hasattr(argument, '_music'):
+#        return abjad.Selection(argument._music)
+#    elif isinstance(argument, abjad.Spanner):
+#        return abjad.Selection(argument.leaves)
+#    return abjad.Selection(argument)
     return abjad.Selection(argument)

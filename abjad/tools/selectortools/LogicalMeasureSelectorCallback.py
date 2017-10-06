@@ -45,9 +45,9 @@ class LogicalMeasureSelectorCallback(AbjadValueObject):
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
             >>> selector = selector.by_logical_measure()
-            >>> selector = selector[0]
+            >>> selector = selector.map(abjad.select().get_item(0))
             >>> selector(staff)
-            Selection([Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")])
+            [Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")]
 
     ..  container:: example
 
@@ -58,9 +58,9 @@ class LogicalMeasureSelectorCallback(AbjadValueObject):
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
             >>> selector = selector.by_logical_measure()
-            >>> selector = selector[-1]
+            >>> selector = selector.map(abjad.select().get_item(-1))
             >>> selector(staff)
-            Selection([Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")])
+            [Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")]
 
     ..  container:: example
 
@@ -104,14 +104,13 @@ class LogicalMeasureSelectorCallback(AbjadValueObject):
     def __call__(self, argument, rotation=None):
         r'''Iterates `argument`.
 
-        Returns tuple of selections.
+        Returns list of selections.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
+        import abjad
         selections = []
-        for subexpr in argument:
-            selections_ = self._group(subexpr)
-            selections.extend(selections_)
-        return tuple(selections)
+        logical_measures = self._group(argument)
+        selections.extend(logical_measures)
+        return selections
 
     ### PRIVATE METHODS ###
 

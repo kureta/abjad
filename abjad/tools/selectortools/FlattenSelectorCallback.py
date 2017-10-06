@@ -23,12 +23,14 @@ class FlattenSelectorCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates `argument`.
+        r'''Calls callback on `argument`.
+
+        Returns selection.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
+        import abjad
         argument = datastructuretools.Sequence(argument)
         argument = argument.flatten(depth=self.depth)
-        return tuple(argument)
+        return abjad.Selection(argument)
 
     ### PUBLIC PROPERTIES ###
 

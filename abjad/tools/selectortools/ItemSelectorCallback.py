@@ -1,4 +1,3 @@
-import collections
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -11,16 +10,14 @@ class ItemSelectorCallback(AbjadValueObject):
     __documentation_section__ = 'Callbacks'
 
     __slots__ = (
-        '_apply_to_each',
         '_item',
         )
 
     ### INITIALIZER ###
 
-    def __init__(self, item=0, apply_to_each=True):
+    def __init__(self, item=0):
         assert isinstance(item, int)
         self._item = item
-        self._apply_to_each = bool(apply_to_each)
 
     ### SPECIAL METHODS ###
 
@@ -29,15 +26,8 @@ class ItemSelectorCallback(AbjadValueObject):
 
         Returns item.
         '''
-        assert isinstance(argument, collections.Iterable), repr(argument)
-        if self.apply_to_each:
-            result = []
-            for item in argument:
-                result_ = self._get_item(item)
-                result.append(result_)
-            result = tuple(result)
-        else:
-            result = self._get_item(argument)
+        import abjad
+        result = self._get_item(argument)
         return result
 
     ### PRIVATE METHODS ###
@@ -47,18 +37,6 @@ class ItemSelectorCallback(AbjadValueObject):
         return result
 
     ### PUBLIC PROPERTIES ###
-
-    @property
-    def apply_to_each(self):
-        r'''Is true if item selector callback will be applied against the
-        contents of each selection, rather than against the sequence of
-        selections itself.
-
-        Otherwise false.
-
-        Returns true or false.
-        '''
-        return self._apply_to_each
 
     @property
     def item(self):
