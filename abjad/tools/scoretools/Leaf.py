@@ -175,8 +175,8 @@ class Leaf(Component):
         return ['grace body', result]
 
     def _format_leaf_body(self, bundle):
-        from abjad.tools import systemtools
-        indent = systemtools.LilyPondFormatManager.indent
+        import abjad
+        indent = abjad.LilyPondFormatManager.indent
         result = self._format_leaf_nucleus()[1]
         result.extend(bundle.right.stem_tremolos)
         result.extend(bundle.right.articulations)
@@ -192,10 +192,10 @@ class Leaf(Component):
             if len(markup) == 1:
                 result[0] += ' {}'.format(markup[0])
             else:
-                result.extend(indent + '{}'.format(x) for x in markup)
+                result.extend(indent + '{}'.format(_) for _ in markup)
         trill_pitches = bundle.right.trill_pitches
         if trill_pitches:
-            assert len(trill_pitches) == 1
+            assert len(trill_pitches) == 1, repr(trill_pitches)
             result[-1] += ' {}'.format(trill_pitches[0])
         return ['self body', result]
 

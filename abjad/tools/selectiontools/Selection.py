@@ -212,6 +212,7 @@ class Selection(object):
 
     ### PRIVATE METHODS ###
 
+    # TODO: make public (and bound)
     @staticmethod
     def _all_are_contiguous_components_in_same_logical_voice(
         argument,
@@ -271,6 +272,7 @@ class Selection(object):
             previous = current
         return True
 
+    # TODO: make public (and bound)
     @staticmethod
     def _all_in_same_logical_voice(
         argument,
@@ -336,6 +338,7 @@ class Selection(object):
                 return False
         return True
 
+    # TODO: make public (and bound)
     @staticmethod
     def _all_in_same_parent(
         argument, prototype=None, allow_orphans=True):
