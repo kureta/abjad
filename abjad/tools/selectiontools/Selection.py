@@ -40,7 +40,9 @@ class Selection(object):
             if isinstance(item, abjad.LogicalTie):
                 continue
             if isinstance(item, abjad.Selection):
-                raise Exception(f'selections can not nest: {music!r}.')
+                message = 'selections can not nest: {!r}.'
+                message = message.format(music)
+                raise Exception(message)
         self._music = tuple(music)
 
     ### SPECIAL METHODS ###
