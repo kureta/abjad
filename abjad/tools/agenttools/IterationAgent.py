@@ -1563,7 +1563,6 @@ class IterationAgent(abctools.AbjadObject):
                     >>> for logical_tie in abjad.iterate(staff[1]).by_logical_tie():
                     ...     logical_tie
                     ...
-                    LogicalTie([Note("c'1"), Note("c'2")])
                     LogicalTie([Note("d'2"), Note("d'1")])
 
                 ::
@@ -1572,7 +1571,6 @@ class IterationAgent(abctools.AbjadObject):
                     ...     parentage_mask=staff[1]):
                     ...     logical_tie
                     ...
-                    LogicalTie([Note("c'2")])
                     LogicalTie([Note("d'2")])
 
             ..  container:: example expression
@@ -1584,7 +1582,6 @@ class IterationAgent(abctools.AbjadObject):
                     >>> for logical_tie in expression(staff[1]):
                     ...     logical_tie
                     ...
-                    LogicalTie([Note("c'1"), Note("c'2")])
                     LogicalTie([Note("d'2"), Note("d'1")])
 
                 ::
@@ -1855,6 +1852,8 @@ class IterationAgent(abctools.AbjadObject):
                 with_grace_notes=with_grace_notes,
                 ):
                 logical_tie = abjad.inspect(leaf).get_logical_tie()
+                if leaf is not logical_tie.head:
+                    continue
                 if parentage_mask:
                     leaves = []
                     for leaf in logical_tie:

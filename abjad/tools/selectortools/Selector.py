@@ -2591,18 +2591,8 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     e'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
                     f'8 ~
                     \times 2/3 {
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
                         f'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -2623,18 +2613,8 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #blue
                     \once \override Stem.color = #blue
                     a'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
                     b'8 ~
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
                         b'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -2657,8 +2637,8 @@ class Selector(AbjadValueObject):
                 ...     item
                 ...
                 Selection([LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])])
-                Selection([LogicalTie([Note("f'8"), Note("f'8")]), LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
-                Selection([LogicalTie([Note("b'8"), Note("b'8")]), LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
         ..  container:: example
 
@@ -2697,18 +2677,8 @@ class Selector(AbjadValueObject):
                         e'8 ~
                     }
                     e'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
                     f'8 ~
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
                         f'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -2729,18 +2699,8 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     a'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
                     b'8 ~
                     \times 2/3 {
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
                         b'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -2762,8 +2722,8 @@ class Selector(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([LogicalTie([Note("f'8"), Note("f'8")]), LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
-                Selection([LogicalTie([Note("b'8"), Note("b'8")]), LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
         Returns new selector.
         '''
