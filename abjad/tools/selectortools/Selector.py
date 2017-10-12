@@ -157,6 +157,7 @@ class Selector(AbjadValueObject):
 
     __slots__ = (
         '_callbacks',
+        '_template',
         )
 
     _publish_storage_format = True
@@ -166,10 +167,14 @@ class Selector(AbjadValueObject):
     def __init__(
         self,
         callbacks=None,
+        template=None,
         ):
         if callbacks is not None:
             callbacks = tuple(callbacks)
         self._callbacks = callbacks
+        if template is not None:
+            assert isinstance(template, str), repr(template)
+        self._template = template
 
     ### SPECIAL METHODS ###
 
@@ -194,6 +199,16 @@ class Selector(AbjadValueObject):
             argument = callback(argument, rotation=rotation)
         return argument
 
+    def __format__(self, format_specification=''):
+        r'''Formats selector.
+
+        Returns string.
+        '''
+        if self.template is not None:
+            return self.template
+        return super(Selector, self).__format__(format_specification)
+
+
     def __getitem__(self, argument):
         r'''Gets item or slice identified by `argument`.
 
@@ -212,6 +227,15 @@ class Selector(AbjadValueObject):
         else:
             raise ValueError(argument)
         return self._append_callback(callback)
+
+    def __repr__(self):
+        r'''Gets interpreter representation.
+
+        Returns string.
+        '''
+        if self.template is not None:
+            return self.template
+        return super(Selector, self).__repr__()
 
     ### PRIVATE METHODS ###
 
@@ -5513,8 +5537,8 @@ class Selector(AbjadValueObject):
 
         Returns new selector.
         '''
-        from abjad.tools import selectortools
-        callback = selectortools.ExtraLeafSelectorCallback(
+        import abjad
+        callback = abjad.ExtraLeafSelectorCallback(
             with_previous_leaf=True,
             )
         return self._append_callback(callback)
@@ -5523,8 +5547,36 @@ class Selector(AbjadValueObject):
 
     @property
     def callbacks(self):
-        r'''Gets callbacks of selector.
+        r'''Gets callbacks.
 
         Returns tuple.
         '''
         return self._callbacks
+
+    @property
+    def template(self):
+        r'''Gets template.
+
+        ..  container:: example
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> template = 'select_note_runs()'
+                >>> selector = abjad.new(selector, template=template)
+
+            ::
+
+                >>> selector
+                select_note_runs()
+
+            ::
+
+                >>> abjad.f(selector)
+                select_note_runs()
+
+        Returns string or none.
+        '''
+        return self._template
