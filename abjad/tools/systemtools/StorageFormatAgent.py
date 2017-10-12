@@ -188,6 +188,10 @@ class StorageFormatAgent(AbjadValueObject):
         return result
 
     def _format_specced_object(self, as_storage_format=True):
+        if hasattr(self._client, '_get_format_specification'):
+            specification = self._client._get_format_specification()
+            if specification.storage_format_forced_override is not None:
+                return [specification.storage_format_forced_override]
         formatting_keywords = self._get_formatting_keywords(as_storage_format)
         args_values = formatting_keywords['args_values']
         as_storage_format = formatting_keywords['as_storage_format']

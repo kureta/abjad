@@ -199,15 +199,14 @@ class Selector(AbjadValueObject):
             argument = callback(argument, rotation=rotation)
         return argument
 
-    def __format__(self, format_specification=''):
-        r'''Formats selector.
-
-        Returns string.
-        '''
-        if self.template is not None:
-            return self.template
-        return super(Selector, self).__format__(format_specification)
-
+#    def __format__(self, format_specification=''):
+#        r'''Formats selector.
+#
+#        Returns string.
+#        '''
+#        if self.template is not None:
+#            return self.template
+#        return super(Selector, self).__format__(format_specification)
 
     def __getitem__(self, argument):
         r'''Gets item or slice identified by `argument`.
@@ -228,14 +227,14 @@ class Selector(AbjadValueObject):
             raise ValueError(argument)
         return self._append_callback(callback)
 
-    def __repr__(self):
-        r'''Gets interpreter representation.
-
-        Returns string.
-        '''
-        if self.template is not None:
-            return self.template
-        return super(Selector, self).__repr__()
+#    def __repr__(self):
+#        r'''Gets interpreter representation.
+#
+#        Returns string.
+#        '''
+#        if self.template is not None:
+#            return self.template
+#        return super(Selector, self).__repr__()
 
     ### PRIVATE METHODS ###
 
@@ -243,6 +242,19 @@ class Selector(AbjadValueObject):
         callbacks = self.callbacks or ()
         callbacks = callbacks + (callback,)
         return type(self)(callbacks)
+
+    def _get_format_specification(self):
+        import abjad
+        if self.template is None:
+            return super(Selector, self)._get_format_specification()
+        return abjad.FormatSpecification(
+            client=self,
+            repr_is_indented=False,
+            storage_format_is_indented=False,
+            storage_format_args_values=[self.template],
+            storage_format_forced_override=self.template,
+            storage_format_kwargs_names=(),
+            )
 
     ### PUBLIC METHODS ###
 
