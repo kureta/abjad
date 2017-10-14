@@ -88,9 +88,9 @@ class Selection(object):
 
         Returns string.
         '''
-        from abjad.tools import systemtools
+        import abjad
         if format_specification in ('', 'storage'):
-            return systemtools.StorageFormatAgent(self).get_storage_format()
+            return abjad.StorageFormatAgent(self).get_storage_format()
         return str(self)
 
     def __getitem__(self, argument):
@@ -171,16 +171,6 @@ class Selection(object):
         Returns nonnegative integer.
         '''
         return len(self._music)
-
-    def __ne__(self, argument):
-        r'''Is true when self does not equal argument.
-
-        ..  note:: this definition can be removed after support for Python is
-            dropped.
-
-        Returns true or false.
-        '''
-        return not self.__eq__(argument)
 
     def __radd__(self, argument):
         r'''Concatenates selection to `argument`.
