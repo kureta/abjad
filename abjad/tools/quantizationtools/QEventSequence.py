@@ -548,26 +548,23 @@ class QEventSequence(AbjadObject):
 
         Return ``QEventSequence`` instance.
         '''
-        from abjad.tools import selectiontools
-        Selection = selectiontools.Selection
-        assert Selection._all_in_same_logical_voice(leaves, contiguous=True)
+        import abjad
+        assert abjad.select(leaves).in_same_logical_voice(contiguous=True)
         assert len(leaves)
         if tempo is None:
-            prototype = indicatortools.MetronomeMark
+            prototype = abjad.MetronomeMark
             assert leaves[0]._get_effective(prototype) is not None
-        #else:
-        #    #tempo = indicatortools.MetronomeMark(tempo)
-        elif isinstance(tempo, indicatortools.MetronomeMark):
+        elif isinstance(tempo, abjad.MetronomeMark):
             tempo = copy.copy(tempo)
         elif isinstance(tempo, tuple):
-            tempo = indicatortools.MetronomeMark(*tempo)
+            tempo = abjad.MetronomeMark(*tempo)
         else:
             raise TypeError(tempo)
         # sort by silence and tied leaves
         groups = []
         for rvalue, rgroup in itertools.groupby(
             leaves,
-            lambda x: isinstance(x, (scoretools.Rest, scoretools.Skip))):
+            lambda x: isinstance(x, (abjad.Rest, abjad.Skip))):
             if rvalue:
                 groups.append(list(rgroup))
             else:
@@ -585,14 +582,14 @@ class QEventSequence(AbjadObject):
                     for x in group)
             else:
                 duration = sum(x._get_effective(
-                    indicatortools.MetronomeMark).duration_to_milliseconds(
+                    abjad.MetronomeMark).duration_to_milliseconds(
                     x._get_duration())
                     for x in group)
             durations.append(duration)
             # get pitch of first leaf in group
-            if isinstance(group[0], (scoretools.Rest, scoretools.Skip)):
+            if isinstance(group[0], (abjad.Rest, abjad.Skip)):
                 pitch = None
-            elif isinstance(group[0], scoretools.Note):
+            elif isinstance(group[0], abjad.Note):
                 pitch = group[0].written_pitch.number
             # chord
             else:
