@@ -553,16 +553,15 @@ class MutationAgent(abctools.AbjadObject):
 
         Returns none.
         '''
-        from abjad.tools import selectiontools
-        if isinstance(self._client, selectiontools.Selection):
+        import abjad
+        if isinstance(self._client, abjad.Selection):
             donors = self._client
         else:
-            donors = selectiontools.Selection(self._client)
-        assert donors._all_in_same_parent(donors)
-        if not isinstance(recipients, selectiontools.Selection):
-            recipients = selectiontools.Selection(recipients)
-        assert recipients._all_in_same_parent(
-            recipients)
+            donors = abjad.select(self._client)
+        assert donors.in_same_parent()
+        if not isinstance(recipients, abjad.Selection):
+            recipients = abjad.select(recipients)
+        assert recipients.in_same_parent()
         if donors:
             parent, start, stop = donors._get_parent_and_start_stop_indices()
             assert parent is not None, repr(donors)
@@ -2977,7 +2976,7 @@ class MutationAgent(abctools.AbjadObject):
             donors = self._client
         else:
             donors = abjad.select(self._client)
-        assert donors._all_in_same_parent(donors)
+        assert donors.in_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container, repr(container)
         donors._give_music_to_empty_container(container)

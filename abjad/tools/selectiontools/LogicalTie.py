@@ -85,10 +85,6 @@ class LogicalTie(Selection):
             abjad.mutate(self.leaves).wrap(tuplet)
         return self[0]._get_logical_tie()
 
-    def _all_leaves_are_in_same_parent(self):
-        parents = [leaf._parent for leaf in self.leaves]
-        return mathtools.all_are_equal(parents)
-
     def _fuse_leaves_by_immediate_parent(self):
         result = []
         parts = self._get_leaves_grouped_by_immediate_parents()

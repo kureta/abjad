@@ -209,17 +209,10 @@ class Selection(object):
         prototype=None,
         allow_orphans=True,
         ):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        allowable_types = (
-            list,
-            tuple,
-            types.GeneratorType,
-            selectiontools.Selection,
-            )
-        if not isinstance(argument, allowable_types):
+        import abjad
+        if not isinstance(argument, collections.Iterable):
             return False
-        prototype = prototype or (scoretools.Component,)
+        prototype = prototype or (abjad.Component,)
         if not isinstance(prototype, tuple):
             prototype = (prototype, )
         assert isinstance(prototype, tuple)
@@ -270,23 +263,16 @@ class Selection(object):
         allow_orphans=True,
         contiguous=False,
         ):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
+        import abjad
         if contiguous:
             return Selection._all_are_contiguous_components_in_same_logical_voice(
                 argument,
                 prototype=prototype,
                 allow_orphans=allow_orphans,
                 )
-        allowable_types = (
-            list,
-            tuple,
-            types.GeneratorType,
-            selectiontools.Selection,
-            )
-        if not isinstance(argument, allowable_types):
+        if not isinstance(argument, collections.Iterable):
             return False
-        prototype = prototype or (scoretools.Component,)
+        prototype = prototype or (abjad.Component,)
         if not isinstance(prototype, tuple):
             prototype = (prototype, )
         assert isinstance(prototype, tuple)
@@ -326,65 +312,6 @@ class Selection(object):
                 not same_logical_voice
                 ):
                 return False
-        return True
-
-    # TODO: make public (and bound)
-    @staticmethod
-    def _all_in_same_parent(
-        argument, prototype=None, allow_orphans=True):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        allowable_types = (
-            list,
-            tuple,
-            types.GeneratorType,
-            selectiontools.Selection,
-            )
-        if not isinstance(argument, allowable_types):
-            return False
-        prototype = prototype or (scoretools.Component, )
-        if not isinstance(prototype, tuple):
-            prototype = (prototype, )
-        assert isinstance(prototype, tuple)
-        if len(argument) == 0:
-            return True
-        all_are_orphans_of_correct_type = True
-        if allow_orphans:
-            for component in argument:
-                if not isinstance(component, prototype):
-                    all_are_orphans_of_correct_type = False
-                    break
-                if not component._get_parentage().is_orphan:
-                    all_are_orphans_of_correct_type = False
-                    break
-            if all_are_orphans_of_correct_type:
-                return True
-        first = argument[0]
-        if not isinstance(first, prototype):
-            return False
-        first_parent = first._parent
-        if first_parent is None:
-            if allow_orphans:
-                orphan_components = True
-            else:
-                return False
-        same_parent = True
-        strictly_contiguous = True
-        previous = first
-        for current in argument[1:]:
-            if not isinstance(current, prototype):
-                return False
-            if not current._get_parentage().is_orphan:
-                orphan_components = False
-            if current._parent is not first_parent:
-                same_parent = False
-            if not previous._is_immediate_temporal_successor_of(current):
-                strictly_contiguous = False
-            if ((not allow_orphans or
-                (allow_orphans and not orphan_components)) and
-                (not same_parent or not strictly_contiguous)):
-                return False
-            previous = current
         return True
 
     def _attach_tie_spanner_to_leaf_pair(self, use_messiaen_style_ties=False):
@@ -698,13 +625,8 @@ class Selection(object):
         return leaves[0]._set_duration(total_preprolated)
 
     def _fuse_measures(self):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        # check input
-        prototype = (scoretools.Measure,)
-        assert self._all_in_same_parent(
-            self, prototype)
-        # return none on empty measures
+        import abjad
+        assert self.in_same_parent(prototype=abjad.Measure)
         if len(self) == 0:
             return None
         # TODO: instantiate a new measure
@@ -714,19 +636,18 @@ class Selection(object):
         implicit_scaling = self[0].implicit_scaling
         assert all(
             x.implicit_scaling == implicit_scaling for x in self)
-        selection = selectiontools.Selection(self)
+        selection = abjad.Selection(self)
         parent, start, stop = selection._get_parent_and_start_stop_indices()
         old_denominators = []
-        new_duration = durationtools.Duration(0)
+        new_duration = abjad.Duration(0)
         for measure in self:
             effective_time_signature = measure.time_signature
             old_denominators.append(effective_time_signature.denominator)
             new_duration += effective_time_signature.duration
-        new_time_signature = \
-            measure._duration_to_time_signature(
-                new_duration,
-                old_denominators,
-                )
+        new_time_signature = measure._duration_to_time_signature(
+            new_duration,
+            old_denominators,
+            )
         music = []
         for measure in self:
             # scale before reassignment to prevent logical tie scale drama
@@ -737,7 +658,7 @@ class Selection(object):
             measure_music = measure[:]
             measure_music._set_parents(None)
             music += measure_music
-        new_measure = scoretools.Measure(new_time_signature, music)
+        new_measure = abjad.Measure(new_time_signature, music)
         new_measure.implicit_scaling = self[0].implicit_scaling
         if parent is not None:
             self._give_dominant_spanners([new_measure])
@@ -747,8 +668,8 @@ class Selection(object):
         return new_measure
 
     def _fuse_tuplets(self):
-        from abjad.tools import scoretools
-        assert self._all_in_same_parent(self, prototype=scoretools.Tuplet)
+        import abjad
+        assert self.in_same_parent(prototype=abjad.Tuplet)
         if len(self) == 0:
             return None
         first = self[0]
@@ -761,12 +682,12 @@ class Selection(object):
             if type(tuplet) != first_type:
                 message = 'tuplets must be same type.'
                 raise TypeError(message)
-        assert isinstance(first, scoretools.Tuplet)
-        new_tuplet = scoretools.Tuplet(first_multiplier, [])
+        assert isinstance(first, abjad.Tuplet)
+        new_tuplet = abjad.Tuplet(first_multiplier, [])
         wrapped = False
         if (self[0]._get_parentage().root is not
             self[-1]._get_parentage().root):
-            dummy_container = scoretools.Container(self)
+            dummy_container = abjad.Container(self)
             wrapped = True
         mutate(self).swap(new_tuplet)
         if wrapped:
@@ -861,7 +782,7 @@ class Selection(object):
         return start_offsets, stop_offsets
 
     def _get_parent_and_start_stop_indices(self):
-        assert self._all_in_same_parent(self)
+        assert self.in_same_parent()
         if self:
             first, last = self[0], self[-1]
             parent = first._parent
@@ -931,9 +852,9 @@ class Selection(object):
     def _give_music_to_empty_container(self, container):
         r'''Not composer-safe.
         '''
-        from abjad.tools import scoretools
-        assert self._all_in_same_parent(self)
-        assert isinstance(container, scoretools.Container)
+        import abjad
+        assert self.in_same_parent()
+        assert isinstance(container, abjad.Container)
         assert not container
         music = []
         for component in self:
@@ -944,9 +865,9 @@ class Selection(object):
     def _give_position_in_parent_to_container(self, container):
         r'''Not composer-safe.
         '''
-        from abjad.tools import scoretools
-        assert self._all_in_same_parent(self)
-        assert isinstance(container, scoretools.Container)
+        import abjad
+        assert self.in_same_parent()
+        assert isinstance(container, abjad.Container)
         parent, start, stop = self._get_parent_and_start_stop_indices()
         if parent is not None:
             parent._music.__setitem__(slice(start, start), [container])
@@ -1436,6 +1357,59 @@ class Selection(object):
             selection = tuple(generator)
             result.append(selection)
         return result
+
+    def in_same_parent(argument, prototype=None, allow_orphans=True):
+        r'''Is true when components are all in same parent.
+
+        Returns true or false.
+        '''
+        import abjad
+        if not isinstance(argument, collections.Iterable):
+            return False
+        prototype = prototype or (abjad.Component, )
+        if not isinstance(prototype, tuple):
+            prototype = (prototype, )
+        assert isinstance(prototype, tuple)
+        if len(argument) == 0:
+            return True
+        all_are_orphans_of_correct_type = True
+        if allow_orphans:
+            for component in argument:
+                if not isinstance(component, prototype):
+                    all_are_orphans_of_correct_type = False
+                    break
+                if not component._get_parentage().is_orphan:
+                    all_are_orphans_of_correct_type = False
+                    break
+            if all_are_orphans_of_correct_type:
+                return True
+        first = argument[0]
+        if not isinstance(first, prototype):
+            return False
+        first_parent = first._parent
+        if first_parent is None:
+            if allow_orphans:
+                orphan_components = True
+            else:
+                return False
+        same_parent = True
+        strictly_contiguous = True
+        previous = first
+        for current in argument[1:]:
+            if not isinstance(current, prototype):
+                return False
+            if not current._get_parentage().is_orphan:
+                orphan_components = False
+            if current._parent is not first_parent:
+                same_parent = False
+            if not previous._is_immediate_temporal_successor_of(current):
+                strictly_contiguous = False
+            if ((not allow_orphans or
+                (allow_orphans and not orphan_components)) and
+                (not same_parent or not strictly_contiguous)):
+                return False
+            previous = current
+        return True
 
     def partition_by_durations(
         self,
