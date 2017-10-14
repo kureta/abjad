@@ -448,7 +448,7 @@ class MutationAgent(abctools.AbjadObject):
             return selection._fuse()
         elif (
             isinstance(self._client, abjad.Selection) and
-            self._client.in_same_logical_voice(contiguous=True)
+            self._client.in_contiguous_logical_voice()
             ):
             selection = abjad.select(self._client)
             return selection._fuse()
@@ -3212,7 +3212,7 @@ class MutationAgent(abctools.AbjadObject):
             selection = self._client
         assert isinstance(selection, abjad.Selection), repr(selection)
         parent, start, stop = selection._get_parent_and_start_stop_indices()
-        if not selection.in_same_logical_voice(contiguous=True):
+        if not selection.in_contiguous_logical_voice():
             message = 'must be contiguous components in same logical voice:'
             message += ' {!r}.'
             message = message.format(selection)

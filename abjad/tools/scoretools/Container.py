@@ -756,8 +756,7 @@ class Container(Component):
             self.is_simultaneous = parsed.is_simultaneous
             if (
                 parsed.is_simultaneous or
-                not abjad.select(parsed[:]).in_same_logical_voice(
-                    contiguous=True)
+                not abjad.select(parsed[:]).in_contiguous_logical_voice()
                 ):
                 while len(parsed):
                     self.append(parsed.pop(0))
@@ -919,7 +918,7 @@ class Container(Component):
         # otherwise circular withdraw ensues!
         if withdraw_components_from_crossing_spanners:
             selection = abjad.Selection(argument)
-            if selection.in_same_logical_voice(contiguous=True):
+            if selection.in_contiguous_logical_voice():
                 selection._withdraw_from_crossing_spanners()
         self._music.__setitem__(slice(start, start), argument)
         for component in argument:

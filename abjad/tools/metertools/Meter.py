@@ -975,7 +975,7 @@ class Meter(AbjadValueObject):
                 #print()
                 logical_tie[:]._fuse()
         # Validate arguments.
-        assert abjad.select(components).in_same_logical_voice(contiguous=True)
+        assert abjad.select(components).in_contiguous_logical_voice()
         if not isinstance(meter, abjad.Meter):
             meter = abjad.Meter(meter)
         if boundary_depth is not None:

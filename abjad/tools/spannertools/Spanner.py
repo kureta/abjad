@@ -130,7 +130,7 @@ class Spanner(AbjadObject):
             raise Exception(message)
         if self._contiguity_constraint == 'logical voice':
             leaves = self[-1:] + [leaf]
-            if not abjad.select(leaves).in_same_logical_voice(contiguous=True):
+            if not abjad.select(leaves).in_contiguous_logical_voice():
                 raise Exception(leaves)
         leaf._spanners.add(self)
         self._leaves.append(leaf)
@@ -138,7 +138,7 @@ class Spanner(AbjadObject):
     def _append_left(self, leaf):
         import abjad
         leaves = [leaf] + self[:1]
-        assert abjad.select(leaves).in_same_logical_voice(contiguous=True)
+        assert abjad.select(leaves).in_contiguous_logical_voice()
         leaf._spanners.add(self)
         self._leaves.insert(0, leaf)
 
@@ -235,9 +235,7 @@ class Spanner(AbjadObject):
         leaf_input = list(self[-1:])
         leaf_input.extend(leaves)
         if self._contiguity_constraint == 'logical voice':
-            if not abjad.select(leaf_input).in_same_logical_voice(
-                contiguous=True,
-                ):
+            if not abjad.select(leaf_input).in_contiguous_logical_voice():
                 message = 'must be contiguous leaves'
                 message += ' in same logical voice: {!r}.'
                 message = message.format(leaf_input)
@@ -249,7 +247,7 @@ class Spanner(AbjadObject):
         import abjad
         leaf_input = leaves + list(self[:1])
         leaf_input = abjad.select(leaf_input)
-        assert leaf_input.in_same_logical_voice(contiguous=True)
+        assert leaf_input.in_contiguous_logical_voice()
         for leaf in reversed(leaves):
             self._append_left(leaf)
 

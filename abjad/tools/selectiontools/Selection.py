@@ -403,7 +403,7 @@ class Selection(object):
         Returns contiguous selection.
         '''
         # check input
-        assert self.in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
         # return empty list when nothing to copy
         if n < 1:
             return []
@@ -446,7 +446,7 @@ class Selection(object):
         return new_components
 
     def _copy_and_include_enclosing_containers(self):
-        assert self.in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
         # get governor
         parentage = self[0]._get_parentage(include_self=True)
         governor = parentage._get_governor()
@@ -485,22 +485,22 @@ class Selection(object):
         return governor_copy
 
     def _fuse(self):
-        from abjad.tools import scoretools
-        assert self.in_same_logical_voice(contiguous=True)
-        if all(isinstance(x, scoretools.Leaf) for x in self):
+        import abjad
+        assert self.in_contiguous_logical_voice()
+        if all(isinstance(_, abjad.Leaf) for _ in self):
             return self._fuse_leaves()
-        elif all(isinstance(x, scoretools.Tuplet) for x in self):
+        elif all(isinstance(_, abjad.Tuplet) for _ in self):
             return self._fuse_tuplets()
-        elif all(isinstance(x, scoretools.Measure) for x in self):
+        elif all(isinstance(_, abjad.Measure) for _ in self):
             return self._fuse_measures()
         else:
             message = 'can not fuse.'
             raise Exception(message)
 
     def _fuse_leaves(self):
-        from abjad.tools import scoretools
-        assert self.in_same_logical_voice(contiguous=True)
-        assert all(isinstance(x, scoretools.Leaf) for x in self)
+        import abjad
+        assert self.in_contiguous_logical_voice()
+        assert all(isinstance(_, abjad.Leaf) for _ in self)
         leaves = self
         if len(leaves) <= 1:
             return leaves
@@ -615,7 +615,7 @@ class Selection(object):
         In other words, there is some intersection -- but not total
         intersection -- between the components of P and C.
         '''
-        assert self.in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
         all_components = set(iterate(self).by_class())
         contained_spanners = set()
         for component in iterate(self).by_class():
@@ -638,7 +638,7 @@ class Selection(object):
         score tree before reattaching spanners.
         score components.
         '''
-        assert self.in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
         receipt = set([])
         if len(self) == 0:
             return receipt
@@ -728,8 +728,8 @@ class Selection(object):
         Returns none.
         Not composer-safe.
         '''
-        assert self.in_same_logical_voice(contiguous=True)
-        assert Selection(recipients).in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
+        assert Selection(recipients).in_contiguous_logical_voice()
         receipt = self._get_dominant_spanners()
         for spanner, index in receipt:
             for recipient in reversed(recipients):
@@ -761,57 +761,6 @@ class Selection(object):
             parent._music.__setitem__(slice(start, start), [container])
             container._set_parent(parent)
             self._set_parents(None)
-
-    def _in_same_logical_voice_and_contiguous(
-        self,
-        prototype=None,
-        allow_orphans=True,
-        ):
-        import abjad
-        if not isinstance(self, collections.Iterable):
-            return False
-        prototype = prototype or (abjad.Component,)
-        if not isinstance(prototype, tuple):
-            prototype = (prototype, )
-        assert isinstance(prototype, tuple)
-        if len(self) == 0:
-            return True
-        all_are_orphans_of_correct_type = True
-        if allow_orphans:
-            for component in self:
-                if not isinstance(component, prototype):
-                    all_are_orphans_of_correct_type = False
-                    break
-                if not component._get_parentage().is_orphan:
-                    all_are_orphans_of_correct_type = False
-                    break
-            if all_are_orphans_of_correct_type:
-                return True
-        if not allow_orphans:
-            if any(x._get_parentage().is_orphan for x in self):
-                return False
-        first = self[0]
-        if not isinstance(first, prototype):
-            return False
-        first_parentage = first._get_parentage()
-        first_logical_voice = first_parentage.logical_voice
-        first_root = first_parentage.root
-        previous = first
-        for current in self[1:]:
-            current_parentage = current._get_parentage()
-            current_logical_voice = current_parentage.logical_voice
-            # false if wrong type of component found
-            if not isinstance(current, prototype):
-                return False
-            # false if in different logical voices
-            if current_logical_voice != first_logical_voice:
-                return False
-            # false if components are in same score and are discontiguous
-            if current_parentage.root == first_root:
-                if not previous._is_immediate_temporal_successor_of(current):
-                    return False
-            previous = current
-        return True
 
     def _iterate_components(self, recurse=True, reverse=False):
         if recurse:
@@ -853,7 +802,7 @@ class Selection(object):
     def _withdraw_from_crossing_spanners(self):
         r'''Not composer-safe.
         '''
-        assert self.in_same_logical_voice(contiguous=True)
+        assert self.in_contiguous_logical_voice()
         crossing_spanners = self._get_crossing_spanners()
         components_including_children = select(self).by_class()
         for crossing_spanner in list(crossing_spanners):
@@ -1297,22 +1246,67 @@ class Selection(object):
             result.append(selection)
         return result
 
-    def in_same_logical_voice(
+    def in_contiguous_logical_voice(
         self,
         prototype=None,
         allow_orphans=True,
-        contiguous=False,
         ):
+        r'''Is true when components are in contiguous logical voice.
+
+        Returns true or false.
+        '''
+        import abjad
+        if not isinstance(self, collections.Iterable):
+            return False
+        prototype = prototype or (abjad.Component,)
+        if not isinstance(prototype, tuple):
+            prototype = (prototype, )
+        assert isinstance(prototype, tuple)
+        if len(self) == 0:
+            return True
+        all_are_orphans_of_correct_type = True
+        if allow_orphans:
+            for component in self:
+                if not isinstance(component, prototype):
+                    all_are_orphans_of_correct_type = False
+                    break
+                if not component._get_parentage().is_orphan:
+                    all_are_orphans_of_correct_type = False
+                    break
+            if all_are_orphans_of_correct_type:
+                return True
+        if not allow_orphans:
+            if any(x._get_parentage().is_orphan for x in self):
+                return False
+        first = self[0]
+        if not isinstance(first, prototype):
+            return False
+        first_parentage = first._get_parentage()
+        first_logical_voice = first_parentage.logical_voice
+        first_root = first_parentage.root
+        previous = first
+        for current in self[1:]:
+            current_parentage = current._get_parentage()
+            current_logical_voice = current_parentage.logical_voice
+            # false if wrong type of component found
+            if not isinstance(current, prototype):
+                return False
+            # false if in different logical voices
+            if current_logical_voice != first_logical_voice:
+                return False
+            # false if components are in same score and are discontiguous
+            if current_parentage.root == first_root:
+                if not previous._is_immediate_temporal_successor_of(current):
+                    return False
+            previous = current
+        return True
+
+    def in_logical_voice(self, prototype=None, allow_orphans=True):
         r'''Is true when components are in same logical voice.
 
         Returns true or false.
         '''
         import abjad
-        if contiguous:
-            return self._in_same_logical_voice_and_contiguous(
-                prototype=prototype,
-                allow_orphans=allow_orphans,
-                )
         prototype = prototype or (abjad.Component,)
         if not isinstance(prototype, tuple):
             prototype = (prototype, )
