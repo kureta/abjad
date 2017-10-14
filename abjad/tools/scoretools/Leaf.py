@@ -429,7 +429,7 @@ class Leaf(Component):
         result_leaves = abjad.select(result_components).by_leaf()
         assert all(isinstance(_, abjad.Selection) for _ in result_selections)
         assert all(isinstance(_, abjad.Component) for _ in result_components)
-        assert all(isinstance(_, abjad.Leaf) for _ in result_leaves)
+        assert result_leaves.are_leaves()
         if abjad.inspect(self).has_spanner(abjad.Tie):
             for leaf in result_leaves:
                 abjad.detach(abjad.Tie, leaf)

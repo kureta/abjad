@@ -487,7 +487,7 @@ class Selection(object):
     def _fuse(self):
         import abjad
         assert self.in_contiguous_logical_voice()
-        if all(isinstance(_, abjad.Leaf) for _ in self):
+        if self.are_leaves():
             return self._fuse_leaves()
         elif all(isinstance(_, abjad.Tuplet) for _ in self):
             return self._fuse_tuplets()
@@ -499,8 +499,8 @@ class Selection(object):
 
     def _fuse_leaves(self):
         import abjad
+        assert self.are_leaves()
         assert self.in_contiguous_logical_voice()
-        assert all(isinstance(_, abjad.Leaf) for _ in self)
         leaves = self
         if len(leaves) <= 1:
             return leaves
@@ -783,8 +783,7 @@ class Selection(object):
             spanners.update(component._get_spanners())
         for spanner in spanners:
             schema[spanner] = []
-        for i, component in \
-            enumerate(iterate(self).by_class()):
+        for i, component in enumerate(iterate(self).by_class()):
             attached_spanners = component._get_spanners()
             for attached_spanner in attached_spanners:
                 try:
@@ -813,6 +812,14 @@ class Selection(object):
                     component._spanners.discard(crossing_spanner)
 
     ### PUBLIC METHODS ###
+
+    def are_leaves(self):
+        r'''Is true when components are all leaves.
+
+        Returns true or false.
+        '''
+        import abjad
+        return all(isinstance(_, abjad.Leaf) for _ in self)
 
     def by_class(
         self,

@@ -653,7 +653,7 @@ class Container(Component):
             lilypond_format = lilypond_format.replace('\t', ' ')
             lilypond_format = lilypond_format.replace('  ', ' ')
             storage_format_args_values.append(lilypond_format)
-            if not all(isinstance(x, abjad.Leaf) for x in self):
+            if not self[:].are_leaves():
                 repr_text = self._get_abbreviated_string_format()
         return abjad.FormatSpecification(
             client=self,

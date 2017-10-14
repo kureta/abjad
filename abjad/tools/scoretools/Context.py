@@ -75,8 +75,7 @@ class Context(Container):
 
         Returns string.
         '''
-        from abjad.tools import scoretools
-        if all(isinstance(x, scoretools.Leaf) for x in self):
+        if self[:].are_leaves():
             return Container.__repr__(self)
         return self._get_abbreviated_string_format()
 

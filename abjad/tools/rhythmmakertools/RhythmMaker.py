@@ -93,9 +93,10 @@ class RhythmMaker(AbjadValueObject):
 
     @staticmethod
     def _all_are_tuplets_or_all_are_leaf_selections(argument):
-        if all(isinstance(x, scoretools.Tuplet) for x in argument):
+        import abjad
+        if all(isinstance(_, abjad.Tuplet) for _ in argument):
             return True
-        elif all(RhythmMaker._is_leaf_selection(x) for x in argument):
+        elif all(_.are_leaves() for _ in argument):
             return True
         else:
             return False
@@ -260,12 +261,6 @@ class RhythmMaker(AbjadValueObject):
         if self.tuplet_specifier is not None:
             return self.tuplet_specifier
         return rhythmmakertools.TupletSpecifier()
-
-    @staticmethod
-    def _is_leaf_selection(argument):
-        if isinstance(argument, selectiontools.Selection):
-            return all(isinstance(x, scoretools.Leaf) for x in argument)
-        return False
 
     @staticmethod
     def _is_sign_tuple(argument):
