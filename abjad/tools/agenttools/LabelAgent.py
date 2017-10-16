@@ -1,15 +1,6 @@
 import inspect
 from abjad.tools import abctools
-from abjad.tools import markuptools
-from abjad.tools import mathtools
-from abjad.tools import pitchtools
 from abjad.tools import schemetools
-from abjad.tools import scoretools
-from abjad.tools.topleveltools import attach
-from abjad.tools.topleveltools import detach
-from abjad.tools.topleveltools import override
-from abjad.tools.topleveltools import iterate
-from abjad.tools.topleveltools import new
 
 
 class LabelAgent(abctools.AbjadObject):
@@ -250,14 +241,14 @@ class LabelAgent(abctools.AbjadObject):
     def _color_leaf(self, leaf, color):
         import abjad
         if isinstance(leaf, (abjad.Note, abjad.Chord)):
-            override(leaf).accidental.color = color
-            override(leaf).beam.color = color
-            override(leaf).dots.color = color
-            override(leaf).note_head.color = color
-            override(leaf).stem.color = color
+            abjad.override(leaf).accidental.color = color
+            abjad.override(leaf).beam.color = color
+            abjad.override(leaf).dots.color = color
+            abjad.override(leaf).note_head.color = color
+            abjad.override(leaf).stem.color = color
         elif isinstance(leaf, abjad.Rest):
-            override(leaf).dots.color = color
-            override(leaf).rest.color = color
+            abjad.override(leaf).dots.color = color
+            abjad.override(leaf).rest.color = color
         return leaf
 
     def _update_expression(self, frame):
@@ -374,16 +365,17 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        override(self.client).accidental.color = color
-        override(self.client).beam.color = color
-        override(self.client).dots.color = color
-        override(self.client).note_head.color = color
-        override(self.client).rest.color = color
-        override(self.client).stem.color = color
-        override(self.client).tuplet_bracket.color = color
-        override(self.client).tuplet_number.color = color
+        abjad.override(self.client).accidental.color = color
+        abjad.override(self.client).beam.color = color
+        abjad.override(self.client).dots.color = color
+        abjad.override(self.client).note_head.color = color
+        abjad.override(self.client).rest.color = color
+        abjad.override(self.client).stem.color = color
+        abjad.override(self.client).tuplet_bracket.color = color
+        abjad.override(self.client).tuplet_number.color = color
 
     def color_leaves(self, color='red'):
         r"""Colors leaves.
@@ -455,9 +447,10 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         """
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        for leaf in iterate(self.client).by_leaf():
+        for leaf in abjad.iterate(self.client).by_leaf():
             self._color_leaf(leaf, color)
 
     def color_note_heads(self, color_map=None):
@@ -665,7 +658,7 @@ class LabelAgent(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         color_map = color_map or self._pc_number_to_color
-        for leaf in iterate(self.client).by_leaf():
+        for leaf in abjad.iterate(self.client).by_leaf():
             if isinstance(leaf, abjad.Chord):
                 for note_head in leaf.note_heads:
                     number = note_head.written_pitch.number
@@ -679,7 +672,7 @@ class LabelAgent(abctools.AbjadObject):
                 pc = abjad.NumberedPitchClass(number)
                 color = color_map[pc.number]
                 if color is not None:
-                    override(leaf).note_head.color = color
+                    abjad.override(leaf).note_head.color = color
 
     def remove_markup(self):
         r'''Removes markup from leaves.
@@ -1943,7 +1936,7 @@ class LabelAgent(abctools.AbjadObject):
                     leaf = vertical_moment.start_leaves[0]
                 else:
                     leaf = vertical_moment.start_leaves[-1]
-                attach(label, leaf)
+                abjad.attach(label, leaf)
 
     def with_durations(self, direction=Up, preferred_denominator=None):
         r'''Labels logical ties with durations.
