@@ -26,7 +26,7 @@ class ByLogicalTieCallback(AbjadValueObject):
     def __call__(self, argument, rotation=None):
         r'''Calls callback on `argument`.
 
-        Returns selection of logical ties.
+        Returns list of logical ties.
         '''
         import abjad
         result = []
@@ -36,7 +36,7 @@ class ByLogicalTieCallback(AbjadValueObject):
             if not self.trivial and logical_tie.is_trivial:
                 continue
             result.append(logical_tie)
-        return abjad.Selection(result)
+        return result
 
     ### PUBLIC PROPERTIES ###
 

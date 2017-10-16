@@ -20,16 +20,8 @@ class WrapCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Wraps `argument` in selection.
+        r'''Wraps `argument` in list.
 
-        Somewhat like the opposite of flattening.
-
-        Ignores `rotation`.
-
-        Returns tuple.
+        Returns list.
         '''
-        import abjad
-        if isinstance(argument, abjad.LogicalTie):
-            return abjad.Selection([argument])
-        else:
-            return abjad.Selection(argument)
+        return [argument]

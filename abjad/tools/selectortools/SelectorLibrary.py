@@ -232,15 +232,14 @@ class SelectorLibrary(object):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([LogicalTie([Note("d'4"), Note("d'4")]), LogicalTie([Note("e'4")])])
-                Selection([LogicalTie([Note("g'4")])])
-                Selection([LogicalTie([Note("b'4"), Note("b'4")]), LogicalTie([Note("c''4")])])
+                [LogicalTie([Note("d'4"), Note("d'4")]), LogicalTie([Note("e'4")])]
+                [LogicalTie([Note("g'4")])]
+                [LogicalTie([Note("b'4"), Note("b'4")]), LogicalTie([Note("c''4")])]
 
         '''
         import abjad
         selector = SelectorLibrary.select_pitched_runs()
-        get = abjad.select().by_logical_tie()[1:]
-        selector = selector.map(get)
+        selector = selector.map(abjad.select().by_logical_tie()[1:])
         if argument is None:
             return selector
         return selector(argument)
@@ -331,15 +330,14 @@ class SelectorLibrary(object):
                 >>> for item in selector(staff):
                 ...     item
                 ...
-                Selection([LogicalTie([Note("c'4")]), LogicalTie([Note("d'4"), Note("d'4")])])
-                Selection([LogicalTie([Note("f'4")])])
-                Selection([LogicalTie([Note("a'4")]), LogicalTie([Note("b'4"), Note("b'4")])])
+                [LogicalTie([Note("c'4")]), LogicalTie([Note("d'4"), Note("d'4")])]
+                [LogicalTie([Note("f'4")])]
+                [LogicalTie([Note("a'4")]), LogicalTie([Note("b'4"), Note("b'4")])]
 
         '''
         import abjad
         selector = SelectorLibrary.select_pitched_runs()
-        get = abjad.select().by_logical_tie()[:-1]
-        selector = selector.map(get)
+        selector = selector.map(abjad.select().by_logical_tie()[:-1])
         if argument is None:
             return selector
         return selector(argument)
