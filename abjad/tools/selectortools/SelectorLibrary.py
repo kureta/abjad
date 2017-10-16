@@ -22,7 +22,7 @@ class SelectorLibrary(object):
                 >>> string = r"c'4. d'8 ~ \times 2/3 { d'4 r4 e'4 ~ } e'8 f'4."
                 >>> staff = abjad.Staff(string)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_alternating()
+                >>> abjad.label(result).color_selections()
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -91,7 +91,7 @@ class SelectorLibrary(object):
                 >>> string = r"c'4. d'8 ~ \times 2/3 { d'4 r4 e'4 ~ } e'8 f'4."
                 >>> staff = abjad.Staff(string)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_alternating()
+                >>> abjad.label(result).color_selections()
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -162,7 +162,7 @@ class SelectorLibrary(object):
                 ...     r"f' g' \times 2/3 { r a' b' ~ } b' c''"
                 ...     )
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_alternating()
+                >>> abjad.label(result).color_selections()
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -261,7 +261,7 @@ class SelectorLibrary(object):
                 ...     r"f' g' \times 2/3 { r a' b' ~ } b' c''"
                 ...     )
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_alternating()
+                >>> abjad.label(result).color_selections()
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -357,7 +357,7 @@ class SelectorLibrary(object):
                 >>> string = r"c'4. d'8 ~ \times 2/3 { d'4 r4 e'4 ~ } e'8 f'4."
                 >>> staff = abjad.Staff(string)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_alternating()
+                >>> abjad.label(result).color_selections()
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 

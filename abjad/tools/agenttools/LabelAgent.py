@@ -268,27 +268,6 @@ class LabelAgent(abctools.AbjadObject):
 
     ### PUBLIC METHODS ###
 
-    def color_alternating(self, colors=['red', 'blue']):
-        r'''Colors client items in alternating `colors`.
-
-        Returns none.
-        '''
-        import abjad
-        colors = abjad.CyclicTuple(colors)
-        if isinstance(self._client, abjad.Component):
-            target = [self._client]
-        elif isinstance(self._client, abjad.LogicalTie):
-            target = [self._client]
-        elif isinstance(self._client, abjad.Selection):
-            target = [self._client]
-        elif isinstance(self._client, list):
-            target = self._client
-        else:
-            raise TypeError(self._client)
-        for i, item in enumerate(target):
-            color = colors[i]
-            abjad.label(item).color_leaves(color=color)
-
     def color_container(self, color='red'):
         r'''Colors contents of `container`.
 
@@ -673,6 +652,31 @@ class LabelAgent(abctools.AbjadObject):
                 color = color_map[pc.number]
                 if color is not None:
                     abjad.override(leaf).note_head.color = color
+
+    def color_selections(self, selector=None, colors=None):
+        r'''Colors client items in cyclic `colors`.
+
+        Returns none.
+        '''
+        import abjad
+        if (colors is None and selector and selector.callbacks and
+           isinstance(selector.callbacks[-1], abjad.ItemSelectorCallback)):
+            colors = ['green']
+        colors = colors or ['red', 'blue']
+        colors = abjad.CyclicTuple(colors)
+        if isinstance(self._client, abjad.Component):
+            target = [self._client]
+        elif isinstance(self._client, abjad.LogicalTie):
+            target = [self._client]
+        elif isinstance(self._client, abjad.Selection):
+            target = [self._client]
+        elif isinstance(self._client, list):
+            target = self._client
+        else:
+            raise TypeError(self._client)
+        for i, item in enumerate(target):
+            color = colors[i]
+            abjad.label(item).color_leaves(color=color)
 
     def remove_markup(self):
         r'''Removes markup from leaves.
