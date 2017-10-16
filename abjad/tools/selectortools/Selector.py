@@ -307,11 +307,11 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     c'4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8 ~
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -319,11 +319,11 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'16 ~
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -332,11 +332,11 @@ class Selector(AbjadValueObject):
                     \once \override Stem.color = #red
                     e'8
                     r4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     g'8
                 }
 
@@ -1353,11 +1353,11 @@ class Selector(AbjadValueObject):
                         \once \override Dots.color = #red
                         \once \override Rest.color = #red
                         r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1366,17 +1366,17 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         e'8
                     }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     \once \override Dots.color = #red
                     \once \override Rest.color = #red
                     r8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -1385,11 +1385,11 @@ class Selector(AbjadValueObject):
                     \once \override Stem.color = #red
                     f'8
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1397,8 +1397,8 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Dots.color = #red
-                        \once \override Rest.color = #red
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
                         r8
                     }
                 }
@@ -1452,11 +1452,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                     }
                     \once \override Accidental.color = #red
@@ -1467,11 +1467,11 @@ class Selector(AbjadValueObject):
                     f'8
                     r8
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     \times 2/3 {
                         \once \override Accidental.color = #red
@@ -1480,11 +1480,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         e'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         r8
                     }
@@ -1535,11 +1535,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                     }
                     \once \override Accidental.color = #red
@@ -1548,17 +1548,17 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     f'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                     \once \override Dots.color = #red
                     \once \override Rest.color = #red
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     \times 2/3 {
                         \once \override Accidental.color = #red
@@ -1567,11 +1567,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         e'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         r8
                     }
@@ -1612,11 +1612,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                     }
                     \once \override Accidental.color = #red
@@ -1625,17 +1625,17 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     f'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                     \once \override Dots.color = #red
                     \once \override Rest.color = #red
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     \times 2/3 {
                         \once \override Accidental.color = #red
@@ -1644,11 +1644,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         e'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \ottava #0
                         r8
@@ -1688,11 +1688,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         c'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1701,17 +1701,17 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         e'8
                     }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     \once \override Dots.color = #red
                     \once \override Rest.color = #red
                     r8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -1720,11 +1720,11 @@ class Selector(AbjadValueObject):
                     \once \override Stem.color = #red
                     f'8
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1732,11 +1732,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         c'8
                     }
                 }
@@ -1786,11 +1786,11 @@ class Selector(AbjadValueObject):
                         \once \override Dots.color = #red
                         \once \override Rest.color = #red
                         r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1804,11 +1804,11 @@ class Selector(AbjadValueObject):
                     r8
                     f'8
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -1816,8 +1816,8 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Dots.color = #red
-                        \once \override Rest.color = #red
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
                         r8
                     }
                 }
@@ -1839,8 +1839,7 @@ class Selector(AbjadValueObject):
                 >>> prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(abjad.Tuplet)
-                >>> trim_leaves = abjad.select().by_leaf(trim=prototype)
-                >>> selector = selector.map(trim_leaves)
+                >>> selector = selector.by_leaf(trim=prototype)
 
             ::
 
@@ -1867,11 +1866,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
                     }
                     f'8
@@ -1879,11 +1878,11 @@ class Selector(AbjadValueObject):
                     r8
                     f'8
                     \times 2/3 {
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -1898,8 +1897,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([Note("d'8"), Note("e'8")])
-                Selection([Note("e'8"), Note("d'8")])
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("d'8")
 
         ..  container:: example
 
@@ -2314,18 +2315,18 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8 ~
                     {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -2333,8 +2334,8 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         e'8
-                        \once \override Dots.color = #red
-                        \once \override Rest.color = #red
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
                         r8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -2349,8 +2350,8 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     f'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                 }
 
@@ -2393,18 +2394,18 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8 ~
                     {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -2413,18 +2414,18 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         e'8
                         r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         f'8 ~
                     }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     r8
                 }
@@ -2479,18 +2480,18 @@ class Selector(AbjadValueObject):
                         d'8
                         e'8
                         r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         f'8 ~
                     }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                     r8
                 }
@@ -2763,11 +2764,11 @@ class Selector(AbjadValueObject):
                     \once \override Stem.color = #red
                     d'8 ~
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
                     e'8 ~
                     \once \override Accidental.color = #red
@@ -2777,11 +2778,11 @@ class Selector(AbjadValueObject):
                     \once \override Stem.color = #red
                     e'8
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     f'8
                 }
 
@@ -2827,23 +2828,23 @@ class Selector(AbjadValueObject):
                     c'8
                     d'8 ~
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8
                     r8
                     f'8
@@ -2956,11 +2957,11 @@ class Selector(AbjadValueObject):
                     d'8
                     e'8
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     <c' e' g'>8 ~
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -3010,11 +3011,11 @@ class Selector(AbjadValueObject):
                     c'8
                     d'8 ~
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8
                     r8
                     \once \override Accidental.color = #red
@@ -3023,11 +3024,11 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     <c' e' g'>8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     <c' e' g'>4
                 }
 
@@ -3074,17 +3075,17 @@ class Selector(AbjadValueObject):
                     d'8
                     e'8
                     r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     <c' e' g'>8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     <c' e' g'>4
                 }
 
@@ -3300,11 +3301,11 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     d'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -3312,11 +3313,11 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -3605,17 +3606,17 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -3681,23 +3682,23 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8
                     r8
                     \once \override Accidental.color = #red
@@ -3864,8 +3865,8 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     e'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
                     r8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -4395,23 +4396,23 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8
                     r8
                     f'8
@@ -4462,17 +4463,17 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     d'8
                     \once \override Accidental.color = #red
                     \once \override Beam.color = #red
@@ -4729,23 +4730,23 @@ class Selector(AbjadValueObject):
                     \once \override NoteHead.color = #red
                     \once \override Stem.color = #red
                     d'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
                     e'8
                     r8
                     \once \override Accidental.color = #red
@@ -4954,8 +4955,8 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                        \once \override Dots.color = #red
-                        \once \override Rest.color = #red
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
                         r8
                     }
                 }

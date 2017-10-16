@@ -659,24 +659,17 @@ class LabelAgent(abctools.AbjadObject):
         Returns none.
         '''
         import abjad
-        if (colors is None and selector and selector.callbacks and
-           isinstance(selector.callbacks[-1], abjad.ItemSelectorCallback)):
-            colors = ['green']
-        colors = colors or ['red', 'blue']
-        colors = abjad.CyclicTuple(colors)
-        if isinstance(self._client, abjad.Component):
-            target = [self._client]
-        elif isinstance(self._client, abjad.LogicalTie):
-            target = [self._client]
-        elif isinstance(self._client, abjad.Selection):
-            target = [self._client]
-        elif isinstance(self._client, list):
-            target = self._client
+        if (selector and selector.callbacks and
+            isinstance(selector.callbacks[-1], abjad.ItemSelectorCallback)):
+            colors = colors or ['green']
+            color = colors[0]
+            abjad.label(self.client).color_leaves(color=color)
         else:
-            raise TypeError(self._client)
-        for i, item in enumerate(target):
-            color = colors[i]
-            abjad.label(item).color_leaves(color=color)
+            colors = colors or ['red', 'blue']
+            colors = abjad.CyclicTuple(colors)
+            for i, item in enumerate(self.client):
+                color = colors[i]
+                abjad.label(item).color_leaves(color=color)
 
     def remove_markup(self):
         r'''Removes markup from leaves.
