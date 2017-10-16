@@ -89,8 +89,7 @@ class Selector(AbjadValueObject):
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
             >>> selector = selector.by_run(abjad.Note)
-            >>> get_first = abjad.select().get_item(0)
-            >>> selector = selector.map(get_first)
+            >>> selector = selector.map(abjad.select()[0])
 
         ::
 
@@ -450,8 +449,7 @@ class Selector(AbjadValueObject):
                 >>> selector = selector.by_logical_tie()
                 >>> selector = selector.by_duration('<', (1, 4))
                 >>> selector = selector.by_contiguity()
-                >>> get_first_leaf = abjad.select().by_leaf().get_item(0)
-                >>> selector = selector.map(get_first_leaf)
+                >>> selector = selector.map(abjad.select().by_leaf()[0])
 
             ::
 
@@ -496,508 +494,6 @@ class Selector(AbjadValueObject):
         '''
         from abjad.tools import selectortools
         callback = selectortools.ContiguitySelectorCallback()
-        return self._append_callback(callback)
-
-    def by_counts(
-        self,
-        counts,
-        cyclic=False,
-        fuse_overhang=False,
-        nonempty=False,
-        overhang=False,
-        rotate=False,
-        ):
-        r'''Partitions by counts.
-
-        ..  todo:: Change name to Selector.partition_by_counts().
-
-        ..  container:: example
-
-            Partitions once by counts without overhang:
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [3],
-                ...     cyclic=False,
-                ...     overhang=False,
-                ...     )
-
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-                >>> result = selector(staff)
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    e'8
-                    r8
-                    f'8
-                    g'8
-                    a'8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
-
-        ..  container:: example
-
-            Partitions cyclically by counts without overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [3],
-                ...     cyclic=True,
-                ...     overhang=False,
-                ...     )
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-                >>> result = selector(staff)
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    g'8
-                    a'8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
-                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
-
-        ..  container:: example
-
-            Partitions cyclically by counts with overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [3],
-                ...     cyclic=True,
-                ...     overhang=True,
-                ...     )
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-                >>> result = selector(staff)
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    g'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
-                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
-                Selection([Note("g'8"), Note("a'8")])
-
-        ..  container:: example
-
-            Partitions cyclically by counts with fused overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [3],
-                ...     cyclic=True,
-                ...     fuse_overhang=True,
-                ...     overhang=True,
-                ...     )
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-                >>> result = selector(staff)
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    g'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    a'8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
-                Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
-
-        ..  container:: example
-
-            Partitions cyclically by counts with overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [1, 2, 3],
-                ...     cyclic=True,
-                ...     overhang=True,
-                ...     )
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
-                >>> result = selector(staff)
-                >>> selector.color(result, ['red', 'blue', 'cyan'])
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'8
-                    \once \override Accidental.color = #cyan
-                    \once \override Beam.color = #cyan
-                    \once \override Dots.color = #cyan
-                    \once \override NoteHead.color = #cyan
-                    \once \override Stem.color = #cyan
-                    e'8
-                    \once \override Dots.color = #cyan
-                    \once \override Rest.color = #cyan
-                    r8
-                    \once \override Accidental.color = #cyan
-                    \once \override Beam.color = #cyan
-                    \once \override Dots.color = #cyan
-                    \once \override NoteHead.color = #cyan
-                    \once \override Stem.color = #cyan
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    g'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    a'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    b'8
-                    \once \override Dots.color = #cyan
-                    \once \override Rest.color = #cyan
-                    r8
-                    \once \override Accidental.color = #cyan
-                    \once \override Beam.color = #cyan
-                    \once \override Dots.color = #cyan
-                    \once \override NoteHead.color = #cyan
-                    \once \override Stem.color = #cyan
-                    c''8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8")])
-                Selection([Rest('r8'), Note("d'8")])
-                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
-                Selection([Note("g'8")])
-                Selection([Note("a'8"), Note("b'8")])
-                Selection([Rest('r8'), Note("c''8")])
-
-        ..  container:: example
-
-            Partitions cyclically by counts rotated one to the left, with
-            overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_counts(
-                ...     [1, 2, 3],
-                ...     cyclic=True,
-                ...     overhang=True,
-                ...     rotate=True,
-                ...     )
-
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
-                >>> result = selector(staff, rotation=1)
-                >>> selector.color(result, ['red', 'blue', 'cyan'])
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #cyan
-                    \once \override Beam.color = #cyan
-                    \once \override Dots.color = #cyan
-                    \once \override NoteHead.color = #cyan
-                    \once \override Stem.color = #cyan
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    g'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    b'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    c''8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8')])
-                Selection([Note("d'8"), Note("e'8"), Rest('r8')])
-                Selection([Note("f'8")])
-                Selection([Note("g'8"), Note("a'8")])
-                Selection([Note("b'8"), Rest('r8'), Note("c''8")])
-
-        Returns new expression.
-        '''
-        from abjad.tools import selectortools
-        callback = selectortools.CountsSelectorCallback(
-            counts,
-            cyclic=cyclic,
-            fuse_overhang=fuse_overhang,
-            nonempty=nonempty,
-            overhang=overhang,
-            rotate=rotate,
-            )
         return self._append_callback(callback)
 
     def by_duration(self, inequality=None, duration=None, preprolated=None):
@@ -1506,9 +1002,8 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
                 >>> selector = abjad.select()
-                >>> selector = selector.by_leaf(trim=prototype)
+                >>> selector = selector.by_leaf(trim=True)
 
             ::
 
@@ -1593,8 +1088,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> leaves = abjad.select(result).by_leaf()
-                >>> abjad.attach(abjad.OctavationSpanner(), leaves)
+                >>> abjad.attach(abjad.OctavationSpanner(), result)
                 >>> show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -1660,9 +1154,8 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
                 >>> selector = abjad.select()
-                >>> selector = selector.by_leaf(trim=prototype)
+                >>> selector = selector.by_leaf(trim=True)
 
             ::
 
@@ -1836,10 +1329,9 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(abjad.Tuplet)
-                >>> selector = selector.by_leaf(trim=prototype)
+                >>> selector = selector.by_leaf(trim=True)
 
             ::
 
@@ -1912,8 +1404,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(abjad.Tuplet)
-                >>> heads = abjad.select().by_leaf(head=True, pitched=True)
-                >>> selector = selector.map(heads)
+                >>> selector = selector.by_leaf(head=True, pitched=True)
 
             ::
 
@@ -1939,11 +1430,11 @@ class Selector(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         c'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8 ~
                         d'8
                     }
@@ -1952,11 +1443,11 @@ class Selector(AbjadValueObject):
                     r8
                     e'8
                     \times 2/3 {
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8 ~
                         d'8
                         \once \override Accidental.color = #blue
@@ -1971,8 +1462,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("d'8"), Note("c'8")])
+                Note("c'8")
+                Note("d'8")
+                Note("d'8")
+                Note("c'8")
 
         ..  container:: example
 
@@ -1984,8 +1477,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(abjad.Tuplet)
-                >>> tails = abjad.select().by_leaf(tail=True, pitched=True)
-                >>> selector = selector.map(tails)
+                >>> selector = selector.by_leaf(tail=True, pitched=True)
 
             ::
 
@@ -2012,11 +1504,11 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         c'8
                         d'8 ~
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                     }
                     e'8
@@ -2025,11 +1517,11 @@ class Selector(AbjadValueObject):
                     e'8
                     \times 2/3 {
                         d'8 ~
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -2043,8 +1535,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("d'8"), Note("c'8")])
+                Note("c'8")
+                Note("d'8")
+                Note("d'8")
+                Note("c'8")
 
         ..  container:: example
 
@@ -2056,8 +1550,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(abjad.Tuplet)
-                >>> heads = abjad.select().by_leaf(prototype=abjad.Chord, head=True)
-                >>> selector = selector.map(heads)
+                >>> selector = selector.by_leaf(abjad.Chord, head=True)
 
             ::
 
@@ -2084,6 +1577,11 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         <c' e' g'>8 ~
                         <c' e' g'>8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                     }
                     e'8
@@ -2091,6 +1589,11 @@ class Selector(AbjadValueObject):
                     r8
                     <g d' fs'>8
                     \times 2/3 {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -2105,8 +1608,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([Chord("<c' e' g'>8")])
-                Selection([Chord("<c' d'>8")])
+                Chord("<c' e' g'>8")
+                Note("d'8")
+                Note("e'8")
+                Chord("<c' d'>8")
 
         Returns new expression.
         '''
@@ -2504,14 +2009,14 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects pitched logical ties in each tuplet separately:
+            Selects pitched logical ties (starting) in each tuplet:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(prototype=abjad.Tuplet)
-                >>> plts = abjad.select().by_logical_tie(pitched=True)
-                >>> selector = selector.map(plts)
+                >>> get = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(get)
 
             ::
 
@@ -2606,16 +2111,16 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects pitched logical ties in each of the last two tuplets
-            separately:
+            Selects pitched logical ties (starting) in each of the last two
+            tuplets:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_class(prototype=abjad.Tuplet)
                 >>> selector = selector.get_slice(start=-2)
-                >>> plts = abjad.select().by_logical_tie(pitched=True)
-                >>> selector = selector.map(plts)
+                >>> get = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(get)
 
             ::
 
@@ -2858,14 +2363,14 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects note 1 in every pitched logical tie:
+            Selects note 1 in each pitched logical tie:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> pattern = abjad.select().by_pattern(abjad.index([1]))
-                >>> selector = selector.map(pattern)
+                >>> get = abjad.select().by_pattern(abjad.index([1]))
+                >>> selector = selector.map(get)
 
             ::
 
@@ -3214,11 +2719,11 @@ class Selector(AbjadValueObject):
         abjad.label(result).color_selections(self, colors=colors)
 
     def first(self):
-        r'''Selects first item in selection.
+        r'''Gets first item.
 
         ..  container:: example
 
-            Selects first pitched logical tie:
+            Gets first pitched logical tie:
 
             ::
 
@@ -3271,7 +2776,7 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects leaves of middle pitched logical ties:
+            Flattens middle pitched logical ties:
 
             ::
 
@@ -3345,11 +2850,11 @@ class Selector(AbjadValueObject):
         return self._append_callback(callback)
 
     def get_item(self, n):
-        r'''Selects item `n`.
+        r'''Gets item `n`.
 
         ..  container:: example
 
-            Selects leaf 1:
+            Gets leaf 1:
 
             ::
 
@@ -3393,7 +2898,7 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects logical tie 1:
+            Gets logical tie 1:
 
             ::
 
@@ -3435,14 +2940,14 @@ class Selector(AbjadValueObject):
                     f'8
                 }
 
-            Logical tie returns directly (without selection wrapper):
+            ::
 
                 >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
 
         ..  container:: example
 
-            Selects tuplet 1:
+            Gets tuplet 1:
 
             ::
 
@@ -3496,8 +3001,6 @@ class Selector(AbjadValueObject):
                     }
                 }
 
-            Tuplet returns directly (without selection wrapper):
-
             ::
 
                 >>> selector.print(result)
@@ -3505,14 +3008,13 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects the first leaf in every pitched logical tie:
+            Gets the first leaf in each pitched logical tie:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> get_first = abjad.select().get_item(0)
-                >>> selector = selector.map(get_first)
+                >>> selector = selector.map(abjad.select().by_leaf()[0])
 
             ::
 
@@ -3574,11 +3076,11 @@ class Selector(AbjadValueObject):
         return self._append_callback(callback)
 
     def get_slice(self, start=None, stop=None):
-        r'''Selects slice.
+        r'''Gets slice.
 
         ..  container:: example
 
-            Selects nonlast pitched logical ties:
+            Gets nonlast pitched logical ties:
 
             ::
 
@@ -3718,14 +3220,13 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects nonfirst leaves in pitched logical ties:
+            Gets nonfirst leaves in each pitched logical tie:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> nonfirst = abjad.select().get_slice(start=1)
-                >>> selector = selector.map(nonfirst)
+                >>> selector = selector.map(abjad.select()[1:])
 
             ::
 
@@ -3774,14 +3275,13 @@ class Selector(AbjadValueObject):
                 Selection([Note("e'8"), Note("e'8")])
                 Selection(music=())
 
-            Gets nonlast leaves in pitched logical ties:
+            Gets nonlast leaves in each pitched logical tie:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> nonlast = abjad.select().get_slice(stop=-1)
-                >>> selector = selector.map(nonlast)
+                >>> selector = selector.map(abjad.select()[:-1])
 
             ::
 
@@ -3832,13 +3332,13 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects last three leaves:
+            Gets last three leaves:
 
             ::
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
-                >>> selector = selector.get_slice(start=-3)
+                >>> selector = selector[-3:]
 
             ::
 
@@ -3894,7 +3394,7 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Groups contiguous pitched leaves by pitch:
+            Groups pitched leaves by pitch:
 
             ::
 
@@ -4092,7 +3592,7 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Groups contiguous pitched logical ties by pitch:
+            Groups pitched logical ties by pitch:
 
             ::
 
@@ -4295,11 +3795,11 @@ class Selector(AbjadValueObject):
         return self._append_callback(callback)
 
     def last(self):
-        r'''Selects last item.
+        r'''Gets last item.
 
         ..  container:: example
 
-            Selects last pitched logical tie:
+            Gets last pitched logical tie:
 
             ::
 
@@ -4510,6 +4010,506 @@ class Selector(AbjadValueObject):
         callback = abjad.SliceSelectorCallback(stop=-1)
         return self._append_callback(callback)
 
+    def partition_by_counts(
+        self,
+        counts,
+        cyclic=False,
+        fuse_overhang=False,
+        nonempty=False,
+        overhang=False,
+        rotate=False,
+        ):
+        r'''Partitions by counts.
+
+        ..  container:: example
+
+            Partitions once by counts without overhang:
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [3],
+                ...     cyclic=False,
+                ...     overhang=False,
+                ...     )
+
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+
+        ..  container:: example
+
+            Partitions cyclically by counts without overhang:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     overhang=False,
+                ...     )
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    g'8
+                    a'8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+
+        ..  container:: example
+
+            Partitions cyclically by counts with overhang:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     overhang=True,
+                ...     )
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    g'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8")])
+
+        ..  container:: example
+
+            Partitions cyclically by counts with fused overhang:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     fuse_overhang=True,
+                ...     overhang=True,
+                ...     )
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
+
+        ..  container:: example
+
+            Partitions cyclically by counts with overhang:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [1, 2, 3],
+                ...     cyclic=True,
+                ...     overhang=True,
+                ...     )
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
+                >>> result = selector(staff)
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
+                    e'8
+                    \once \override Dots.color = #cyan
+                    \once \override Rest.color = #cyan
+                    r8
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    b'8
+                    \once \override Dots.color = #cyan
+                    \once \override Rest.color = #cyan
+                    r8
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
+                    c''8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8")])
+                Selection([Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8"), Note("b'8")])
+                Selection([Rest('r8'), Note("c''8")])
+
+        ..  container:: example
+
+            Partitions cyclically by counts rotated one to the left, with
+            overhang:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.partition_by_counts(
+                ...     [1, 2, 3],
+                ...     cyclic=True,
+                ...     overhang=True,
+                ...     rotate=True,
+                ...     )
+
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
+                >>> result = selector(staff, rotation=1)
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    g'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    b'8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    c''8
+                }
+
+            ::
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Rest('r8')])
+                Selection([Note("d'8"), Note("e'8"), Rest('r8')])
+                Selection([Note("f'8")])
+                Selection([Note("g'8"), Note("a'8")])
+                Selection([Note("b'8"), Rest('r8'), Note("c''8")])
+
+        Returns new expression.
+        '''
+        from abjad.tools import selectortools
+        callback = selectortools.CountsSelectorCallback(
+            counts,
+            cyclic=cyclic,
+            fuse_overhang=fuse_overhang,
+            nonempty=nonempty,
+            overhang=overhang,
+            rotate=rotate,
+            )
+        return self._append_callback(callback)
+
     def partition_by_ratio(self, ratio):
         r'''Partitions by ratio.
 
@@ -4606,7 +4606,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d' r \times 2/3 { e' r f' } g' a' r")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4648,20 +4648,20 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #blue
                         f'8
                     }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
                     g'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
+                    \once \override Accidental.color = #cyan
+                    \once \override Beam.color = #cyan
+                    \once \override Dots.color = #cyan
+                    \once \override NoteHead.color = #cyan
+                    \once \override Stem.color = #cyan
                     a'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
+                    \once \override Dots.color = #cyan
+                    \once \override Rest.color = #cyan
                     r8
                 }
 
@@ -4906,20 +4906,16 @@ class Selector(AbjadValueObject):
         return results_by_selector
 
     def select(self):
-        r'''Selects last result.
+        r'''Selects previous result.
 
         ..  container:: example
 
-            Selects last two leaves in tuplet 1:
+            Selects tuplets:
 
             ::
 
                 >>> selector = abjad.select()
-                >>> selector = selector.by_class(prototype=abjad.Tuplet)
-                >>> selector = selector.get_item(1)
-                >>> selector = selector.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.get_slice(start=-2)
+                >>> selector = selector.by_class(abjad.Tuplet)
 
             ::
 
@@ -4939,8 +4935,20 @@ class Selector(AbjadValueObject):
                     autoBeaming = ##f
                 } {
                     \times 2/3 {
+                        \once \override Dots.color = #red
+                        \once \override Rest.color = #red
                         r8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
                     }
                     f'8
@@ -4948,12 +4956,17 @@ class Selector(AbjadValueObject):
                     r8
                     f'8
                     \times 2/3 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         e'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                         \once \override Dots.color = #blue
                         \once \override Rest.color = #blue
@@ -4964,12 +4977,12 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Note("d'8")
-                Rest('r8')
+                Tuplet(Multiplier(2, 3), "r8 d'8 e'8")
+                Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
 
         ..  container:: example
 
-            Selects each tuplet as a separate selection:
+            Selects each tuplet (wrapped as a separate selection):
 
             ::
 
@@ -5133,7 +5146,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> get = abjad.select().get_item(-1).with_next_leaf()
+                >>> get = abjad.select()[-1].with_next_leaf()
                 >>> selector = selector.map(get)
 
             ::
@@ -5305,8 +5318,8 @@ class Selector(AbjadValueObject):
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
                 >>> selector = selector.by_run(abjad.Note)
-                >>> previous_leaf = abjad.select().with_previous_leaf()
-                >>> selector = selector.map(previous_leaf)
+                >>> get = abjad.select().with_previous_leaf()
+                >>> selector = selector.map(get)
 
             ::
 
@@ -5381,7 +5394,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_logical_tie(pitched=True)
-                >>> get = abjad.select().get_item(0).with_previous_leaf()
+                >>> get = abjad.select()[0].with_previous_leaf()
                 >>> selector = selector.map(get)
 
             ::

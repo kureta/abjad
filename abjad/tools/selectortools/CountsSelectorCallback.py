@@ -34,7 +34,7 @@ class CountsSelectorCallback(AbjadValueObject):
 
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
-            >>> selector = selector.by_counts([3])
+            >>> selector = selector.partition_by_counts([3])
             >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
             >>> selector(staff)
             [Selection([Note("c'8"), Rest('r8'), Note("d'8")])]

@@ -1,7 +1,5 @@
 import collections
 from abjad.tools.abctools import AbjadValueObject
-from abjad.tools.topleveltools import iterate
-from abjad.tools.topleveltools import select
 
 
 class PrototypeSelectorCallback(AbjadValueObject):
@@ -49,7 +47,7 @@ class PrototypeSelectorCallback(AbjadValueObject):
             if isinstance(trim, collections.Sequence):
                 trim = tuple(trim)
                 assert all(isinstance(x, type) for x in trim)
-            assert isinstance(trim, (tuple, type))
+            assert isinstance(trim, (tuple, type, type(True)))
         self._trim = trim
 
     ### SPECIAL METHODS ###
@@ -60,35 +58,27 @@ class PrototypeSelectorCallback(AbjadValueObject):
         Returns selection.
         '''
         import abjad
-        #assert isinstance(argument, collections.Iterable), repr(argument)
         result = []
         prototype = self.prototype
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
-        #for subexpr in argument:
-        if True:
-            subexpr = argument
-            subresult = iterate(subexpr).by_class(prototype)
-            subresult = select(subresult)
-            if subresult:
-                if self.trim:
-                    subresult = self._trim_subresult(subresult, self.trim)
-                if self.head is not None:
-                    subresult = self._head_filter_subresult(
-                        subresult,
-                        self.head,
-                        )
-                if self.tail is not None:
-                    subresult = self._tail_filter_subresult(
-                        subresult,
-                        self.tail,
-                        )
-                #if self.flatten:
-                #    result.extend(subresult)
-                #else:
-                #    result.append(subresult)
-                result.extend(subresult)
-        #return tuple(result)
+        subexpr = argument
+        subresult = abjad.iterate(subexpr).by_class(prototype)
+        subresult = abjad.select(subresult)
+        if subresult:
+            if self.trim:
+                subresult = self._trim_subresult(subresult, self.trim)
+            if self.head is not None:
+                subresult = self._head_filter_subresult(
+                    subresult,
+                    self.head,
+                    )
+            if self.tail is not None:
+                subresult = self._tail_filter_subresult(
+                    subresult,
+                    self.tail,
+                    )
+            result.extend(subresult)
         return abjad.Selection(result)
 
     ### PRIVATE METHODS ###
@@ -152,6 +142,8 @@ class PrototypeSelectorCallback(AbjadValueObject):
     @staticmethod
     def _trim_subresult(result, trim):
         import abjad
+        if trim is True:
+            trim = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
         result_ = []
         found_good_component = False
         for item in result:
