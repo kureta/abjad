@@ -1,5 +1,4 @@
 from abjad.tools.abctools import AbjadValueObject
-from abjad.tools.topleveltools import select
 
 
 class ByContiguityCallback(AbjadValueObject):

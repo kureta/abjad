@@ -50,14 +50,12 @@ class LengthInequality(Inequality):
         operator_string='<',
         length=mathtools.Infinity(),
         ):
-        Inequality.__init__(
-            self,
-            operator_string=operator_string,
-            )
+        import abjad
+        Inequality.__init__(self, operator_string=operator_string)
         assert 0 <= length
         infinities = (
-            mathtools.Infinity(),
-            mathtools.NegativeInfinity(),
+            abjad.mathtools.Infinity(),
+            abjad.mathtools.NegativeInfinity(),
             )
         if length not in infinities:
             length = int(length)

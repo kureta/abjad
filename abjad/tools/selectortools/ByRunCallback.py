@@ -1,7 +1,5 @@
 import collections
 from abjad.tools.abctools import AbjadValueObject
-from abjad.tools import selectiontools
-from abjad.tools.topleveltools import iterate
 
 
 class ByRunCallback(AbjadValueObject):
@@ -38,18 +36,16 @@ class ByRunCallback(AbjadValueObject):
         prototype = self.prototype
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
-        for run in iterate(argument).by_run(prototype):
+        for run in abjad.iterate(argument).by_run(prototype):
             assert isinstance(run, abjad.Selection)
-            #run = selectiontools.Selection(run)
             result.append(run)
-        #return tuple(result)
         return result
 
     ### PUBLIC PROPERTIES ###
 
     @property
     def prototype(self):
-        r'''Gets run selector callback prototype.
+        r'''Gets prototype.
 
         Return tuple of classes.
         '''

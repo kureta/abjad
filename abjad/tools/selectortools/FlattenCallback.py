@@ -1,5 +1,4 @@
 import collections
-from abjad.tools import datastructuretools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -28,7 +27,7 @@ class FlattenCallback(AbjadValueObject):
         Returns selection.
         '''
         import abjad
-        argument = datastructuretools.Sequence(argument)
+        argument = abjad.Sequence(argument)
         argument = argument.flatten(depth=self.depth)
         return abjad.Selection(argument)
 
@@ -36,7 +35,7 @@ class FlattenCallback(AbjadValueObject):
 
     @property
     def depth(self):
-        r'''Gets depth of callback.
+        r'''Gets depth.
 
         Returns integer.
         '''

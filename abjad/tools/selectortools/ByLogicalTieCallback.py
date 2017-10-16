@@ -1,7 +1,4 @@
 import collections
-from abjad.tools import selectiontools
-from abjad.tools import spannertools
-from abjad.tools.topleveltools import iterate
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -20,18 +17,14 @@ class ByLogicalTieCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(
-        self,
-        pitched=True,
-        trivial=True,
-        ):
+    def __init__(self, pitched=True, trivial=True):
         self._pitched = bool(pitched)
         self._trivial = bool(trivial)
 
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates `argument`.
+        r'''Calls callback on `argument`.
 
         Returns selection of logical ties.
         '''

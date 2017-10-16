@@ -1,6 +1,5 @@
 import collections
 import itertools
-from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -85,7 +84,7 @@ class ByLogicalMeasureCallback(AbjadValueObject):
             Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
             Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
 
-    Groups components by the logical measure of component start offset.
+    Groups components by logical measure of component start offset.
     '''
 
     ### CLASS VARIABLES ###
@@ -102,11 +101,10 @@ class ByLogicalMeasureCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates `argument`.
+        r'''Calls callback on `argument`.
 
         Returns list of selections.
         '''
-        import abjad
         selections = []
         logical_measures = self._group(argument)
         selections.extend(logical_measures)
@@ -115,12 +113,12 @@ class ByLogicalMeasureCallback(AbjadValueObject):
     ### PRIVATE METHODS ###
 
     def _get_first_component(self, argument):
-        from abjad.tools import scoretools
-        if isinstance(argument, scoretools.Component):
+        import abjad
+        if isinstance(argument, abjad.Component):
             return argument
         else:
             component = argument[0]
-            assert isinstance(component, scoretools.Component)
+            assert isinstance(component, abjad.Component)
             return component
 
     def _get_logical_measure_number(self, argument):
@@ -129,6 +127,7 @@ class ByLogicalMeasureCallback(AbjadValueObject):
         return first_component._logical_measure_number
 
     def _group(self, argument):
+        import abjad
         selections = []
         first_component = self._get_first_component(argument)
         first_component._update_logical_measure_numbers()
@@ -137,6 +136,6 @@ class ByLogicalMeasureCallback(AbjadValueObject):
             lambda _: self._get_logical_measure_number(_),
             )
         for value, group in pairs:
-            selection = selectiontools.Selection(list(group))
+            selection = abjad.Selection(list(group))
             selections.append(selection)
         return tuple(selections)

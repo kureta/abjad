@@ -23,13 +23,10 @@ class ByDurationCallback(AbjadValueObject):
         duration=durationtools.Duration(1, 4),
         preprolated=None,
         ):
-        from abjad.tools import selectortools
-        prototype = (
-            durationtools.Duration,
-            selectortools.DurationInequality,
-            )
+        import abjad
+        prototype = (abjad.Duration, abjad.DurationInequality)
         if not isinstance(duration, prototype):
-            duration = durationtools.Duration(duration)
+            duration = abjad.Duration(duration)
         self._duration = duration
         if preprolated is not None:
             preprolated = bool(preprolated)
@@ -38,41 +35,39 @@ class ByDurationCallback(AbjadValueObject):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates tuple `argument`.
+        r'''Calls callback on `argument`.
 
         Returns tuple in which each item is a selection or component.
         '''
-        from abjad.tools import scoretools
-        from abjad.tools import selectortools
+        import abjad
         assert isinstance(argument, collections.Iterable), repr(argument)
         inequality = self.duration
-        if not isinstance(inequality, selectortools.DurationInequality):
-            inequality = selectortools.DurationInequality(
+        if not isinstance(inequality, abjad.DurationInequality):
+            inequality = abjad.DurationInequality(
                 duration=inequality,
                 operator_string='==',
                 )
         result = []
         for item in argument:
             if not self.preprolated:
-                if isinstance(item, scoretools.Component):
+                if isinstance(item, abjad.Component):
                     duration = item._get_duration()
                 else:
                     duration = item.get_duration()
             else:
-                if isinstance(item, scoretools.Component):
+                if isinstance(item, abjad.Component):
                     item._update_now(offsets=True)
                     duration = item._get_preprolated_duration()
                 else:
                     durations = []
                     for x in item:
-                        if isinstance(x, scoretools.Component):
+                        if isinstance(x, abjad.Component):
                             x._update_now(offsets=True)
                         duration = x._get_preprolated_duration()
                         durations.append(x._get_preprolated_duration())
                     duration = sum(durations)
             if inequality(duration):
                 result.append(item)
-        #return tuple(result)
         return result
 
     ### PUBLIC PROPERTIES ###

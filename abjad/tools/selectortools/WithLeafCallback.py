@@ -49,7 +49,7 @@ class WithLeafCallback(AbjadValueObject):
 
     @property
     def with_next_leaf(self):
-        r'''Gets next leaf inclusion.
+        r'''Is true when callback gets next leaf.
 
         Returns true or false.
         '''
@@ -57,7 +57,7 @@ class WithLeafCallback(AbjadValueObject):
 
     @property
     def with_previous_leaf(self):
-        r'''Gets previous leaf inclusion.
+        r'''Is true when callback gets previous leaf.
 
         Returns true or false.
         '''

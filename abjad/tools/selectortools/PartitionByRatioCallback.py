@@ -1,7 +1,4 @@
 import collections
-from abjad.tools import datastructuretools
-from abjad.tools import mathtools
-from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -20,8 +17,9 @@ class PartitionByRatioCallback(AbjadValueObject):
     ### INITIALIZER ###
 
     def __init__(self, ratio=None):
-        ratio = ratio or mathtools.Ratio((1,))
-        ratio = mathtools.Ratio(ratio)
+        import abjad
+        ratio = ratio or abjad.Ratio((1,))
+        ratio = abjad.Ratio(ratio)
         self._ratio = ratio
 
     ### SPECIAL METHODS ###

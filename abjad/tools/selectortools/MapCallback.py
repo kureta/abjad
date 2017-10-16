@@ -15,16 +15,13 @@ class MapCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(
-        self,
-        callback=None,
-        ):
+    def __init__(self, callback=None):
         self._callback = callback
 
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Calls callback on `argument`.
+        r'''Maps callback to `argument`.
 
         Returns list.
         '''

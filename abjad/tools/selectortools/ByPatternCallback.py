@@ -1,5 +1,3 @@
-from abjad.tools import datastructuretools
-from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -17,18 +15,16 @@ class ByPatternCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(
-        self,
-        pattern=None,
-        ):
+    def __init__(self, pattern=None):
+        import abjad
         if pattern is not None:
-            assert isinstance(pattern, datastructuretools.Pattern)
+            assert isinstance(pattern, abjad.Pattern)
         self._pattern = pattern
 
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates tuple `argument`.
+        r'''Calls callback on `argument`.
 
         Returns selection.
         '''
@@ -53,7 +49,7 @@ class ByPatternCallback(AbjadValueObject):
 
     @property
     def pattern(self):
-        r'''Gets pattern of patterned selector callback.
+        r'''Gets pattern.
 
         Returns pattern.
         '''

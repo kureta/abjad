@@ -1,6 +1,4 @@
 import collections
-from abjad.tools import datastructuretools
-from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -67,7 +65,8 @@ class PartitionByCountsCallback(AbjadValueObject):
         overhang=True,
         rotate=True,
         ):
-        counts = datastructuretools.CyclicTuple(int(_) for _ in counts)
+        import abjad
+        counts = abjad.CyclicTuple(int(_) for _ in counts)
         self._counts = counts
         self._cyclic = bool(cyclic)
         self._fuse_overhang = bool(fuse_overhang)
@@ -89,9 +88,9 @@ class PartitionByCountsCallback(AbjadValueObject):
         result = []
         counts = self.counts
         if self.rotate:
-            counts = datastructuretools.Sequence(counts).rotate(n=-rotation)
-            counts = datastructuretools.CyclicTuple(counts)
-        groups = datastructuretools.Sequence(argument).partition_by_counts(
+            counts = abjad.Sequence(counts).rotate(n=-rotation)
+            counts = abjad.CyclicTuple(counts)
+        groups = abjad.Sequence(argument).partition_by_counts(
             [abs(_) for _ in counts],
             cyclic=self.cyclic,
             overhang=self.overhang,
@@ -110,23 +109,22 @@ class PartitionByCountsCallback(AbjadValueObject):
                 raise Exception(counts, i)
             if count < 0:
                 continue
-            items = selectiontools.Selection(group)
+            items = abjad.Selection(group)
             subresult.append(items)
         if self.nonempty and not subresult:
-            group = selectiontools.Selection(groups[0])
+            group = abjad.Selection(groups[0])
             subresult.append(group)
         result.extend(subresult)
         if self.rotate:
-            counts = datastructuretools.Sequence(counts).rotate(n=-1)
-            counts = datastructuretools.CyclicTuple(counts)
-        #return tuple(result)
+            counts = abjad.Sequence(counts).rotate(n=-1)
+            counts = abjad.CyclicTuple(counts)
         return result
 
     ### PUBLIC PROPERTIES ###
 
     @property
     def counts(self):
-        r'''Gets counts selector callback counts.
+        r'''Gets counts.
 
         Returns tuple.
         '''
@@ -134,7 +132,7 @@ class PartitionByCountsCallback(AbjadValueObject):
 
     @property
     def cyclic(self):
-        r'''Gets counts selector callback cyclicity.
+        r'''Is true when callback partitions cyclically.
 
         Returns true or false.
         '''
@@ -142,7 +140,7 @@ class PartitionByCountsCallback(AbjadValueObject):
 
     @property
     def fuse_overhang(self):
-        r'''Gets counts selector callback fuse overhang flag.
+        r'''Is true when callback fuses overhang.
 
         Returns ordinal constant.
         '''
@@ -150,7 +148,7 @@ class PartitionByCountsCallback(AbjadValueObject):
 
     @property
     def nonempty(self):
-        r'''Gets counts selector callback nonempty flag.
+        r'''Gets nonempty flag.
 
         Returns true or false.
         '''
@@ -158,7 +156,7 @@ class PartitionByCountsCallback(AbjadValueObject):
 
     @property
     def overhang(self):
-        r'''Gets counts selector callback overhang flag.
+        r'''Is true when callback returns overhang.
 
         Returns true or false.
         '''
@@ -166,7 +164,7 @@ class PartitionByCountsCallback(AbjadValueObject):
 
     @property
     def rotate(self):
-        r'''Gets counts selector callback rotate flag.
+        r'''Gets rotation.
 
         Returns true or false.
         '''

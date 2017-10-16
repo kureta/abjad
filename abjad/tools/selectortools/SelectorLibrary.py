@@ -6,6 +6,8 @@ class SelectorLibrary(object):
 
     __documentation_section__ = 'Selectors'
 
+    ### PUBLIC METHODS ###
+
     @staticmethod
     def select_first_logical_tie_in_pitched_runs(argument=None):
         r'''Selects first logical tie in each pitched run.

@@ -16,22 +16,16 @@ class ByLengthCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(
-        self,
-        length=1,
-        ):
-        from abjad.tools import selectortools
-        prototype = (
-            int,
-            selectortools.LengthInequality,
-            )
+    def __init__(self, length=1):
+        import abjad
+        prototype = (int, abjad.LengthInequality)
         assert isinstance(length, prototype)
         self._length = length
 
     ### SPECIAL METHODS ###
 
     def __call__(self, argument, rotation=None):
-        r'''Iterates iterable `argument`.
+        r'''Calls callback on `argument`.
 
         Returns list in which each item is a selection or component.
         '''
@@ -52,8 +46,8 @@ class ByLengthCallback(AbjadValueObject):
 
     @property
     def length(self):
-        r'''Gets length selector callback length.
+        r'''Gets length.
 
-        Returns length.
+        Returns integer or length inequality.
         '''
         return self._length

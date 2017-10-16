@@ -17,16 +17,14 @@ class ByPitchCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(
-        self,
-        pitches=None,
-        ):
+    def __init__(self, pitches=None):
+        import abjad
         if pitches is not None:
             if not isinstance(pitches, collections.Iterable):
                 pitches = [pitches]
-            pitches = pitchtools.PitchSet(
+            pitches = abjad.PitchSet(
                 items=pitches,
-                item_class=pitchtools.NumberedPitch,
+                item_class=abjad.NumberedPitch,
                 )
         self._pitches = pitches
 
@@ -42,9 +40,9 @@ class ByPitchCallback(AbjadValueObject):
             return ()
         result = []
         for item in argument:
-            pitch_set = pitchtools.PitchSet.from_selection(
+            pitch_set = abjad.PitchSet.from_selection(
                 item,
-                item_class=pitchtools.NumberedPitch,
+                item_class=abjad.NumberedPitch,
                 )
             if self.pitches.intersection(pitch_set):
                 result.append(item)
@@ -54,7 +52,7 @@ class ByPitchCallback(AbjadValueObject):
 
     @property
     def pitches(self):
-        r'''Gets pitch set of pitch selector callback.
+        r'''Gets pitches.
 
         Returns pitch set.
         '''
