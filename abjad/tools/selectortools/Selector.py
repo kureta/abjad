@@ -21,7 +21,7 @@ class Selector(AbjadValueObject):
             >>> string = r"c'4 \times 2/3 { d'8 r8 e'8 } r16 f'16 g'8 a'4"
             >>> staff = abjad.Staff(string)
             >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
+            >>> selector.color(result)
             >>> abjad.setting(staff).auto_beaming = False
             >>> show(staff) # doctest: +SKIP
 
@@ -75,9 +75,7 @@ class Selector(AbjadValueObject):
 
         ::
 
-            >>> for item in result:
-            ...     item
-            ...
+            >>> selector.print(result)
             Selection([Note("c'4"), Note("d'8")])
             Selection([Note("e'8")])
             Selection([Note("f'16"), Note("g'8"), Note("a'4")])
@@ -99,7 +97,7 @@ class Selector(AbjadValueObject):
             >>> string = r"c'4 \times 2/3 { d'8 r8 e'8 } r16 f'16 g'8 a'4"
             >>> staff = abjad.Staff(string)
             >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
+            >>> selector.color(result)
             >>> abjad.setting(staff).auto_beaming = False
             >>> show(staff) # doctest: +SKIP
 
@@ -138,9 +136,7 @@ class Selector(AbjadValueObject):
 
         ::
 
-            >>> for item in result:
-            ...     item
-            ...
+            >>> selector.print(result)
             Note("c'4")
             Note("e'8")
             Note("f'16")
@@ -211,15 +207,6 @@ class Selector(AbjadValueObject):
             raise ValueError(argument)
         return self._append_callback(callback)
 
-#    def __repr__(self):
-#        r'''Gets interpreter representation.
-#
-#        Returns string.
-#        '''
-#        if self.template is not None:
-#            return self.template
-#        return super(Selector, self).__repr__()
-
     ### PRIVATE METHODS ###
 
     def _append_callback(self, callback):
@@ -284,7 +271,7 @@ class Selector(AbjadValueObject):
                 >>> selector(staff)
                 Selection([Chord("<c' e' g'>4"), Chord("<e' g' c''>2")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         return self._append_callback(callback)
 
@@ -304,7 +291,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -355,10 +342,15 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("c'4"), Note("d'8"), Note("d'16"), Note("e'16"), Note("e'8"), Note("g'8")])
+                >>> selector.print(result)
+                Note("c'4")
+                Note("d'8")
+                Note("d'16")
+                Note("e'16")
+                Note("e'8")
+                Note("g'8")
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.PrototypeSelectorCallback(prototype=prototype)
@@ -382,7 +374,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -443,9 +435,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
                 Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
 
@@ -467,7 +457,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 f'4 g'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -498,10 +488,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                [Note("d'8"), Note("g'8")]
+                >>> selector.print(result)
+                Note("d'8")
+                Note("g'8")
 
-        Returns new selector.
+        Returns new expression.
         '''
         from abjad.tools import selectortools
         callback = selectortools.ContiguitySelectorCallback()
@@ -537,7 +528,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -571,9 +562,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
 
         ..  container:: example
@@ -594,7 +583,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -640,9 +629,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
 
@@ -664,7 +651,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -720,9 +707,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8")])
@@ -746,7 +731,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -802,9 +787,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
 
@@ -826,9 +809,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(
-                ...     colors=['red', 'blue', 'cyan'],
-                ...     )
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -899,9 +880,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
@@ -930,9 +909,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
                 >>> result = selector(staff, rotation=1)
-                >>> abjad.label(result).color_selections(
-                ...     colors=['red', 'blue', 'cyan'],
-                ...     )
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1003,16 +980,14 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8")])
                 Selection([Note("g'8"), Note("a'8")])
                 Selection([Note("b'8"), Rest('r8'), Note("c''8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         from abjad.tools import selectortools
         callback = selectortools.CountsSelectorCallback(
@@ -1041,7 +1016,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1073,9 +1048,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("d'8"), Note("e'8")])
 
         ..  container:: example
@@ -1093,7 +1066,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1130,9 +1103,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8"), Note("e'8")])
 
@@ -1151,7 +1122,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1198,9 +1169,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
@@ -1226,7 +1195,7 @@ class Selector(AbjadValueObject):
                 ...     \times 5/4 { g'16 a'16 ~ a'16 b'16 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1311,16 +1280,14 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("d'16"), Note("d'16")])
                 LogicalTie([Note("e'16"), Note("e'16")])
                 LogicalTie([Note("f'16"), Note("f'16")])
                 LogicalTie([Note("g'16"), Note("g'16")])
                 LogicalTie([Note("a'16"), Note("a'16")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         duration_expr = None
@@ -1372,7 +1339,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1438,8 +1405,17 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Rest('r8'), Note("d'8"), Note("e'8"), Note("f'8"), Rest('r8'), Rest('r8'), Note("f'8"), Note("e'8"), Note("d'8"), Rest('r8')])
+                >>> selector.print(result)
+                Rest('r8')
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+                Rest('r8')
 
         ..  container:: example
 
@@ -1458,7 +1434,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1516,8 +1492,13 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("d'8"), Note("e'8"), Note("f'8"), Note("f'8"), Note("e'8"), Note("d'8")])
+                >>> selector.print(result)
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
 
         ..  container:: example
 
@@ -1536,7 +1517,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1598,8 +1579,15 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("d'8"), Note("e'8"), Note("f'8"), Rest('r8'), Rest('r8'), Note("f'8"), Note("e'8"), Note("d'8")])
+                >>> selector.print(result)
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
 
             Use trimmed leaves with ottava spanners:
 
@@ -1683,7 +1671,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1755,8 +1743,17 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("c'8"), Note("d'8"), Note("e'8"), Note("f'8"), Rest('r8'), Rest('r8'), Note("f'8"), Note("e'8"), Note("d'8"), Note("c'8")])
+                >>> selector.print(result)
+                Note("c'8")
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+                Note("c'8")
 
         ..  container:: example
 
@@ -1775,7 +1772,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1827,8 +1824,13 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Rest('r8'), Note("d'8"), Note("e'8"), Note("e'8"), Note("d'8"), Rest('r8')])
+                >>> selector.print(result)
+                Rest('r8')
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("d'8")
+                Rest('r8')
 
             Selects trimmed leaves in tuplets:
 
@@ -1847,7 +1849,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1895,8 +1897,9 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                [Selection([Note("d'8"), Note("e'8")]), Selection([Note("e'8"), Note("d'8")])]
+                >>> selector.print(result)
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("e'8"), Note("d'8")])
 
         ..  container:: example
 
@@ -1918,7 +1921,7 @@ class Selector(AbjadValueObject):
                 ...     r e' \times 2/3 { d' ~ d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1966,9 +1969,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for selection in result:
-                ...     selection
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("d'8"), Note("c'8")])
 
@@ -1992,7 +1993,7 @@ class Selector(AbjadValueObject):
                 ...     r e' \times 2/3 { d' ~ d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2040,9 +2041,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("d'8"), Note("c'8")])
 
@@ -2066,7 +2065,7 @@ class Selector(AbjadValueObject):
                 ...     r <g d' fs'> \times 2/3 { e' <c' d'> ~ <c' d'> }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2104,13 +2103,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Chord("<c' e' g'>8")])
                 Selection([Chord("<c' d'>8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         if pitched:
@@ -2144,7 +2141,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2191,9 +2188,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
@@ -2212,7 +2207,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2249,13 +2244,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8"), Note("e'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         length_expr = None
@@ -2279,7 +2272,7 @@ class Selector(AbjadValueObject):
     def by_logical_measure(self):
         r'''Selects by logical measure.
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.LogicalMeasureSelectorCallback()
@@ -2305,7 +2298,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2363,9 +2356,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
@@ -2386,7 +2377,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2440,9 +2431,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
@@ -2464,7 +2453,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2508,9 +2497,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("f'8"), Note("f'8")])
 
@@ -2533,7 +2520,7 @@ class Selector(AbjadValueObject):
                 ...     \times 2/3 { b' c'' d'' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2611,9 +2598,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])])
                 Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
                 Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
@@ -2639,7 +2624,7 @@ class Selector(AbjadValueObject):
                 ...     \times 2/3 { b' c'' d'' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2697,13 +2682,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
                 Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.LogicalTieSelectorCallback(
@@ -2734,14 +2717,17 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
             ::
 
-                >>> result
-                Selection([Note("c'8"), Note("d'8"), Note("e'8"), Rest('r8')])
+                >>> selector.print(result)
+                Note("c'8")
+                Note("d'8")
+                Note("e'8")
+                Rest('r8')
 
         ..  container:: example
 
@@ -2759,7 +2745,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff, rotation=1)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2801,8 +2787,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("d'8"), Note("e'8"), Note("e'8"), Note("f'8")])
+                >>> selector.print(result)
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("f'8")
 
         ..  container:: example
 
@@ -2820,7 +2809,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2862,9 +2851,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
 
@@ -2883,7 +2870,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2915,15 +2902,13 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection(music=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8")])
                 Selection(music=())
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.PatternedSelectorCallback(pattern=pattern)
@@ -2951,7 +2936,7 @@ class Selector(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2987,9 +2972,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Note("c'8")
                 Chord("<c' e' g'>8")
                 Chord("<c' e' g'>4")
@@ -3009,7 +2992,7 @@ class Selector(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3050,8 +3033,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("c'8"), Note("e'8"), Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+                >>> selector.print(result)
+                Note("c'8")
+                Note("e'8")
+                Chord("<c' e' g'>8")
+                Chord("<c' e' g'>4")
 
         ..  container:: example
 
@@ -3068,7 +3054,7 @@ class Selector(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3104,13 +3090,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.PitchSelectorCallback(pitches=pitches)
@@ -3139,7 +3123,7 @@ class Selector(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3207,19 +3191,26 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
                 Selection([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.RunSelectorCallback(prototype)
         return self._append_callback(callback)
+
+
+    def color(self, result, colors=None):
+        r'''Colors `result`.
+
+        Returns none.
+        '''
+        import abjad
+        abjad.label(result).color_selections(self, colors=colors)
 
     def first(self):
         r'''Selects first item in selection.
@@ -3238,7 +3229,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3265,10 +3256,10 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.ItemSelectorCallback(item=0)
@@ -3292,7 +3283,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3339,10 +3330,14 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("d'8"), Note("d'8"), Note("e'8"), Note("e'8"), Note("e'8")])
+                >>> selector.print(result)
+                Note("d'8")
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("e'8")
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.FlattenSelectorCallback(depth=depth)
@@ -3365,7 +3360,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3392,7 +3387,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
+                >>> selector.print(result)
                 Note("d'8")
 
         ..  container:: example
@@ -3409,7 +3404,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3441,7 +3436,7 @@ class Selector(AbjadValueObject):
 
             Logical tie returns directly (without selection wrapper):
 
-                >>> result
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
 
         ..  container:: example
@@ -3462,7 +3457,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3504,7 +3499,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
+                >>> selector.print(result)
                 Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
 
         ..  container:: example
@@ -3522,7 +3517,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3564,16 +3559,14 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Note("e'8")
                 Note("f'8")
 
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.ItemSelectorCallback(item=n)
@@ -3596,7 +3589,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3648,9 +3641,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
@@ -3667,7 +3658,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3719,9 +3710,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
                 LogicalTie([Note("f'8")])
@@ -3741,7 +3730,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3778,9 +3767,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection(music=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8"), Note("e'8")])
@@ -3799,7 +3786,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3836,9 +3823,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection(music=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8"), Note("e'8")])
@@ -3858,7 +3843,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3892,16 +3877,15 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                >>> selector.print(result)
+                Note("e'8")
+                Rest('r8')
+                Note("f'8")
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
-        callback = abjad.SliceSelectorCallback(
-            start=start,
-            stop=stop,
-            )
+        callback = abjad.SliceSelectorCallback(start=start, stop=stop)
         return self._append_callback(callback)
 
     def group_by_pitch(self, allow_discontiguity=False):
@@ -3925,7 +3909,7 @@ class Selector(AbjadValueObject):
                 ...     d'8 ~ d'16 d'16 r8 d'16 d'16
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4001,9 +3985,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("c'16"), Note("c'16")])
                 Selection([Note("c'16"), Note("c'16")])
                 Selection([Note("d'8"), Note("d'16"), Note("d'16")])
@@ -4027,7 +4009,7 @@ class Selector(AbjadValueObject):
                 ...     d'8 ~ d'16 d'16 r8 d'16 d'16
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4103,9 +4085,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
                 Selection([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
 
@@ -4126,7 +4106,7 @@ class Selector(AbjadValueObject):
                 ...     d'8 ~ d'16 d'16 r8 d'16 d'16
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4202,9 +4182,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
@@ -4227,7 +4205,7 @@ class Selector(AbjadValueObject):
                 ...     d'8 ~ d'16 d'16 r8 d'16 d'16
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4303,13 +4281,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.GroupByPitchCallback(
@@ -4334,7 +4310,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4361,10 +4337,10 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
+                >>> selector.print(result)
                 LogicalTie([Note("f'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.ItemSelectorCallback(item=-1)
@@ -4373,7 +4349,7 @@ class Selector(AbjadValueObject):
     def map(self, callback):
         r'''Maps `callback` to selector.
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.MapSelectorCallback(callback=callback)
@@ -4396,7 +4372,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4443,13 +4419,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.SliceSelectorCallback(start=1, stop=-1)
@@ -4472,7 +4446,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4524,14 +4498,12 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.SliceSelectorCallback(stop=-1)
@@ -4554,7 +4526,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d' r \times 2/3 { e' r f' } g' a' r")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4615,9 +4587,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8'), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8"), Rest('r8')])
 
@@ -4635,7 +4605,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d' r \times 2/3 { e' r f' } g' a' r")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4696,18 +4666,28 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8')])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8"), Rest('r8')])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.PartitionByRatioCallback(ratio)
         return self._append_callback(callback)
+
+    def print(self, result):
+        r'''Prints `result`.
+
+        Returns none.
+        '''
+        import abjad
+        if isinstance(self.callbacks[-1], abjad.ItemSelectorCallback):
+            print(repr(result))
+        else:
+            for item in result:
+                print(repr(item))
 
     def rest(self):
         r'''Selects rest of items.
@@ -4726,7 +4706,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4778,14 +4758,12 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
                 LogicalTie([Note("f'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.SliceSelectorCallback(start=1)
@@ -4949,7 +4927,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4984,8 +4962,9 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> result
-                Selection([Note("d'8"), Rest('r8')])
+                >>> selector.print(result)
+                Note("d'8")
+                Rest('r8')
 
         ..  container:: example
 
@@ -5004,7 +4983,7 @@ class Selector(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5056,13 +5035,11 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Tuplet(Multiplier(2, 3), "r8 d'8 e'8")])
                 Selection([Tuplet(Multiplier(2, 3), "e'8 d'8 r8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.WrapSelectionCallback()
@@ -5086,7 +5063,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5142,9 +5119,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
@@ -5164,7 +5139,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5215,9 +5190,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Rest('r8')])
@@ -5244,7 +5217,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> manager = abjad.override(staff).sustain_pedal_line_spanner
                 >>> manager.staff_padding = 6
                 >>> abjad.setting(staff).auto_beaming = False
@@ -5307,15 +5280,13 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.ExtraLeafSelectorCallback(with_next_leaf=True)
@@ -5340,7 +5311,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5396,9 +5367,7 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8"), Note("e'8")])
                 Selection([Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
@@ -5418,7 +5387,7 @@ class Selector(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> result = selector(staff)
-                >>> abjad.label(result).color_selections(selector)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5469,15 +5438,13 @@ class Selector(AbjadValueObject):
 
             ::
 
-                >>> for item in result:
-                ...     item
-                ...
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Rest('r8'), Note("f'8")])
 
-        Returns new selector.
+        Returns new expression.
         '''
         import abjad
         callback = abjad.ExtraLeafSelectorCallback(with_previous_leaf=True)
