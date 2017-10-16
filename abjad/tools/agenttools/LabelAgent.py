@@ -229,13 +229,11 @@ class LabelAgent(abctools.AbjadObject):
     ### INITIALIZER ###
 
     def __init__(self, client=None):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        from abjad.tools import spannertools
+        import abjad
         prototype = (
-            scoretools.Component,
-            selectiontools.Selection,
-            spannertools.Spanner,
+            abjad.Component,
+            abjad.Selection,
+            abjad.Spanner,
             list,
             type(None),
             )
@@ -250,13 +248,14 @@ class LabelAgent(abctools.AbjadObject):
     ### PRIVATE METHODS ###
 
     def _color_leaf(self, leaf, color):
-        if isinstance(leaf, (scoretools.Note, scoretools.Chord)):
+        import abjad
+        if isinstance(leaf, (abjad.Note, abjad.Chord)):
             override(leaf).accidental.color = color
             override(leaf).beam.color = color
             override(leaf).dots.color = color
             override(leaf).note_head.color = color
             override(leaf).stem.color = color
-        elif isinstance(leaf, scoretools.Rest):
+        elif isinstance(leaf, abjad.Rest):
             override(leaf).dots.color = color
             override(leaf).rest.color = color
         return leaf
@@ -287,7 +286,7 @@ class LabelAgent(abctools.AbjadObject):
         colors = abjad.CyclicTuple(colors)
         if isinstance(self._client, abjad.Component):
             target = [self._client]
-        elif isinstance(self._client, abjad.selectiontools.LogicalTie):
+        elif isinstance(self._client, abjad.LogicalTie):
             target = [self._client]
         elif isinstance(self._client, abjad.Selection):
             target = [self._client]
@@ -667,14 +666,14 @@ class LabelAgent(abctools.AbjadObject):
             return self._update_expression(inspect.currentframe())
         color_map = color_map or self._pc_number_to_color
         for leaf in iterate(self.client).by_leaf():
-            if isinstance(leaf, scoretools.Chord):
+            if isinstance(leaf, abjad.Chord):
                 for note_head in leaf.note_heads:
                     number = note_head.written_pitch.number
                     pc = abjad.NumberedPitchClass(number)
                     color = color_map.get(pc, None)
                     if color is not None:
                         note_head.tweak.color = color
-            elif isinstance(leaf, scoretools.Note):
+            elif isinstance(leaf, abjad.Note):
                 note_head = leaf.note_head
                 number = note_head.written_pitch.number
                 pc = abjad.NumberedPitchClass(number)
@@ -791,11 +790,11 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        leaves = iterate(self.client).by_leaf()
-        for leaf in leaves:
-            detach(markuptools.Markup, leaf)
+        for leaf in  abjad.iterate(self.client).by_leaf():
+            abjad.detach(abjad.Markup, leaf)
 
     def vertical_moments(self, direction=Up, prototype=None):
         r'''Labels vertical moments.
@@ -2101,17 +2100,17 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        logical_ties = iterate(self.client).by_logical_tie()
-        for logical_tie in logical_ties:
+        for logical_tie in  abjad.iterate(self.client).by_logical_tie():
             duration = logical_tie.get_duration()
             if preferred_denominator is not None:
-                duration = mathtools.NonreducedFraction(duration)
+                duration = abjad.NonreducedFraction(duration)
                 duration = duration.with_denominator(preferred_denominator)
-            label = markuptools.Markup(str(duration), direction=direction)
+            label = abjad.Markup(str(duration), direction=direction)
             label = label.small()
-            attach(label, logical_tie.head)
+            abjad.attach(label, logical_tie.head)
 
     def with_indices(self, direction=Up, prototype=None):
         r'''Labels logical ties with indices.
@@ -2571,20 +2570,21 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if prototype is None:
-            items = iterate(self.client).by_logical_tie()
+            items = abjad.iterate(self.client).by_logical_tie()
         else:
-            items = iterate(self.client).by_class(prototype=prototype)
+            items = abjad.iterate(self.client).by_class(prototype=prototype)
         items = list(items)
         for index, item in enumerate(items):
             string = str(index)
-            label = markuptools.Markup(string, direction=direction)
+            label = abjad.Markup(string, direction=direction)
             label = label.small()
-            leaves = iterate(item).by_leaf()
-            first_leaf = list(leaves)[0]
-            attach(label, first_leaf)
+            leaves = abjad.select(item).by_leaf()
+            first_leaf = leaves[0]
+            abjad.attach(label, first_leaf)
 
     def with_intervals(self, direction=Up, prototype=None):
         r"""Labels consecutive notes with intervals.
@@ -2906,35 +2906,35 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         """
-        from abjad.tools.topleveltools import inspect as abjad_inspect
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        prototype = prototype or pitchtools.NamedInterval
-        notes = iterate(self.client).by_class(scoretools.Note)
-        for note in notes:
+        prototype = prototype or abjad.NamedInterval
+        for note in  abjad.iterate(self.client).by_leaf(abjad.Note):
             label = None
-            next_leaf = abjad_inspect(note).get_leaf(1)
-            if isinstance(next_leaf, scoretools.Note):
-                interval = pitchtools.NamedInterval.from_pitch_carriers(
+            next_leaf = abjad.inspect(note).get_leaf(1)
+            if isinstance(next_leaf, abjad.Note):
+                interval = abjad.NamedInterval.from_pitch_carriers(
                     note,
                     next_leaf,
                     )
-                if prototype is pitchtools.NamedInterval:
-                    label = markuptools.Markup(interval, direction)
-                elif prototype is pitchtools.NamedIntervalClass:
-                    label = pitchtools.NamedIntervalClass(interval)
-                    label = markuptools.Markup(label, direction)
-                elif prototype is pitchtools.NumberedInterval:
-                    label = pitchtools.NumberedInterval(interval)
-                    label = markuptools.Markup(label, direction)
-                elif prototype is pitchtools.NumberedIntervalClass:
-                    label = pitchtools.NumberedIntervalClass(interval)
-                    label = markuptools.Markup(label, direction)
-                elif prototype is pitchtools.NumberedInversionEquivalentIntervalClass:
-                    label = pitchtools.NumberedInversionEquivalentIntervalClass(interval)
-                    label = markuptools.Markup(label, direction)
+                if prototype is abjad.NamedInterval:
+                    label = abjad.Markup(interval, direction)
+                elif prototype is abjad.NamedIntervalClass:
+                    label = abjad.NamedIntervalClass(interval)
+                    label = abjad.Markup(label, direction)
+                elif prototype is abjad.NumberedInterval:
+                    label = abjad.NumberedInterval(interval)
+                    label = abjad.Markup(label, direction)
+                elif prototype is abjad.NumberedIntervalClass:
+                    label = abjad.NumberedIntervalClass(interval)
+                    label = abjad.Markup(label, direction)
+                elif prototype is abjad.NumberedInversionEquivalentIntervalClass:
+                    label = abjad.NumberedInversionEquivalentIntervalClass(
+                        interval)
+                    label = abjad.Markup(label, direction)
                 if label is not None:
-                    attach(label, note)
+                    abjad.attach(label, note)
 
     def with_pitches(self, direction=Up, locale=None, prototype=None):
         r'''Labels logical ties with pitches.
@@ -3967,29 +3967,29 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        prototype = prototype or pitchtools.SetClass()
-        if prototype is pitchtools.SetClass:
+        prototype = prototype or abjad.SetClass()
+        if prototype is abjad.SetClass:
             prototype = prototype()
-        assert isinstance(prototype, pitchtools.SetClass), repr(prototype)
+        assert isinstance(prototype, abjad.SetClass), repr(prototype)
         for selection in self._client:
-            pitch_class_set = pitchtools.PitchClassSet.from_selection(
-                selection)
+            pitch_class_set = abjad.PitchClassSet.from_selection(selection)
             if not pitch_class_set:
                 continue
-            set_class = pitchtools.SetClass.from_pitch_class_set(
+            set_class = abjad.SetClass.from_pitch_class_set(
                 pitch_class_set,
                 lex_rank=prototype.lex_rank,
                 transposition_only=prototype.transposition_only,
                 )
             string = str(set_class)
-            command = markuptools.MarkupCommand('line', [string])
-            label = markuptools.Markup(command, direction=direction)
+            command = abjad.MarkupCommand('line', [string])
+            label = abjad.Markup(command, direction=direction)
             if label is not None:
                 label = label.tiny()
                 leaf = selection[0]
-                attach(label, leaf)
+                abjad.attach(label, leaf)
 
     def with_start_offsets(
         self,
@@ -4231,22 +4231,21 @@ class LabelAgent(abctools.AbjadObject):
 
         Returns none.
         '''
-        from abjad.tools.topleveltools import inspect as abjad_inspect
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        logical_ties = iterate(self.client).by_logical_tie()
-        for logical_tie in logical_ties:
+        for logical_tie in abjad.iterate(self.client).by_logical_tie():
             if clock_time:
-                inspector = abjad_inspect(logical_tie.head)
+                inspector = abjad.inspect(logical_tie.head)
                 timespan = inspector.get_timespan(in_seconds=True)
                 start_offset = timespan.start_offset
                 string = start_offset.to_clock_string()
                 string = '"{}"'.format(string)
             else:
-                timespan = abjad_inspect(logical_tie.head).get_timespan()
+                timespan = abjad.inspect(logical_tie.head).get_timespan()
                 start_offset = timespan.start_offset
                 string = str(start_offset)
-            label = markuptools.Markup(string, direction=direction)
+            label = abjad.Markup(string, direction=direction)
             if font_size is not None:
                 label = label.fontsize(font_size)
-            attach(label, logical_tie.head)
+            abjad.attach(label, logical_tie.head)
