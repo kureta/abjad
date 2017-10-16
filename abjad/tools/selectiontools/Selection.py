@@ -376,7 +376,7 @@ class Selection(object):
 
             ::
 
-                >>> selector = abjad.select().by_leaf(flatten=True)
+                >>> selector = abjad.select().by_leaf()
                 >>> leaves = selector(staff)
                 >>> leaves = leaves[1:5]
                 >>> new_staff = leaves._copy(include_enclosing_containers=True)

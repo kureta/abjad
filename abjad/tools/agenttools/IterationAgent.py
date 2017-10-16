@@ -1938,7 +1938,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf(flatten=True)
+                    >>> selector = abjad.select().by_leaf()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> agent = abjad.inspect(leaf)
@@ -1958,7 +1958,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf(flatten=True)
+                    >>> selector = abjad.select().by_leaf()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> agent = abjad.inspect(leaf)
@@ -2080,7 +2080,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf(flatten=True)
+                    >>> selector = abjad.select().by_leaf()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> for note in abjad.iterate(leaf).by_logical_voice_from_component(
@@ -2097,7 +2097,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf(flatten=True)
+                    >>> selector = abjad.select().by_leaf()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> expression = abjad.iterate()

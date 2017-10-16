@@ -355,7 +355,7 @@ class Parentage(Selection):
 
             ::
 
-                >>> selector = abjad.select().by_leaf(flatten=True)
+                >>> selector = abjad.select().by_leaf()
                 >>> leaves = selector(score)
                 >>> for leaf in leaves:
                 ...     parentage = abjad.inspect(leaf).get_parentage()

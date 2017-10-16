@@ -11,7 +11,6 @@ class PrototypeSelectorCallback(AbjadValueObject):
     __documentation_section__ = 'Callbacks'
 
     __slots__ = (
-        '_flatten',
         '_head',
         '_prototype',
         '_tail',
@@ -23,7 +22,6 @@ class PrototypeSelectorCallback(AbjadValueObject):
     def __init__(
         self,
         prototype=None,
-        flatten=None,
         head=None,
         tail=None,
         trim=None,
@@ -34,9 +32,6 @@ class PrototypeSelectorCallback(AbjadValueObject):
             assert all(isinstance(_, type) for _ in prototype)
         assert isinstance(prototype, (tuple, type))
         self._prototype = prototype
-        if flatten is not None:
-            flatten = bool(flatten)
-        self._flatten = flatten
         if head is not None:
             head = bool(head)
         self._head = head
@@ -189,15 +184,6 @@ class PrototypeSelectorCallback(AbjadValueObject):
         return result
 
     ### PUBLIC PROPERTIES ###
-
-    @property
-    def flatten(self):
-        r'''Is true if selector callback returns a single, rather than nested
-        selection. Otherwise false.
-
-        Returns true or false.
-        '''
-        return self._flatten
 
     @property
     def head(self):

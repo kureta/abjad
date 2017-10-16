@@ -810,10 +810,9 @@ class Selector(AbjadValueObject):
 
     def by_leaf(
         self,
-        flatten=None,
+        prototype=None,
         head=None,
         pitched=None,
-        prototype=None,
         tail=None,
         trim=None,
         ):
@@ -1577,11 +1576,6 @@ class Selector(AbjadValueObject):
                         \once \override Stem.color = #red
                         <c' e' g'>8 ~
                         <c' e' g'>8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
                         d'8
                     }
                     e'8
@@ -1589,11 +1583,6 @@ class Selector(AbjadValueObject):
                     r8
                     <g d' fs'>8
                     \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
                         e'8
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
@@ -1609,8 +1598,6 @@ class Selector(AbjadValueObject):
 
                 >>> selector.print(result)
                 Chord("<c' e' g'>8")
-                Note("d'8")
-                Note("e'8")
                 Chord("<c' d'>8")
 
         Returns new expression.
@@ -1622,7 +1609,6 @@ class Selector(AbjadValueObject):
             prototype = abjad.Leaf
         callback = abjad.PrototypeSelectorCallback(
             prototype=prototype,
-            flatten=flatten,
             head=head,
             tail=tail,
             trim=trim,
@@ -2434,7 +2420,7 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector = abjad.select()
-                >>> selector = selector.by_leaf(flatten=True)
+                >>> selector = selector.by_leaf()
                 >>> selector = selector.by_pitch(pitches="c'")
 
             ::
