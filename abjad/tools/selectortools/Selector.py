@@ -194,12 +194,12 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         if isinstance(argument, slice):
-            callback = abjad.SliceSelectorCallback(
+            callback = abjad.GetSliceCallback(
                 start=argument.start,
                 stop=argument.stop,
                 )
         elif isinstance(argument, int):
-            callback = abjad.ItemSelectorCallback(
+            callback = abjad.GetItemCallback(
                 item=argument,
                 )
         else:
@@ -352,7 +352,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.PrototypeSelectorCallback(prototype=prototype)
+        callback = abjad.ByClassCallback(prototype=prototype)
         return self._append_callback(callback)
 
     def by_contiguity(self):
@@ -492,8 +492,8 @@ class Selector(AbjadValueObject):
 
         Returns new expression.
         '''
-        from abjad.tools import selectortools
-        callback = selectortools.ContiguitySelectorCallback()
+        import abjad
+        callback = abjad.ByContiguityCallback()
         return self._append_callback(callback)
 
     def by_duration(self, inequality=None, duration=None, preprolated=None):
@@ -802,7 +802,7 @@ class Selector(AbjadValueObject):
                 )
         if not isinstance(duration_expr, prototype):
             raise ValueError(inequality, duration)
-        callback = abjad.DurationSelectorCallback(
+        callback = abjad.ByDurationCallback(
             duration=duration_expr,
             preprolated=preprolated,
             )
@@ -1607,7 +1607,7 @@ class Selector(AbjadValueObject):
             prototype = (abjad.Chord, abjad.Note)
         elif prototype is None:
             prototype = abjad.Leaf
-        callback = abjad.PrototypeSelectorCallback(
+        callback = abjad.ByClassCallback(
             prototype=prototype,
             head=head,
             tail=tail,
@@ -1758,7 +1758,7 @@ class Selector(AbjadValueObject):
                 )
         if not isinstance(length_expr, ( int, float, abjad.LengthInequality)):
             raise ValueError(inequality, length)
-        callback = abjad.LengthSelectorCallback(length=length_expr)
+        callback = abjad.ByLengthCallback(length=length_expr)
         return self._append_callback(callback)
 
     def by_logical_measure(self):
@@ -1767,7 +1767,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.LogicalMeasureSelectorCallback()
+        callback = abjad.ByLogicalMeasureCallback()
         return self._append_callback(callback)
 
     def by_logical_tie(
@@ -2181,7 +2181,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.LogicalTieSelectorCallback(
+        callback = abjad.ByLogicalTieCallback(
             pitched=pitched,
             trivial=trivial,
             )
@@ -2403,7 +2403,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.PatternedSelectorCallback(pattern=pattern)
+        callback = abjad.ByPatternCallback(pattern=pattern)
         return self._append_callback(callback)
 
     # TODO: implement pitch-inequality class.
@@ -2589,7 +2589,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.PitchSelectorCallback(pitches=pitches)
+        callback = abjad.ByPitchCallback(pitches=pitches)
         return self._append_callback(callback)
 
     def by_run(
@@ -2692,7 +2692,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.RunSelectorCallback(prototype)
+        callback = abjad.ByRunCallback(prototype)
         return self._append_callback(callback)
 
 
@@ -2754,7 +2754,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ItemSelectorCallback(item=0)
+        callback = abjad.GetItemCallback(item=0)
         return self._append_callback(callback)
 
     def flatten(self, depth=-1):
@@ -2832,7 +2832,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.FlattenSelectorCallback(depth=depth)
+        callback = abjad.FlattenCallback(depth=depth)
         return self._append_callback(callback)
 
     def get_item(self, n):
@@ -3058,7 +3058,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ItemSelectorCallback(item=n)
+        callback = abjad.GetItemCallback(item=n)
         return self._append_callback(callback)
 
     def get_slice(self, start=None, stop=None):
@@ -3372,7 +3372,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.SliceSelectorCallback(start=start, stop=stop)
+        callback = abjad.GetSliceCallback(start=start, stop=stop)
         return self._append_callback(callback)
 
     def group_by_pitch(self, allow_discontiguity=False):
@@ -3830,7 +3830,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ItemSelectorCallback(item=-1)
+        callback = abjad.GetItemCallback(item=-1)
         return self._append_callback(callback)
 
     def map(self, callback):
@@ -3839,7 +3839,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.MapSelectorCallback(callback=callback)
+        callback = abjad.MapCallback(callback=callback)
         return self._append_callback(callback)
 
     def middle(self):
@@ -3913,7 +3913,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.SliceSelectorCallback(start=1, stop=-1)
+        callback = abjad.GetSliceCallback(start=1, stop=-1)
         return self._append_callback(callback)
 
     def most(self):
@@ -3993,7 +3993,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.SliceSelectorCallback(stop=-1)
+        callback = abjad.GetSliceCallback(stop=-1)
         return self._append_callback(callback)
 
     def partition_by_counts(
@@ -4486,7 +4486,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         from abjad.tools import selectortools
-        callback = selectortools.CountsSelectorCallback(
+        callback = selectortools.PartitionByCountsCallback(
             counts,
             cyclic=cyclic,
             fuse_overhang=fuse_overhang,
@@ -4670,7 +4670,7 @@ class Selector(AbjadValueObject):
         Returns none.
         '''
         import abjad
-        if isinstance(self.callbacks[-1], abjad.ItemSelectorCallback):
+        if isinstance(self.callbacks[-1], abjad.GetItemCallback):
             print(repr(result))
         else:
             for item in result:
@@ -4753,7 +4753,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.SliceSelectorCallback(start=1)
+        callback = abjad.GetSliceCallback(start=1)
         return self._append_callback(callback)
 
     @staticmethod
@@ -5042,7 +5042,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.WrapSelectionCallback()
+        callback = abjad.WrapCallback()
         return self._append_callback(callback)
 
     def with_next_leaf(self):
@@ -5289,7 +5289,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ExtraLeafSelectorCallback(with_next_leaf=True)
+        callback = abjad.WithLeafCallback(with_next_leaf=True)
         return self._append_callback(callback)
 
     def with_previous_leaf(self):
@@ -5447,7 +5447,7 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ExtraLeafSelectorCallback(with_previous_leaf=True)
+        callback = abjad.WithLeafCallback(with_previous_leaf=True)
         return self._append_callback(callback)
 
     ### PUBLIC PROPERTIES ###

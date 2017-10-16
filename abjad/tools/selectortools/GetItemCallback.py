@@ -1,8 +1,8 @@
 from abjad.tools.abctools import AbjadValueObject
 
 
-class ItemSelectorCallback(AbjadValueObject):
-    r'''Item selector callback.
+class GetItemCallback(AbjadValueObject):
+    r'''Get-item callback.
     '''
 
     ### CLASS VARIABLES ###

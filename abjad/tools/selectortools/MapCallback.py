@@ -1,8 +1,8 @@
 from abjad.tools.abctools import AbjadValueObject
 
 
-class MapSelectorCallback(AbjadValueObject):
-    r'''Map selector callback.
+class MapCallback(AbjadValueObject):
+    r'''Map callback.
     '''
 
     ### CLASS VARIABLES ###

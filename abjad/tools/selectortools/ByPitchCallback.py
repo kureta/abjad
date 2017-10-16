@@ -3,8 +3,8 @@ from abjad.tools import pitchtools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class PitchSelectorCallback(AbjadValueObject):
-    r'''Pitch selector callback.
+class ByPitchCallback(AbjadValueObject):
+    r'''By-pitch callback.
     '''
 
     ### CLASS VARIABLES ###

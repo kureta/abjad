@@ -4,8 +4,8 @@ from abjad.tools import selectiontools
 from abjad.tools.topleveltools import iterate
 
 
-class RunSelectorCallback(AbjadValueObject):
-    r'''Run selector callback.
+class ByRunCallback(AbjadValueObject):
+    r'''By-run callback.
     '''
 
     ### CLASS VARIABLES ###

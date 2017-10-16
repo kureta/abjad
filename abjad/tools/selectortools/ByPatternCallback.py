@@ -3,8 +3,8 @@ from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class PatternedSelectorCallback(AbjadValueObject):
-    r'''Patterned selector callback.
+class ByPatternCallback(AbjadValueObject):
+    r'''By-pattern callback.
     '''
 
     ### CLASS VARIABLES ###

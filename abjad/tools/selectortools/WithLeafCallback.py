@@ -1,8 +1,8 @@
 from abjad.tools.abctools import AbjadValueObject
 
 
-class ExtraLeafSelectorCallback(AbjadValueObject):
-    r'''Extra leaf selector callback.
+class WithLeafCallback(AbjadValueObject):
+    r'''With-leaf callback.
     '''
 
     ### CLASS VARIABLES ###

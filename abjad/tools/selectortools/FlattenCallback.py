@@ -3,8 +3,8 @@ from abjad.tools import datastructuretools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class FlattenSelectorCallback(AbjadValueObject):
-    r'''Flatten selector callback.
+class FlattenCallback(AbjadValueObject):
+    r'''Flatten callback.
     '''
 
     ### CLASS VARIABLES ###

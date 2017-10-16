@@ -2,8 +2,8 @@ import collections
 from abjad.tools.abctools import AbjadValueObject
 
 
-class LengthSelectorCallback(AbjadValueObject):
-    r'''Length selector callback.
+class ByLengthCallback(AbjadValueObject):
+    r'''By-length callback.
     '''
 
     ### CLASS VARIABLES ###

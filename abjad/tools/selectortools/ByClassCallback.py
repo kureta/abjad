@@ -2,8 +2,8 @@ import collections
 from abjad.tools.abctools import AbjadValueObject
 
 
-class PrototypeSelectorCallback(AbjadValueObject):
-    r'''Prototype selector callback.
+class ByClassCallback(AbjadValueObject):
+    r'''By-class callback.
     '''
 
     ### CLASS VARIABLES ###

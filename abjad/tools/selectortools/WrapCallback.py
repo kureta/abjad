@@ -1,8 +1,8 @@
 from abjad.tools.abctools import AbjadValueObject
 
 
-class WrapSelectionCallback(AbjadValueObject):
-    r'''Wrap selection callback.
+class WrapCallback(AbjadValueObject):
+    r'''Wrap callback.
     '''
 
     ### CLASS VARIABLES ###

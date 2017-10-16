@@ -660,7 +660,7 @@ class LabelAgent(abctools.AbjadObject):
         '''
         import abjad
         if (selector and selector.callbacks and
-            isinstance(selector.callbacks[-1], abjad.ItemSelectorCallback)):
+            isinstance(selector.callbacks[-1], abjad.GetItemCallback)):
             colors = colors or ['green']
             color = colors[0]
             abjad.label(self.client).color_leaves(color=color)

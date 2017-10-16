@@ -1,10 +1,9 @@
 import collections
-from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
 class GroupByPitchCallback(AbjadValueObject):
-    r'''Group-by-pitch selector callback.
+    r'''Group-by-pitch callback.
     '''
 
     ### CLASS VARIABLES ###
@@ -34,10 +33,6 @@ class GroupByPitchCallback(AbjadValueObject):
         Returns list of selections.
         '''
         import abjad
-#        if len(argument) == 1 and isinstance(argument[0], abjad.Selection):
-#            selection = argument[0]
-#        else:
-#            selection = abjad.select(argument)
         selection = abjad.Selection(argument)
         selections = selection.group_by(self._get_written_pitches)
         selections = self._map_contiguity(selections)
@@ -53,10 +48,10 @@ class GroupByPitchCallback(AbjadValueObject):
             return argument.written_pitch
         elif isinstance(argument, abjad.Chord):
             return argument.written_pitches
-        elif (isinstance(argument, abjad.selectiontools.LogicalTie) and
+        elif (isinstance(argument, abjad.LogicalTie) and
             isinstance(argument.head, abjad.Note)):
             return argument.head.written_pitch
-        elif (isinstance(argument, abjad.selectiontools.LogicalTie) and
+        elif (isinstance(argument, abjad.LogicalTie) and
             isinstance(argument.head, abjad.Chord)):
             return argument.head.written_pitches
         else:
@@ -66,7 +61,7 @@ class GroupByPitchCallback(AbjadValueObject):
         import abjad
         if self.allow_discontiguity:
             return selections
-        selector = abjad.ContiguitySelectorCallback()
+        selector = abjad.ByContiguityCallback()
         result = []
         for selection in selections:
             parts = selector(selection)

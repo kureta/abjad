@@ -2,8 +2,8 @@ from abjad.tools.abctools import AbjadValueObject
 from abjad.tools.topleveltools import select
 
 
-class ContiguitySelectorCallback(AbjadValueObject):
-    r'''Contiguity selector callback.
+class ByContiguityCallback(AbjadValueObject):
+    r'''By-contiguity callback.
     '''
 
     ### CLASS VARIABLES ###

@@ -4,8 +4,8 @@ from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class CountsSelectorCallback(AbjadValueObject):
-    r'''Counts selector callback.
+class PartitionByCountsCallback(AbjadValueObject):
+    r'''Partition-by-counts callback.
 
     ..  container:: example
 
@@ -13,9 +13,9 @@ class CountsSelectorCallback(AbjadValueObject):
 
         ::
 
-            >>> callback = abjad.CountsSelectorCallback([3])
+            >>> callback = abjad.PartitionByCountsCallback([3])
             >>> f(callback)
-            abjad.CountsSelectorCallback(
+            abjad.PartitionByCountsCallback(
                 counts=abjad.CyclicTuple(
                     [3]
                     ),

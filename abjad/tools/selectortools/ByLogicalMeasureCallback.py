@@ -4,8 +4,8 @@ from abjad.tools import selectiontools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class LogicalMeasureSelectorCallback(AbjadValueObject):
-    r'''Logical measure selector callback.
+class ByLogicalMeasureCallback(AbjadValueObject):
+    r'''By-logical-measure callback.
 
     ..  container:: example
 

@@ -3,8 +3,8 @@ from abjad.tools import durationtools
 from abjad.tools.abctools import AbjadValueObject
 
 
-class DurationSelectorCallback(AbjadValueObject):
-    r'''Duration selector callback.
+class ByDurationCallback(AbjadValueObject):
+    r'''By-duration callback.
     '''
 
     ### CLASS VARIABLES ###

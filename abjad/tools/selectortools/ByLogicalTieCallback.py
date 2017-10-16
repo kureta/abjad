@@ -5,8 +5,8 @@ from abjad.tools.topleveltools import iterate
 from abjad.tools.abctools import AbjadValueObject
 
 
-class LogicalTieSelectorCallback(AbjadValueObject):
-    r'''Logical tie selector callback.
+class ByLogicalTieCallback(AbjadValueObject):
+    r'''By-logical-tie callback.
     '''
 
     ### CLASS VARIABLES ###

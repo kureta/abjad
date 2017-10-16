@@ -1,8 +1,8 @@
 from abjad.tools.abctools import AbjadValueObject
 
 
-class SliceSelectorCallback(AbjadValueObject):
-    r'''Slice selector callback.
+class GetSliceCallback(AbjadValueObject):
+    r'''Get-slice callback.
     '''
 
     ### CLASS VARIABLES ###
