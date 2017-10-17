@@ -1,4 +1,3 @@
-import collections
 from abjad.tools.abctools import AbjadValueObject
 
 
