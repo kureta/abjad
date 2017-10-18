@@ -13,13 +13,15 @@ class ByLogicalTieCallback(AbjadValueObject):
     __slots__ = (
         '_pitched',
         '_trivial',
+        '_with_grace_notes',
         )
 
     ### INITIALIZER ###
 
-    def __init__(self, pitched=True, trivial=True):
+    def __init__(self, pitched=True, trivial=True, with_grace_notes=False):
         self._pitched = bool(pitched)
         self._trivial = bool(trivial)
+        self._with_grace_notes = bool(with_grace_notes)
 
     ### SPECIAL METHODS ###
 
@@ -30,7 +32,9 @@ class ByLogicalTieCallback(AbjadValueObject):
         '''
         import abjad
         result = []
-        for logical_tie in abjad.iterate(argument).by_logical_tie():
+        for logical_tie in abjad.iterate(argument).by_logical_tie(
+            with_grace_notes=self.with_grace_notes,
+            ):
             if self.pitched and not logical_tie.is_pitched:
                 continue
             if not self.trivial and logical_tie.is_trivial:
@@ -55,3 +59,11 @@ class ByLogicalTieCallback(AbjadValueObject):
         Returns true or false.
         '''
         return self._trivial
+
+    @property
+    def with_grace_notes(self):
+        r'''Is true if callback iterates logical ties with grace notes.
+
+        Returns true or false.
+        '''
+        return self._with_grace_notes

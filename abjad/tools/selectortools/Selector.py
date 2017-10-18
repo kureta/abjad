@@ -1799,6 +1799,7 @@ class Selector(AbjadValueObject):
         self,
         pitched=False,
         trivial=True,
+        with_grace_notes=False,
         ):
         r'''Selects by logical tie.
 
@@ -2206,7 +2207,11 @@ class Selector(AbjadValueObject):
         Returns new expression.
         '''
         import abjad
-        callback = abjad.ByLogicalTieCallback(pitched=pitched, trivial=trivial)
+        callback = abjad.ByLogicalTieCallback(
+            pitched=pitched,
+            trivial=trivial,
+            with_grace_notes=with_grace_notes,
+            )
         selector = self._append_callback(callback)
         template = self._get_template(inspect.currentframe())
         return abjad.new(selector, template=template)
