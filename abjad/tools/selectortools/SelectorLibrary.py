@@ -140,7 +140,7 @@ class SelectorLibrary(object):
         '''
         import abjad
         selector = SelectorLibrary.select_pitched_runs()
-        get = abjad.select().by_logical_tie().last()
+        get = abjad.select().by_logical_tie()[-1]
         selector = selector.map(get)
         if argument is None:
             return selector
