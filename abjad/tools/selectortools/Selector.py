@@ -1,4 +1,5 @@
 import collections
+import inspect
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -226,6 +227,18 @@ class Selector(AbjadValueObject):
             storage_format_kwargs_names=(),
             )
 
+    def _get_template(self, frame):
+        import abjad
+        try:
+            frame_info = inspect.getframeinfo(frame)
+            function_name = frame_info.function
+            arguments = abjad.Expression._wrap_arguments(frame)
+            stem = self.template or 'abjad.select()'
+            template = f'{stem}.{function_name}({arguments})'
+        finally:
+            del frame
+        return template
+
     ### PUBLIC METHODS ###
 
     def append_callback(self, callback):
@@ -353,7 +366,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByClassCallback(prototype=prototype)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_contiguity(self):
         r'''Selects by contiguity.
@@ -494,7 +509,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByContiguityCallback()
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_duration(self, inequality=None, duration=None, preprolated=None):
         r'''Selects by duration.
@@ -806,7 +823,9 @@ class Selector(AbjadValueObject):
             duration=duration_expr,
             preprolated=preprolated,
             )
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_leaf(
         self,
@@ -1613,7 +1632,9 @@ class Selector(AbjadValueObject):
             tail=tail,
             trim=trim,
             )
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_length(self, inequality=None, length=None):
         r'''Selects by length.
@@ -1759,7 +1780,9 @@ class Selector(AbjadValueObject):
         if not isinstance(length_expr, ( int, float, abjad.LengthInequality)):
             raise ValueError(inequality, length)
         callback = abjad.ByLengthCallback(length=length_expr)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_logical_measure(self):
         r'''Selects by logical measure.
@@ -1768,7 +1791,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByLogicalMeasureCallback()
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_logical_tie(
         self,
@@ -2182,7 +2207,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByLogicalTieCallback(pitched=pitched, trivial=trivial)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_pattern(self, pattern=None):
         r'''Selects by `pattern`.
@@ -2398,7 +2425,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByPatternCallback(pattern=pattern)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     # TODO: implement pitch-inequality class.
     def by_pitch(self, pitches=None):
@@ -2581,7 +2610,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByPitchCallback(pitches=pitches)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def by_run(
         self,
@@ -2684,8 +2715,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.ByRunCallback(prototype)
-        return self._append_callback(callback)
-
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def color(self, result, colors=None):
         r'''Colors `result`.
@@ -2746,7 +2778,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetItemCallback(item=0)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def flatten(self, depth=-1):
         r'''Flattens selection.
@@ -2824,7 +2858,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.FlattenCallback(depth=depth)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def get_item(self, n):
         r'''Gets item `n`.
@@ -3050,7 +3086,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetItemCallback(item=n)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def get_slice(self, start=None, stop=None):
         r'''Gets slice.
@@ -3364,7 +3402,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetSliceCallback(start=start, stop=stop)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def group_by_pitch(self, allow_discontiguity=False):
         r'''Groups by pitch.
@@ -3769,7 +3809,9 @@ class Selector(AbjadValueObject):
         callback = abjad.GroupByPitchCallback(
             allow_discontiguity=allow_discontiguity,
             )
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def last(self):
         r'''Gets last item.
@@ -3822,7 +3864,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetItemCallback(item=-1)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def map(self, callback):
         r'''Maps `callback` to selector.
@@ -3831,7 +3875,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.MapCallback(callback=callback)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def middle(self):
         r'''Selects middle items.
@@ -3905,7 +3951,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetSliceCallback(start=1, stop=-1)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def most(self):
         r'''Selects most items.
@@ -3985,7 +4033,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetSliceCallback(stop=-1)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def partition_by_counts(
         self,
@@ -4476,8 +4526,8 @@ class Selector(AbjadValueObject):
 
         Returns new expression.
         '''
-        from abjad.tools import selectortools
-        callback = selectortools.PartitionByCountsCallback(
+        import abjad
+        callback = abjad.PartitionByCountsCallback(
             counts,
             cyclic=cyclic,
             fuse_overhang=fuse_overhang,
@@ -4485,7 +4535,9 @@ class Selector(AbjadValueObject):
             overhang=overhang,
             rotate=rotate,
             )
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def partition_by_ratio(self, ratio):
         r'''Partitions by ratio.
@@ -4653,7 +4705,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.PartitionByRatioCallback(ratio)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def print(self, result):
         r'''Prints `result`.
@@ -4745,7 +4799,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.GetSliceCallback(start=1)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     @staticmethod
     def run_selectors(argument, selectors, rotation=None):
@@ -5127,7 +5183,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.WithLeafCallback(with_next_leaf=True)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def with_previous_leaf(self):
         r'''Selects with previous leaf.
@@ -5285,7 +5343,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.WithLeafCallback(with_previous_leaf=True)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     def wrap(self):
         r'''Wraps result in list.
@@ -5439,7 +5499,9 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         callback = abjad.WrapCallback()
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     ### PUBLIC PROPERTIES ###
 
