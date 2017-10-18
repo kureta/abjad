@@ -234,7 +234,8 @@ class Selector(AbjadValueObject):
             function_name = frame_info.function
             arguments = abjad.Expression._wrap_arguments(frame)
             stem = self.template or 'abjad.select()'
-            template = f'{stem}.{function_name}({arguments})'
+            template = '{}.{}({})'
+            template = template.format(stem, function_name, arguments)
         finally:
             del frame
         return template
