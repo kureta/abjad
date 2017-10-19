@@ -952,7 +952,7 @@ class Selection(object):
         nontrivial=False,
         pitched=False,
         reverse=False,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Select components by logical tie.
 

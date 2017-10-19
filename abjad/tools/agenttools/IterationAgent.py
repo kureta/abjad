@@ -1307,7 +1307,7 @@ class IterationAgent(abctools.AbjadObject):
         pitched=False,
         reverse=False,
         parentage_mask=None,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Iterates by logical tie.
 
@@ -1395,6 +1395,7 @@ class IterationAgent(abctools.AbjadObject):
 
                     >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
                     ...     reverse=True,
+                    ...     with_grace_notes=False,
                     ...     ):
                     ...     logical_tie
                     ...
@@ -1408,7 +1409,10 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(reverse=True)
+                    >>> expression = expression.by_logical_tie(
+                    ...     reverse=True,
+                    ...     with_grace_notes=False,
+                    ...     )
                     >>> for logical_tie in expression(staff):
                     ...     logical_tie
                     ...

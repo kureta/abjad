@@ -1766,7 +1766,7 @@ class Selector(AbjadValueObject):
         '''
         import abjad
         length_expr = None
-        if isinstance(inequality, ( int, float, abjad.LengthInequality)):
+        if isinstance(inequality, (int, float, abjad.LengthInequality)):
             length_expr = inequality
         elif isinstance(inequality, str) and length is not None:
             length_expr = abjad.LengthInequality(
@@ -1800,7 +1800,7 @@ class Selector(AbjadValueObject):
         self,
         pitched=False,
         trivial=True,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Selects by logical tie.
 
