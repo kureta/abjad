@@ -205,7 +205,9 @@ class Selector(AbjadValueObject):
                 )
         else:
             raise ValueError(argument)
-        return self._append_callback(callback)
+        selector = self._append_callback(callback)
+        template = self._get_template(inspect.currentframe())
+        return abjad.new(selector, template=template)
 
     ### PRIVATE METHODS ###
 
