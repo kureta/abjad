@@ -134,10 +134,8 @@ class IterationAgent(abctools.AbjadObject):
     @staticmethod
     def _iterate_components(argument, prototype, pitched=None, reverse=False):
         import abjad
-        # TODO: forbid string input
         if isinstance(argument, str):
-            #raise Exception(repr(argument))
-            return
+            raise Exception(repr(argument))
         if isinstance(argument, prototype):
             if IterationAgent._matches_pitched(argument, pitched=pitched):
                 yield argument

@@ -78,7 +78,7 @@ def test_custom_score_template_class_02():
     # here's how to properly override with externalized layout
 
     score = custom_context_score_template()
-    score[0][0].append("c'4 ( d'4 e'4 f'4 )")
+    score[0][0].extend("c'4 ( d'4 e'4 f'4 )")
     lilypond_file = abjad.LilyPondFile.new(score)
 
     context_block = abjad.ContextBlock(

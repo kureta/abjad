@@ -426,15 +426,20 @@ class Container(Component):
 
         Returns none.
         '''
+        if isinstance(argument, str):
+            argument = self._parse_string(argument)
+            if isinstance(i, int):
+                assert len(argument) == 1, repr(argument)
+                argument = argument[0]
         return self._set_item(i, argument)
 
     ### PRIVATE METHODS ###
 
     @staticmethod
     def _all_are_orphan_components(argument):
-        from abjad.tools import scoretools
+        import abjad
         for component in argument:
-            if not isinstance(component, scoretools.Component):
+            if not isinstance(component, abjad.Component):
                 return False
             if not component._get_parentage().is_orphan:
                 return False
@@ -861,29 +866,15 @@ class Container(Component):
         Only private methods should set this keyword.
         '''
         import abjad
-        # cache argument indicators
         argument_indicators = []
         for component in iterate(argument).by_class():
             indicators = component._get_indicators(unwrap=False)
             argument_indicators.extend(indicators)
-        # item assignment
         if isinstance(i, int):
-            if isinstance(argument, str):
-                argument = self._parse_string(argument)[:]
-                assert len(argument) == 1, repr(argument)
-                argument = argument[0]
-            else:
-                argument = [argument]
+            argument = [argument]
             if i < 0:
                 i = len(self) + i
             i = slice(i, i + 1)
-        else:
-            if isinstance(argument, str):
-                argument = self._parse_string(argument)[:]
-            elif (isinstance(argument, list) and
-                len(argument) == 1 and
-                isinstance(argument[0], str)):
-                argument = self._parse_string(argument[0])[:]
         prototype = (abjad.Component, abjad.Selection)
         assert all(isinstance(_, prototype) for _ in argument)
         new_argument = []
@@ -908,7 +899,6 @@ class Container(Component):
             start, stop, stride = i.indices(len(self))
         old_components = self[start:stop]
         spanners_receipt = self._get_spanners_that_dominate_slice(start, stop)
-        #print('RECEIPT', spanners_receipt, self, argument)
         for component in old_components:
             for child in abjad.iterate([component]).by_class():
                 for spanner in child._get_spanners():
@@ -1251,6 +1241,10 @@ class Container(Component):
 
         Returns none.
         '''
+        if isinstance(component, str):
+            selection = self._parse_string(component)
+            assert len(selection) == 1
+            component = selection[0]
         self.__setitem__(slice(len(self), len(self)), [component])
 
     def extend(self, argument):
@@ -1294,6 +1288,8 @@ class Container(Component):
 
         Returns none.
         '''
+        if isinstance(argument, str):
+            argument = self._parse_string(argument)
         self.__setitem__(
             slice(len(self), len(self)),
             argument.__getitem__(slice(0, len(argument)))
@@ -1461,6 +1457,10 @@ class Container(Component):
         '''
         import abjad
         assert isinstance(i, int)
+        if isinstance(component, str):
+            selection = self._parse_string(component)
+            assert len(selection) == 1, repr(selection)
+            component = selection[0]
         if not fracture_spanners:
             self.__setitem__(slice(i, i), [component])
             return
