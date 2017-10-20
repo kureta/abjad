@@ -127,43 +127,78 @@ class IterationAgent(abctools.AbjadObject):
         import abjad
         if isinstance(argument, str):
             raise Exception(repr(argument))
-        if (with_grace_notes and
-            getattr(argument, '_grace_container', None) is not None):
-            for component in argument._grace_container:
-                for x in IterationAgent._iterate_components(
-                    component,
-                    pitched=pitched,
-                    prototype=prototype,
-                    reverse=reverse,
-                    with_grace_notes=with_grace_notes,
-                    ):
-                    yield x
-        if isinstance(argument, prototype):
-            if IterationAgent._matches_pitched(argument, pitched=pitched):
-                yield argument
-        if (with_grace_notes and
-            getattr(argument, '_after_grace_container', None) is not None):
-            for component in argument._after_grace_container:
-                for x in IterationAgent._iterate_components(
-                    component,
-                    pitched=pitched,
-                    prototype=prototype,
-                    reverse=reverse,
-                    with_grace_notes=with_grace_notes,
-                    ):
-                    yield x
-        if isinstance(argument, collections.Iterable):
-            if reverse:
-                argument = reversed(argument)
-            for component in argument:
-                for x in IterationAgent._iterate_components(
-                    component,
-                    pitched=pitched,
-                    prototype=prototype,
-                    reverse=reverse,
-                    with_grace_notes=with_grace_notes,
-                    ):
-                    yield x
+        if not reverse:
+            if (with_grace_notes and
+                getattr(argument, '_grace_container', None) is not None):
+                for component in argument._grace_container:
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
+            if isinstance(argument, prototype):
+                if IterationAgent._matches_pitched(argument, pitched=pitched):
+                    yield argument
+            if (with_grace_notes and
+                getattr(argument, '_after_grace_container', None) is not None):
+                for component in argument._after_grace_container:
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
+            if isinstance(argument, collections.Iterable):
+                for component in argument:
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
+        else:
+            if (with_grace_notes and
+                getattr(argument, '_after_grace_container', None) is not None):
+                for component in reversed(argument._after_grace_container):
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
+            if isinstance(argument, prototype):
+                if IterationAgent._matches_pitched(argument, pitched=pitched):
+                    yield argument
+            if (with_grace_notes and
+                getattr(argument, '_grace_container', None) is not None):
+                for component in reversed(argument._grace_container):
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
+            if isinstance(argument, collections.Iterable):
+                for component in reversed(argument):
+                    for x in IterationAgent._iterate_components(
+                        component,
+                        pitched=pitched,
+                        prototype=prototype,
+                        reverse=reverse,
+                        with_grace_notes=with_grace_notes,
+                        ):
+                        yield x
 
     @staticmethod
     def _iterate_subrange(iterator, start=0, stop=None):
@@ -626,6 +661,82 @@ class IterationAgent(abctools.AbjadObject):
                     Note("gf'16")
                     Note("e'8")
                     Note("f'8")
+
+        ..  container:: example
+
+            Iterates grace notes and after grace notes in reverse:
+
+            ..  container:: example
+
+                ::
+
+                    >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
+                    >>> container = abjad.GraceContainer("cf''16 bf'16")
+                    >>> abjad.attach(container, voice[1])
+                    >>> container = abjad.AfterGraceContainer("af'16 gf'16")
+                    >>> abjad.attach(container, voice[1])
+                    >>> show(voice) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(voice)
+                    \new Voice {
+                        c'8 [
+                        \grace {
+                            cf''16
+                            bf'16
+                        }
+                        \afterGrace
+                        d'8
+                        {
+                            af'16
+                            gf'16
+                        }
+                        e'8
+                        f'8 ]
+                    }
+
+            ..  container:: example
+
+                ::
+
+                    >>> for leaf in abjad.iterate(voice).by_class(
+                    ...     with_grace_notes=True,
+                    ...     reverse=True,
+                    ...     ):
+                    ...     leaf
+                    ...
+                    Voice("c'8 d'8 e'8 f'8")
+                    Note("f'8")
+                    Note("e'8")
+                    Note("gf'16")
+                    Note("af'16")
+                    Note("d'8")
+                    Note("bf'16")
+                    Note("cf''16")
+                    Note("c'8")
+
+            ..  container:: example expression
+
+                ::
+
+                    >>> expression = abjad.iterate()
+                    >>> expression = expression.by_class(
+                    ...     with_grace_notes=True,
+                    ...     reverse=True,
+                    ...     )
+                    >>> for leaf in expression(voice):
+                    ...     leaf
+                    ...
+                    Voice("c'8 d'8 e'8 f'8")
+                    Note("f'8")
+                    Note("e'8")
+                    Note("gf'16")
+                    Note("af'16")
+                    Note("d'8")
+                    Note("bf'16")
+                    Note("cf''16")
+                    Note("c'8")
 
         ..  container:: example
 
@@ -4400,9 +4511,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("gf'16")
                     Note("e'8")
                     Note("f'8")
-
-        ..  note:: Reverse-iteration does not yet support grace notes.
-            (Relatively straightforward to implement when the need arises.)
 
         Returns generator.
         '''
