@@ -21,7 +21,6 @@ class PartitionByCountsCallback(AbjadValueObject):
                 fuse_overhang=False,
                 nonempty=False,
                 overhang=True,
-                rotate=True,
                 )
 
     ..  container:: example
@@ -48,7 +47,6 @@ class PartitionByCountsCallback(AbjadValueObject):
         '_cyclic',
         '_fuse_overhang',
         '_overhang',
-        '_rotate',
         '_nonempty',
         )
 
@@ -63,7 +61,6 @@ class PartitionByCountsCallback(AbjadValueObject):
         fuse_overhang=False,
         nonempty=False,
         overhang=True,
-        rotate=True,
         ):
         import abjad
         counts = abjad.CyclicTuple(int(_) for _ in counts)
@@ -71,25 +68,18 @@ class PartitionByCountsCallback(AbjadValueObject):
         self._cyclic = bool(cyclic)
         self._fuse_overhang = bool(fuse_overhang)
         self._overhang = bool(overhang)
-        self._rotate = bool(rotate)
         self._nonempty = bool(nonempty)
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
+    def __call__(self, argument):
         r'''Calls callback on `argument`.
 
         Returns list of selections.
         '''
         import abjad
-        if rotation is None:
-            rotation = 0
-        rotation = int(rotation)
         result = []
         counts = self.counts
-        if self.rotate:
-            counts = abjad.Sequence(counts).rotate(n=-rotation)
-            counts = abjad.CyclicTuple(counts)
         groups = abjad.Sequence(argument).partition_by_counts(
             [abs(_) for _ in counts],
             cyclic=self.cyclic,
@@ -115,9 +105,6 @@ class PartitionByCountsCallback(AbjadValueObject):
             group = abjad.Selection(groups[0])
             subresult.append(group)
         result.extend(subresult)
-        if self.rotate:
-            counts = abjad.Sequence(counts).rotate(n=-1)
-            counts = abjad.CyclicTuple(counts)
         return result
 
     ### PUBLIC PROPERTIES ###
@@ -161,11 +148,3 @@ class PartitionByCountsCallback(AbjadValueObject):
         Returns true or false.
         '''
         return self._overhang
-
-    @property
-    def rotate(self):
-        r'''Gets rotation.
-
-        Returns true or false.
-        '''
-        return self._rotate

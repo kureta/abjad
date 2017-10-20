@@ -24,7 +24,7 @@ class PartitionByRatioCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
+    def __call__(self, argument):
         r'''Calls callback on `argument`.
 
         Returns list of selections.

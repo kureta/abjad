@@ -19,8 +19,10 @@ class WrapCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
-        r'''Wraps `argument` in list.
+    def __call__(self, argument=None):
+        r'''Calls callback on `argument`.
+
+        Wraps `argument` in list.
 
         Returns list.
         '''

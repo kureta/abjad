@@ -170,23 +170,19 @@ class Selector(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
-        r'''Calls selector callbacks on `argument`.
+    def __call__(self, music=None):
+        r'''Calls selector on `music`.
 
         Returns selection.
         '''
         import abjad
-        if rotation is None:
-            rotation = 0
-        rotation = int(rotation)
         prototype = (abjad.Component, abjad.Selection, list)
-        if not isinstance(argument, prototype):
-            raise Exception(argument)
-            argument = abjad.select(argument)
-        callbacks = self.callbacks or ()
-        for callback in callbacks:
-            argument = callback(argument, rotation=rotation)
-        return argument
+        if not isinstance(music, prototype):
+            raise Exception(music)
+            music = abjad.select(music)
+        for callback in self.callbacks or ():
+            music = callback(music)
+        return music
 
     def __getitem__(self, argument):
         r'''Gets item or slice identified by `argument`.
@@ -242,6 +238,44 @@ class Selector(AbjadValueObject):
             del frame
         return template
 
+    ### PUBLIC PROPERTIES ###
+
+    @property
+    def callbacks(self):
+        r'''Gets callbacks.
+
+        Returns tuple.
+        '''
+        return self._callbacks
+
+    @property
+    def template(self):
+        r'''Gets template.
+
+        ..  container:: example
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> template = 'select_note_runs()'
+                >>> selector = abjad.new(selector, template=template)
+
+            ::
+
+                >>> selector
+                select_note_runs()
+
+            ::
+
+                >>> abjad.f(selector)
+                select_note_runs()
+
+        Returns string or none.
+        '''
+        return self._template
+
     ### PUBLIC METHODS ###
 
     def append_callback(self, callback):
@@ -262,7 +296,7 @@ class Selector(AbjadValueObject):
 
                 >>> from abjad.tools import abctools
                 >>> class CMajorSelectorCallback(abctools.AbjadValueObject):
-                ...     def __call__(self, argument, rotation=None):
+                ...     def __call__(self, argument):
                 ...         c_major_pcs = abjad.PitchClassSet("c e g")
                 ...         result = []
                 ...         for item in argument:
@@ -2252,70 +2286,6 @@ class Selector(AbjadValueObject):
 
         ..  container:: example
 
-            Selects every other leaf rotated one to the right:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_pattern(
-                ...     pattern=abjad.index_every([0], period=2),
-                ...     )
-
-            ::
-
-                >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
-                >>> result = selector(staff, rotation=1)
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8 ~
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8 ~
-                    e'8 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    e'8
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Note("d'8")
-                Note("e'8")
-                Note("e'8")
-                Note("f'8")
-
-        ..  container:: example
-
             Selects every other logical tie:
 
             ::
@@ -3784,7 +3754,6 @@ class Selector(AbjadValueObject):
         fuse_overhang=False,
         nonempty=False,
         overhang=False,
-        rotate=False,
         ):
         r'''Partitions by counts.
 
@@ -4165,105 +4134,6 @@ class Selector(AbjadValueObject):
                 Selection([Note("a'8"), Note("b'8")])
                 Selection([Rest('r8'), Note("c''8")])
 
-        ..  container:: example
-
-            Partitions cyclically by counts rotated one to the left, with
-            overhang:
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.partition_by_counts(
-                ...     [1, 2, 3],
-                ...     cyclic=True,
-                ...     overhang=True,
-                ...     rotate=True,
-                ...     )
-
-
-            ::
-
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
-                >>> result = selector(staff, rotation=1)
-                >>> selector.color(result, ['red', 'blue', 'cyan'])
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #cyan
-                    \once \override Beam.color = #cyan
-                    \once \override Dots.color = #cyan
-                    \once \override NoteHead.color = #cyan
-                    \once \override Stem.color = #cyan
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    g'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    b'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    c''8
-                }
-
-            ::
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Rest('r8')])
-                Selection([Note("d'8"), Note("e'8"), Rest('r8')])
-                Selection([Note("f'8")])
-                Selection([Note("g'8"), Note("a'8")])
-                Selection([Note("b'8"), Rest('r8'), Note("c''8")])
-
         Returns new expression.
         '''
         import abjad
@@ -4273,7 +4143,6 @@ class Selector(AbjadValueObject):
             fuse_overhang=fuse_overhang,
             nonempty=nonempty,
             overhang=overhang,
-            rotate=rotate,
             )
         selector = self._append_callback(callback)
         template = self._get_template(inspect.currentframe())
@@ -4462,7 +4331,7 @@ class Selector(AbjadValueObject):
                 print(repr(item))
 
     @staticmethod
-    def run_selectors(argument, selectors, rotation=None):
+    def run_selectors(argument, selectors):
         r'''Processes multiple selectors against a single selection.
 
         ..  container:: example
@@ -4547,9 +4416,6 @@ class Selector(AbjadValueObject):
         Returns a dictionary of selector/selection pairs.
         '''
         import abjad
-        if rotation is None:
-            rotation = 0
-        rotation = int(rotation)
         prototype = (abjad.Component, abjad.Selection)
         if not isinstance(argument, prototype):
             argument = abjad.select(argument)
@@ -4589,10 +4455,7 @@ class Selector(AbjadValueObject):
                 previous_prefix = callbacks[:index - 1]
                 previous_expr = results_by_prefix[previous_prefix]
                 callback = this_prefix[-1]
-                argument = callback(
-                    previous_expr,
-                    rotation=rotation,
-                    )
+                argument = callback(previous_expr)
                 results_by_prefix[this_prefix] = argument
         return results_by_selector
 
@@ -5160,41 +5023,3 @@ class Selector(AbjadValueObject):
         selector = self._append_callback(callback)
         template = self._get_template(inspect.currentframe())
         return abjad.new(selector, template=template)
-
-    ### PUBLIC PROPERTIES ###
-
-    @property
-    def callbacks(self):
-        r'''Gets callbacks.
-
-        Returns tuple.
-        '''
-        return self._callbacks
-
-    @property
-    def template(self):
-        r'''Gets template.
-
-        ..  container:: example
-
-            ::
-
-                >>> selector = abjad.select()
-                >>> selector = selector.by_leaf()
-                >>> selector = selector.by_run(abjad.Note)
-                >>> template = 'select_note_runs()'
-                >>> selector = abjad.new(selector, template=template)
-
-            ::
-
-                >>> selector
-                select_note_runs()
-
-            ::
-
-                >>> abjad.f(selector)
-                select_note_runs()
-
-        Returns string or none.
-        '''
-        return self._template

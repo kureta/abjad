@@ -23,25 +23,18 @@ class ByPatternCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
+    def __call__(self, argument):
         r'''Calls callback on `argument`.
 
         Returns selection.
         '''
         import abjad
-        if rotation is None:
-            rotation = 0
-        rotation = int(rotation)
         if not self.pattern:
             return argument
         result = []
         length = len(argument)
         for index, item in enumerate(argument):
-            if self.pattern.matches_index(
-                index,
-                length,
-                rotation=rotation,
-                ):
+            if self.pattern.matches_index(index, length):
                 result.append(item)
         return abjad.Selection(result)
 

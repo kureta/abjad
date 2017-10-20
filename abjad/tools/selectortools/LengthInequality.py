@@ -64,7 +64,7 @@ class LengthInequality(Inequality):
     ### SPECIAL METHODS ###
 
     def __call__(self, argument):
-        r'''Calls length inequality on `argument`.
+        r'''Calls inequality on `argument`.
 
         Returns true or false.
         '''

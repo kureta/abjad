@@ -14,7 +14,7 @@ class TopCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
+    def __call__(self, argument=None):
         r'''Calls callback on `argument`.
 
         Returns selection.

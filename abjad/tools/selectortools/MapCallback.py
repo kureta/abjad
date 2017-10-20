@@ -20,7 +20,7 @@ class MapCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument, rotation=None):
+    def __call__(self, argument):
         r'''Maps callback to `argument`.
 
         Returns list.
