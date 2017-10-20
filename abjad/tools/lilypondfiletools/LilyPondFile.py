@@ -1462,8 +1462,14 @@ class LilyPondFile(AbjadObject):
         score = abjad.Score()
         lilypond_file = abjad.LilyPondFile.floating(score)
         if pitched_staff is None:
-            for note in abjad.iterate(selections).by_class(
-                abjad.Note,
+            if isinstance(selections, list):
+                selections_ = selections
+            elif isinstance(selections, dict):
+                selections_ = selections.values()
+            else:
+                raise TypeError(selections)
+            for note in abjad.iterate(selections_).by_class(
+                prototype=abjad.Note,
                 with_grace_notes=True,
                 ):
                 if note.written_pitch != abjad.NamedPitch("c'"):

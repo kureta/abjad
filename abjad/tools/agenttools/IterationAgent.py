@@ -1,11 +1,8 @@
 import collections
 import inspect
 from abjad.tools import abctools
-from abjad.tools import durationtools
-from abjad.tools import mathtools
-from abjad.tools import scoretools
-from abjad.tools import spannertools
-from abjad.tools.topleveltools import iterate
+# import datastructuretools makes Left available
+from abjad.tools import datastructuretools
 
 
 class IterationAgent(abctools.AbjadObject):
@@ -115,21 +112,11 @@ class IterationAgent(abctools.AbjadObject):
     ### INITIALIZER ###
 
     def __init__(self, client=None):
+        assert not isinstance(client, str), repr(client)
         self._client = client
         self._expression = None
 
     ### PRIVATE METHODS ###
-
-    @staticmethod
-    def _matches_pitched(component, pitched=None):
-        import abjad
-        prototype = (abjad.Chord, abjad.Note)
-        if (pitched is None or
-            (pitched is True and isinstance(component, prototype)) or
-            (pitched is not True and not isinstance(component, prototype))):
-            return True
-        else:
-            return False
 
     @staticmethod
     def _iterate_components(argument, prototype, pitched=None, reverse=False):
@@ -165,55 +152,69 @@ class IterationAgent(abctools.AbjadObject):
         except StopIteration:
             pass
 
-    def _with_graces(self, prototype=None):
-        prototype = prototype or scoretools.Leaf
-        if getattr(self._client, '_grace_container', None) is not None:
-            for component in self._client._grace_container:
-                for x in iterate(component)._with_graces(
-                    prototype,
-                    ):
-                    yield x
-        if isinstance(self._client, prototype):
-            yield self._client
-        if getattr(self._client, '_after_grace_container', None) is not None:
-            for component in self._client._after_grace_container:
-                for x in iterate(component)._with_graces(
-                    prototype,
-                    ):
-                    yield x
-        if isinstance(self._client, (list, tuple)):
-            for component in self._client:
-                for x in iterate(component)._with_graces(
-                    prototype,
-                    ):
-                    yield x
-        if hasattr(self._client, '_music'):
-            for component in self._client._music:
-                for x in iterate(component)._with_graces(
-                    prototype,
-                    ):
-                    yield x
-
     @staticmethod
     def _list_ordered_pitch_pairs(expr_1, expr_2):
-        pitches_1 = sorted(iterate(expr_1).by_pitch())
-        pitches_2 = sorted(iterate(expr_2).by_pitch())
+        import abjad
+        pitches_1 = sorted(abjad.iterate(expr_1).by_pitch())
+        pitches_2 = sorted(abjad.iterate(expr_2).by_pitch())
         sequences = [pitches_1, pitches_2]
-        enumerator = mathtools.Enumerator(sequences)
+        enumerator = abjad.Enumerator(sequences)
         for pair in enumerator.yield_outer_product():
             yield pair
 
     @staticmethod
     def _list_unordered_pitch_pairs(argument):
-        pitches = sorted(iterate(argument).by_pitch())
-        enumerator = mathtools.Enumerator(pitches)
+        import abjad
+        pitches = sorted(abjad.iterate(argument).by_pitch())
+        enumerator = abjad.Enumerator(pitches)
         for pair in enumerator.yield_pairs():
             yield pair
+
+    @staticmethod
+    def _matches_pitched(component, pitched=None):
+        import abjad
+        prototype = (abjad.Chord, abjad.Note)
+        if (pitched is None or
+            (pitched is True and isinstance(component, prototype)) or
+            (pitched is not True and not isinstance(component, prototype))):
+            return True
+        else:
+            return False
 
     def _update_expression(self, frame):
         import abjad
         callback = abjad.Expression._frame_to_callback(frame)
         return self._expression.append_callback(callback)
+
+    @staticmethod
+    def _with_graces(argument, prototype=None):
+        import abjad
+        if isinstance(argument, str):
+            raise Exception(repr(argument))
+        prototype = prototype or abjad.Leaf
+        if getattr(argument, '_grace_container', None) is not None:
+            for component in argument._grace_container:
+                for x in IterationAgent._with_graces(
+                    component,
+                    prototype=prototype,
+                    ):
+                    yield x
+        if isinstance(argument, prototype):
+            yield argument
+        if getattr(argument, '_after_grace_container', None) is not None:
+            for component in argument._after_grace_container:
+                for x in IterationAgent._with_graces(
+                    component,
+                    prototype=prototype,
+                    ):
+                    yield x
+        if isinstance(argument, collections.Iterable):
+            for component in argument:
+                for x in IterationAgent._with_graces(
+                    component,
+                    prototype=prototype,
+                    ):
+                    yield x
 
     ### PUBLIC PROPERTIES ###
 
@@ -752,9 +753,10 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        prototype = prototype or scoretools.Component
+        prototype = prototype or abjad.Component
         if with_grace_notes:
             if reverse:
                 message = 'reverse grace iteration not yet implemented.'
@@ -762,9 +764,9 @@ class IterationAgent(abctools.AbjadObject):
             if not start == 0 or stop is not None:
                 message = 'indexed grace iteration not yet implemented.'
                 raise NotImplementedError(message)
-            return self._with_graces(prototype=prototype)
+            return self._with_graces(self.client, prototype=prototype)
         iterator = self._iterate_components(
-            self._client,
+            self.client,
             prototype,
             pitched=pitched,
             reverse=reverse
@@ -1171,9 +1173,10 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        prototype = prototype or scoretools.Leaf
+        prototype = prototype or abjad.Leaf
         return self.by_class(
             prototype=prototype,
             pitched=pitched,
@@ -1275,18 +1278,17 @@ class IterationAgent(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         vertical_moments = self.by_vertical_moment()
-
         def _closure(vertical_moments):
             for moment_1, moment_2 in abjad.Sequence(vertical_moments).nwise():
-                enumerator = mathtools.Enumerator(moment_1.start_leaves)
+                enumerator = abjad.Enumerator(moment_1.start_leaves)
                 for pair in enumerator.yield_pairs():
                     yield abjad.select(pair)
                 sequences = [moment_1.leaves, moment_2.start_leaves]
-                enumerator = mathtools.Enumerator(sequences)
+                enumerator = abjad.Enumerator(sequences)
                 for pair in enumerator.yield_outer_product():
                     yield abjad.select(pair)
             else:
-                enumerator = mathtools.Enumerator(moment_2.start_leaves)
+                enumerator = abjad.Enumerator(moment_2.start_leaves)
                 for pair in enumerator.yield_pairs():
                     yield abjad.select(pair)
         return _closure(vertical_moments)
@@ -1965,40 +1967,40 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-
         def _closure():
-            if (isinstance(self._client, prototype) and
-                self._client._get_parentage().logical_voice == logical_voice):
-                yield self._client
+            if (isinstance(self.client, prototype) and
+                self.client._get_parentage().logical_voice == logical_voice):
+                yield self.client
             if not reverse:
-                if isinstance(self._client, (list, tuple)):
-                    for component in self._client:
-                        for x in iterate(component).by_logical_voice(
+                if isinstance(self.client, (list, tuple)):
+                    for component in self.client:
+                        for x in abjad.iterate(component).by_logical_voice(
                             prototype,
                             logical_voice,
                             ):
                             yield x
-                if hasattr(self._client, '_music'):
-                    for component in self._client._music:
-                        for x in iterate(component).by_logical_voice(
+                if hasattr(self.client, '_music'):
+                    for component in self.client._music:
+                        for x in abjad.iterate(component).by_logical_voice(
                             prototype,
                             logical_voice,
                             ):
                             yield x
             else:
-                if isinstance(self._client, (list, tuple)):
-                    for component in reversed(self._client):
-                        for x in iterate(component).by_logical_voice(
+                if isinstance(self.client, (list, tuple)):
+                    for component in reversed(self.client):
+                        for x in abjad.iterate(component).by_logical_voice(
                             prototype,
                             logical_voice,
                             reverse=True,
                             ):
                             yield x
-                if hasattr(self._client, '_music'):
-                    for component in reversed(self._client._music):
-                        for x in iterate(component).by_logical_voice(
+                if hasattr(self.client, '_music'):
+                    for component in reversed(self.client._music):
+                        for x in abjad.iterate(component).by_logical_voice(
                             prototype,
                             logical_voice,
                             reverse=True,
@@ -2406,23 +2408,20 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        # set default class
         if prototype is None:
-            prototype = scoretools.Component
-
+            prototype = abjad.Component
         def _closure():
-            # save logical voice signature of input component
-            signature = self._client._get_parentage().logical_voice
-            # iterate component depth-first allowing to crawl UP into score
+            signature = self.client._get_parentage().logical_voice
             if not reverse:
-                for x in iterate(self._client).depth_first(capped=False):
+                for x in abjad.iterate(self.client).depth_first(capped=False):
                     if isinstance(x, prototype):
                         if x._get_parentage().logical_voice == signature:
                             yield x
             else:
-                for x in iterate(self._client).depth_first(
+                for x in abjad.iterate(self.client).depth_first(
                     capped=False,
                     direction=Right,
                     ):
@@ -2612,26 +2611,22 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
-        from abjad.tools import pitchtools
-        from abjad.tools import scoretools
-        from abjad.tools import spannertools
-        from abjad.tools.topleveltools import iterate
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-
         def _closure():
-            if isinstance(self._client, pitchtools.Pitch):
-                pitch = pitchtools.NamedPitch.from_pitch_carrier(self._client)
+            if isinstance(self.client, abjad.Pitch):
+                pitch = abjad.NamedPitch.from_pitch_carrier(self.client)
                 yield pitch
             result = []
             try:
-                result.extend(self._client.pitches)
+                result.extend(self.client.pitches)
             except AttributeError:
                 pass
-            if isinstance(self._client, scoretools.Chord):
-                result.extend(self._client.written_pitches)
-            elif isinstance(self._client, spannertools.Spanner):
-                for leaf in self._client.leaves:
+            if isinstance(self.client, abjad.Chord):
+                result.extend(self.client.written_pitches)
+            elif isinstance(self.client, abjad.Spanner):
+                for leaf in self.client.leaves:
                     try:
                         result.append(leaf.written_pitch)
                     except AttributeError:
@@ -2640,14 +2635,14 @@ class IterationAgent(abctools.AbjadObject):
                         result.extedn(leaf.written_pitches)
                     except AttributeError:
                         pass
-            elif isinstance(self._client, pitchtools.PitchSet):
-                result.extend(sorted(list(self._client)))
-            elif isinstance(self._client, (list, tuple, set)):
-                for item in self._client:
-                    for pitch_ in iterate(item).by_pitch():
+            elif isinstance(self.client, abjad.PitchSet):
+                result.extend(sorted(list(self.client)))
+            elif isinstance(self.client, (list, tuple, set)):
+                for item in self.client:
+                    for pitch_ in abjad.iterate(item).by_pitch():
                         result.append(pitch_)
             else:
-                for leaf in iterate(self._client).by_leaf():
+                for leaf in abjad.iterate(self.client).by_leaf():
                     try:
                         result.append(leaf.written_pitch)
                     except AttributeError:
@@ -2807,11 +2802,9 @@ class IterationAgent(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-
         def _closure():
             for leaf_pair in self.by_leaf_pair():
                 leaf_pair_list = list(leaf_pair)
-                # iterate chord pitches if first leaf is chord
                 for pair in self._list_unordered_pitch_pairs(
                     leaf_pair_list[0]):
                     yield abjad.PitchSegment(items=pair)
@@ -2821,7 +2814,6 @@ class IterationAgent(abctools.AbjadObject):
                 else:
                     for pair in self._list_ordered_pitch_pairs(*leaf_pair):
                         yield abjad.PitchSegment(items=pair)
-                # iterate chord pitches if last leaf is chord
                 for pair in self._list_unordered_pitch_pairs(
                     leaf_pair_list[1]):
                     yield abjad.PitchSegment(items=pair)
@@ -2993,8 +2985,7 @@ class IterationAgent(abctools.AbjadObject):
         prototype = prototype or abjad.Leaf
         if not isinstance(prototype, collections.Sequence):
             prototype = (prototype,)
-        selection = abjad.select(self._client)
-
+        selection = abjad.select(self.client)
         def _closure():
             current_run = ()
             for run in selection.group_by(type):
@@ -3122,20 +3113,19 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
-        from abjad.tools.topleveltools import inspect as abjad_inspect
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-
         def _closure():
             visited_spanners = set()
             for component in self.by_class(reverse=reverse):
-                spanners = abjad_inspect(component).get_spanners(
+                spanners = abjad.inspect(component).get_spanners(
                     prototype=prototype,
                     )
                 spanners = sorted(spanners,
                     key=lambda x: (
                         type(x).__name__,
-                        abjad_inspect(x).get_timespan(),
+                        abjad.inspect(x).get_timespan(),
                         ),
                     )
                 for spanner in spanners:
@@ -3338,12 +3328,12 @@ class IterationAgent(abctools.AbjadObject):
 
         Iterates leaves when `prototype` is none.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        prototype = prototype or scoretools.Leaf
-
+        prototype = prototype or abjad.Leaf
         def _closure():
-            if isinstance(self.client, scoretools.Component):
+            if isinstance(self.client, abjad.Component):
                 components = [self.client]
             else:
                 components = list(self.client)
@@ -3374,7 +3364,7 @@ class IterationAgent(abctools.AbjadObject):
                         if sibling is not None:
                             #print('        SIBLING:', sibling)
                             components.append(sibling)
-                        if not isinstance(component, scoretools.Container):
+                        if not isinstance(component, abjad.Container):
                             continue
                         if not len(component):
                             continue
@@ -3408,7 +3398,7 @@ class IterationAgent(abctools.AbjadObject):
                         sibling = component._get_sibling(-1)
                         if sibling is not None:
                             components.insert(0, sibling)
-                        if not isinstance(component, scoretools.Container):
+                        if not isinstance(component, abjad.Container):
                             continue
                         if not len(component):
                             continue
@@ -3787,22 +3777,22 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        assert isinstance(self._client, scoretools.Component)
-        prototype = prototype or scoretools.Leaf
-        root = self._client._get_parentage().root
-        component_generator = iterate(root).by_timeline(
+        assert isinstance(self.client, abjad.Component)
+        prototype = prototype or abjad.Leaf
+        root = self.client._get_parentage().root
+        component_generator = abjad.iterate(root).by_timeline(
             prototype=prototype,
             reverse=reverse,
             )
-
         def _closure():
             yielded_expr = False
             for component in component_generator:
                 if yielded_expr:
                     yield component
-                elif component is self._client:
+                elif component is self.client:
                     yield component
                     yielded_expr = True
         return _closure()
@@ -3873,37 +3863,26 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
-        from abjad.tools import selectiontools
-        prototype = (spannertools.Tie,)
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-
         def _closure():
-            if isinstance(self._client, scoretools.Leaf):
-                logical_tie = self._client._get_logical_tie()
+            if isinstance(self.client, abjad.Leaf):
+                logical_tie = self.client._get_logical_tie()
                 if len(logical_tie) == 1:
                     yield logical_tie
                 else:
                     message = 'can not have only one leaf in logical tie.'
                     raise ValueError(message)
-            elif isinstance(
-                self._client, (
-                    collections.Sequence,
-                    scoretools.Container,
-                    selectiontools.Selection,
-                    )):
-                for component in self._client:
-                    if isinstance(component, scoretools.Leaf):
-                        tie_spanners = component._get_spanners(prototype)
-                        if not tie_spanners or \
-                            tuple(tie_spanners)[0]._is_my_last_leaf(component):
+            elif isinstance(self.client, collections.Iterable):
+                for component in self.client:
+                    if isinstance(component, abjad.Leaf):
+                        ties = component._get_spanners(abjad.Tie)
+                        if (not ties or
+                            tuple(ties)[0]._is_my_last_leaf(component)):
                             yield component._get_logical_tie()
-                    elif isinstance(component, scoretools.Container):
+                    elif isinstance(component, abjad.Container):
                         yield component
-            else:
-                message = 'input must be iterable: {!r}.'
-                message = message.format(self._client)
-                raise ValueError(message)
         return _closure()
 
     def by_vertical_moment(self, reverse=False):
@@ -4111,13 +4090,13 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
-        from abjad.tools import selectiontools
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         def _buffer_components_starting_with(component, buffer, stop_offsets):
             buffer.append(component)
             stop_offsets.append(component._get_timespan().stop_offset)
-            if isinstance(component, scoretools.Container):
+            if isinstance(component, abjad.Container):
                 if component.is_simultaneous:
                     for x in component:
                         _buffer_components_starting_with(
@@ -4129,12 +4108,11 @@ class IterationAgent(abctools.AbjadObject):
 
         def _iterate_vertical_moments(argument):
             governors = (argument,)
-            current_offset, stop_offsets, buffer = \
-                durationtools.Offset(0), [], []
+            current_offset, stop_offsets, buffer = abjad.Offset(0), [], []
             _buffer_components_starting_with(argument, buffer, stop_offsets)
             while buffer:
-                vertical_moment = selectiontools.VerticalMoment()
-                offset = durationtools.Offset(current_offset)
+                vertical_moment = abjad.VerticalMoment()
+                offset = abjad.Offset(current_offset)
                 components = list(buffer)
                 components.sort(key=lambda x: x._get_parentage().score_index)
                 vertical_moment._offset = offset
@@ -4144,15 +4122,13 @@ class IterationAgent(abctools.AbjadObject):
                 current_offset, stop_offsets = min(stop_offsets), []
                 _update_buffer(current_offset, buffer, stop_offsets)
         def _next_in_parent(component):
-            from abjad.tools import selectiontools
-            assert isinstance(component, scoretools.Component), repr(component)
-            selection = selectiontools.Selection(component)
-            parent, start, stop = \
-                selection._get_parent_and_start_stop_indices()
+            assert isinstance(component, abjad.Component), repr(component)
+            selection = abjad.Selection(component)
+            result = selection._get_parent_and_start_stop_indices()
+            parent, start, stop = result
             assert start == stop
             if parent is None:
                 raise StopIteration
-            # can not advance within simultaneous parent
             if parent.is_simultaneous:
                 raise StopIteration
             try:
@@ -4160,7 +4136,6 @@ class IterationAgent(abctools.AbjadObject):
             except IndexError:
                 raise StopIteration
         def _update_buffer(current_offset, buffer, stop_offsets):
-            #print 'At %s with %s ...' % (current_offset, buffer)
             for component in buffer[:]:
                 if component._get_timespan().stop_offset <= current_offset:
                     buffer.remove(component)
@@ -4172,10 +4147,9 @@ class IterationAgent(abctools.AbjadObject):
                         pass
                 else:
                     stop_offsets.append(component._get_timespan().stop_offset)
-
         def _closure():
             if not reverse:
-                for x in _iterate_vertical_moments(self._client):
+                for x in _iterate_vertical_moments(self.client):
                     yield x
             else:
                 moments_in_governor = []
@@ -4185,7 +4159,8 @@ class IterationAgent(abctools.AbjadObject):
                         moments_in_governor.append(offset)
                 moments_in_governor.sort()
                 for moment_in_governor in reversed(moments_in_governor):
-                    yield self._client._get_vertical_moment_at(moment_in_governor)
+                    yield self.client._get_vertical_moment_at(
+                        moment_in_governor)
         return _closure()
 
     def depth_first(
@@ -4437,6 +4412,10 @@ class IterationAgent(abctools.AbjadObject):
 
         Returns generator.
         '''
+        import abjad
+#        direction = direction or abjad.Left
+#        if direction is None:
+#            direction = abjad.Left
         if self._expression:
             return self._update_expression(inspect.currentframe())
         def _next_node_depth_first(component, total):
@@ -4448,13 +4427,10 @@ class IterationAgent(abctools.AbjadObject):
 
             If client has no univisited music and no parent, return none.
             '''
-            import abjad
             # if component is a container with not-yet-returned children
-            if (
-                hasattr(component, '_music') and
+            if (hasattr(component, '_music') and
                 0 < len(component) and
-                total < len(component)
-                ):
+                total < len(component)):
                 # return next not-yet-returned child
                 return component[total], 0
             # if component is a leaf with grace container attached
@@ -4472,10 +4448,8 @@ class IterationAgent(abctools.AbjadObject):
                 if carrier is None:
                     return None, None
                 # if there's also an after grace container
-                if (
-                    not isinstance(component, abjad.AfterGraceContainer) and
-                    carrier._after_grace_container is not None
-                    ):
+                if (not isinstance(component, abjad.AfterGraceContainer) and
+                    carrier._after_grace_container is not None):
                     return carrier._after_grace_container, 0
                 carrier_parent = carrier._parent
                 # if carrier has no parent
@@ -4497,11 +4471,9 @@ class IterationAgent(abctools.AbjadObject):
 
             If client has no univisited music and no parent, return none.
             '''
-            if (
-                hasattr(component, '_music') and
+            if (hasattr(component, '_music') and
                 0 < len(component) and
-                total < len(component)
-                ):
+                total < len(component)):
                 return component[len(component) - 1 - total], 0
             else:
                 parent = component._parent
@@ -4545,10 +4517,9 @@ class IterationAgent(abctools.AbjadObject):
                     return None
             else:
                 return node
-        assert isinstance(self._client, scoretools.Component)
-
+        assert isinstance(self.client, abjad.Component)
         def _closure():
-            component = self._client
+            component = self.client
             client_parent, node, rank = component._parent, component, 0
             queue = collections.deque([])
             while node is not None and not (capped and node is client_parent):
@@ -4558,7 +4529,8 @@ class IterationAgent(abctools.AbjadObject):
                 if _is_node_forbidden(node, forbid):
                     node, rank = _handle_forbidden_node(node, queue)
                 else:
-                    node, rank = _advance_node_depth_first(node, rank, direction)
+                    node, rank = _advance_node_depth_first(
+                        node, rank, direction)
             queue.clear()
         return _closure()
 
@@ -4596,8 +4568,8 @@ class IterationAgent(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        for leaf in abjad.iterate(self._client).by_leaf(pitched=True):
-            instrument = leaf._get_effective(abjad.instrumenttools.Instrument)
+        for leaf in abjad.iterate(self.client).by_leaf(pitched=True):
+            instrument = leaf._get_effective(abjad.Instrument)
             if instrument is None:
                 message = 'no instrument found.'
                 raise ValueError(message)
