@@ -117,23 +117,53 @@ class IterationAgent(abctools.AbjadObject):
     ### PRIVATE METHODS ###
 
     @staticmethod
-    def _iterate_components(argument, prototype, pitched=None, reverse=False):
+    def _iterate_components(
+        argument,
+        pitched=None,
+        prototype=None,
+        reverse=False,
+        with_grace_notes=True,
+        ):
         import abjad
         if isinstance(argument, str):
             raise Exception(repr(argument))
+        if (with_grace_notes and
+            getattr(argument, '_grace_container', None) is not None):
+            for component in argument._grace_container:
+                for x in IterationAgent._iterate_components(
+                    component,
+                    pitched=pitched,
+                    prototype=prototype,
+                    reverse=reverse,
+                    with_grace_notes=with_grace_notes,
+                    ):
+                    yield x
         if isinstance(argument, prototype):
             if IterationAgent._matches_pitched(argument, pitched=pitched):
                 yield argument
+        if (with_grace_notes and
+            getattr(argument, '_after_grace_container', None) is not None):
+            for component in argument._after_grace_container:
+                for x in IterationAgent._iterate_components(
+                    component,
+                    pitched=pitched,
+                    prototype=prototype,
+                    reverse=reverse,
+                    with_grace_notes=with_grace_notes,
+                    ):
+                    yield x
         if isinstance(argument, collections.Iterable):
             if reverse:
                 argument = reversed(argument)
-            for item in argument:
-                for component in IterationAgent._iterate_components(
-                    item,
-                    prototype,
+            for component in argument:
+                for x in IterationAgent._iterate_components(
+                    component,
                     pitched=pitched,
-                    reverse=reverse):
-                    yield component
+                    prototype=prototype,
+                    reverse=reverse,
+                    with_grace_notes=with_grace_notes,
+                    ):
+                    yield x
 
     @staticmethod
     def _iterate_subrange(iterator, start=0, stop=None):
@@ -183,36 +213,6 @@ class IterationAgent(abctools.AbjadObject):
         import abjad
         callback = abjad.Expression._frame_to_callback(frame)
         return self._expression.append_callback(callback)
-
-    @staticmethod
-    def _with_graces(argument, prototype=None):
-        import abjad
-        if isinstance(argument, str):
-            raise Exception(repr(argument))
-        prototype = prototype or abjad.Leaf
-        if getattr(argument, '_grace_container', None) is not None:
-            for component in argument._grace_container:
-                for x in IterationAgent._with_graces(
-                    component,
-                    prototype=prototype,
-                    ):
-                    yield x
-        if isinstance(argument, prototype):
-            yield argument
-        if getattr(argument, '_after_grace_container', None) is not None:
-            for component in argument._after_grace_container:
-                for x in IterationAgent._with_graces(
-                    component,
-                    prototype=prototype,
-                    ):
-                    yield x
-        if isinstance(argument, collections.Iterable):
-            for component in argument:
-                for x in IterationAgent._with_graces(
-                    component,
-                    prototype=prototype,
-                    ):
-                    yield x
 
     ### PUBLIC PROPERTIES ###
 
@@ -755,19 +755,12 @@ class IterationAgent(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.Component
-        if with_grace_notes:
-            if reverse:
-                message = 'reverse grace iteration not yet implemented.'
-                raise NotImplementedError(message)
-            if not start == 0 or stop is not None:
-                message = 'indexed grace iteration not yet implemented.'
-                raise NotImplementedError(message)
-            return self._with_graces(self.client, prototype=prototype)
         iterator = self._iterate_components(
             self.client,
-            prototype,
             pitched=pitched,
-            reverse=reverse
+            prototype=prototype,
+            reverse=reverse,
+            with_grace_notes=with_grace_notes,
             )
         return self._iterate_subrange(iterator, start, stop)
 
