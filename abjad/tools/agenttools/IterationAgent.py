@@ -121,38 +121,41 @@ class IterationAgent(abctools.AbjadObject):
     ### PRIVATE METHODS ###
 
     @staticmethod
+    def _matches_pitched(component, pitched=None):
+        import abjad
+        prototype = (abjad.Chord, abjad.Note)
+        if (pitched is None or
+            (pitched is True and isinstance(component, prototype)) or
+            (pitched is not True and not isinstance(component, prototype))):
+            return True
+        else:
+            return False
+
+    @staticmethod
     def _iterate_components(argument, prototype, pitched=None, reverse=False):
         import abjad
-        pitched_prototype = (abjad.Chord, abjad.Note)
+        # TODO: forbid string input
+        if isinstance(argument, str):
+            #raise Exception(repr(argument))
+            return
         if isinstance(argument, prototype):
-            if pitched is None:
+            if IterationAgent._matches_pitched(argument, pitched=pitched):
                 yield argument
-            elif pitched is True and isinstance(argument, pitched_prototype):
-                yield argument
-            elif (
-                pitched is not True and not
-                isinstance(argument, pitched_prototype)
-                ):
-                yield argument
-        if (isinstance(argument, (list, tuple, abjad.Spanner)) or
-            hasattr(argument, '_music')):
-            if hasattr(argument, '_music'):
-                argument = argument._music
+        if isinstance(argument, collections.Iterable):
             if reverse:
                 argument = reversed(argument)
-            for component in argument:
-                for x in IterationAgent._iterate_components(
-                    component,
+            for item in argument:
+                for component in IterationAgent._iterate_components(
+                    item,
                     prototype,
                     pitched=pitched,
                     reverse=reverse):
-                    yield x
+                    yield component
 
     @staticmethod
     def _iterate_subrange(iterator, start=0, stop=None):
         assert 0 <= start
         try:
-            # skip items before start
             for i in range(start):
                 next(iterator)
             if stop is None:
