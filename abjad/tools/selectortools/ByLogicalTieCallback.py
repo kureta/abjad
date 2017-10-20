@@ -18,7 +18,7 @@ class ByLogicalTieCallback(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(self, pitched=True, trivial=True, with_grace_notes=False):
+    def __init__(self, pitched=True, trivial=True, with_grace_notes=True):
         self._pitched = bool(pitched)
         self._trivial = bool(trivial)
         self._with_grace_notes = bool(with_grace_notes)

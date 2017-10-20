@@ -827,7 +827,7 @@ class Selection(object):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Select components by class.
 
@@ -890,7 +890,7 @@ class Selection(object):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Select components by leaf.
 

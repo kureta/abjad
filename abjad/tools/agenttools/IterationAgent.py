@@ -296,7 +296,7 @@ class IterationAgent(abctools.AbjadObject):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Iterates by class.
 
@@ -555,9 +555,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for component in abjad.iterate(voice).by_class(
-                    ...     with_grace_notes=True,
-                    ...     ):
+                    >>> for component in abjad.iterate(voice).by_class():
                     ...     component
                     ...
                     Voice("c'8 d'8 e'8 f'8")
@@ -573,9 +571,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_class()
                     >>> for component in expression(voice):
                     ...     component
                     ...
@@ -626,9 +622,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(voice).by_class(
-                    ...     with_grace_notes=True,
-                    ...     ):
+                    >>> for leaf in abjad.iterate(voice).by_class():
                     ...     leaf
                     ...
                     Voice("c'8 d'8 e'8 f'8")
@@ -646,9 +640,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_class()
                     >>> for leaf in expression(voice):
                     ...     leaf
                     ...
@@ -701,7 +693,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(voice).by_class(
-                    ...     with_grace_notes=True,
                     ...     reverse=True,
                     ...     ):
                     ...     leaf
@@ -721,10 +712,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     with_grace_notes=True,
-                    ...     reverse=True,
-                    ...     )
+                    >>> expression = expression.by_class(reverse=True)
                     >>> for leaf in expression(voice):
                     ...     leaf
                     ...
@@ -882,7 +870,7 @@ class IterationAgent(abctools.AbjadObject):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=False,
+        with_grace_notes=True,
         ):
         r'''Iterates by leaf.
 
@@ -1125,9 +1113,7 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(voice).by_leaf(
-                    ...     with_grace_notes=True,
-                    ...     ):
+                    >>> for leaf in abjad.iterate(voice).by_leaf():
                     ...     leaf
                     ...
                     Note("c'8")
@@ -1144,9 +1130,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_leaf()
                     >>> for leaf in expression(voice):
                     ...     leaf
                     ...
@@ -1724,10 +1708,8 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(voice).by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     ):
-                    ...     logical_tie
+                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    ...     item
                     ...
                     LogicalTie([Note("c'8")])
                     LogicalTie([Note("cf''16")])
@@ -1741,9 +1723,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_logical_tie()
                     >>> for logical_tie in expression(voice):
                     ...     logical_tie
                     ...
@@ -1786,10 +1766,8 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(voice).by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     ):
-                    ...     logical_tie
+                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    ...     item
                     ...
                     LogicalTie([Note("c'8")])
                     LogicalTie([Note("d'8")])
@@ -1803,9 +1781,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_logical_tie()
                     >>> for logical_tie in expression(voice):
                     ...     logical_tie
                     ...
@@ -1855,10 +1831,8 @@ class IterationAgent(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(voice).by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     ):
-                    ...     logical_tie
+                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    ...     item
                     ...
                     LogicalTie([Note("c'8")])
                     LogicalTie([Note("cf''16")])
@@ -1874,9 +1848,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(
-                    ...     with_grace_notes=True,
-                    ...     )
+                    >>> expression = expression.by_logical_tie()
                     >>> for logical_tie in expression(voice):
                     ...     logical_tie
                     ...
@@ -3449,7 +3421,8 @@ class IterationAgent(abctools.AbjadObject):
                         for _ in components
                         )
                     components.sort(
-                        key=lambda x: x._get_parentage(with_grace_notes=True).score_index,
+                        key=lambda x: x._get_parentage(
+                            with_grace_notes=True).score_index,
                         reverse=True,
                         )
                     components_to_process = components[:]
@@ -3486,7 +3459,8 @@ class IterationAgent(abctools.AbjadObject):
                         for _ in components
                         )
                     components.sort(
-                        key=lambda x: x._get_parentage(with_grace_notes=True).score_index,
+                        key=lambda x: x._get_parentage(
+                            with_grace_notes=True).score_index,
                         reverse=True,
                         )
                     components_to_process = components[:]
