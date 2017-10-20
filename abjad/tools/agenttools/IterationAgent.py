@@ -120,11 +120,55 @@ class IterationAgent(abctools.AbjadObject):
 
     ### PRIVATE METHODS ###
 
-    def _by_components_and_grace_containers(self, prototype=None):
+    @staticmethod
+    def _iterate_components(argument, prototype, pitched=None, reverse=False):
+        import abjad
+        pitched_prototype = (abjad.Chord, abjad.Note)
+        if isinstance(argument, prototype):
+            if pitched is None:
+                yield argument
+            elif pitched is True and isinstance(argument, pitched_prototype):
+                yield argument
+            elif (
+                pitched is not True and not
+                isinstance(argument, pitched_prototype)
+                ):
+                yield argument
+        if (isinstance(argument, (list, tuple, abjad.Spanner)) or
+            hasattr(argument, '_music')):
+            if hasattr(argument, '_music'):
+                argument = argument._music
+            if reverse:
+                argument = reversed(argument)
+            for component in argument:
+                for x in IterationAgent._iterate_components(
+                    component,
+                    prototype,
+                    pitched=pitched,
+                    reverse=reverse):
+                    yield x
+
+    @staticmethod
+    def _iterate_subrange(iterator, start=0, stop=None):
+        assert 0 <= start
+        try:
+            # skip items before start
+            for i in range(start):
+                next(iterator)
+            if stop is None:
+                for item in iterator:
+                    yield item
+            else:
+                for i in range(stop - start):
+                    yield next(iterator)
+        except StopIteration:
+            pass
+
+    def _with_graces(self, prototype=None):
         prototype = prototype or scoretools.Leaf
         if getattr(self._client, '_grace_container', None) is not None:
             for component in self._client._grace_container:
-                for x in iterate(component)._by_components_and_grace_containers(
+                for x in iterate(component)._with_graces(
                     prototype,
                     ):
                     yield x
@@ -132,19 +176,19 @@ class IterationAgent(abctools.AbjadObject):
             yield self._client
         if getattr(self._client, '_after_grace_container', None) is not None:
             for component in self._client._after_grace_container:
-                for x in iterate(component)._by_components_and_grace_containers(
+                for x in iterate(component)._with_graces(
                     prototype,
                     ):
                     yield x
         if isinstance(self._client, (list, tuple)):
             for component in self._client:
-                for x in iterate(component)._by_components_and_grace_containers(
+                for x in iterate(component)._with_graces(
                     prototype,
                     ):
                     yield x
         if hasattr(self._client, '_music'):
             for component in self._client._music:
-                for x in iterate(component)._by_components_and_grace_containers(
+                for x in iterate(component)._with_graces(
                     prototype,
                     ):
                     yield x
@@ -717,69 +761,14 @@ class IterationAgent(abctools.AbjadObject):
             if not start == 0 or stop is not None:
                 message = 'indexed grace iteration not yet implemented.'
                 raise NotImplementedError(message)
-            return self._by_components_and_grace_containers(
-                prototype=prototype
-                )
-        pitched_prototype = (scoretools.Note, scoretools.Chord)
-
-        def component_iterator(argument, prototype, reverse=False):
-            if isinstance(argument, prototype):
-                if pitched is None:
-                    yield argument
-                elif pitched is True and isinstance(argument, pitched_prototype):
-                    yield argument
-                elif (
-                    pitched is not True and not
-                    isinstance(argument, pitched_prototype)
-                    ):
-                    yield argument
-            if (
-                isinstance(argument, (list, tuple, spannertools.Spanner)) or
-                hasattr(argument, '_music')
-                ):
-                if hasattr(argument, '_music'):
-                    argument = argument._music
-                if reverse:
-                    argument = reversed(argument)
-                for component in argument:
-                    for x in component_iterator(
-                        component,
-                        prototype,
-                        reverse=reverse,
-                        ):
-                        yield x
-
-        def subrange(iter, start=0, stop=None):
-            # if start<0, then 'stop-start' gives a funny result
-            # don not have to check stop>=start
-            # because range(stop-start) already handles that
-            assert 0 <= start
-            try:
-                # skip the first few elements, up to 'start' of them:
-                for i in range(start):
-                    # no yield to swallow the results
-                    next(iter)
-                # now generate (stop-start) elements
-                # (or all elements if stop is none)
-                if stop is None:
-                    for x in iter:
-                        yield x
-                else:
-                    for i in range(stop - start):
-                        yield next(iter)
-            except StopIteration:
-                # this happens if we exhaust the list before
-                # we generate a total of 'stop' elements
-                pass
-        return subrange(
-            component_iterator(
-                self._client,
-                prototype,
-                reverse=reverse
-                ),
-            start,
-            stop,
+            return self._with_graces(prototype=prototype)
+        iterator = self._iterate_components(
+            self._client,
+            prototype,
+            pitched=pitched,
+            reverse=reverse
             )
+        return self._iterate_subrange(iterator, start, stop)
 
     def by_leaf(
         self,
