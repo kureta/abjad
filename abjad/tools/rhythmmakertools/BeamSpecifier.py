@@ -174,8 +174,8 @@ class BeamSpecifier(AbjadValueObject):
 
     ### PRIVATE METHODS ###
 
-    def _detach_all_beams(self, divisions):
-        for component in iterate(divisions).by_class():
+    def _detach_all_beams(self, divisions, with_grace_notes=False):
+        for component in iterate(divisions).by_class(with_grace_notes=False):
             detach(spannertools.Beam, component)
 
     ### PUBLIC PROPERTIES ###
