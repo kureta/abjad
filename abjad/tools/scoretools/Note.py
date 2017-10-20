@@ -106,22 +106,20 @@ class Note(Leaf):
     ### PRIVATE METHODS ###
 
     def _divide(self, pitch=None):
-        from abjad.tools import markuptools
-        from abjad.tools import pitchtools
-        from abjad.tools import scoretools
-        pitch = pitch or pitchtools.NamedPitch('b', 3)
-        pitch = pitchtools.NamedPitch(pitch)
+        import abjad
+        pitch = pitch or abjad.NamedPitch('b', 3)
+        pitch = abjad.NamedPitch(pitch)
         treble = copy.copy(self)
         bass = copy.copy(self)
-        detach(markuptools.Markup, treble)
-        detach(markuptools.Markup, bass)
+        detach(abjad.Markup, treble)
+        detach(abjad.Markup, bass)
         if treble.written_pitch < pitch:
-            treble = scoretools.Rest(treble)
+            treble = abjad.Rest(treble)
         if pitch <= bass.written_pitch:
-            bass = scoretools.Rest(bass)
-        up_markup = self._get_markup(direction=Up)
+            bass = abjad.Rest(bass)
+        up_markup = self._get_markup(direction=abjad.Up)
         up_markup = [copy.copy(markup) for markup in up_markup]
-        down_markup = self._get_markup(direction=Down)
+        down_markup = self._get_markup(direction=abjad.Down)
         down_markup = [copy.copy(markup) for markup in down_markup]
         for markup in up_markup:
             markup(treble)

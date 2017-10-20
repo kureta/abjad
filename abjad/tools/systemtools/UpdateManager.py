@@ -38,12 +38,12 @@ class UpdateManager(AbjadObject):
 
     @staticmethod
     def _iterate_entire_score(score_root):
-        from abjad.tools.topleveltools import iterate
-        components = iterate(score_root).depth_first(
+        import abjad
+        components = abjad.iterate(score_root).depth_first(
             capped=True,
             unique=True,
             forbid=None,
-            direction=Left,
+            direction=abjad.Left,
             )
         return components
 

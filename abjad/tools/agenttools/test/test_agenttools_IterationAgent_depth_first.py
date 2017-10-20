@@ -57,7 +57,7 @@ def test_agenttools_IterationAgent_depth_first_01():
     # RIGHT-TO-LEFT #
 
     iterator = abjad.iterate(staff[2]).depth_first(
-        direction=Right,
+        direction=abjad.Right,
         )
 
     assert next(iterator) is staff[2]
@@ -120,7 +120,7 @@ def test_agenttools_IterationAgent_depth_first_02():
 
     iterator = abjad.iterate(staff[2]).depth_first(
         capped=False,
-        direction=Right,
+        direction=abjad.Right,
         )
 
     assert next(iterator) is staff[2]
@@ -193,7 +193,7 @@ def test_agenttools_IterationAgent_depth_first_03():
     # RIGHT-TO-LEFT #
 
     iterator = abjad.iterate(staff[2]).depth_first(
-        direction=Right,
+        direction=abjad.Right,
         unique=False,
         )
 
@@ -260,7 +260,7 @@ def test_agenttools_IterationAgent_depth_first_04():
     # RIGHT-TO-LEFT #
 
     iterator = abjad.iterate(staff).depth_first(
-        direction=Right,
+        direction=abjad.Right,
         forbid='simultaneous',
         )
 
@@ -338,7 +338,7 @@ def test_agenttools_IterationAgent_depth_first_05():
 
     iterator = abjad.iterate(staff[2]).depth_first(
         capped=False,
-        direction=Right,
+        direction=abjad.Right,
         unique=False,
         )
 
@@ -411,7 +411,7 @@ def test_agenttools_IterationAgent_depth_first_06():
 
     iterator = abjad.iterate(staff[2]).depth_first(
         capped=False,
-        direction=Right,
+        direction=abjad.Right,
         forbid='simultaneous',
         )
 
@@ -469,7 +469,7 @@ def test_agenttools_IterationAgent_depth_first_07():
     # RIGHT-TO-LEFT #
 
     iterator = abjad.iterate(staff).depth_first(
-        direction=Right,
+        direction=abjad.Right,
         forbid='simultaneous',
         unique=False,
         )
@@ -535,7 +535,7 @@ def test_agenttools_IterationAgent_depth_first_08():
 
     iterator = abjad.iterate(staff[2]).depth_first(
         capped=False,
-        direction=Right,
+        direction=abjad.Right,
         forbid='simultaneous',
         unique=False,
         )

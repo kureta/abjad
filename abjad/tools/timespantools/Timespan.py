@@ -1338,7 +1338,7 @@ class Timespan(BoundedObject):
 
             >>> timespan.round_offsets(
             ...     2,
-            ...     anchor=Right,
+            ...     anchor=abjad.Right,
             ...     )
             Timespan(start_offset=Offset(-2, 1), stop_offset=Offset(0, 1))
 
@@ -1346,26 +1346,26 @@ class Timespan(BoundedObject):
 
             >>> timespan.round_offsets(
             ...     2,
-            ...     anchor=Right,
+            ...     anchor=abjad.Right,
             ...     must_be_well_formed=False,
             ...     )
             Timespan(start_offset=Offset(0, 1), stop_offset=Offset(0, 1))
 
         Returns new timespan.
         '''
-        from abjad.tools.topleveltools import new
-        multiplier = abs(durationtools.Multiplier(multiplier))
+        import abjad
+        multiplier = abs(abjad.Multiplier(multiplier))
         assert 0 < multiplier
-        new_start_offset = durationtools.Offset(
+        new_start_offset = abjad.Offset(
             int(round(self._start_offset / multiplier)) * multiplier)
-        new_stop_offset = durationtools.Offset(
+        new_stop_offset = abjad.Offset(
             int(round(self._stop_offset / multiplier)) * multiplier)
         if (new_start_offset == new_stop_offset) and must_be_well_formed:
-            if anchor == Left:
+            if anchor == abjad.Left:
                 new_stop_offset = new_stop_offset + multiplier
             else:
                 new_start_offset = new_start_offset - multiplier
-        result = new(
+        result = abjad.new(
             self,
             start_offset=new_start_offset,
             stop_offset=new_stop_offset,
@@ -1392,26 +1392,26 @@ class Timespan(BoundedObject):
 
             ::
 
-                >>> timespan.scale(abjad.Multiplier(2), anchor=Right)
+                >>> timespan.scale(abjad.Multiplier(2), anchor=abjad.Right)
                 Timespan(start_offset=Offset(0, 1), stop_offset=Offset(6, 1))
 
         Returns new timespan.
         '''
-        from abjad.tools.topleveltools import new
-        multiplier = durationtools.Multiplier(multiplier)
+        import abjad
+        multiplier = abjad.Multiplier(multiplier)
         assert 0 < multiplier
         new_duration = multiplier * self.duration
-        if anchor == Left:
+        if anchor == abjad.Left:
             new_start_offset = self._start_offset
             new_stop_offset = self._start_offset + new_duration
-        elif anchor == Right:
+        elif anchor == abjad.Right:
             new_stop_offset = self._stop_offset
             new_start_offset = self._stop_offset - new_duration
         else:
             message = 'unknown anchor direction: {!r}.'
             message = message.format(anchor)
             raise ValueError(message)
-        result = new(
+        result = abjad.new(
             self,
             start_offset=new_start_offset,
             stop_offset=new_stop_offset,

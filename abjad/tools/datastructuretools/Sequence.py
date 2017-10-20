@@ -961,6 +961,7 @@ class Sequence(abctools.AbjadValueObject):
 
     @staticmethod
     def _make_partition_indicator(counts, cyclic, overhang, reversed_):
+        import abjad
         indicator = [str(_) for _ in counts]
         indicator = ', '.join(indicator)
         if cyclic:
@@ -971,7 +972,7 @@ class Sequence(abctools.AbjadValueObject):
             indicator = 'R' + indicator
         if overhang is True:
             indicator += '+'
-        elif overhang == Exact:
+        elif overhang == abjad.Exact:
             indicator += '!'
         return indicator
 
@@ -3288,7 +3289,7 @@ class Sequence(abctools.AbjadValueObject):
                     >>> parts = sequence.partition_by_counts(
                     ...     [2, 3, 5],
                     ...     cyclic=False,
-                    ...     overhang=Exact,
+                    ...     overhang=abjad.Exact,
                     ...     )
 
                 ::
@@ -3308,7 +3309,7 @@ class Sequence(abctools.AbjadValueObject):
                     >>> expression = expression.partition_by_counts(
                     ...     [2, 3, 5],
                     ...     cyclic=False,
-                    ...     overhang=Exact,
+                    ...     overhang=abjad.Exact,
                     ...     )
 
                 ::
@@ -3356,7 +3357,7 @@ class Sequence(abctools.AbjadValueObject):
                     >>> parts = sequence.partition_by_counts(
                     ...     [2],
                     ...     cyclic=True,
-                    ...     overhang=Exact,
+                    ...     overhang=abjad.Exact,
                     ...     )
 
                 ::
@@ -3378,7 +3379,7 @@ class Sequence(abctools.AbjadValueObject):
                     >>> expression = expression.partition_by_counts(
                     ...     [2],
                     ...     cyclic=True,
-                    ...     overhang=Exact,
+                    ...     overhang=abjad.Exact,
                     ...     )
 
                 ::
@@ -3480,6 +3481,7 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns nested sequence.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if not all(isinstance(_, int) and 0 <= _ for _ in counts):
@@ -3489,7 +3491,7 @@ class Sequence(abctools.AbjadValueObject):
         sequence = self
         if reversed_:
             sequence = type(self)(reversed(sequence))
-        if overhang == Exact:
+        if overhang == abjad.Exact:
             result_with_overhang = sequence.partition_by_counts(
                 counts,
                 cyclic=cyclic,
@@ -3512,15 +3514,15 @@ class Sequence(abctools.AbjadValueObject):
             else:
                 counts = Sequence(counts).repeat_to_weight(
                     len(sequence),
-                    allow_total=Less,
+                    allow_total=abjad.Less,
                     )
         elif overhang:
-            weight_counts = mathtools.weight(counts)
+            weight_counts = abjad.mathtools.weight(counts)
             length = len(sequence)
             if weight_counts < length:
                 counts = list(counts)
                 counts.append(len(sequence) - weight_counts)
-        for start, stop in mathtools.cumulative_sums_pairwise(counts):
+        for start, stop in abjad.mathtools.cumulative_sums_pairwise(counts):
             part = sequence[start:stop]
             result.append(part)
         if reversed_:
@@ -3669,7 +3671,7 @@ class Sequence(abctools.AbjadValueObject):
         parts = self.partition_by_counts(
             counts,
             cyclic=False,
-            overhang=Exact,
+            overhang=abjad.Exact,
             )
         return type(self)(items=parts)
 
@@ -3949,7 +3951,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=False,
                 ...     overhang=False,
-                ...     allow_part_weights=Less,
+                ...     allow_part_weights=abjad.Less,
                 ...     ):
                 ...     item
                 ...
@@ -3967,7 +3969,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=False,
                 ...     overhang=True,
-                ...     allow_part_weights=Less,
+                ...     allow_part_weights=abjad.Less,
                 ...     ):
                 ...     item
                 ...
@@ -3986,7 +3988,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 5],
                 ...     cyclic=True,
                 ...     overhang=False,
-                ...     allow_part_weights=Less,
+                ...     allow_part_weights=abjad.Less,
                 ...     ):
                 ...     item
                 ...
@@ -4008,7 +4010,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 5],
                 ...     cyclic=True,
                 ...     overhang=True,
-                ...     allow_part_weights=Less,
+                ...     allow_part_weights=abjad.Less,
                 ...     ):
                 ...     item
                 ...
@@ -4034,7 +4036,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=False,
                 ...     overhang=False,
-                ...     allow_part_weights=More,
+                ...     allow_part_weights=abjad.More,
                 ...     ):
                 ...     item
                 ...
@@ -4052,7 +4054,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=False,
                 ...     overhang=True,
-                ...     allow_part_weights=More,
+                ...     allow_part_weights=abjad.More,
                 ...     ):
                 ...     item
                 ...
@@ -4071,7 +4073,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=True,
                 ...     overhang=False,
-                ...     allow_part_weights=More,
+                ...     allow_part_weights=abjad.More,
                 ...     ):
                 ...     item
                 ...
@@ -4091,7 +4093,7 @@ class Sequence(abctools.AbjadValueObject):
                 ...     [10, 4],
                 ...     cyclic=True,
                 ...     overhang=True,
-                ...     allow_part_weights=More,
+                ...     allow_part_weights=abjad.More,
                 ...     ):
                 ...     item
                 ...
@@ -4103,7 +4105,8 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns nested sequence.
         '''
-        if allow_part_weights == Exact:
+        import abjad
+        if allow_part_weights == abjad.Exact:
             candidate = type(self)(items=self)
             candidate = candidate.split(
                 weights,
@@ -4116,7 +4119,7 @@ class Sequence(abctools.AbjadValueObject):
             else:
                 message = 'can not partition exactly.'
                 raise Exception(message)
-        elif allow_part_weights == More:
+        elif allow_part_weights == abjad.More:
             if not cyclic:
                 return Sequence._partition_sequence_once_by_weights_at_least(
                     self,
@@ -4129,7 +4132,7 @@ class Sequence(abctools.AbjadValueObject):
                     weights,
                     overhang=overhang,
                     )
-        elif allow_part_weights == Less:
+        elif allow_part_weights == abjad.Less:
             if not cyclic:
                 return Sequence._partition_sequence_once_by_weights_at_most(
                     self,
@@ -4568,7 +4571,7 @@ class Sequence(abctools.AbjadValueObject):
             ::
 
                 >>> sequence = abjad.Sequence([5, -5, -5])
-                >>> sequence.repeat_to_weight(23, allow_total=More)
+                >>> sequence.repeat_to_weight(23, allow_total=abjad.More)
                 Sequence([5, -5, -5, 5, -5])
 
         ..  container:: example
@@ -4578,7 +4581,7 @@ class Sequence(abctools.AbjadValueObject):
             ::
 
                 >>> sequence = abjad.Sequence([5, -5, -5])
-                >>> sequence.repeat_to_weight(23, allow_total=Less)
+                >>> sequence.repeat_to_weight(23, allow_total=abjad.Less)
                 Sequence([5, -5, -5, 5])
 
         ..  container:: example
@@ -4599,10 +4602,11 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns new sequence.
         '''
+        import abjad
         assert isinstance(weight, numbers.Number), repr(weight)
         assert 0 <= weight
-        if allow_total == Exact:
-            sequence_weight = mathtools.weight(self)
+        if allow_total == abjad.Exact:
+            sequence_weight = abjad.mathtools.weight(self)
             complete_repetitions = int(
                 math.ceil(float(weight) / float(sequence_weight))
                 )
@@ -4620,25 +4624,25 @@ class Sequence(abctools.AbjadValueObject):
                         absolute_amount_to_keep = element_weight - overage
                         assert 0 < absolute_amount_to_keep
                         signed_amount_to_keep = absolute_amount_to_keep
-                        signed_amount_to_keep *= mathtools.sign(item)
+                        signed_amount_to_keep *= abjad.mathtools.sign(item)
                         items.pop()
                         items.append(signed_amount_to_keep)
                         break
                 else:
                     break
-        elif allow_total == Less:
+        elif allow_total == abjad.Less:
             items = [self[0]]
             i = 1
-            while mathtools.weight(items) < weight:
+            while abjad.mathtools.weight(items) < weight:
                 items.append(self[i % len(self)])
                 i += 1
-            if weight < mathtools.weight(items):
+            if weight < abjad.mathtools.weight(items):
                 items = items[:-1]
             return type(self)(items)
-        elif allow_total == More:
+        elif allow_total == abjad.More:
             items = [self[0]]
             i = 1
-            while mathtools.weight(items) < weight:
+            while abjad.mathtools.weight(items) < weight:
                 items.append(self[i % len(self)])
                 i += 1
             return type(self)(items)
@@ -5273,6 +5277,7 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns new sequence.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         result = []
@@ -5281,7 +5286,7 @@ class Sequence(abctools.AbjadValueObject):
         if cyclic:
             weights = Sequence(weights).repeat_to_weight(
                 mathtools.weight(self),
-                allow_total=Less,
+                allow_total=abjad.Less,
                 )
         for weight in weights:
             current_piece_weight = mathtools.weight(current_piece)

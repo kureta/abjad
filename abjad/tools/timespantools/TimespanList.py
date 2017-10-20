@@ -1162,7 +1162,7 @@ class TimespanList(TypedList):
                 >>> result = timespans.clip_timespan_durations(
                 ...     minimum=3,
                 ...     maximum=7,
-                ...     anchor=Right,
+                ...     anchor=abjad.Right,
                 ...     )
                 >>> show(result, range_=(-2, 10), scale=0.5) # doctest: +SKIP
 
@@ -1184,31 +1184,32 @@ class TimespanList(TypedList):
 
         Returns new timespan list.
         '''
-        assert anchor in (Left, Right)
+        import abjad
+        assert anchor in (abjad.Left, abjad.Right)
         if minimum is not None:
-            minimum = durationtools.Duration(minimum)
+            minimum = abjad.Duration(minimum)
         if maximum is not None:
-            maximum = durationtools.Duration(maximum)
+            maximum = abjad.Duration(maximum)
         if minimum is not None and maximum is not None:
             assert minimum <= maximum
         timespans = type(self)()
         for timespan in self:
             if minimum is not None and timespan.duration < minimum:
-                if anchor == Left:
+                if anchor == abjad.Left:
                     new_timespan = timespan.set_duration(minimum)
                 else:
                     new_start_offset = timespan.stop_offset - minimum
-                    new_timespan = new(
+                    new_timespan = abjad.new(
                         timespan,
                         start_offset=new_start_offset,
                         stop_offset=timespan.stop_offset,
                         )
             elif maximum is not None and maximum < timespan.duration:
-                if anchor == Left:
+                if anchor == abjad.Left:
                     new_timespan = timespan.set_duration(maximum)
                 else:
                     new_start_offset = timespan.stop_offset - maximum
-                    new_timespan = new(
+                    new_timespan = abjad.new(
                         timespan,
                         start_offset=new_start_offset,
                         stop_offset=timespan.stop_offset,
@@ -3076,7 +3077,7 @@ class TimespanList(TypedList):
 
                 >>> rounded_timespans = timespans.round_offsets(
                 ...     5,
-                ...     anchor=Right,
+                ...     anchor=abjad.Right,
                 ...     )
                 >>> show(rounded_timespans, range_=(-5, 10), scale=0.5) # doctest: +SKIP
 
@@ -3117,7 +3118,7 @@ class TimespanList(TypedList):
 
                 >>> rounded_timespans = timespans.round_offsets(
                 ...     5,
-                ...     anchor=Right,
+                ...     anchor=abjad.Right,
                 ...     must_be_well_formed=False,
                 ...     )
 
@@ -3210,7 +3211,7 @@ class TimespanList(TypedList):
 
             ::
 
-                >>> _ = timespans.scale(2, anchor=Right)
+                >>> _ = timespans.scale(2, anchor=abjad.Right)
                 >>> show(timespans, range_=(-3, 10), scale=0.5) # doctest: +SKIP
 
             ::

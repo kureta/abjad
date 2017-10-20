@@ -198,10 +198,10 @@ class TestManager(AbjadObject):
                 assert len(staff) == 2
                 voice_1 = staff[0]
                 abjad.override(voice_1).note_head.Y_offset = 0.5
-                abjad.override(voice_1).stem.direction = Up
+                abjad.override(voice_1).stem.direction = abjad.Up
                 voice_2 = staff[1]
                 abjad.override(voice_2).note_head.Y_offset = -0.5
-                abjad.override(voice_2).stem.direction = Down
+                abjad.override(voice_2).stem.direction = abjad.Down
                 vector = abjad.SpacingVector(0, 0, 6, 0)
                 manager = abjad.override(staff)
                 manager.vertical_axis_group.staff_staff_spacing = vector

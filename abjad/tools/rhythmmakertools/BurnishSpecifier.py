@@ -319,7 +319,7 @@ class BurnishSpecifier(AbjadValueObject):
             result = abjad.sequence(divisions[0]).partition_by_counts(
                 [left_count, middle_count, right_count],
                 cyclic=False,
-                overhang=Exact,
+                overhang=abjad.Exact,
                 )
             left_part, middle_part, right_part = result
             left_part = class_._burnish_division_part(left_part, left)
@@ -340,7 +340,7 @@ class BurnishSpecifier(AbjadValueObject):
             result = abjad.sequence(divisions[0]).partition_by_counts(
                 [left_count, middle_count],
                 cyclic=False,
-                overhang=Exact,
+                overhang=abjad.Exact,
                 )
             left_part, middle_part = result
             left_part = class_._burnish_division_part(left_part, left)
@@ -366,7 +366,7 @@ class BurnishSpecifier(AbjadValueObject):
             result = abjad.sequence(divisions[-1]).partition_by_counts(
                 [middle_count, right_count],
                 cyclic=False,
-                overhang=Exact,
+                overhang=abjad.Exact,
                 )
             middle_part, right_part = result
             middle_part = class_._burnish_division_part(middle_part, middle)

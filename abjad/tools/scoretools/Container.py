@@ -987,7 +987,7 @@ class Container(Component):
         if fracture_spanners:
             for spanner in left._get_spanners():
                 index = spanner._index(left)
-                spanner._fracture(index, direction=Right)
+                spanner._fracture(index, direction=abjad.Right)
         # return new left and right containers
         return halves
 
@@ -1126,7 +1126,7 @@ class Container(Component):
                 if timespan.start_offset == start_offset:
                     for spanner in abjad.inspect(parent).get_spanners():
                         index = spanner._index(parent)
-                        spanner._fracture(index, direction=Left)
+                        spanner._fracture(index, direction=abjad.Left)
                 if parent is component:
                     break
         # crawl back up through duration-crossing containers and split each
@@ -1351,7 +1351,7 @@ class Container(Component):
                 >>> container.extend("fs16 cs' e' a'")
                 >>> container.extend("cs''16 e'' cs'' a'")
                 >>> container.extend("fs'16 e' cs' fs")
-                >>> slur = abjad.Slur(direction=Down)
+                >>> slur = abjad.Slur(direction=abjad.Down)
                 >>> abjad.attach(slur, container[:])
                 >>> show(container) # doctest: +SKIP
 
@@ -1407,7 +1407,7 @@ class Container(Component):
                 >>> container.extend("fs16 cs' e' a'")
                 >>> container.extend("cs''16 e'' cs'' a'")
                 >>> container.extend("fs'16 e' cs' fs")
-                >>> slur = abjad.Slur(direction=Down)
+                >>> slur = abjad.Slur(direction=abjad.Down)
                 >>> abjad.attach(slur, container[:])
                 >>> show(container) # doctest: +SKIP
 
@@ -1471,12 +1471,12 @@ class Container(Component):
         if previous_leaf:
             for spanner in previous_leaf._get_spanners():
                 index = spanner._index(previous_leaf)
-                spanner._fracture(index, direction=Right)
+                spanner._fracture(index, direction=abjad.Right)
         next_leaf = component._get_leaf(1)
         if next_leaf:
             for spanner in next_leaf._get_spanners():
                 index = spanner._index(next_leaf)
-                spanner._fracture(index, direction=Left)
+                spanner._fracture(index, direction=abjad.Left)
 
     def pop(self, i=-1):
         r'''Pops component from container at index `i`.

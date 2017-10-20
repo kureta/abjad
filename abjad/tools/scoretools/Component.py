@@ -486,10 +486,10 @@ class Component(AbjadObject):
     def _get_markup(self, direction=None):
         import abjad
         markup = self._get_indicators(abjad.Markup)
-        if direction == Up:
-            return tuple(x for x in markup if x.direction == Up)
-        elif direction == Down:
-            return tuple(x for x in markup if x.direction == Down)
+        if direction == abjad.Up:
+            return tuple(x for x in markup if x.direction == abjad.Up)
+        elif direction == abjad.Down:
+            return tuple(x for x in markup if x.direction == abjad.Down)
         return markup
 
     def _get_next_measure(self):
@@ -797,7 +797,7 @@ class Component(AbjadObject):
         import abjad
         assert all(isinstance(x, abjad.Component) for x in components)
         selection = abjad.select(self)
-        if direction == Right:
+        if direction == abjad.Right:
             if grow_spanners:
                 insert_offset = self._get_timespan()._stop_offset
                 receipt = selection._get_dominant_spanners()

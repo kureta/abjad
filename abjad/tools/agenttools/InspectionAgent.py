@@ -131,7 +131,7 @@ class InspectionAgent(abctools.AbjadObject):
             ::
 
                 >>> note = abjad.Note("c'4")
-                >>> abjad.annotate(note, 'bow_direction', Down)
+                >>> abjad.annotate(note, 'bow_direction', abjad.Down)
                 >>> abjad.inspect(note).get_annotation('bow_direction')
                 Down
 

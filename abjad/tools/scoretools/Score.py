@@ -132,9 +132,9 @@ class Score(Context):
 
                 >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
                 >>> score = abjad.Score([staff])
-                >>> place = abjad.Markup('Bremen - Boston - LA.', direction=Down)
+                >>> place = abjad.Markup('Bremen - Boston - LA.', direction=abjad.Down)
                 >>> date = abjad.Markup('July 2010 - May 2011.')
-                >>> markup = abjad.Markup.right_column([place, date], direction=Down)
+                >>> markup = abjad.Markup.right_column([place, date], direction=abjad.Down)
                 >>> markup = markup.italic()
                 >>> markup = score.add_final_markup(
                 ...     markup,
@@ -173,12 +173,12 @@ class Score(Context):
                 >>> score = abjad.Score([staff])
                 >>> place = abjad.Markup(
                 ...     'Bremen - Boston - LA.',
-                ...     direction=Down,
+                ...     direction=abjad.Down,
                 ...     )
                 >>> date = abjad.Markup('July 2010 - May 2011.')
                 >>> markup = abjad.Markup.right_column(
                 ...     [place, date],
-                ...     direction=Down,
+                ...     direction=abjad.Down,
                 ...     )
                 >>> markup = markup.italic()
                 >>> markup = score.add_final_markup(

@@ -1459,7 +1459,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=True,
-                ...     fill=Exact,
+                ...     fill=abjad.Exact,
                 ...     in_seconds=False,
                 ...     overhang=True,
                 ...     )
@@ -1511,7 +1511,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=False,
-                ...     fill=Exact,
+                ...     fill=abjad.Exact,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
@@ -1563,7 +1563,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
                 ...     cyclic=True,
-                ...     fill=More,
+                ...     fill=abjad.More,
                 ...     in_seconds=False,
                 ...     overhang=True,
                 ...     )
@@ -1618,7 +1618,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=True,
-                ...     fill=Less,
+                ...     fill=abjad.Less,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
@@ -1675,7 +1675,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=False,
-                ...     fill=Less,
+                ...     fill=abjad.Less,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
@@ -1731,7 +1731,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
-                ...     fill=Exact,
+                ...     fill=abjad.Exact,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
@@ -1787,7 +1787,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
-                ...     fill=Exact,
+                ...     fill=abjad.Exact,
                 ...     in_seconds=True,
                 ...     overhang=True,
                 ...     )
@@ -1843,7 +1843,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=False,
-                ...     fill=Exact,
+                ...     fill=abjad.Exact,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
@@ -1898,7 +1898,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=True,
-                ...     fill=Less,
+                ...     fill=abjad.Less,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
@@ -1959,7 +1959,7 @@ class Selection(object):
                 >>> selections = leaves.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=False,
-                ...     fill=Less,
+                ...     fill=abjad.Less,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
@@ -2016,10 +2016,10 @@ class Selection(object):
                 except IndexError:
                     break
             elif target_duration < candidate_duration:
-                if fill == Exact:
+                if fill == abjad.Exact:
                     message = 'must partition exactly.'
                     raise Exception(message)
-                elif fill == Less:
+                elif fill == abjad.Less:
                     result.append(part)
                     part = [component]
                     if in_seconds:
@@ -2044,7 +2044,7 @@ class Selection(object):
                             cumulative_duration,
                             )
                         raise Exception(message)
-                elif fill == More:
+                elif fill == abjad.More:
                     part.append(component)
                     result.append(part)
                     part = []

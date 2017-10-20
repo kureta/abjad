@@ -149,21 +149,19 @@ class Chord(Leaf):
         return new
 
     def _divide(self, pitch=None):
-        from abjad.tools import scoretools
-        from abjad.tools import markuptools
-        from abjad.tools import pitchtools
-        pitch = pitch or pitchtools.NamedPitch('b', 3)
-        pitch = pitchtools.NamedPitch(pitch)
+        import abjad
+        pitch = pitch or abjad.NamedPitch('b', 3)
+        pitch = abjad.NamedPitch(pitch)
         treble = copy.copy(self)
         bass = copy.copy(self)
-        detach(markuptools.Markup, treble)
-        detach(markuptools.Markup, bass)
-        if isinstance(treble, scoretools.Note):
+        abjad.detach(abjad.Markup, treble)
+        abjad.detach(abjad.Markup, bass)
+        if isinstance(treble, abjad.Note):
             if treble.written_pitch < pitch:
-                treble = scoretools.Rest(treble)
-        elif isinstance(treble, scoretools.Rest):
+                treble = abjad.Rest(treble)
+        elif isinstance(treble, abjad.Rest):
             pass
-        elif isinstance(treble, scoretools.Chord):
+        elif isinstance(treble, abjad.Chord):
             for note_head in reversed(treble.note_heads):
                 if note_head.written_pitch < pitch:
                     treble.note_heads.remove(note_head)
@@ -171,12 +169,12 @@ class Chord(Leaf):
             message = 'invalid pitch carrier: {!r}.'
             message = message.format(treble)
             raise TypeError(message)
-        if isinstance(bass, scoretools.Note):
+        if isinstance(bass, abjad.Note):
             if pitch <= bass.written_pitch:
-                bass = scoretools.Rest(bass)
-        elif isinstance(bass, scoretools.Rest):
+                bass = abjad.Rest(bass)
+        elif isinstance(bass, abjad.Rest):
             pass
-        elif isinstance(bass, scoretools.Chord):
+        elif isinstance(bass, abjad.Chord):
             for note_head in reversed(bass.note_heads):
                 if pitch <= note_head.written_pitch:
                     bass.note_heads.remove(note_head)
@@ -186,9 +184,9 @@ class Chord(Leaf):
             raise TypeError(message)
         treble = self._cast_defective_chord(treble)
         bass = self._cast_defective_chord(bass)
-        up_markup = self._get_markup(direction=Up)
+        up_markup = self._get_markup(direction=abjad.Up)
         up_markup = [copy.copy(markup) for markup in up_markup]
-        down_markup = self._get_markup(direction=Down)
+        down_markup = self._get_markup(direction=abjad.Down)
         down_markup = [copy.copy(markup) for markup in down_markup]
         for markup in up_markup:
             markup(treble)

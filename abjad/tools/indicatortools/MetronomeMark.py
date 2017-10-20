@@ -861,19 +861,19 @@ class MetronomeMark(AbjadValueObject):
         return markup
 
     def _to_markup(self):
-        from abjad.tools import markuptools
+        import abjad
         if self.custom_markup is not None:
             return self.custom_markup
         duration_log = int(math.log(self.reference_duration.denominator, 2))
-        lhs = markuptools.Markup.note_by_number(
+        lhs = abjad.Markup.note_by_number(
             duration_log,
             self.reference_duration.dot_count,
             1,
             )
-        lhs = lhs.general_align('Y', Down).fontsize(-6)
-        equals = markuptools.Markup('=')
-        #right_space = markuptools.Markup.hspace(0.1)
-        units = markuptools.Markup(self.units_per_minute)
+        lhs = lhs.general_align('Y', abjad.Down).fontsize(-6)
+        equals = abjad.Markup('=')
+        #right_space = abjad.Markup.hspace(0.1)
+        units = abjad.Markup(self.units_per_minute)
         #rhs = left_space + equals + right_space + units
         rhs = equals + units
         #rhs = rhs.fontsize(3).upright()

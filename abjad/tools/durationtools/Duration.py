@@ -571,30 +571,27 @@ class Duration(AbjadObject, Fraction):
 
     @staticmethod
     def _make_markup_score_block(selection):
-        from abjad.tools import lilypondfiletools
-        from abjad.tools import schemetools
-        from abjad.tools import scoretools
+        import abjad
         selection = copy.deepcopy(selection)
-        staff = scoretools.Staff(selection)
+        staff = abjad.Staff(selection)
         staff.context_name = 'RhythmicStaff'
         staff.remove_commands.append('Time_signature_engraver')
         staff.remove_commands.append('Staff_symbol_engraver')
-        override(staff).stem.direction = Up
-        #override(staff).stem.length = 4
-        override(staff).stem.length = 5
-        override(staff).tuplet_bracket.bracket_visibility = True
-        override(staff).tuplet_bracket.direction = Up
-        override(staff).tuplet_bracket.padding = 1.25
-        override(staff).tuplet_bracket.shorten_pair = (-1, -1.5)
-        scheme = schemetools.Scheme('tuplet-number::calc-fraction-text')
-        override(staff).tuplet_number.text = scheme
-        setting(staff).tuplet_full_length = True
-        layout_block = lilypondfiletools.Block(name='layout')
+        abjad.override(staff).stem.direction = abjad.Up
+        abjad.override(staff).stem.length = 5
+        abjad.override(staff).tuplet_bracket.bracket_visibility = True
+        abjad.override(staff).tuplet_bracket.direction = abjad.Up
+        abjad.override(staff).tuplet_bracket.padding = 1.25
+        abjad.override(staff).tuplet_bracket.shorten_pair = (-1, -1.5)
+        scheme = abjad.Scheme('tuplet-number::calc-fraction-text')
+        abjad.override(staff).tuplet_number.text = scheme
+        abjad.setting(staff).tuplet_full_length = True
+        layout_block = abjad.Block(name='layout')
         layout_block.indent = 0
         layout_block.ragged_right = True
-        score = scoretools.Score([staff])
-        override(score).spacing_spanner.spacing_increment = 0.5
-        setting(score).proportional_notation_duration = False
+        score = abjad.Score([staff])
+        abjad.override(score).spacing_spanner.spacing_increment = 0.5
+        abjad.setting(score).proportional_notation_duration = False
         return score, layout_block
 
     @staticmethod
@@ -1167,7 +1164,7 @@ class Duration(AbjadObject, Fraction):
             ::
 
                 >>> string = '"{}"'.format(clock_string)
-                >>> markup = abjad.Markup(string, direction=Up)
+                >>> markup = abjad.Markup(string, direction=abjad.Up)
                 >>> abjad.attach(markup, note)
                 >>> show(note) # doctest: +SKIP
 

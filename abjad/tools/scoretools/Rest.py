@@ -54,14 +54,14 @@ class Rest(Leaf):
     ### PRIVATE METHODS ###
 
     def _divide(self, pitch=None):
-        from abjad.tools import markuptools
+        import abjad
         treble = copy.copy(self)
         bass = copy.copy(self)
-        detach(markuptools.Markup, treble)
-        detach(markuptools.Markup, bass)
-        up_markup = self._get_markup(direction=Up)
+        detach(abjad.Markup, treble)
+        detach(abjad.Markup, bass)
+        up_markup = self._get_markup(direction=abjad.Up)
         up_markup = [copy.copy(markup) for markup in up_markup]
-        down_markup = self._get_markup(direction=Down)
+        down_markup = self._get_markup(direction=abjad.Down)
         down_markup = [copy.copy(markup) for markup in down_markup]
         for markup in up_markup:
             markup(treble)

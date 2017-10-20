@@ -451,20 +451,20 @@ class Leaf(Component):
             first_selection = result_selections[0]
             for spanner in abjad.inspect(first_selection[-1]).get_spanners():
                 index = spanner._index(first_selection[-1])
-                spanner._fracture(index, direction=Right)
+                spanner._fracture(index, direction=abjad.Right)
             last_selection = result_selections[-1]
             for spanner in abjad.inspect(last_selection[0]).get_spanners():
                 index = spanner._index(last_selection[0])
-                spanner._fracture(index, direction=Left)
+                spanner._fracture(index, direction=abjad.Left)
             for middle_selection in result_selections[1:-1]:
                 spanners = abjad.inspect(middle_selection[0]).get_spanners()
                 for spanner in spanners:
                     index = spanner._index(middle_selection[0])
-                    spanner._fracture(index, direction=Left)
+                    spanner._fracture(index, direction=abjad.Left)
                 spanners = abjad.inspect(middle_selection[-1]).get_spanners()
                 for spanner in spanners:
                     index = spanner._index(middle_selection[-1])
-                    spanner._fracture(index, direction=Right)
+                    spanner._fracture(index, direction=abjad.Right)
         # move indicators
         first_result_leaf = result_leaves[0]
         last_result_leaf = result_leaves[-1]
@@ -472,10 +472,10 @@ class Leaf(Component):
             if isinstance(indicator, abjad.Multiplier):
                 continue
             abjad.detach(indicator, self)
-            direction = getattr(indicator, '_time_orientation', Left)
-            if direction is Left:
+            direction = getattr(indicator, '_time_orientation', abjad.Left)
+            if direction == abjad.Left:
                 abjad.attach(indicator, first_result_leaf)
-            elif direction is Right:
+            elif direction == abjad.Right:
                 abjad.attach(indicator, last_result_leaf)
             else:
                 raise ValueError(direction)

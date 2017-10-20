@@ -44,20 +44,20 @@ def test_agenttools_InspectionAgent_get_markup_01():
 def test_agenttools_InspectionAgent_get_markup_02():
 
     chord = abjad.Chord([-11, 2, 5], (1, 4))
-    up_markup = abjad.Markup('UP', Up)
+    up_markup = abjad.Markup('UP', abjad.Up)
     abjad.attach(up_markup, chord)
-    down_markup = abjad.Markup('DOWN', Down)
+    down_markup = abjad.Markup('DOWN', abjad.Down)
     abjad.attach(down_markup, chord)
-    found_markup = abjad.inspect(chord).get_markup(direction=Down)
+    found_markup = abjad.inspect(chord).get_markup(direction=abjad.Down)
     assert found_markup == (down_markup,)
 
 
 def test_agenttools_InspectionAgent_get_markup_03():
 
     chord = abjad.Chord([-11, 2, 5], (1, 4))
-    up_markup = abjad.Markup('UP', Up)
+    up_markup = abjad.Markup('UP', abjad.Up)
     abjad.attach(up_markup, chord)
-    down_markup = abjad.Markup('DOWN', Down)
+    down_markup = abjad.Markup('DOWN', abjad.Down)
     abjad.attach(down_markup, chord)
-    found_markup = abjad.inspect(chord).get_markup(direction=Up)
+    found_markup = abjad.inspect(chord).get_markup(direction=abjad.Up)
     assert found_markup == (up_markup,)

@@ -191,7 +191,7 @@ def test_agenttools_MutationAgent_splice_07():
     notes = [abjad.Note("c'16"), abjad.Note("d'16"), abjad.Note("e'16")]
     result = abjad.mutate(voice[0]).splice(
         notes,
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=True,
         )
 
@@ -221,7 +221,7 @@ def test_agenttools_MutationAgent_splice_08():
     abjad.attach(beam, voice[:])
     result = abjad.mutate(voice[1]).splice(
         [abjad.Note("dqf'8")],
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=True,
         )
 
@@ -251,7 +251,7 @@ def test_agenttools_MutationAgent_splice_09():
     tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
     result = abjad.mutate(voice[0]).splice(
         [tuplet],
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=True,
         )
 
@@ -286,7 +286,7 @@ def test_agenttools_MutationAgent_splice_10():
     abjad.attach(beam, leaves)
     result = abjad.mutate(voice[1]).splice(
         [abjad.Note("dqs'8")],
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=True,
         )
 
@@ -320,7 +320,7 @@ def test_agenttools_MutationAgent_splice_11():
     notes = [abjad.Note("c'16"), abjad.Note("d'16"), abjad.Note("e'16")]
     result = abjad.mutate(voice[0]).splice(
         notes,
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=False,
         )
 
@@ -350,7 +350,7 @@ def test_agenttools_MutationAgent_splice_12():
     abjad.attach(beam, voice[:])
     result = abjad.mutate(voice[1]).splice(
         [abjad.Note("dqf'8")],
-        direction=Left,
+        direction=abjad.Left,
         grow_spanners=False,
         )
 

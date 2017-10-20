@@ -2637,13 +2637,13 @@ class MutationAgent(abctools.AbjadObject):
                 ...     r"c'4 \p \< cs' d' ds' \f",
                 ...     name='Voice 2',
                 ...     )
-                >>> abjad.override(voice_1).stem.direction = Up
-                >>> abjad.override(voice_1).slur.direction = Up
+                >>> abjad.override(voice_1).stem.direction = abjad.Up
+                >>> abjad.override(voice_1).slur.direction = abjad.Up
                 >>> container = abjad.Container(
                 ...     [voice_1, voice_2],
                 ...     is_simultaneous=True,
                 ...     )
-                >>> abjad.override(voice_2).stem.direction = Down
+                >>> abjad.override(voice_2).stem.direction = abjad.Down
                 >>> staff = abjad.Staff([container])
                 >>> show(staff) # doctest: +SKIP
 
@@ -2903,7 +2903,10 @@ class MutationAgent(abctools.AbjadObject):
         # partition split components according to input durations
         result = abjad.Sequence(result).flatten()
         result = abjad.select(result)
-        result = result.partition_by_durations(durations_copy, fill=Exact)
+        result = result.partition_by_durations(
+            durations_copy,
+            fill=abjad.Exact,
+            )
         # return list of shards
         result = [abjad.select(_) for _ in result]
         return result

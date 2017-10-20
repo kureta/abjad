@@ -103,7 +103,7 @@ class MarkupCommand(AbjadValueObject):
 
         ::
 
-            >>> markup = abjad.Markup(contents=command, direction=Up)
+            >>> markup = abjad.Markup(contents=command, direction=abjad.Up)
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> abjad.attach(markup, staff[0])
             >>> show(staff) # doctest: +SKIP

@@ -1,8 +1,6 @@
 import collections
 import inspect
 from abjad.tools import abctools
-# import datastructuretools makes Left available
-from abjad.tools import datastructuretools
 
 
 class IterationAgent(abctools.AbjadObject):
@@ -1887,7 +1885,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_1.is_simultaneous = True
                     >>> container_1[0].name = 'Voice 1'
-                    >>> abjad.override(container_1[0]).stem.direction = Down
+                    >>> abjad.override(container_1[0]).stem.direction = abjad.Down
                     >>> container_1[1].name = 'Voice 2'
                     >>> container_2 = abjad.Container([
                     ...     abjad.Voice("g'8 a'8"),
@@ -1895,7 +1893,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_2.is_simultaneous = True
                     >>> container_2[0].name = 'Voice 1'
-                    >>> abjad.override(container_2[0]).stem.direction = Down
+                    >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                     >>> container_2[1].name = 'Voice 2'
                     >>> staff = abjad.Staff([container_1, container_2])
                     >>> show(staff) # doctest: +SKIP
@@ -2029,7 +2027,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_1.is_simultaneous = True
                     >>> container_1[0].name = 'Voice 1'
-                    >>> abjad.override(container_1[0]).stem.direction = Down
+                    >>> abjad.override(container_1[0]).stem.direction = abjad.Down
                     >>> container_1[1].name = 'Voice 2'
                     >>> container_2 = abjad.Container([
                     ...     abjad.Voice("g'8 a'8"),
@@ -2037,7 +2035,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_2.is_simultaneous = True
                     >>> container_2[0].name = 'Voice 1'
-                    >>> abjad.override(container_2[0]).stem.direction = Down
+                    >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                     >>> container_2[1].name = 'Voice 2'
                     >>> staff = abjad.Staff([container_1, container_2])
                     >>> show(staff) # doctest: +SKIP
@@ -2120,7 +2118,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_1.is_simultaneous = True
                     >>> container_1[0].name = 'Voice 1'
-                    >>> abjad.override(container_1[0]).stem.direction = Down
+                    >>> abjad.override(container_1[0]).stem.direction = abjad.Down
                     >>> container_1[1].name = 'Voice 2'
                     >>> container_2 = abjad.Container([
                     ...     abjad.Voice("g'8 a'8"),
@@ -2128,7 +2126,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_2.is_simultaneous = True
                     >>> container_2[0].name = 'Voice 1'
-                    >>> abjad.override(container_2[0]).stem.direction = Down
+                    >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                     >>> container_2[1].name = 'Voice 2'
                     >>> staff = abjad.Staff([container_1, container_2])
                     >>> show(staff) # doctest: +SKIP
@@ -2208,7 +2206,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_1.is_simultaneous = True
                     >>> container_1[0].name = 'Voice 1'
-                    >>> abjad.override(container_1[0]).stem.direction = Down
+                    >>> abjad.override(container_1[0]).stem.direction = abjad.Down
                     >>> container_1[1].name = 'Voice 2'
                     >>> container_2 = abjad.Container([
                     ...     abjad.Voice("g'8 a'8"),
@@ -2216,7 +2214,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_2.is_simultaneous = True
                     >>> container_2[0].name = 'Voice 1'
-                    >>> abjad.override(container_2[0]).stem.direction = Down
+                    >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                     >>> container_2[1].name = 'Voice 2'
                     >>> staff = abjad.Staff([container_1, container_2])
                     >>> show(staff) # doctest: +SKIP
@@ -2297,7 +2295,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_1.is_simultaneous = True
                     >>> container_1[0].name = 'Voice 1'
-                    >>> abjad.override(container_1[0]).stem.direction = Down
+                    >>> abjad.override(container_1[0]).stem.direction = abjad.Down
                     >>> container_1[1].name = 'Voice 2'
                     >>> container_2 = abjad.Container([
                     ...     abjad.Voice("g'8 a'8"),
@@ -2305,7 +2303,7 @@ class IterationAgent(abctools.AbjadObject):
                     ...     ])
                     >>> container_2.is_simultaneous = True
                     >>> container_2[0].name = 'Voice 1'
-                    >>> abjad.override(container_2[0]).stem.direction = Down
+                    >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                     >>> container_2[1].name = 'Voice 2'
                     >>> staff = abjad.Staff([container_1, container_2])
                     >>> show(staff) # doctest: +SKIP
@@ -2416,14 +2414,17 @@ class IterationAgent(abctools.AbjadObject):
         def _closure():
             signature = self.client._get_parentage().logical_voice
             if not reverse:
-                for x in abjad.iterate(self.client).depth_first(capped=False):
+                for x in abjad.iterate(self.client).depth_first(
+                    capped=False,
+                    direction=abjad.Left,
+                    ):
                     if isinstance(x, prototype):
                         if x._get_parentage().logical_voice == signature:
                             yield x
             else:
                 for x in abjad.iterate(self.client).depth_first(
                     capped=False,
-                    direction=Right,
+                    direction=abjad.Right,
                     ):
                     if isinstance(x, prototype):
                         if x._get_parentage().logical_voice == signature:
@@ -4166,7 +4167,7 @@ class IterationAgent(abctools.AbjadObject):
     def depth_first(
         self,
         capped=True,
-        direction=Left,
+        direction=None,
         forbid=None,
         unique=True,
         ):
@@ -4291,7 +4292,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> agent = abjad.iterate(score)
-                    >>> for component in agent.depth_first(direction=Right):
+                    >>> for component in agent.depth_first(direction=abjad.Right):
                     ...     component
                     ...
                     <Score<<2>>>
@@ -4314,7 +4315,7 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> expression = abjad.iterate()
-                    >>> expression = expression.depth_first(direction=Right)
+                    >>> expression = expression.depth_first(direction=abjad.Right)
                     >>> for component in expression(score):
                     ...     component
                     ...
@@ -4413,19 +4414,14 @@ class IterationAgent(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-#        direction = direction or abjad.Left
-#        if direction is None:
-#            direction = abjad.Left
+        direction = direction or abjad.Left
         if self._expression:
             return self._update_expression(inspect.currentframe())
         def _next_node_depth_first(component, total):
             r'''If client has unvisited music, return next unvisited node in
             client's music.
 
-            If client has no univisited music and has a parent, return client's
-            parent.
-
-            If client has no univisited music and no parent, return none.
+            If client has no univisited music, return client's parent.
             '''
             # if component is a container with not-yet-returned children
             if (hasattr(component, '_music') and
@@ -4438,7 +4434,8 @@ class IterationAgent(abctools.AbjadObject):
                 # return grace container
                 return component._grace_container, 0
             # if component is a leaf with after grace container attached
-            elif getattr(component, '_after_grace_container', None) is not None:
+            elif (getattr(component, '_after_grace_container', None)
+                is not None):
                 # return after grace container
                 return component._after_grace_container, 0
             # if component is grace container with all children returned
@@ -4466,10 +4463,7 @@ class IterationAgent(abctools.AbjadObject):
             r'''If client has unvisited music, return previous unvisited node
             in client's music.
 
-            If client has no univisited music and has a parent, return client's
-            parent.
-
-            If client has no univisited music and no parent, return none.
+            If client has no univisited music, return client's parent.
             '''
             if (hasattr(component, '_music') and
                 0 < len(component) and
@@ -4491,7 +4485,7 @@ class IterationAgent(abctools.AbjadObject):
             queue.pop()
             return node, rank
         def _advance_node_depth_first(node, rank, direction):
-            if direction is Left:
+            if direction == abjad.Left:
                 node, rank = _next_node_depth_first(node, rank)
             else:
                 node, rank = _previous_node_depth_first(node, rank)
