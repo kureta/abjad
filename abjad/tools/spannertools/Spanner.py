@@ -1,6 +1,6 @@
+import collections
 import copy
 from abjad.tools.abctools import AbjadObject
-from abjad.tools.topleveltools import override
 
 
 class Spanner(AbjadObject):
@@ -65,7 +65,7 @@ class Spanner(AbjadObject):
         import abjad
         new = type(self)(*self.__getnewargs__())
         if getattr(self, '_lilypond_grob_name_manager', None) is not None:
-            new._lilypond_grob_name_manager = copy.copy(override(self))
+            new._lilypond_grob_name_manager = copy.copy(abjad.override(self))
         if getattr(self, '_lilypond_setting_name_manager', None) is not None:
             new._lilypond_setting_name_manager = copy.copy(abjad.setting(self))
         self._copy_keyword_args(new)
@@ -621,10 +621,14 @@ class Spanner(AbjadObject):
 
         Returns dictionary.
         '''
-        manager = override(self)
+        import abjad
+        manager = abjad.override(self)
         overrides = {}
         for attribute_tuple in manager._get_attribute_tuples():
             attribute = '__'.join(attribute_tuple[:-1])
             value = attribute_tuple[-1]
             overrides[attribute] = value
         return overrides
+
+
+collections.Sequence.register(Spanner)

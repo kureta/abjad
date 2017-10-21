@@ -139,8 +139,7 @@ class OctavationSpanner(Spanner):
         Returns none.
         """
         import abjad
-        # TODO: make spanners iterable, then just pass in self:
-        pitches = abjad.PitchSegment.from_selection(self.leaves)
+        pitches = abjad.PitchSegment.from_selection(self)
         max_pitch = max(pitches)
         max_numbered_diatonic_pitch = max_pitch._get_diatonic_pitch_number()
         if ottava_breakpoint is not None:
