@@ -1,14 +1,6 @@
 import collections
 import copy
 import itertools
-import types
-# must import datastructuretools for Exact constant to be available
-from abjad.tools import datastructuretools
-from abjad.tools import durationtools
-from abjad.tools import systemtools
-from abjad.tools.topleveltools import iterate
-from abjad.tools.topleveltools import mutate
-from abjad.tools.topleveltools import select
 
 
 class Selection(object):
@@ -190,7 +182,8 @@ class Selection(object):
 
         Returns string.
         '''
-        return systemtools.StorageFormatAgent(self).get_repr_format()
+        import abjad
+        return abjad.StorageFormatAgent(self).get_repr_format()
 
     def __setstate__(self, state):
         r'''Sets state of selection.
@@ -402,6 +395,7 @@ class Selection(object):
 
         Returns contiguous selection.
         '''
+        import abjad
         # check input
         assert self.in_contiguous_logical_voice()
         # return empty list when nothing to copy
@@ -432,7 +426,7 @@ class Selection(object):
                     reversed_schema[component_index] = [new_covered_spanner]
         # iterate components and add new components to new spanners
         for component_index, new_component in enumerate(
-            iterate(new_components).by_class()):
+            abjad.iterate(new_components).by_class()):
             try:
                 new_covered_spanners = reversed_schema[component_index]
                 for new_covered_spanner in new_covered_spanners:
@@ -446,12 +440,13 @@ class Selection(object):
         return new_components
 
     def _copy_and_include_enclosing_containers(self):
+        import abjad
         assert self.in_contiguous_logical_voice()
         # get governor
         parentage = self[0]._get_parentage(include_self=True)
         governor = parentage._get_governor()
         # find start and stop indices in governor
-        governor_leaves = select(governor).by_leaf()
+        governor_leaves = abjad.select(governor).by_leaf()
         for i, x in enumerate(governor_leaves):
             if x is self[0]:
                 start_index_in_governor = i
@@ -459,15 +454,15 @@ class Selection(object):
             if x is self[-1]:
                 stop_index_in_governor = i
         # copy governor
-        governor_copy = mutate(governor).copy()
-        copied_leaves = select(governor_copy).by_leaf()
+        governor_copy = abjad.mutate(governor).copy()
+        copied_leaves = abjad.select(governor_copy).by_leaf()
         # find start and stop leaves in copy of governor
         start_leaf = copied_leaves[start_index_in_governor]
         stop_leaf = copied_leaves[stop_index_in_governor]
         # trim governor copy forwards from first leaf
         found_start_leaf = False
         while not found_start_leaf:
-            leaf = next(iterate(governor_copy).by_leaf())
+            leaf = next(abjad.iterate(governor_copy).by_leaf())
             if leaf is start_leaf:
                 found_start_leaf = True
             else:
@@ -475,7 +470,8 @@ class Selection(object):
         # trim governor copy backwards from last leaf
         found_stop_leaf = False
         while not found_stop_leaf:
-            reverse_iterator = iterate(governor_copy).by_leaf(reverse=True)
+            reverse_iterator = abjad.iterate(
+                governor_copy).by_leaf(reverse=True)
             leaf = next(reverse_iterator)
             if leaf is stop_leaf:
                 found_stop_leaf = True
@@ -577,19 +573,19 @@ class Selection(object):
             self[-1]._get_parentage().root):
             dummy_container = abjad.Container(self)
             wrapped = True
-        mutate(self).swap(new_tuplet)
+        abjad.mutate(self).swap(new_tuplet)
         if wrapped:
             del(dummy_container[:])
         return new_tuplet
 
     def _get_component(self, prototype=None, n=0, recurse=True):
-        from abjad.tools import scoretools
-        prototype = prototype or (scoretools.Component,)
+        import abjad
+        prototype = prototype or (abjad.Component,)
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
         if 0 <= n:
             if recurse:
-                components = iterate(self).by_class(prototype)
+                components = abjad.iterate(self).by_class(prototype)
             else:
                 components = self._music
             for i, x in enumerate(components):
@@ -597,7 +593,7 @@ class Selection(object):
                     return x
         else:
             if recurse:
-                components = iterate(self).by_class(
+                components = abjad.iterate(self).by_class(
                     prototype, reverse=True)
             else:
                 components = reversed(self._music)
@@ -615,10 +611,11 @@ class Selection(object):
         In other words, there is some intersection -- but not total
         intersection -- between the components of P and C.
         '''
+        import abjad
         assert self.in_contiguous_logical_voice()
-        all_components = set(iterate(self).by_class())
+        all_components = set(abjad.iterate(self).by_class())
         contained_spanners = set()
-        for component in iterate(self).by_class():
+        for component in abjad.iterate(self).by_class():
             contained_spanners.update(component._get_spanners())
         crossing_spanners = set([])
         for spanner in contained_spanners:
@@ -654,10 +651,11 @@ class Selection(object):
         return receipt
 
     def _get_format_specification(self):
+        import abjad
         values = []
         if self._music:
             values = [list(self._music)]
-        return systemtools.FormatSpecification(
+        return abjad.FormatSpecification(
             client=self,
             storage_format_args_values=values,
             )
@@ -763,8 +761,9 @@ class Selection(object):
             self._set_parents(None)
 
     def _iterate_components(self, recurse=True, reverse=False):
+        import abjad
         if recurse:
-            return iterate(self).by_class()
+            return abjad.iterate(self).by_class()
         else:
             return self._iterate_top_level_components(reverse=reverse)
 
@@ -777,13 +776,14 @@ class Selection(object):
                 yield component
 
     def _make_spanner_schema(self):
+        import abjad
         schema = {}
         spanners = set()
-        for component in iterate(self).by_class():
+        for component in abjad.iterate(self).by_class():
             spanners.update(component._get_spanners())
         for spanner in spanners:
             schema[spanner] = []
-        for i, component in enumerate(iterate(self).by_class()):
+        for i, component in enumerate(abjad.iterate(self).by_class()):
             attached_spanners = component._get_spanners()
             for attached_spanner in attached_spanners:
                 try:
@@ -801,9 +801,10 @@ class Selection(object):
     def _withdraw_from_crossing_spanners(self):
         r'''Not composer-safe.
         '''
+        import abjad
         assert self.in_contiguous_logical_voice()
         crossing_spanners = self._get_crossing_spanners()
-        components_including_children = select(self).by_class()
+        components_including_children = abjad.select(self).by_class()
         for crossing_spanner in list(crossing_spanners):
             spanner_components = crossing_spanner.leaves[:]
             for component in components_including_children:
@@ -874,7 +875,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_class(
+        import abjad
+        iterator = abjad.iterate(self).by_class(
             prototype=prototype,
             reverse=reverse,
             start=start,
@@ -937,7 +939,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_leaf(
+        import abjad
+        iterator = abjad.iterate(self).by_leaf(
             pitched=pitched,
             prototype=prototype,
             reverse=reverse,
@@ -990,7 +993,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_logical_tie(
+        import abjad
+        iterator = abjad.iterate(self).by_logical_tie(
             nontrivial=nontrivial,
             pitched=pitched,
             reverse=reverse,
@@ -1093,7 +1097,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_timeline(
+        import abjad
+        iterator = abjad.iterate(self).by_timeline(
             prototype=prototype,
             reverse=reverse,
             )
@@ -1153,7 +1158,8 @@ class Selection(object):
 
         Returns new selection.
         '''
-        iterator = iterate(self).by_timeline_and_logical_tie(
+        import abjad
+        iterator = abjad.iterate(self).by_timeline_and_logical_tie(
             nontrivial=nontrivial,
             pitched=pitched,
             reverse=reverse,
@@ -1165,12 +1171,13 @@ class Selection(object):
 
         Returns duration.
         '''
+        import abjad
         durations = []
         for element in self:
             if hasattr(element, '_get_duration'):
                 duration = element._get_duration(in_seconds=in_seconds)
             else:
-                duration = durationtools.Duration(element)
+                duration = abjad.Duration(element)
             durations.append(duration)
         return sum(durations)
 
@@ -1411,7 +1418,7 @@ class Selection(object):
         self,
         durations,
         cyclic=False,
-        fill=Exact,
+        fill=None,
         in_seconds=False,
         overhang=False,
         ):
@@ -1968,6 +1975,8 @@ class Selection(object):
                 ...
                 Selection([Note("c'8")])
 
+        Interprets `fill` as `Exact` when `fill` is none.
+
         Parts must equal `durations` exactly when `fill` is `Exact`.
 
         Parts must be less than or equal to `durations` when `fill` is `Less`.
@@ -1984,6 +1993,7 @@ class Selection(object):
         Returns list of selections.
         '''
         import abjad
+        fill = fill or abjad.Exact
         durations = [abjad.Duration(_) for _ in durations]
         if cyclic:
             durations = abjad.CyclicTuple(durations)
