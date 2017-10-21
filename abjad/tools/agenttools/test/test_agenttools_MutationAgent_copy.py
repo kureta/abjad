@@ -246,7 +246,7 @@ def test_agenttools_MutationAgent_copy_05():
         '''
         )
 
-    selection = abjad.selectiontools.Selection(music=voice)
+    selection = abjad.select(voice)
     new_selection = abjad.mutate(selection).copy()
     new_voice = new_selection[0]
     for component in abjad.iterate(new_voice).by_class():

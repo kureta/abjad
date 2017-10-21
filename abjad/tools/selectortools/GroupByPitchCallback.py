@@ -1,4 +1,5 @@
 import collections
+import itertools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -23,17 +24,15 @@ class GroupByPitchCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument=None):
-        r'''Calls callback on `argument`.
+    def __call__(self, music=None):
+        r'''Calls callback on `music`.
 
-        Returns list of selections.
+        Returns selection or list.
         '''
         import abjad
-        selection = abjad.Selection(argument)
-        selections = selection.group_by(self._get_written_pitches)
-        selections = self._map_contiguity(selections)
-        selections = [abjad.Selection(_) for _ in selections]
-        return selections
+        groups = self._group_by(music, self._get_written_pitches)
+        groups = self._map_contiguity(groups)
+        return abjad.Selection._manifest(groups)
 
     ### PRIVATE METHODS ###
 
@@ -53,15 +52,26 @@ class GroupByPitchCallback(AbjadValueObject):
         else:
             return None
 
-    def _map_contiguity(self, selections):
+    @staticmethod
+    def _group_by(iterable, predicate):
+        import abjad
+        groups = []
+        grouper = itertools.groupby(iterable, predicate)
+        for label, generator in grouper:
+            group = abjad.Selection._manifest(generator)
+            groups.append(group)
+        return groups
+
+    # TODO: reimplement with self.map(); then remove
+    def _map_contiguity(self, groups):
         import abjad
         if self.allow_discontiguity:
-            return selections
+            return groups
         selector = abjad.ByContiguityCallback()
         result = []
-        for selection in selections:
-            parts = selector(selection)
-            result.extend(parts)
+        for group in groups:
+            subgroups = selector(group)
+            result.extend(subgroups)
         return result
 
     ### PUBLIC PROPERTIES ###

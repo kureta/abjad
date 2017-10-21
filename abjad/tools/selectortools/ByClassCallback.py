@@ -74,7 +74,7 @@ class ByClassCallback(AbjadValueObject):
                     self.tail,
                     )
             result.extend(subresult)
-        return abjad.Selection(result)
+        return abjad.Selection._manifest(result)
 
     ### PRIVATE METHODS ###
 

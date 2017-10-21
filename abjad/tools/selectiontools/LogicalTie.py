@@ -114,8 +114,8 @@ class LogicalTie(Selection):
 
         Returns component.
         '''
-        if self._music:
-            return self._music[0]
+        if self.components:
+            return self.components[0]
 
     @property
     def is_pitched(self):
@@ -123,8 +123,8 @@ class LogicalTie(Selection):
 
         Returns true or false.
         '''
-        from abjad.tools import scoretools
-        return isinstance(self.head, (scoretools.Note, scoretools.Chord))
+        import abjad
+        return isinstance(self.head, (abjad.Note, abjad.Chord))
 
     @property
     def is_trivial(self):
@@ -156,8 +156,8 @@ class LogicalTie(Selection):
 
         Returns leaf.
         '''
-        if self._music:
-            return self._music[-1]
+        if self.components:
+            return self.components[-1]
 
     @property
     def tie_spanner(self):

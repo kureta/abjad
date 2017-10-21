@@ -28,7 +28,7 @@ class FlattenCallback(AbjadValueObject):
         import abjad
         argument = abjad.Sequence(argument)
         argument = argument.flatten(depth=self.depth)
-        return abjad.Selection(argument)
+        return abjad.Selection._manifest(argument)
 
     ### PUBLIC PROPERTIES ###
 

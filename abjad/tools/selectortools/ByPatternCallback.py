@@ -36,7 +36,7 @@ class ByPatternCallback(AbjadValueObject):
         for index, item in enumerate(argument):
             if self.pattern.matches_index(index, length):
                 result.append(item)
-        return abjad.Selection(result)
+        return abjad.Selection._manifest(result)
 
     ### PUBLIC PROPERTIES ###
 

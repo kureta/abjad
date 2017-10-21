@@ -20,22 +20,16 @@ class Selection(object):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_music',
+        '_components',
         )
 
     ### INITIALIZER ###
 
-    def __init__(self, music=None):
+    def __init__(self, components=None):
         import abjad
-        music = self._coerce_music(music)
-        for item in music:
-            if isinstance(item, abjad.LogicalTie):
-                continue
-            if isinstance(item, abjad.Selection):
-                message = 'selections can not nest: {!r}.'
-                message = message.format(music)
-                raise Exception(message)
-        self._music = tuple(music)
+        components = self._coerce_music(components)
+        assert all(isinstance(_, abjad.Component) for _ in components)
+        self._components = tuple(components)
 
     ### SPECIAL METHODS ###
 
@@ -45,19 +39,15 @@ class Selection(object):
         Returns new selection.
         '''
         assert isinstance(argument, collections.Iterable)
-        if isinstance(argument, type(self)):
-            music = self._music + argument._music
-            return type(self)(music)
-        else:
-            music = self._music + tuple(argument)
-        return type(self)(music)
+        components = self.components + tuple(argument)
+        return type(self)(components=components)
 
     def __contains__(self, argument):
         r'''Is true when `argument` is in selection. Otherwise false.
 
         Returns true or false.
         '''
-        return argument in self._music
+        return argument in self.components
 
     def __eq__(self, argument):
         r'''Is true when selection and `argument` are of the same type
@@ -67,9 +57,9 @@ class Selection(object):
         Returns true or false.
         '''
         if isinstance(argument, type(self)):
-            return self._music == argument._music
+            return self.components == argument.components
         elif isinstance(argument, collections.Sequence):
-            return self._music == tuple(argument)
+            return self.components == tuple(argument)
         return False
 
     def __format__(self, format_specification=''):
@@ -90,7 +80,7 @@ class Selection(object):
 
         Returns component from selection.
         '''
-        result = self._music.__getitem__(argument)
+        result = self.components.__getitem__(argument)
         if isinstance(result, tuple):
             result = Selection(result)
         return result
@@ -162,7 +152,7 @@ class Selection(object):
 
         Returns nonnegative integer.
         '''
-        return len(self._music)
+        return len(self.components)
 
     def __radd__(self, argument):
         r'''Concatenates selection to `argument`.
@@ -170,12 +160,8 @@ class Selection(object):
         Returns newly created selection.
         '''
         assert isinstance(argument, collections.Iterable)
-        if isinstance(argument, type(self)):
-            music = argument._music + self._music
-            return type(self)(music)
-        else:
-            music = tuple(argument) + self._music
-        return type(self)(music)
+        components = tuple(argument) + self.components
+        return type(self)(components=components)
 
     def __repr__(self):
         r'''Gets interpreter representation of selection.
@@ -242,9 +228,8 @@ class Selection(object):
             return []
         elif isinstance(music, abjad.Component):
             return [music]
-        elif isinstance(music, abjad.LogicalTie):
-            return [music]
         else:
+            assert isinstance(music, collections.Iterable), repr(music)
             items = []
             for item in music:
                 items_ = Selection._coerce_music(item)
@@ -587,7 +572,7 @@ class Selection(object):
             if recurse:
                 components = abjad.iterate(self).by_class(prototype)
             else:
-                components = self._music
+                components = self.components
             for i, x in enumerate(components):
                 if i == n:
                     return x
@@ -596,7 +581,7 @@ class Selection(object):
                 components = abjad.iterate(self).by_class(
                     prototype, reverse=True)
             else:
-                components = reversed(self._music)
+                components = reversed(self.components)
             for i, x in enumerate(components):
                 if i == abs(n) - 1:
                     return x
@@ -653,8 +638,8 @@ class Selection(object):
     def _get_format_specification(self):
         import abjad
         values = []
-        if self._music:
-            values = [list(self._music)]
+        if self.components:
+            values = [list(self.components)]
         return abjad.FormatSpecification(
             client=self,
             storage_format_args_values=values,
@@ -775,6 +760,14 @@ class Selection(object):
             for component in self:
                 yield component
 
+    @staticmethod
+    def _manifest(iterator):
+        import abjad
+        items = list(iterator)
+        if all(isinstance(_, abjad.Component) for _ in items):
+            items = Selection(items)
+        return items
+
     def _make_spanner_schema(self):
         import abjad
         schema = {}
@@ -795,7 +788,7 @@ class Selection(object):
     def _set_parents(self, new_parent):
         r'''Not composer-safe.
         '''
-        for component in self._music:
+        for component in self.components:
             component._set_parent(new_parent)
 
     def _withdraw_from_crossing_spanners(self):
@@ -811,6 +804,16 @@ class Selection(object):
                 if component in spanner_components:
                     crossing_spanner._leaves.remove(component)
                     component._spanners.discard(crossing_spanner)
+
+    ### PUBLIC PROPERTIES ###
+
+    @property
+    def components(self):
+        r'''Gets components.
+
+        Returns tuple of components.
+        '''
+        return self._components
 
     ### PUBLIC METHODS ###
 
@@ -883,7 +886,7 @@ class Selection(object):
             stop=stop,
             with_grace_notes=with_grace_notes,
             )
-        return Selection(iterator)
+        return self._manifest(iterator)
 
     def by_leaf(
         self,
@@ -948,7 +951,7 @@ class Selection(object):
             stop=stop,
             with_grace_notes=with_grace_notes,
             )
-        return Selection(iterator)
+        return self._manifest(iterator)
 
     def by_logical_tie(
         self,
@@ -1000,7 +1003,7 @@ class Selection(object):
             reverse=reverse,
             with_grace_notes=with_grace_notes,
             )
-        return Selection(iterator)
+        return self._manifest(iterator)
 
     def by_run(self, prototype=None):
         r'''Select components by run.
@@ -1048,7 +1051,8 @@ class Selection(object):
         Returns new selection.
         '''
         import abjad
-        return abjad.iterate(self).by_run(prototype=prototype)
+        iterator = abjad.iterate(self).by_run(prototype=prototype)
+        return self._manifest(iterator)
 
     def by_timeline(self, prototype=None, reverse=False):
         r'''Select components by timeline.
@@ -1102,7 +1106,7 @@ class Selection(object):
             prototype=prototype,
             reverse=reverse,
             )
-        return Selection(iterator)
+        return self._manifest(iterator)
 
     def by_timeline_and_logical_tie(
         self,
@@ -1164,7 +1168,7 @@ class Selection(object):
             pitched=pitched,
             reverse=reverse,
             )
-        return Selection(iterator)
+        return self._manifest(iterator)
 
     def get_duration(self, in_seconds=False):
         r'''Gets duration of contiguous selection.
@@ -1197,7 +1201,7 @@ class Selection(object):
 
         Returns timespan.
         '''
-        from abjad.tools import timespantools
+        import abjad
         if in_seconds:
             raise NotImplementedError
         timespan = self[0]._get_timespan()
@@ -1209,13 +1213,13 @@ class Selection(object):
                 start_offset = timespan.start_offset
             if stop_offset < timespan.stop_offset:
                 stop_offset = timespan.stop_offset
-        return timespantools.Timespan(start_offset, stop_offset)
+        return abjad.Timespan(start_offset, stop_offset)
 
     def get_vertical_moment_at(self, offset):
         r'''Select vertical moment at `offset`.
         '''
-        from abjad.tools import selectiontools
-        return selectiontools.VerticalMoment(self, offset)
+        import abjad
+        return abjad.VerticalMoment(self, offset)
 
     def group_by(self, predicate):
         r'''Groups components in contiguous selection by `predicate`.
@@ -1258,7 +1262,7 @@ class Selection(object):
         for label, generator in grouper:
             selection = tuple(generator)
             result.append(selection)
-        return result
+        return self._manifest(result)
 
     def in_contiguous_logical_voice(
         self,
@@ -2071,7 +2075,7 @@ class Selection(object):
             if overhang:
                 result.append(components_copy)
         result = [abjad.select(_) for _ in result]
-        return result
+        return self._manifest(result)
 
 
 collections.Sequence.register(Selection)

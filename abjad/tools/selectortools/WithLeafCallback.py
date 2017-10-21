@@ -43,7 +43,7 @@ class WithLeafCallback(AbjadValueObject):
             next_leaf = leaves[-1]._get_leaf(1)
             if next_leaf is not None:
                 selection.append(next_leaf)
-        return abjad.Selection(selection)
+        return abjad.Selection._manifest(selection)
 
     ### PUBLIC PROPERTIES ###
 

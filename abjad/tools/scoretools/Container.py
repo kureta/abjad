@@ -141,6 +141,7 @@ class Container(Component):
 
     __slots__ = (
         '_formatter',
+        # TODO: change _music to _components
         '_music',
         '_named_children',
         '_name',

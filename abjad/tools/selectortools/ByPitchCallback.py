@@ -46,7 +46,7 @@ class ByPitchCallback(AbjadValueObject):
                 )
             if self.pitches.intersection(pitch_set):
                 result.append(item)
-        return abjad.Selection(result)
+        return abjad.Selection._manifest(result)
 
     ### PUBLIC PROPERTIES ###
 

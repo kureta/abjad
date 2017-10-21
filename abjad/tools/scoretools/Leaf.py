@@ -280,13 +280,13 @@ class Leaf(Component):
             tie_spanners = abjad.inspect(component).get_spanners(abjad.Tie)
             if len(tie_spanners) == 1:
                 tie_spanner = tie_spanners.pop()
-                return abjad.LogicalTie(music=tie_spanner.leaves)
+                return abjad.LogicalTie(components=tie_spanner.leaves)
             elif 1 < len(tie_spanners):
                 message = 'parentage of {!r} contains {} tie spanners.'
                 message = message.format(self, len(tie_spanners))
                 raise Exception(message)
         else:
-            return abjad.LogicalTie(music=self)
+            return abjad.LogicalTie(components=self)
 
     def _process_contribution_packet(self, contribution_packet):
         manager = systemtools.LilyPondFormatManager

@@ -13,15 +13,15 @@ class ByContiguityCallback(AbjadValueObject):
 
     ### SPECIAL METHODS ###
 
-    def __call__(self, argument):
-        r'''Calls callback on `argument`.
+    def __call__(self, music):
+        r'''Calls callback on `music`.
 
         Returns list of selections.
         '''
         import abjad
         selections, selection = [], []
-        selection.extend(argument[:1])
-        for item in argument[1:]:
+        selection.extend(music[:1])
+        for item in music[1:]:
             try:
                 this_timespan = selection[-1]._get_timespan()
             except AttributeError:
@@ -33,8 +33,8 @@ class ByContiguityCallback(AbjadValueObject):
             if this_timespan.stop_offset == that_timespan.start_offset:
                 selection.append(item)
             else:
-                selections.append(abjad.Selection(selection))
+                selections.append(abjad.Selection._manifest(selection))
                 selection = [item]
         if selection:
-            selections.append(abjad.Selection(selection))
+            selections.append(abjad.Selection._manifest(selection))
         return selections

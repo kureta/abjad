@@ -60,23 +60,26 @@ class VerticalMoment(Selection):
 
     ### INITIALIZER ###
 
-    def __init__(self, music=None, offset=None):
-        self._music = music
-        if music is None:
+    def __init__(self, components=None, offset=None):
+        import abjad
+        #self._music = music
+        if components is None:
             self._offset = offset
             self._components = ()
             self._governors = ()
-            return
-        governors, components = self._from_offset(music, offset)
-        offset = durationtools.Offset(offset)
-        self._offset = offset
-        assert isinstance(governors, collections.Iterable)
-        governors = tuple(governors)
-        self._governors = governors
-        assert isinstance(components, collections.Iterable)
-        components = list(components)
-        components.sort(key=lambda _: _._get_parentage().score_index)
-        self._components = tuple(components)
+            #return
+        else:
+            governors, components = self._from_offset(components, offset)
+            offset = abjad.Offset(offset)
+            self._offset = offset
+            assert isinstance(governors, collections.Iterable)
+            governors = tuple(governors)
+            self._governors = governors
+            assert isinstance(components, collections.Iterable)
+            components = list(components)
+            components.sort(key=lambda _: _._get_parentage().score_index)
+            #self._components = tuple(components)
+        Selection.__init__(self, components=components)
 
     ### SPECIAL METHODS ###
 
@@ -249,13 +252,13 @@ class VerticalMoment(Selection):
         result = tuple(result)
         return result
 
-    @property
-    def music(self):
-        r'''Gets music of vertical moment.
-
-        Returns component or selection.
-        '''
-        return self._music
+#    @property
+#    def music(self):
+#        r'''Gets music of vertical moment.
+#
+#        Returns component or selection.
+#        '''
+#        return self._music
 
     @property
     def next_vertical_moment(self):

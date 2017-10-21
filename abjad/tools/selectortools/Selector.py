@@ -306,7 +306,7 @@ class Selector(AbjadValueObject):
                 ...             pcs = abjad.PitchClassSet(pitches)
                 ...             if pcs == c_major_pcs:
                 ...                 result.append(item)
-                ...         return abjad.Selection(result)
+                ...         return abjad.Selection._manifest(result)
 
             ::
 
@@ -2264,9 +2264,7 @@ class Selector(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
-                >>> selector = selector.by_pattern(
-                ...     pattern=abjad.index_every([0], period=2),
-                ...     )
+                >>> selector = selector.by_pattern(abjad.index_every([0], 2))
 
             ::
 
@@ -2394,10 +2392,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection(music=())
+                Selection(components=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8")])
-                Selection(music=())
+                Selection(components=())
 
         Returns new expression.
         '''
@@ -2407,7 +2405,6 @@ class Selector(AbjadValueObject):
         template = self._get_template(inspect.currentframe())
         return abjad.new(selector, template=template)
 
-    # TODO: implement pitch-inequality class.
     def by_pitch(self, pitches=None):
         r'''Selects by pitch.
 
@@ -3208,10 +3205,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection(music=())
+                Selection(components=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8"), Note("e'8")])
-                Selection(music=())
+                Selection(components=())
 
             Gets nonlast leaves in each pitched logical tie:
 
@@ -3263,10 +3260,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection(music=())
+                Selection(components=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8"), Note("e'8")])
-                Selection(music=())
+                Selection(components=())
 
         ..  container:: example
 
@@ -3624,10 +3621,10 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
-                Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
-                Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
-                Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
+                [LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])]
+                [LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])]
+                [LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])]
+                [LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])]
 
             Groups discontiguous pitched logical ties by pitch:
 
@@ -3723,8 +3720,8 @@ class Selector(AbjadValueObject):
             ::
 
                 >>> selector.print(result)
-                Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
-                Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
+                [LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])]
+                [LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])]
 
         Returns new expression.
         '''
@@ -4409,9 +4406,9 @@ class Selector(AbjadValueObject):
                 >>> for item in result[contiguity_selector]:
                 ...     item
                 ...
-                Selection([LogicalTie([Note("d'8")]), LogicalTie([Note("e'8")])])
-                Selection([LogicalTie([Note("g'8")])])
-                Selection([LogicalTie([Note("b'8")]), LogicalTie([Note("c'8")])])
+                [LogicalTie([Note("d'8")]), LogicalTie([Note("e'8")])]
+                [LogicalTie([Note("g'8")])]
+                [LogicalTie([Note("b'8")]), LogicalTie([Note("c'8")])]
 
         Returns a dictionary of selector/selection pairs.
         '''
