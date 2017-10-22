@@ -1,9 +1,10 @@
 import collections
 import copy
 import itertools
+from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
 
-class Selection(object):
+class Selection(AbjadValueObject):
     r'''Selection of components.
 
     ..  container:: example
