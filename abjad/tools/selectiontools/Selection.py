@@ -39,7 +39,7 @@ class Selection(AbjadValueObject):
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -114,7 +114,7 @@ class Selection(AbjadValueObject):
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -151,6 +151,185 @@ class Selection(AbjadValueObject):
             Note("c'4")
             Note("e'8")
             Note("f'16")
+
+    ..  container:: example
+
+        Selects every other leaf:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.sequence()
+            >>> pattern = abjad.index_every([0], 2)
+            >>> selector = selector.retain_pattern(pattern)
+
+        ::
+
+            >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                d'8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                d'8
+                e'8 ~
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                e'8 ~
+                e'8
+                \once \override Dots.color = #blue
+                \once \override Rest.color = #blue
+                r8
+                f'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Note("c'8")
+            Note("d'8")
+            Note("e'8")
+            Rest('r8')
+
+    ..  container:: example
+
+        Selects every other logical tie:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_logical_tie(pitched=True)
+            >>> selector = selector.sequence()
+            >>> selector = selector.retain_pattern(
+            ...     pattern=abjad.index_every([0], period=2),
+            ...     )
+
+        ::
+
+            >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                d'8 ~
+                d'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8
+                r8
+                f'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            LogicalTie([Note("c'8")])
+            LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
+
+    ..  container:: example
+
+        Selects note 1 in each pitched logical tie:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_logical_tie(pitched=True)
+            >>> get = abjad.select().by_leaf().sequence().retain_pattern(
+            ...     abjad.index([1]),
+            ...     )
+            >>> selector = selector.map(get)
+
+        ::
+
+            >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
+            >>> result = selector(staff)
+            >>> selector.color(result)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                c'8
+                d'8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                d'8
+                e'8 ~
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                e'8 ~
+                e'8
+                r8
+                f'8
+            }
+
+        ::
+
+            >>> selector.print(selector, result)
+            Sequence([])
+            Sequence([Note("d'8")])
+            Sequence([Note("e'8")])
+            Sequence([])
 
     '''
 
@@ -426,7 +605,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 2/4
                     c'8 (
@@ -497,7 +676,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \new Voice {
                         \times 2/3 {
@@ -1125,7 +1304,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -1173,7 +1352,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -1263,7 +1442,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     \once \override Accidental.color = #red
@@ -1346,7 +1525,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1395,7 +1574,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     \once \override Accidental.color = #red
@@ -1478,7 +1657,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1554,7 +1733,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1604,7 +1783,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1660,7 +1839,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1734,7 +1913,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -1897,7 +2076,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -1948,7 +2127,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2043,7 +2222,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2125,7 +2304,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2200,7 +2379,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2277,7 +2456,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2378,7 +2557,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2453,7 +2632,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2526,7 +2705,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2599,7 +2778,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2672,7 +2851,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -2749,7 +2928,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -2815,7 +2994,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -2997,7 +3176,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 ~
                     \times 2/3 {
@@ -3038,7 +3217,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -3117,7 +3296,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -3193,7 +3372,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -3260,7 +3439,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -3364,7 +3543,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -3433,157 +3612,6 @@ class Selection(AbjadValueObject):
             )
         return self._manifest(generator)
 
-#    def by_pattern(self, pattern=None):
-#        r'''Selects by `pattern`.
-#
-#        ..  container:: example
-#
-#            Selects every other leaf:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_pattern(abjad.index_every([0], 2))
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ::
-#
-#                >>> selector.print(selector, result)
-#                Note("c'8")
-#                Note("d'8")
-#                Note("e'8")
-#                Rest('r8')
-#
-#        ..  container:: example
-#
-#            Selects every other logical tie:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_logical_tie(pitched=True)
-#                >>> selector = selector.by_pattern(
-#                ...     pattern=abjad.index_every([0], period=2),
-#                ...     )
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    d'8 ~
-#                    d'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8 ~
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8 ~
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8
-#                    r8
-#                    f'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(selector, result)
-#                LogicalTie([Note("c'8")])
-#                LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
-#
-#        ..  container:: example
-#
-#            Selects note 1 in each pitched logical tie:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_logical_tie(pitched=True)
-#                >>> get = abjad.select().by_pattern(abjad.index([1]))
-#                >>> selector = selector.map(get)
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    c'8
-#                    d'8 ~
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    d'8
-#                    e'8 ~
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    e'8 ~
-#                    e'8
-#                    r8
-#                    f'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(selector, result)
-#                Selection(components=())
-#                Selection([Note("d'8")])
-#                Selection([Note("e'8")])
-#                Selection(components=())
-#
-#        Returns new expression.
-#        '''
-#        import abjad
-#        callback = abjad.ByPatternCallback(pattern=pattern)
-#        selector = self._append_callback(callback)
-#        return selector
-
 #    def by_pitch(self, pitches=None):
 #        r'''Selects by pitch.
 #
@@ -3608,7 +3636,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -3664,7 +3692,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -3726,7 +3754,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -3781,7 +3809,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8
@@ -3833,7 +3861,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -4099,7 +4127,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     d'8
@@ -4155,7 +4183,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -4255,7 +4283,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -4352,7 +4380,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -4451,7 +4479,7 @@ class Selection(AbjadValueObject):
 #
 #            ..  docs::
 #
-#                >>> f(staff)
+#                >>> abjad.f(staff)
 #                \new Staff \with {
 #                    autoBeaming = ##f
 #                } {
@@ -4713,7 +4741,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -4786,7 +4814,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -4865,7 +4893,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -4969,7 +4997,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -5024,7 +5052,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -5092,7 +5120,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -5172,7 +5200,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -5250,7 +5278,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -5382,7 +5410,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5434,7 +5462,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5486,7 +5514,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5541,7 +5569,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5598,7 +5626,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5653,7 +5681,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5709,7 +5737,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5765,7 +5793,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5820,7 +5848,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -5881,7 +5909,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/8
@@ -6039,7 +6067,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -6118,7 +6146,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -6339,6 +6367,16 @@ class Selection(AbjadValueObject):
 #                results_by_prefix[this_prefix] = argument
 #        return results_by_selector
 
+    def sequence(self):
+        r'''Changes selection into sequence.
+
+        Returns sequence.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return abjad.sequence(self)
+
     def top(self):
         r'''Selects top components.
         '''
@@ -6382,7 +6420,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -6458,7 +6496,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -6538,7 +6576,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override SustainPedalLineSpanner.staff-padding = #6
                     autoBeaming = ##f
@@ -6635,7 +6673,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -6711,7 +6749,7 @@ class Selection(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {

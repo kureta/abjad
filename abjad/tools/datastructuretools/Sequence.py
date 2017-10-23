@@ -4746,7 +4746,7 @@ class Sequence(abctools.AbjadValueObject):
                 items.append(item)
         return type(self)(items=items)
 
-    # TODO: change input to pattern
+    # TODO: remove in favor of self.retain_pattern()
     def retain(self, indices=None, period=None):
         '''Retains items at `indices`.
 
@@ -4809,6 +4809,8 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns new sequence.
         '''
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
         length = len(self)
         period = period or length
         if indices is None:
@@ -4826,6 +4828,77 @@ class Sequence(abctools.AbjadValueObject):
         items = []
         for i, item in enumerate(self):
             if i % period in indices:
+                items.append(item)
+        return type(self)(items=items)
+
+    def retain_pattern(self, pattern):
+        '''Retains items at indices matching `pattern`.
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence = abjad.Sequence(range(10))
+                >>> sequence.retain_pattern(abjad.index_all())
+                Sequence([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index([2, 3]))
+                Sequence([2, 3])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index([-2, -3]))
+                Sequence([7, 8])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index_every([2, 3], 4))
+                Sequence([2, 3, 6, 7])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index_every([-2, -3], 4))
+                Sequence([0, 3, 4, 7, 8])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index())
+                Sequence([])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index([97, 98, 99]))
+                Sequence([])
+
+        ..  container:: example
+
+            ::
+
+                >>> sequence.retain_pattern(abjad.index([-97, -98, -99]))
+                Sequence([])
+
+        Returns new sequence.
+        '''
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        length = len(self)
+        items = []
+        for i, item in enumerate(self):
+            if pattern.matches_index(i, length):
                 items.append(item)
         return type(self)(items=items)
 

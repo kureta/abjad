@@ -1,3 +1,4 @@
+import collections
 import inspect
 from abjad.tools import abctools
 from abjad.tools import schemetools
@@ -223,14 +224,11 @@ class LabelAgent(abctools.AbjadObject):
         import abjad
         prototype = (
             abjad.Component,
-            abjad.Selection,
-            abjad.Spanner,
-            list,
+            collections.Iterable,
             type(None),
             )
         if not isinstance(client, prototype):
-            message = 'must be component, selection, spanner, list or none:'
-            message += ' {!r}.'
+            message = 'must be component, iterable or none: {!r}.'
             message = message.format(client)
             raise TypeError(message)
         self._client = client
