@@ -92,14 +92,14 @@ class IntervalClassSegment(Segment):
 
                 >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
                 >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.select((staff_1, staff_2))
+                >>> selection = abjad.Selection((staff_1, staff_2))
                 >>> abjad.IntervalClassSegment.from_selection(selection)
                 IntervalClassSegment(['-M2', '-M3', '-m3', '+m7', '+M7', '-P5'])
 
         Returns interval-class segment.
         '''
-        from abjad.tools import pitchtools
-        pitch_segment = pitchtools.PitchSegment.from_selection(selection)
+        import abjad
+        pitch_segment = abjad.PitchSegment.from_selection(selection)
         pitches = [_ for _ in pitch_segment]
         intervals = mathtools.difference_series(pitches)
         return class_(

@@ -158,7 +158,7 @@ class TieSpecifier(AbjadValueObject):
                     continue
                 tie = abjad.Tie()
                 assert tie._attachment_test_all(subgroup)
-                abjad.attach(tie, abjad.select(subgroup))
+                abjad.attach(tie, abjad.Selection(subgroup))
 
     ### PUBLIC PROPERTIES ###
 

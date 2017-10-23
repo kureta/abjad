@@ -159,7 +159,7 @@ def test_selectiontools_Selection__get_dominant_spanners_07():
     trill = abjad.TrillSpanner()
     abjad.attach(trill, leaves)
 
-    receipt = abjad.select(voice)._get_dominant_spanners()
+    receipt = abjad.Selection(voice)._get_dominant_spanners()
 
     assert len(receipt) == 1
     assert (trill, 0) in receipt
@@ -180,7 +180,7 @@ def test_selectiontools_Selection__get_dominant_spanners_08():
     trill = abjad.TrillSpanner()
     abjad.attach(trill, leaves)
 
-    receipt = abjad.select(leaves[:2])._get_dominant_spanners()
+    receipt = leaves[:2]._get_dominant_spanners()
 
     assert len(receipt) == 2
     assert (beam, 0) in receipt

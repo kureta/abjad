@@ -1,6 +1,4 @@
 import collections
-from abjad.tools import durationtools
-from abjad.tools import systemtools
 from abjad.tools.selectiontools.Selection import Selection
 
 
@@ -153,18 +151,17 @@ class VerticalMoment(Selection):
 
     @staticmethod
     def _from_offset(argument, offset):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        offset = durationtools.Offset(offset)
+        import abjad
+        offset = abjad.Offset(offset)
         governors = []
-        prototype = (list, tuple, selectiontools.Selection)
+        prototype = (list, tuple, abjad.Selection)
         message = 'must be component or of Abjad components: {!r}.'
         message = message.format(argument)
-        if isinstance(argument, scoretools.Component):
+        if isinstance(argument, abjad.Component):
             governors.append(argument)
         elif isinstance(argument, prototype):
             for x in argument:
-                if isinstance(x, scoretools.Component):
+                if isinstance(x, sabjad.Component):
                     governors.append(x)
                 else:
                     raise TypeError(message)
@@ -180,7 +177,8 @@ class VerticalMoment(Selection):
         return governors, components
 
     def _get_format_specification(self):
-        return systemtools.FormatSpecification(client=self)
+        import abjad
+        return abjad.FormatSpecification(client=self)
 
     @staticmethod
     def _recurse(component, offset):
@@ -237,41 +235,33 @@ class VerticalMoment(Selection):
         for component in self.components:
             if isinstance(component, abjad.Leaf):
                 result.append(component)
-        result = abjad.select(result)
+        result = abjad.Selection(result)
         return result
 
     @property
     def measures(self):
         r'''Tuplet of zero or more measures at vertical moment.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = []
         for component in self.components:
-            if isinstance(component, scoretools.Measure):
+            if isinstance(component, abjad.Measure):
                 result.append(component)
         result = tuple(result)
         return result
-
-#    @property
-#    def music(self):
-#        r'''Gets music of vertical moment.
-#
-#        Returns component or selection.
-#        '''
-#        return self._music
 
     @property
     def next_vertical_moment(self):
         r'''Reference to next vertical moment forward in time.
         '''
-        from abjad.tools import scoretools
+        import abjad
         candidate_shortest_leaf = self.leaves[0]
         for leaf in self.leaves[1:]:
             if (leaf._get_timespan().stop_offset <
                 candidate_shortest_leaf._get_timespan().stop_offset):
                 candidate_shortest_leaf = leaf
         next_leaf = candidate_shortest_leaf._get_in_my_logical_voice(
-            1, prototype=scoretools.Leaf)
+            1, prototype=abjad.Leaf)
         next_vertical_moment = next_leaf._get_vertical_moment()
         return next_vertical_moment
 
@@ -279,9 +269,9 @@ class VerticalMoment(Selection):
     def notes(self):
         r'''Tuple of zero or more notes at vertical moment.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = []
-        prototype = (scoretools.Note,)
+        prototype = (abjad.Note,)
         for component in self.components:
             if isinstance(component, prototype):
                 result.append(component)
@@ -292,9 +282,9 @@ class VerticalMoment(Selection):
     def notes_and_chords(self):
         r'''Tuple of zero or more notes and chords at vertical moment.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = []
-        prototype = (scoretools.Chord, scoretools.Note)
+        prototype = (abjad.Chord, abjad.Note)
         for component in self.components:
             if isinstance(component, prototype):
                 result.append(component)
@@ -324,9 +314,9 @@ class VerticalMoment(Selection):
         r'''Tuple of leaves in vertical moment starting before vertical moment,
         ordered by score index.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = [x for x in self.overlap_components
-            if isinstance(x, scoretools.Leaf)]
+            if isinstance(x, abjad.Leaf)]
         result = tuple(result)
         return result
 
@@ -356,10 +346,10 @@ class VerticalMoment(Selection):
     def previous_vertical_moment(self):
         r'''Reference to previous vertical moment backward in time.
         '''
-        from abjad.tools import scoretools
+        import abjad
         if self.offset == 0:
             raise IndexError
-        most_recent_start_offset = durationtools.Offset(0)
+        most_recent_start_offset = abjad.Offset(0)
         token_leaf = None
         for leaf in self.leaves:
             #print ''
@@ -374,7 +364,7 @@ class VerticalMoment(Selection):
                 #print 'found leaf starting on this moment ...'
                 try:
                     previous_leaf = leaf._get_in_my_logical_voice(
-                        -1, prototype=scoretools.Leaf)
+                        -1, prototype=abjad.Leaf)
                     start = previous_leaf._get_timespan().start_offset
                     #print previous_leaf, start
                     if most_recent_start_offset <= start:
@@ -406,9 +396,9 @@ class VerticalMoment(Selection):
         r'''Tuple of leaves in vertical moment starting with vertical moment,
         ordered by score index.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = [x for x in self.start_components
-            if isinstance(x, scoretools.Leaf)]
+            if isinstance(x, abjad.Leaf)]
         result = tuple(result)
         return result
 
@@ -417,8 +407,8 @@ class VerticalMoment(Selection):
         r'''Tuple of notes in vertical moment starting with vertical moment,
         ordered by score index.
         '''
-        from abjad.tools import scoretools
+        import abjad
         result = [x for x in self.start_components
-            if isinstance(x, scoretools.Note)]
+            if isinstance(x, abjad.Note)]
         result = tuple(result)
         return result

@@ -8,7 +8,6 @@ from abjad.tools import scoretools
 from abjad.tools import spannertools
 from abjad.tools.topleveltools import attach
 from abjad.tools.topleveltools import detach
-from abjad.tools.topleveltools import select
 
 
 class ReducedLyParser(abctools.Parser):
@@ -586,7 +585,7 @@ class ReducedLyParser(abctools.Parser):
                         previous_tie[0]._append(next_leaf)
                     else:
                         tie = abjad.Tie()
-                        selection = abjad.select([leaf, next_leaf])
+                        selection = abjad.Selection([leaf, next_leaf])
                         attach(tie, selection)
 
                 elif current_class is abjad.Beam:
@@ -637,11 +636,12 @@ class ReducedLyParser(abctools.Parser):
                 raise Exception(message)
 
     def _cleanup(self, parsed):
+        import abjad
         container = scoretools.Container()
         for x in parsed:
             container.append(x)
         parsed = container
-        leaves = select(parsed).by_leaf()
+        leaves = abjad.select(parsed).by_leaf()
         if leaves:
             self._apply_spanners(leaves)
         for leaf in leaves:

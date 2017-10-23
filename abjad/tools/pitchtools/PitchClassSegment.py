@@ -1780,7 +1780,7 @@ class PitchClassSegment(Segment):
 
             ::
 
-                >>> selection = abjad.select((staff_1, staff_2))
+                >>> selection = abjad.Selection((staff_1, staff_2))
                 >>> segment = abjad.PitchClassSegment.from_selection(selection)
                 >>> show(segment) # doctest: +SKIP
 

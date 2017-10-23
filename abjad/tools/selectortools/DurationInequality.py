@@ -1,4 +1,3 @@
-from abjad.tools import mathtools
 from abjad.tools.selectortools.Inequality import Inequality
 
 
@@ -48,10 +47,12 @@ class DurationInequality(Inequality):
     def __init__(
         self,
         operator_string='<',
-        duration=mathtools.Infinity(),
+        duration=None,
         ):
         import abjad
         Inequality.__init__(self, operator_string=operator_string)
+        if duration is None:
+            duration = abjad.mathtools.Infinity()
         infinities = (
             abjad.mathtools.Infinity(),
             abjad.mathtools.NegativeInfinity(),

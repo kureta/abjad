@@ -774,7 +774,7 @@ class AccelerandoRhythmMaker(RhythmMaker):
             maker = abjad.NoteMaker()
             notes = maker([0], [total_duration])
             tuplet = abjad.Tuplet((1, 1), notes)
-            selection = abjad.select([tuplet])
+            selection = abjad.Selection([tuplet])
             return selection
         durations = class_._round_durations(durations, 2**10)
         notes = []
@@ -785,7 +785,7 @@ class AccelerandoRhythmMaker(RhythmMaker):
             multiplier = abjad.Multiplier(multiplier)
             attach(multiplier, note)
             notes.append(note)
-        selection = abjad.select(notes)
+        selection = abjad.Selection(notes)
         class_._fix_rounding_error(
             selection,
             total_duration,
@@ -806,7 +806,7 @@ class AccelerandoRhythmMaker(RhythmMaker):
             markup = duration.to_score_markup()
             markup = markup.scale((0.75, 0.75))
             override(tuplet).tuplet_number.text = markup
-        selection = abjad.select([tuplet])
+        selection = abjad.Selection([tuplet])
         return selection
 
     def _make_music(self, divisions, rotation):

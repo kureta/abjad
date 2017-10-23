@@ -672,13 +672,18 @@ class Expression(AbjadValueObject):
         globals_['__argument_0'] = __argument_0
         globals_['class_'] = class_
         globals_['map_operand'] = map_operand
-        statement = 'class_([map_operand(_) for _ in __argument_0])'
+        #statement = 'class_([map_operand(_) for _ in __argument_0])'
+        statement = '[map_operand(_) for _ in __argument_0]'
         try:
             result = eval(statement, globals_)
         except (NameError, SyntaxError, TypeError) as e:
             message = '{!r} raises {!r}.'
             message = message.format(statement, e)
             raise Exception(message)
+        try:
+            result = class_(result)
+        except TypeError:
+            pass
         return result
 
     @classmethod
@@ -1214,14 +1219,21 @@ class Expression(AbjadValueObject):
                 assert argument_info.args[0] == 'self'
                 self = argument_info.locals['self']
                 function = getattr(self, function_name)
-                #signature = inspect.signature(function)
                 signature = inspect.signature(function)
                 argument_names = argument_info.args[1:]
             argument_strings = []
             for argument_name in argument_names:
                 argument_value = argument_info.locals[argument_name]
                 parameter = signature.parameters[argument_name]
-                if argument_value != parameter.default:
+                # positional argument
+                if parameter.default == inspect.Parameter.empty:
+                    argument_value = Expression._to_evaluable_string(
+                        argument_value
+                        )
+                    argument_string = argument_value
+                    argument_strings.append(argument_string)
+                # keyword argument
+                elif argument_value != parameter.default:
                     argument_string = '{argument_name}={argument_value}'
                     argument_value = Expression._to_evaluable_string(
                         argument_value)
@@ -1887,7 +1899,7 @@ class Expression(AbjadValueObject):
         Returns expression.
         '''
         import abjad
-        class_ = abjad.agenttools.IterationAgent
+        class_ = abjad.IterationAgent
         callback = self._make_initializer_callback(class_, **keywords)
         expression = self.append_callback(callback)
         return abjad.new(expression, proxy_class=class_)
@@ -1948,7 +1960,7 @@ class Expression(AbjadValueObject):
         Returns expression.
         '''
         import abjad
-        class_ = abjad.agenttools.LabelAgent
+        class_ = abjad.LabelAgent
         callback = self._make_initializer_callback(class_, **keywords)
         expression = self.append_callback(callback)
         return abjad.new(expression, proxy_class=class_)
@@ -2064,6 +2076,70 @@ class Expression(AbjadValueObject):
             string_template='{}',
             **keywords
             )
+        expression = self.append_callback(callback)
+        return abjad.new(expression, proxy_class=class_)
+
+    def select(self, **keywords):
+        r'''Makes select expression.
+
+        ..  container:: example
+
+            Makes expression to select leaves:
+
+            ..  container:: example
+
+                ::
+
+                    >>> staff = abjad.Staff()
+                    >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
+                    >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
+                    >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
+                    >>> show(staff) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(staff)
+                    \new Staff {
+                        {
+                            \time 2/8
+                            <c' bf'>8
+                            <g' a'>8
+                        }
+                        {
+                            af'8
+                            r8
+                        }
+                        {
+                            r8
+                            gf'8
+                        }
+                    }
+
+            ..  container:: example expression
+
+                ::
+
+                    >>> expression = abjad.Expression()
+                    >>> expression = expression.select()
+                    >>> expression = expression.by_leaf()
+
+                ::
+
+                    >>> for leaf in expression(staff):
+                    ...     leaf
+                    ...
+                    Chord("<c' bf'>8")
+                    Chord("<g' a'>8")
+                    Note("af'8")
+                    Rest('r8')
+                    Rest('r8')
+                    Note("gf'8")
+
+        Returns expression.
+        '''
+        import abjad
+        class_ = abjad.SelectionAgent
+        callback = self._make_initializer_callback(class_, **keywords)
         expression = self.append_callback(callback)
         return abjad.new(expression, proxy_class=class_)
 

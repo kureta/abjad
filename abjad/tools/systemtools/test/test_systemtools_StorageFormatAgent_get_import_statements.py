@@ -10,11 +10,10 @@ def test_systemtools_StorageFormatAgent_get_import_statements_01():
 
 
 def test_systemtools_StorageFormatAgent_get_import_statements_02():
-    subject = abjad.Selector().by_leaf()
+    subject = abjad.Selection()
     agent = abjad.StorageFormatAgent(subject)
     assert agent.get_import_statements() == (
-        'from abjad.tools import scoretools',
-        'from abjad.tools import selectortools',
+        'from abjad.tools import selectiontools',
         )
 
 

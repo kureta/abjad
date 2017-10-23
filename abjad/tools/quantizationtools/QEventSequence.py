@@ -549,7 +549,7 @@ class QEventSequence(AbjadObject):
         Return ``QEventSequence`` instance.
         '''
         import abjad
-        assert abjad.select(leaves).in_contiguous_logical_voice()
+        assert abjad.Selection(leaves).in_contiguous_logical_voice()
         assert len(leaves)
         if tempo is None:
             prototype = abjad.MetronomeMark

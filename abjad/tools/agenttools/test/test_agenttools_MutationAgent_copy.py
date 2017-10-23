@@ -37,8 +37,7 @@ def test_agenttools_MutationAgent_copy_01():
         '''
         )
 
-    selection = abjad.select(leaves[2:4])
-    result = abjad.mutate(selection).copy()
+    result = abjad.mutate(leaves[2:4]).copy()
     new = abjad.Voice(result)
 
     assert format(new) == abjad.String.normalize(
@@ -137,8 +136,7 @@ def test_agenttools_MutationAgent_copy_03():
         '''
         )
 
-    selection = abjad.select(leaves[-3:])
-    result = abjad.mutate(selection).copy()
+    result = abjad.mutate(leaves[-3:]).copy()
     new = abjad.Voice(result)
 
     assert format(new) == abjad.String.normalize(
@@ -246,7 +244,7 @@ def test_agenttools_MutationAgent_copy_05():
         '''
         )
 
-    selection = abjad.select(voice)
+    selection = abjad.Selection(voice)
     new_selection = abjad.mutate(selection).copy()
     new_voice = new_selection[0]
     for component in abjad.iterate(new_voice).by_class():
@@ -374,8 +372,7 @@ def test_agenttools_MutationAgent_copy_07():
         '''
         )
 
-    leaves = abjad.select(leaves[:6])
-    result = abjad.mutate(leaves).copy()
+    result = abjad.mutate(leaves[:6]).copy()
     new_voice = abjad.Voice(result)
     for component in abjad.iterate(new_voice).by_class():
         abjad.detach(abjad.Spanner, component)
@@ -600,8 +597,9 @@ def test_agenttools_MutationAgent_copy_11():
         '''
         )
 
-    leaves = abjad.select(leaves[1:5])
-    new_staff = abjad.mutate(leaves).copy(include_enclosing_containers=True)
+    new_staff = abjad.mutate(leaves[1:5]).copy(
+        include_enclosing_containers=True,
+        )
 
     assert format(new_staff) == abjad.String.normalize(
         r'''
@@ -652,8 +650,9 @@ def test_agenttools_MutationAgent_copy_12():
         '''
         )
 
-    leaves = abjad.select(leaves[1:5])
-    new_staff = abjad.mutate(leaves).copy(include_enclosing_containers=True)
+    new_staff = abjad.mutate(leaves[1:5]).copy(
+        include_enclosing_containers=True,
+        )
 
     assert format(new_staff) == abjad.String.normalize(
         r'''
@@ -708,8 +707,9 @@ def test_agenttools_MutationAgent_copy_13():
         '''
         )
 
-    leaves = abjad.select(leaves[1:3])
-    new_voice = abjad.mutate(leaves).copy(include_enclosing_containers=True)
+    new_voice = abjad.mutate(leaves[1:3]).copy(
+        include_enclosing_containers=True,
+        )
 
     assert format(new_voice) == abjad.String.normalize(
         r'''
@@ -797,8 +797,9 @@ def test_agenttools_MutationAgent_copy_16():
         '''
         )
 
-    leaves = abjad.select(leaves[2:4])
-    new_staff = abjad.mutate(leaves).copy(include_enclosing_containers=True)
+    new_staff = abjad.mutate(leaves[2:4]).copy(
+        include_enclosing_containers=True,
+        )
 
     assert format(new_staff) == abjad.String.normalize(
         r'''

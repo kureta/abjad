@@ -244,7 +244,7 @@ class NoteMaker(AbjadValueObject):
                     )
                 tuplet = abjad.Tuplet(multiplier, ns)
                 result.append(tuplet)
-        result = abjad.select(result)
+        result = abjad.Selection(result)
         return result
 
     ### PRIVATE METHODS ###

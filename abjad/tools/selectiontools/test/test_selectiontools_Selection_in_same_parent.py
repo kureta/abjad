@@ -10,20 +10,20 @@ def test_selectiontools_Selection_in_same_parent_01():
 
     assert voice[:].in_same_parent()
 
-    assert not abjad.select(reversed(voice[:])).in_same_parent()
+    assert not abjad.Selection(reversed(voice[:])).in_same_parent()
 
     components = []
     components.extend(voice[2:])
     components.extend(voice[:2])
-    assert not abjad.select(components).in_same_parent()
+    assert not abjad.Selection(components).in_same_parent()
 
     components = []
     components.extend(voice[3:4])
     components.extend(voice[:1])
-    assert not abjad.select(components).in_same_parent()
+    assert not abjad.Selection(components).in_same_parent()
     components = [voice]
     components.extend(voice[:])
-    assert not abjad.select(components).in_same_parent()
+    assert not abjad.Selection(components).in_same_parent()
 
 
 def test_selectiontools_Selection_in_same_parent_02():
@@ -57,8 +57,8 @@ def test_selectiontools_Selection_in_same_parent_02():
         '''
         )
 
-    assert abjad.select(voice).in_same_parent()
-    assert not abjad.select(voice).in_same_parent(allow_orphans=False)
+    assert abjad.Selection(voice).in_same_parent()
+    assert not abjad.Selection(voice).in_same_parent(allow_orphans=False)
 
     assert voice[:].in_same_parent()
 
@@ -78,8 +78,8 @@ def test_selectiontools_Selection_in_same_parent_03():
         abjad.Note("c'8"),
         abjad.Note("d'8"), abjad.Note("e'8"), abjad.Note("f'8")]
 
-    assert abjad.select(notes).in_same_parent()
-    assert not abjad.select(notes).in_same_parent(allow_orphans=False)
+    assert abjad.Selection(notes).in_same_parent()
+    assert not abjad.Selection(notes).in_same_parent(allow_orphans=False)
 
 
 def test_selectiontools_Selection_in_same_parent_04():

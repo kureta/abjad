@@ -5,8 +5,6 @@ from abjad.tools.abctools import AbjadValueObject
 from abjad.tools.topleveltools import attach
 from abjad.tools.topleveltools import detach
 from abjad.tools.topleveltools import iterate
-from abjad.tools.topleveltools import override
-from abjad.tools.topleveltools import select
 
 
 class BeamSpecifier(AbjadValueObject):
@@ -124,9 +122,10 @@ class BeamSpecifier(AbjadValueObject):
                 else:
                     raise TypeError(selection)
             if self.stemlet_length is not None:
-                grob_proxy = override(beam).staff.stem
+                grob_proxy = abjad.override(beam).staff.stem
                 grob_proxy.stemlet_length = self.stemlet_length
-            leaves = abjad.select(components).by_leaf(with_grace_notes=False)
+            leaves = abjad.Selection(components).by_leaf(
+                with_grace_notes=False)
             abjad.attach(beam, leaves)
         elif self.beam_each_division:
             for selection in selections:
@@ -134,7 +133,7 @@ class BeamSpecifier(AbjadValueObject):
                 if self.stemlet_length is not None:
                     grob_proxy = abjad.override(beam).staff.stem
                     grob_proxy.stemlet_length = self.stemlet_length
-                leaves = abjad.select(selection).by_leaf(
+                leaves = abjad.Selection(selection).by_leaf(
                     with_grace_notes=False)
                 abjad.attach(beam, leaves)
 

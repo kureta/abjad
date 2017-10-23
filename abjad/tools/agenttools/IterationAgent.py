@@ -1368,15 +1368,15 @@ class IterationAgent(abctools.AbjadObject):
             for moment_1, moment_2 in abjad.Sequence(vertical_moments).nwise():
                 enumerator = abjad.Enumerator(moment_1.start_leaves)
                 for pair in enumerator.yield_pairs():
-                    yield abjad.select(pair)
+                    yield abjad.Selection(pair)
                 sequences = [moment_1.leaves, moment_2.start_leaves]
                 enumerator = abjad.Enumerator(sequences)
                 for pair in enumerator.yield_outer_product():
-                    yield abjad.select(pair)
+                    yield abjad.Selection(pair)
             else:
                 enumerator = abjad.Enumerator(moment_2.start_leaves)
                 for pair in enumerator.yield_pairs():
-                    yield abjad.select(pair)
+                    yield abjad.Selection(pair)
         return _closure(vertical_moments)
 
     def by_logical_tie(
@@ -3062,17 +3062,17 @@ class IterationAgent(abctools.AbjadObject):
         prototype = prototype or abjad.Leaf
         if not isinstance(prototype, collections.Sequence):
             prototype = (prototype,)
-        selection = abjad.select(self.client)
+        selection = abjad.Selection(self.client)
         def _closure():
             current_run = ()
             for run in selection.group_by(type):
                 if isinstance(run[0], prototype):
                     current_run = current_run + run
                 elif current_run:
-                    yield abjad.select(current_run)
+                    yield abjad.Selection(current_run)
                     current_run = ()
             if current_run:
-                yield abjad.select(current_run)
+                yield abjad.Selection(current_run)
         return _closure()
 
     def by_spanner(

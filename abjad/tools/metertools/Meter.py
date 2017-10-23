@@ -920,8 +920,7 @@ class Meter(AbjadValueObject):
                         [split_offset],
                         use_messiaen_style_ties=use_messiaen_style_ties,
                         )
-                    logical_ties = \
-                        [abjad.LogicalTie(shard) for shard in shards]
+                    logical_ties = [abjad.LogicalTie(_) for _ in shards]
                     for logical_tie in logical_ties:
                         recurse(
                             boundary_depth=boundary_depth,
@@ -975,7 +974,7 @@ class Meter(AbjadValueObject):
                 #print()
                 logical_tie[:]._fuse()
         # Validate arguments.
-        assert abjad.select(components).in_contiguous_logical_voice()
+        assert abjad.Selection(components).in_contiguous_logical_voice()
         if not isinstance(meter, abjad.Meter):
             meter = abjad.Meter(meter)
         if boundary_depth is not None:

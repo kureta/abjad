@@ -1,5 +1,5 @@
-def select(argument=None):
-    r'''Selects `argument` or makes empty selector.
+def select(client=None):
+    r'''Selects `client` or makes empty selector.
 
     ..  container:: example
 
@@ -8,7 +8,7 @@ def select(argument=None):
         ::
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> selection = abjad.select(staff[:2])
+            >>> selection = abjad.select(staff[:2]).by_leaf(pitched=True)
             >>> for note in selection:
             ...     abjad.override(note).note_head.color = 'red'
 
@@ -30,18 +30,17 @@ def select(argument=None):
 
     ..  container:: example
 
-        Initializes empty selector:
+        Returns selection agent:
 
         ::
 
-            >>> abjad.select()
-            Selector()
+            >>> abjad.select(staff)
+            SelectionAgent(client=Staff("c'4 d'4 e'4 f'4"))
 
-    Returns selector when `argument` is none.
-
-    Returns selection when `argument` is not none.
     '''
     import abjad
-    if argument is None:
-        return abjad.Selector()
-    return abjad.Selection(argument)
+    if client is not None:
+        return abjad.SelectionAgent(client=client)
+    expression = abjad.Expression()
+    expression = expression.select()
+    return expression

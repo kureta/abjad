@@ -30,17 +30,17 @@ def test_selectiontools_Selection__get_crossing_spanners_01():
         '''
         )
 
-    spanners = abjad.select(voice)._get_crossing_spanners()
+    spanners = abjad.Selection(voice)._get_crossing_spanners()
     assert spanners == set([])
 
-    spanners = abjad.select(leaves)._get_crossing_spanners()
+    spanners = abjad.Selection(leaves)._get_crossing_spanners()
     assert spanners == set([])
 
     spanners = voice[:1]._get_crossing_spanners()
     assert len(spanners) == 1
     assert trill in spanners
 
-    spanners = abjad.select(leaves[:-1])._get_crossing_spanners()
+    spanners = abjad.Selection(leaves[:-1])._get_crossing_spanners()
     assert len(spanners) == 2
     assert slur in spanners
     assert trill in spanners
@@ -75,6 +75,6 @@ def test_selectiontools_Selection__get_crossing_spanners_02():
         '''
         )
 
-    spanners = abjad.select(leaves)._get_crossing_spanners()
+    spanners = abjad.Selection(leaves)._get_crossing_spanners()
 
     assert len(spanners) == 0

@@ -796,7 +796,7 @@ class Component(AbjadObject):
         ):
         import abjad
         assert all(isinstance(x, abjad.Component) for x in components)
-        selection = abjad.select(self)
+        selection = abjad.Selection(self)
         if direction == abjad.Right:
             if grow_spanners:
                 insert_offset = self._get_timespan()._stop_offset
@@ -817,7 +817,7 @@ class Component(AbjadObject):
                         for leaf in reversed(leaves):
                             spanner._insert(insert_index, leaf)
                             leaf._spanners.add(spanner)
-            selection = abjad.select(self)
+            selection = abjad.Selection(self)
             parent, start, stop = \
                 selection._get_parent_and_start_stop_indices()
             if parent is not None:
@@ -846,7 +846,7 @@ class Component(AbjadObject):
                         for leaf in reversed(leaves):
                             spanner._insert(index, leaf)
                             component._spanners.add(spanner)
-            selection = abjad.select(self)
+            selection = abjad.Selection(self)
             parent, start, stop = \
                 selection._get_parent_and_start_stop_indices()
             if parent is not None:

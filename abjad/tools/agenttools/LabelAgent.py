@@ -664,6 +664,13 @@ class LabelAgent(abctools.AbjadObject):
             colors = colors or ['green']
             color = colors[0]
             abjad.label(self.client).color_leaves(color=color)
+        elif (selector and selector.callbacks and
+            selector.callbacks[-1].qualified_method_name ==
+                'abjad.SelectionAgent.__getitem__' and
+                'slice' not in selector.callbacks[-1].evaluation_template):
+            colors = colors or ['green']
+            color = colors[0]
+            abjad.label(self.client).color_leaves(color=color)
         else:
             colors = colors or ['red', 'blue']
             colors = abjad.CyclicTuple(colors)

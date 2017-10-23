@@ -5,8 +5,6 @@ from abjad.tools import scoretools
 from abjad.tools import selectiontools
 from abjad.tools import spannertools
 from abjad.tools.rhythmmakertools.RhythmMaker import RhythmMaker
-from abjad.tools.topleveltools import attach
-from abjad.tools.topleveltools import select
 
 
 class EvenRunRhythmMaker(RhythmMaker):
@@ -171,13 +169,14 @@ class EvenRunRhythmMaker(RhythmMaker):
         return result
 
     def _make_music(self, divisions, rotation):
+        import abjad
         selections = []
         for division in divisions:
-            prototype = mathtools.NonreducedFraction
+            prototype = abjad.NonreducedFraction
             assert isinstance(division, prototype), division
         for division in divisions:
             container = self._make_container(division)
-            selection = selectiontools.Selection(container)
+            selection = abjad.Selection(container)
             selections.append(selection)
         beam_specifier = self._get_beam_specifier()
         if beam_specifier.beam_divisions_together:
@@ -185,7 +184,7 @@ class EvenRunRhythmMaker(RhythmMaker):
             for selection in selections:
                 duration = selection.get_duration()
                 durations.append(duration)
-            beam = spannertools.DuratedComplexBeam(
+            beam = abjad.DuratedComplexBeam(
                 durations=durations,
                 span_beam_count=1,
                 nibs_towards_nonbeamable_components=False,
@@ -193,15 +192,13 @@ class EvenRunRhythmMaker(RhythmMaker):
             components = []
             for selection in selections:
                 components.extend(selection)
-            leaves = select(components).by_leaf()
-            #attach(beam, components)
-            attach(beam, leaves)
+            leaves = abjad.select(components).by_leaf()
+            abjad.attach(beam, leaves)
         elif beam_specifier.beam_each_division:
             for selection in selections:
-                beam = spannertools.MultipartBeam()
-                leaves = select(selection).by_leaf()
-                #attach(beam, selection)
-                attach(beam, leaves)
+                beam = abjad.MultipartBeam()
+                leaves = abjad.select(selection).by_leaf()
+                abjad.attach(beam, leaves)
         return selections
 
     ### PUBLIC PROPERTIES ###

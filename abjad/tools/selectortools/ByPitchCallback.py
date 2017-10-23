@@ -1,5 +1,4 @@
 import collections
-from abjad.tools import pitchtools
 from abjad.tools.abctools import AbjadValueObject
 
 

@@ -1,5 +1,4 @@
 from abjad.tools import abctools
-from abjad.tools.topleveltools import iterate
 
 
 class MutationAgent(abctools.AbjadObject):
@@ -107,17 +106,16 @@ class MutationAgent(abctools.AbjadObject):
 
         Returns new component.
         '''
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        if isinstance(self._client, scoretools.Component):
-            selection = selectiontools.Selection(self._client)
+        import abjad
+        if isinstance(self._client, abjad.Component):
+            selection = abjad.Selection(self._client)
         else:
             selection = self._client
         result = selection._copy(
             n=n,
             include_enclosing_containers=include_enclosing_containers,
             )
-        if isinstance(self._client, scoretools.Component):
+        if isinstance(self._client, abjad.Component):
             if len(result) == 1:
                 result = result[0]
         return result
@@ -202,8 +200,7 @@ class MutationAgent(abctools.AbjadObject):
                 >>> staff.append(abjad.Tuplet((3, 2), "c'4 e'4"))
                 >>> staff.append(abjad.Tuplet((3, 2), "d'4 f'4"))
                 >>> hairpin = abjad.Hairpin('p < f')
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(staff)
+                >>> leaves = abjad.select(staff).by_leaf()
                 >>> time_signature = abjad.TimeSignature((3, 4))
                 >>> abjad.attach(time_signature, leaves[0])
                 >>> abjad.attach(hairpin, leaves)
@@ -252,8 +249,7 @@ class MutationAgent(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Tuplet((3, 2), "c'4 e'4"))
                 >>> staff.append(abjad.Tuplet((3, 2), "d'4 f'4"))
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(staff)
+                >>> leaves = abjad.select(staff).by_leaf()
                 >>> hairpin = abjad.Hairpin('p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> time_signature = abjad.TimeSignature((3, 4))
@@ -444,13 +440,13 @@ class MutationAgent(abctools.AbjadObject):
         '''
         import abjad
         if isinstance(self._client, abjad.Component):
-            selection = abjad.select(self._client)
+            selection = abjad.Selection(self._client)
             return selection._fuse()
         elif (
             isinstance(self._client, abjad.Selection) and
             self._client.in_contiguous_logical_voice()
             ):
-            selection = abjad.select(self._client)
+            selection = abjad.Selection(self._client)
             return selection._fuse()
 
     def replace(self, recipients):
@@ -466,8 +462,7 @@ class MutationAgent(abctools.AbjadObject):
                 >>> tuplet_2 = abjad.Tuplet((2, 3), "d'4 e'4 f'4")
                 >>> staff = abjad.Staff([tuplet_1, tuplet_2])
                 >>> hairpin = abjad.Hairpin('p < f')
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(staff)
+                >>> leaves = abjad.select(staff).by_leaf()
                 >>> abjad.attach(hairpin, leaves)
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
@@ -554,10 +549,10 @@ class MutationAgent(abctools.AbjadObject):
         if isinstance(self._client, abjad.Selection):
             donors = self._client
         else:
-            donors = abjad.select(self._client)
+            donors = abjad.Selection(self._client)
         assert donors.in_same_parent()
         if not isinstance(recipients, abjad.Selection):
-            recipients = abjad.select(recipients)
+            recipients = abjad.Selection(recipients)
         assert recipients.in_same_parent()
         if donors:
             parent, start, stop = donors._get_parent_and_start_stop_indices()
@@ -1654,14 +1649,12 @@ class MutationAgent(abctools.AbjadObject):
 
         Operates in place and returns none.
         '''
-        from abjad.tools import metertools
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
+        import abjad
         selection = self._client
-        if isinstance(selection, scoretools.Container):
+        if isinstance(selection, abjad.Container):
             selection = selection[:]
-        assert isinstance(selection, selectiontools.Selection)
-        result = metertools.Meter._rewrite_meter(
+        assert isinstance(selection, abjad.Selection)
+        result = abjad.Meter._rewrite_meter(
             selection,
             meter,
             boundary_depth=boundary_depth,
@@ -2408,8 +2401,7 @@ class MutationAgent(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Tuplet((2, 3), "c'4 d' e'"))
                 >>> staff.append(abjad.Tuplet((2, 3), "c'4 d' e'"))
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(staff)
+                >>> leaves = abjad.select(staff).by_leaf()
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
                 >>> show(staff) # doctest: +SKIP
@@ -2777,10 +2769,10 @@ class MutationAgent(abctools.AbjadObject):
         single_component_input = False
         if isinstance(components, abjad.Component):
             single_component_input = True
-            components = abjad.select(components)
+            components = abjad.Selection(components)
         assert all(isinstance(_, abjad.Component) for _ in components)
         if not isinstance(components, abjad.Selection):
-            components = abjad.select(components)
+            components = abjad.Selection(components)
         durations = [abjad.Duration(_) for _ in durations]
         # return if no split to be done
         if not durations:
@@ -2902,13 +2894,13 @@ class MutationAgent(abctools.AbjadObject):
             result.append(remaining_components)
         # partition split components according to input durations
         result = abjad.Sequence(result).flatten()
-        result = abjad.select(result)
-        result = result.partition_by_durations(
+        result = abjad.Selection(result).partition_by_durations(
             durations_copy,
             fill=abjad.Exact,
             )
         # return list of shards
-        result = [abjad.select(_) for _ in result]
+        #return [abjad.Selection(_) for _ in result]
+        assert all(isinstance(_, abjad.Selection) for _ in result), repr(result)
         return result
 
     def swap(self, container):
@@ -2921,8 +2913,7 @@ class MutationAgent(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Measure((3, 4), "c'4 d'4 e'4"))
                 >>> staff.append(abjad.Measure((3, 4), "d'4 e'4 f'4"))
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(staff)
+                >>> leaves = abjad.select(staff).by_leaf()
                 >>> hairpin = abjad.Hairpin('p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> measures = staff[:]
@@ -2975,7 +2966,7 @@ class MutationAgent(abctools.AbjadObject):
         if isinstance(self._client, abjad.Selection):
             donors = self._client
         else:
-            donors = abjad.select(self._client)
+            donors = abjad.Selection(self._client)
         assert donors.in_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container, repr(container)
@@ -3044,12 +3035,11 @@ class MutationAgent(abctools.AbjadObject):
 
         Returns none.
         '''
-        from abjad.tools import pitchtools
-        from abjad.tools import scoretools
-        named_interval = pitchtools.NamedInterval(argument)
-        for x in iterate(self._client).by_class(
-            (scoretools.Note, scoretools.Chord)):
-            if isinstance(x, scoretools.Note):
+        import abjad
+        named_interval = abjad.NamedInterval(argument)
+        for x in abjad.iterate(self._client).by_class(
+            (abjad.Note, abjad.Chord)):
+            if isinstance(x, abjad.Note):
                 old_written_pitch = x.note_head.written_pitch
                 new_written_pitch = old_written_pitch.transpose(named_interval)
                 x.note_head.written_pitch = new_written_pitch
@@ -3210,7 +3200,7 @@ class MutationAgent(abctools.AbjadObject):
             message = message.format(container)
             raise Exception(message)
         if isinstance(self._client, abjad.Component):
-            selection = abjad.select(self._client)
+            selection = abjad.Selection(self._client)
         else:
             selection = self._client
         assert isinstance(selection, abjad.Selection), repr(selection)

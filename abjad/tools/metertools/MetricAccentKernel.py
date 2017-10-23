@@ -152,8 +152,7 @@ class MetricAccentKernel(AbjadValueObject):
             ::
 
                 >>> MetricAccentKernel = abjad.MetricAccentKernel
-                >>> selector = abjad.select().by_leaf()
-                >>> leaves = selector(score)
+                >>> leaves = abjad.select(score).by_leaf()
                 >>> counter = abjad.MetricAccentKernel.count_offsets(leaves)
                 >>> for offset, count in sorted(counter.items()):
                 ...     offset, count

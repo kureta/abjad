@@ -164,7 +164,7 @@ class DurationSpecifier(AbjadValueObject):
             counts=part_lengths,
             overhang=abjad.Exact,
             )
-        selections = [abjad.select(_) for _ in parts]
+        selections = [abjad.Selection(_) for _ in parts]
         return selections
 
     ### PUBLIC PROPERTIES ###

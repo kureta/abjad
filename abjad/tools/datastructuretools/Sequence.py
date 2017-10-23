@@ -1528,11 +1528,11 @@ class Sequence(abctools.AbjadValueObject):
 
         Returns new sequence.
         '''
-        from abjad.tools import selectiontools
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if classes is None:
-            classes = (collections.Sequence, selectiontools.Selection)
+            classes = (collections.Sequence, abjad.Selection)
         if Sequence not in classes:
             classes = tuple(list(classes) + [Sequence])
         if indices is None:
@@ -4186,7 +4186,7 @@ class Sequence(abctools.AbjadValueObject):
             ::
 
                 >>> expression.get_string()
-                'permute(J, permutation=[1, 0, 3, 2])'
+                'permute(J, [1, 0, 3, 2])'
 
             ::
 

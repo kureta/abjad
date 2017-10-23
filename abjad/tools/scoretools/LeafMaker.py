@@ -568,8 +568,7 @@ class LeafMaker(AbjadValueObject):
                 elif not self.is_diminution and tuplet.is_diminution:
                     tuplet.toggle_prolation()
                 result.append(tuplet)
-        result = abjad.select(result)
-        return result
+        return abjad.Selection(result)
 
     ### PRIVATE METHODS ###
 
@@ -707,7 +706,7 @@ class LeafMaker(AbjadValueObject):
             else:
                 arguments = (written_duration, )
             result.append(class_(*arguments))
-        result = abjad.select(result)
+        result = abjad.Selection(result)
         # apply tie spanner if required
         if tie_parts and 1 < len(result):
             if not issubclass(class_, (abjad.Rest, abjad.Skip)):

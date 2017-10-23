@@ -434,11 +434,11 @@ class LilyPondParser(abctools.Parser):
                             hasattr(spanner_class, 'direction')):
                             direction = span_event.direction
                             spanner = spanner_class(direction=direction)
-                            selection = abjad.select([leaf, next_leaf])
+                            selection = abjad.select([leaf, next_leaf]).by_leaf()
                             attach(spanner, selection)
                         else:
                             spanner = spanner_class()
-                            selection = abjad.select([leaf, next_leaf])
+                            selection = abjad.select([leaf, next_leaf]).by_leaf()
                             attach(spanner, selection)
 
                 # otherwise throw an error

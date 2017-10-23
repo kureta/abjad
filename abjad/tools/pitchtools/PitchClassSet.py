@@ -268,14 +268,14 @@ class PitchClassSet(Set):
 
                 >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
                 >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.select((staff_1, staff_2))
+                >>> selection = abjad.Selection((staff_1, staff_2))
                 >>> abjad.PitchClassSet.from_selection(selection)
                 PitchClassSet(['c', 'd', 'fs', 'g', 'a', 'b'])
 
         Returns pitch-class set.
         '''
-        from abjad.tools import pitchtools
-        pitch_segment = pitchtools.PitchSegment.from_selection(selection)
+        import abjad
+        pitch_segment = abjad.PitchSegment.from_selection(selection)
         return class_(
             items=pitch_segment,
             item_class=item_class,

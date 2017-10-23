@@ -1519,7 +1519,7 @@ def test_agenttools_MutationAgent_split_24():
     '''
 
     note = abjad.Note("c'4")
-    note = abjad.select(note)
+    note = abjad.Selection(note)
 
     result = abjad.mutate(note).split(
         [(1, 32), (5, 32)],

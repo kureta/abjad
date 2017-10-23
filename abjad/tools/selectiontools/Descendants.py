@@ -1,4 +1,3 @@
-from abjad.tools.topleveltools import select
 from abjad.tools.selectiontools.Selection import Selection
 
 
@@ -78,12 +77,12 @@ class Descendants(Selection):
         cross_offset=None,
         include_self=True,
         ):
-        from abjad.tools import scoretools
-        assert isinstance(component, (scoretools.Component, type(None)))
+        import abjad
+        assert isinstance(component, (abjad.Component, type(None)))
         if component is None:
             music = ()
         else:
-            music = list(select(component).by_class())
+            music = list(abjad.select(component).by_class())
             if not include_self:
                 music.remove(component)
         result = []

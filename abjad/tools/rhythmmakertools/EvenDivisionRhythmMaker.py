@@ -474,7 +474,7 @@ class EvenDivisionRhythmMaker(RhythmMaker):
                 tuplet.preferred_denominator = preferred_denominator
             elif isinstance(self.preferred_denominator, int):
                 tuplet.preferred_denominator = self.preferred_denominator
-            selection = abjad.select(tuplet)
+            selection = abjad.Selection(tuplet)
             selections.append(selection)
         selections = self._apply_burnish_specifier(selections, rotation)
         beam_specifier = self._get_beam_specifier()

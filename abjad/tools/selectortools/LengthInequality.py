@@ -1,4 +1,3 @@
-from abjad.tools import mathtools
 from abjad.tools.selectortools.Inequality import Inequality
 
 
@@ -48,10 +47,12 @@ class LengthInequality(Inequality):
     def __init__(
         self,
         operator_string='<',
-        length=mathtools.Infinity(),
+        length=None,
         ):
         import abjad
         Inequality.__init__(self, operator_string=operator_string)
+        if length is None:
+            length = abjad.mathtools.Infinity()
         assert 0 <= length
         infinities = (
             abjad.mathtools.Infinity(),

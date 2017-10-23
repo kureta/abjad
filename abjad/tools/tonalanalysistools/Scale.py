@@ -368,7 +368,7 @@ class Scale(PitchClassSegment):
         descending_notes = copy.deepcopy(ascending_notes[:-1])
         descending_notes = list(descending_notes)
         descending_notes.reverse()
-        descending_notes = abjad.select(descending_notes)
+        descending_notes = abjad.Selection(descending_notes)
         notes = ascending_notes + descending_notes
         notes[-1].written_duration = abjad.Duration(1, 4)
         staff = abjad.Staff(notes)

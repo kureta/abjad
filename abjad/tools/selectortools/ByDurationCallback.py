@@ -1,10 +1,11 @@
 import collections
-from abjad.tools import durationtools
 from abjad.tools.abctools import AbjadValueObject
 
 
 class ByDurationCallback(AbjadValueObject):
     r'''By-duration callback.
+
+    Interprets `duration` as 1/4 when `duration` is none.
     '''
 
     ### CLASS VARIABLES ###
@@ -20,7 +21,7 @@ class ByDurationCallback(AbjadValueObject):
 
     def __init__(
         self,
-        duration=durationtools.Duration(1, 4),
+        duration=(1, 4),
         preprolated=None,
         ):
         import abjad
