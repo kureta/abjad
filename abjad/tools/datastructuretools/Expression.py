@@ -2138,7 +2138,6 @@ class Expression(AbjadValueObject):
         Returns expression.
         '''
         import abjad
-        #class_ = abjad.SelectionAgent
         class_ = abjad.Selection
         callback = self._make_initializer_callback(class_, **keywords)
         expression = self.append_callback(callback)

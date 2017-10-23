@@ -136,7 +136,7 @@ class TieSpecifier(AbjadValueObject):
         import abjad
         if not self.tie_consecutive_notes:
             return
-        leaves = abjad.select(divisions).by_leaf()
+        leaves = list(abjad.iterate(divisions).by_leaf())
         for leaf in leaves:
             abjad.detach(abjad.Tie, leaf)
         pairs = itertools.groupby(leaves, lambda _: _.__class__)

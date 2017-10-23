@@ -35,12 +35,25 @@ def select(client=None):
         ::
 
             >>> abjad.select(staff)
-            SelectionAgent(client=Staff("c'4 d'4 e'4 f'4"))
+            Selection([Staff("c'4 d'4 e'4 f'4")])
+
+        ::
+
+            >>> abjad.f(abjad.select())
+            abjad.Expression(
+                callbacks=[
+                    abjad.Expression(
+                        evaluation_template='abjad.Selection',
+                        is_initializer=True,
+                        ),
+                    ],
+                proxy_class=abjad.Selection,
+                )
 
     '''
     import abjad
     if client is not None:
-        return abjad.SelectionAgent(client=client)
+        return abjad.Selection(components=client)
     expression = abjad.Expression()
     expression = expression.select()
     return expression
