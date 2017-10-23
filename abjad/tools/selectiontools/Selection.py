@@ -746,6 +746,179 @@ class Selection(AbjadValueObject):
             LogicalTie([Note("g'16"), Note("g'16")])
             LogicalTie([Note("a'16"), Note("a'16")])
 
+    ..  container:: example
+
+        Selects leaves with C4:
+
+        ::
+
+            >>> inequality = abjad.PitchInequality('intersects', 'C4')
+            >>> selector = abjad.select().by_leaf()
+            >>> selector = selector.sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                d'8 ~
+                d'8
+                e'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                <c' e' g'>8 ~
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                <c' e' g'>4
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Note("c'8")
+            Chord("<c' e' g'>8")
+            Chord("<c' e' g'>4")
+
+    ..  container:: example
+
+        Selects leaves with C4 or E4:
+
+        ::
+
+            >>> inequality = abjad.PitchInequality('intersects', 'C4 E4')
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf().sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                d'8 ~
+                d'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8
+                r8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                <c' e' g'>8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                <c' e' g'>4
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Note("c'8")
+            Note("e'8")
+            Chord("<c' e' g'>8")
+            Chord("<c' e' g'>4")
+
+    ..  container:: example
+
+        Selects logical ties with C4:
+
+        ::
+
+            >>> inequality = abjad.PitchInequality('intersects', 'C4')
+            >>> selector = abjad.select().by_logical_tie()
+            >>> selector = selector.sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                d'8 ~
+                d'8
+                e'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                <c' e' g'>8 ~
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                <c' e' g'>4
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            LogicalTie([Note("c'8")])
+            LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+
     '''
 
     ### CLASS VARIABLES ###
@@ -3541,189 +3714,6 @@ class Selection(AbjadValueObject):
             with_grace_notes=with_grace_notes,
             )
         return self._manifest(generator)
-
-#    def by_pitch(self, pitches=None):
-#        r'''Selects by pitch.
-#
-#        ..  container:: example
-#
-#            Selects leaves with C4:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_pitch(pitches="c'")
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-#                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-#                >>> result = selector(staff)
-#                >>> abjad.label(result).color_selections(selector)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    d'8 ~
-#                    d'8
-#                    e'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    <c' e' g'>8 ~
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    <c' e' g'>4
-#                }
-#
-#            ::
-#
-#                >>> abjad.Selection.print(selector, result)
-#                Note("c'8")
-#                Chord("<c' e' g'>8")
-#                Chord("<c' e' g'>4")
-#
-#        ..  container:: example
-#
-#            Selects leaves with C4 or E4:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_pitch(pitches="c' e'")
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-#                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-#                >>> result = selector(staff)
-#                >>> abjad.label(result).color_selections(selector)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    d'8 ~
-#                    d'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8
-#                    r8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    <c' e' g'>8 ~
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    <c' e' g'>4
-#                }
-#
-#            ::
-#
-#                >>> abjad.Selection.print(selector, result)
-#                Note("c'8")
-#                Note("e'8")
-#                Chord("<c' e' g'>8")
-#                Chord("<c' e' g'>4")
-#
-#        ..  container:: example
-#
-#            Selects logical ties with C4:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_logical_tie()
-#                >>> selector = selector.by_pitch(pitches=abjad.NamedPitch('C4'))
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-#                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-#                >>> result = selector(staff)
-#                >>> abjad.label(result).color_selections(selector)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    d'8 ~
-#                    d'8
-#                    e'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    <c' e' g'>8 ~
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    <c' e' g'>4
-#                }
-#
-#            ::
-#
-#                >>> abjad.Selection.print(selector, result)
-#                LogicalTie([Note("c'8")])
-#                LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
-#
-#        Returns new expression.
-#        '''
-#        import abjad
-#        callback = abjad.ByPitchCallback(pitches=pitches)
-#        selector = self._append_callback(callback)
-#        return selector
 
     def by_run(self, prototype=None):
         r'''Select components by run.
