@@ -33,7 +33,7 @@ class Selection(AbjadValueObject):
             >>> string = r"c'4 \times 2/3 { d'8 r8 e'8 } r16 f'16 g'8 a'4"
             >>> staff = abjad.Staff(string)
             >>> result = selector(staff)
-            >>> selector.color(result)
+            >>> abjad.label(result).color_selections(selector)
             >>> abjad.setting(staff).auto_beaming = False
             >>> show(staff) # doctest: +SKIP
 
@@ -87,7 +87,7 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector.print(selector, result)
+            >>> abjad.Selection.print(selector, result)
             Selection([Note("c'4"), Note("d'8")])
             Selection([Note("e'8")])
             Selection([Note("f'16"), Note("g'8"), Note("a'4")])
@@ -108,7 +108,7 @@ class Selection(AbjadValueObject):
             >>> string = r"c'4 \times 2/3 { d'8 r8 e'8 } r16 f'16 g'8 a'4"
             >>> staff = abjad.Staff(string)
             >>> result = selector(staff)
-            >>> selector.color(result)
+            >>> abjad.label(result).color_selections(selector)
             >>> abjad.setting(staff).auto_beaming = False
             >>> show(staff) # doctest: +SKIP
 
@@ -147,7 +147,7 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector.print(selector, result)
+            >>> abjad.Selection.print(selector, result)
             Note("c'4")
             Note("e'8")
             Note("f'16")
@@ -293,7 +293,7 @@ class Selection(AbjadValueObject):
 
             >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
             >>> result = selector(staff)
-            >>> selector.color(result)
+            >>> abjad.label(result).color_selections(selector)
             >>> abjad.setting(staff).auto_beaming = False
             >>> show(staff) # doctest: +SKIP
 
@@ -325,11 +325,426 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector.print(selector, result)
+            >>> abjad.Selection.print(selector, result)
             Sequence([])
             Sequence([Note("d'8")])
             Sequence([Note("e'8")])
             Sequence([])
+
+    ..  container:: example
+
+        Selects notes runs with length greater than 1:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.by_run(abjad.Note)
+            >>> selector = selector.sequence()
+            >>> inequality = abjad.LengthInequality('>', 1)
+            >>> selector = selector.filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                c'8
+                r8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                d'8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                e'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                f'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                g'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                a'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Selection([Note("d'8"), Note("e'8")])
+            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+    ..  container:: example
+
+        Selects note runs with length less than 3:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.by_run(abjad.Note)
+            >>> selector = selector.sequence()
+            >>> inequality = abjad.LengthInequality('<', 3)
+            >>> selector = selector.filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                d'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8
+                r8
+                f'8
+                g'8
+                a'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Selection([Note("c'8")])
+            Selection([Note("d'8"), Note("e'8")])
+
+    ..  container:: example
+
+        Selects note runs with duration equal to 2/8:
+
+        ::
+
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.by_run(abjad.Note)
+            >>> selector = selector.sequence()
+            >>> inequality = abjad.DurationInequality('==', (2, 8))
+            >>> selector = selector.filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                c'8
+                r8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                d'8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                e'8
+                r8
+                f'8
+                g'8
+                a'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Selection([Note("d'8"), Note("e'8")])
+
+    ..  container:: example
+
+        Selects note runs with duration less than 3/8:
+
+        ::
+
+            >>> inequality = abjad.DurationInequality('<', (3, 8))
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.by_run(abjad.Note)
+            >>> selector = selector.sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                c'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                d'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                e'8
+                r8
+                f'8
+                g'8
+                a'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Selection([Note("c'8")])
+            Selection([Note("d'8"), Note("e'8")])
+
+    ..  container:: example
+
+        Selects note runs with duration greater than or equal to 1/4:
+
+        ::
+
+            >>> inequality = abjad.DurationInequality('>=', (1, 4))
+            >>> selector = abjad.select()
+            >>> selector = selector.by_leaf()
+            >>> selector = selector.by_run(abjad.Note)
+            >>> selector = selector.sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                c'8
+                r8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                d'8
+                \once \override Accidental.color = #red
+                \once \override Beam.color = #red
+                \once \override Dots.color = #red
+                \once \override NoteHead.color = #red
+                \once \override Stem.color = #red
+                e'8
+                r8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                f'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                g'8
+                \once \override Accidental.color = #blue
+                \once \override Beam.color = #blue
+                \once \override Dots.color = #blue
+                \once \override NoteHead.color = #blue
+                \once \override Stem.color = #blue
+                a'8
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            Selection([Note("d'8"), Note("e'8")])
+            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+    ..  container:: example
+
+        Selects logical ties with preprolated duration equal to 1/8:
+
+        ::
+
+            >>> inequality = abjad.DurationInequality(
+            ...     '==', (1, 8), preprolated=True,
+            ...     )
+            >>> selector = abjad.select()
+            >>> selector = selector.by_logical_tie()
+            >>> selector = selector.sequence().filter(inequality)
+
+        ::
+
+            >>> staff = abjad.Staff(r"""
+            ...     \times 3/4 { c'16 d'16 ~ d'16 e'16 ~ }
+            ...     {e'16 f'16 ~ f'16 g'16 ~ }
+            ...     \times 5/4 { g'16 a'16 ~ a'16 b'16 }
+            ...     """)
+            >>> result = selector(staff)
+            >>> abjad.label(result).color_selections(selector)
+            >>> abjad.setting(staff).auto_beaming = False
+            >>> show(staff) # doctest: +SKIP
+
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff \with {
+                autoBeaming = ##f
+            } {
+                \tweak text #tuplet-number::calc-fraction-text
+                \times 3/4 {
+                    c'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'16 ~
+                }
+                {
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'16 ~
+                }
+                \tweak text #tuplet-number::calc-fraction-text
+                \times 5/4 {
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'16
+                    b'16
+                }
+            }
+
+        ::
+
+            >>> abjad.Selection.print(selector, result)
+            LogicalTie([Note("d'16"), Note("d'16")])
+            LogicalTie([Note("e'16"), Note("e'16")])
+            LogicalTie([Note("f'16"), Note("f'16")])
+            LogicalTie([Note("g'16"), Note("g'16")])
+            LogicalTie([Note("a'16"), Note("a'16")])
 
     '''
 
@@ -1346,7 +1761,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -1397,7 +1812,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("c'4")
                 Note("d'8")
                 Note("d'16")
@@ -1430,14 +1845,16 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
-                >>> selector = selector.by_duration('==', (1, 16))
+                >>> inequality = abjad.DurationInequality('==', (1, 16))
+                >>> selector = selector.sequence().filter(inequality)
+                >>> selector = selector.select()
                 >>> selector = selector.by_contiguity()
 
             ::
 
                 >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -1498,7 +1915,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
                 Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
 
@@ -1519,7 +1936,7 @@ class Selection(AbjadValueObject):
 #
 #                >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 f'4 g'8")
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -1550,7 +1967,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(result)
+#                >>> abjad.Selection.print(selector, result)
 #                Note("d'8")
 #                Note("g'8")
 
@@ -1562,14 +1979,15 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
-                >>> selector = selector.by_duration('==', (1, 16))
+                >>> inequality = abjad.DurationInequality('==', (1, 16))
+                >>> selector = selector.sequence().filter(inequality).select()
                 >>> selector = selector.by_contiguity()
 
             ::
 
                 >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -1630,7 +2048,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
                 Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
 
@@ -1651,7 +2069,7 @@ class Selection(AbjadValueObject):
 #
 #                >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 f'4 g'8")
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -1682,7 +2100,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                Note("d'8")
 #                Note("g'8")
 
@@ -1710,345 +2128,6 @@ class Selection(AbjadValueObject):
         if selection:
             selections.append(abjad.Selection._manifest(selection))
         return selections
-
-    def by_duration(self, inequality=None, duration=None, preprolated=None):
-        r'''Selects by duration.
-
-#        ..  container:: example
-#
-#            Selects note runs with duration equal to 2/8:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_run(abjad.Note)
-#                >>> selector = selector.by_duration(abjad.Duration(2, 8))
-#
-#                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    c'8
-#                    r8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    d'8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    e'8
-#                    r8
-#                    f'8
-#                    g'8
-#                    a'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                Selection([Note("d'8"), Note("e'8")])
-#
-#        ..  container:: example
-#
-#            Selects note runs with duration less than 3/8:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_run(abjad.Note)
-#                >>> selector = selector.by_duration('<', abjad.Duration(3, 8))
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    d'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8
-#                    r8
-#                    f'8
-#                    g'8
-#                    a'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                Selection([Note("c'8")])
-#                Selection([Note("d'8"), Note("e'8")])
-#
-#        ..  container:: example
-#
-#            Selects note runs with duration greater than or equal to 1/4:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_run(abjad.Note)
-#                >>> selector = selector.by_duration('>=', abjad.Duration(1, 4))
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    c'8
-#                    r8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    d'8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    e'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    f'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    g'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    a'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                Selection([Note("d'8"), Note("e'8")])
-#                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-#
-#        ..  container:: example
-#
-#            Selects logical ties with preprolated duration equal to 1/8:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_logical_tie()
-#                >>> selector = selector.by_duration(
-#                ...     '==',
-#                ...     abjad.Duration(1, 8),
-#                ...     preprolated=True,
-#                ...     )
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"""
-#                ...     \times 3/4 { c'16 d'16 ~ d'16 e'16 ~ }
-#                ...     {e'16 f'16 ~ f'16 g'16 ~ }
-#                ...     \times 5/4 { g'16 a'16 ~ a'16 b'16 }
-#                ...     """)
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \tweak text #tuplet-number::calc-fraction-text
-#                    \times 3/4 {
-#                        c'16
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        d'16 ~
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        d'16
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        e'16 ~
-#                    }
-#                    {
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        e'16
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        f'16 ~
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        f'16
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        g'16 ~
-#                    }
-#                    \tweak text #tuplet-number::calc-fraction-text
-#                    \times 5/4 {
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        g'16
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        a'16 ~
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        a'16
-#                        b'16
-#                    }
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                LogicalTie([Note("d'16"), Note("d'16")])
-#                LogicalTie([Note("e'16"), Note("e'16")])
-#                LogicalTie([Note("f'16"), Note("f'16")])
-#                LogicalTie([Note("g'16"), Note("g'16")])
-#                LogicalTie([Note("a'16"), Note("a'16")])
-
-        Returns new expression.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        duration_expr = None
-        prototype = (abjad.Duration, abjad.DurationInequality)
-        if isinstance(inequality, prototype):
-            duration_expr = inequality
-        elif isinstance(inequality, str) and duration is not None:
-            duration_expr = abjad.DurationInequality(
-                duration=duration,
-                operator_string=inequality,
-                )
-        elif inequality is None and duration is not None:
-            duration_expr = abjad.DurationInequality(
-                duration=duration,
-                operator_string='==',
-                )
-        if not isinstance(duration_expr, prototype):
-            raise ValueError(inequality, duration)
-        argument = self
-        assert isinstance(argument, collections.Iterable), repr(argument)
-        inequality = duration
-        if not isinstance(inequality, abjad.DurationInequality):
-            inequality = abjad.DurationInequality(
-                duration=inequality,
-                operator_string='==',
-                )
-        result = []
-        for item in argument:
-            if not preprolated:
-                if isinstance(item, abjad.Component):
-                    duration = item._get_duration()
-                else:
-                    duration = item.get_duration()
-            else:
-                if isinstance(item, abjad.Component):
-                    item._update_now(offsets=True)
-                    duration = item._get_preprolated_duration()
-                else:
-                    durations = []
-                    for x in item:
-                        if isinstance(x, abjad.Component):
-                            x._update_now(offsets=True)
-                        duration = x._get_preprolated_duration()
-                        durations.append(x._get_preprolated_duration())
-                    duration = sum(durations)
-            if inequality(duration):
-                result.append(item)
-        return self._manifest(result)
 
     def by_leaf(
         self,
@@ -2121,7 +2200,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2187,7 +2266,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Rest('r8')
                 Note("d'8")
                 Note("e'8")
@@ -2216,7 +2295,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2274,7 +2353,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("d'8")
                 Note("e'8")
                 Note("f'8")
@@ -2298,7 +2377,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2360,7 +2439,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("d'8")
                 Note("e'8")
                 Note("f'8")
@@ -2450,7 +2529,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2522,7 +2601,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("c'8")
                 Note("d'8")
                 Note("e'8")
@@ -2551,7 +2630,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2603,7 +2682,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Rest('r8')
                 Note("d'8")
                 Note("e'8")
@@ -2626,7 +2705,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2674,7 +2753,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("d'8")
                 Note("e'8")
                 Note("e'8")
@@ -2699,7 +2778,7 @@ class Selection(AbjadValueObject):
                 ...     r e' \times 2/3 { d' ~ d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2747,7 +2826,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("c'8")
                 Note("d'8")
                 Note("d'8")
@@ -2772,7 +2851,7 @@ class Selection(AbjadValueObject):
                 ...     r e' \times 2/3 { d' ~ d' c' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2820,7 +2899,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Note("c'8")
                 Note("d'8")
                 Note("d'8")
@@ -2845,7 +2924,7 @@ class Selection(AbjadValueObject):
                 ...     r <g d' fs'> \times 2/3 { e' <c' d'> ~ <c' d'> }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -2883,7 +2962,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Chord("<c' e' g'>8")
                 Chord("<c' d'>8")
 
@@ -2903,155 +2982,6 @@ class Selection(AbjadValueObject):
             tail=tail,
             trim=trim,
             )
-
-    def by_length(self, inequality=None, length=None):
-        r'''Selects by length.
-
-#        ..  container:: example
-#
-#            Selects notes runs with length greater than 1:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_run(abjad.Note)
-#                >>> selector = selector.by_length('>', 1)
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    c'8
-#                    r8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    d'8
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    e'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    f'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    g'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    a'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                Selection([Note("d'8"), Note("e'8")])
-#                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-#
-#        ..  container:: example
-#
-#            Selects note runs with length less than 3:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_leaf()
-#                >>> selector = selector.by_run(abjad.Note)
-#                >>> selector = selector.by_length('<', 3)
-#
-#            ::
-#
-#                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \once \override Accidental.color = #red
-#                    \once \override Beam.color = #red
-#                    \once \override Dots.color = #red
-#                    \once \override NoteHead.color = #red
-#                    \once \override Stem.color = #red
-#                    c'8
-#                    r8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    d'8
-#                    \once \override Accidental.color = #blue
-#                    \once \override Beam.color = #blue
-#                    \once \override Dots.color = #blue
-#                    \once \override NoteHead.color = #blue
-#                    \once \override Stem.color = #blue
-#                    e'8
-#                    r8
-#                    f'8
-#                    g'8
-#                    a'8
-#                }
-#
-#            ::
-#
-#                >>> selector.print(result)
-#                Selection([Note("c'8")])
-#                Selection([Note("d'8"), Note("e'8")])
-
-        Returns new expression.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        length_expr = None
-        if isinstance(inequality, (int, float, abjad.LengthInequality)):
-            length_expr = inequality
-        elif isinstance(inequality, str) and length is not None:
-            length_expr = abjad.LengthInequality(
-                length=int(length),
-                operator_string=inequality,
-                )
-        elif inequality is None and length is not None:
-            length_expr = abjad.LengthInequality(
-                length=int(length),
-                operator_string='==',
-                )
-        if not isinstance(length_expr, (int, float, abjad.LengthInequality)):
-            raise ValueError(inequality, length)
-        result = self._operator_function(len(self), length)
-        return result
-        result = []
 
     def by_logical_measure(self):
         r'''Selects by logical measure.
@@ -3211,7 +3141,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3269,7 +3199,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
@@ -3290,7 +3220,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3344,7 +3274,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
@@ -3366,7 +3296,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3410,7 +3340,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("f'8"), Note("f'8")])
 
@@ -3433,7 +3363,7 @@ class Selection(AbjadValueObject):
                 ...     \times 2/3 { b' c'' d'' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3511,7 +3441,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 [LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])]
                 [LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])]
                 [LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])]
@@ -3537,7 +3467,7 @@ class Selection(AbjadValueObject):
                 ...     \times 2/3 { b' c'' d'' }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3595,7 +3525,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 [LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])]
                 [LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])]
 
@@ -3630,7 +3560,7 @@ class Selection(AbjadValueObject):
 #                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
 #                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -3666,7 +3596,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                Note("c'8")
 #                Chord("<c' e' g'>8")
 #                Chord("<c' e' g'>4")
@@ -3686,7 +3616,7 @@ class Selection(AbjadValueObject):
 #                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
 #                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -3727,7 +3657,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                Note("c'8")
 #                Note("e'8")
 #                Chord("<c' e' g'>8")
@@ -3748,7 +3678,7 @@ class Selection(AbjadValueObject):
 #                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
 #                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -3784,7 +3714,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                LogicalTie([Note("c'8")])
 #                LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 #
@@ -3855,7 +3785,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -3923,7 +3853,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
@@ -4177,7 +4107,7 @@ class Selection(AbjadValueObject):
 #                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
 #                ...     """)
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -4253,7 +4183,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                Selection([Note("c'8"), Note("c'16"), Note("c'16")])
 #                Selection([Note("c'16"), Note("c'16")])
 #                Selection([Note("d'8"), Note("d'16"), Note("d'16")])
@@ -4277,7 +4207,7 @@ class Selection(AbjadValueObject):
 #                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
 #                ...     """)
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -4353,7 +4283,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
 #                Selection([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
 #
@@ -4374,7 +4304,7 @@ class Selection(AbjadValueObject):
 #                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
 #                ...     """)
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -4450,7 +4380,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                [LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])]
 #                [LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])]
 #                [LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])]
@@ -4473,7 +4403,7 @@ class Selection(AbjadValueObject):
 #                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
 #                ...     """)
 #                >>> result = selector(staff)
-#                >>> selector.color(result)
+#                >>> abjad.label(result).color_selections(selector)
 #                >>> abjad.setting(staff).auto_beaming = False
 #                >>> show(staff) # doctest: +SKIP
 #
@@ -4549,7 +4479,7 @@ class Selection(AbjadValueObject):
 #
 #            ::
 #
-#                >>> selector.print(selector, result)
+#                >>> abjad.Selection.print(selector, result)
 #                [LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])]
 #                [LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])]
 #
@@ -4735,7 +4665,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4787,7 +4717,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Tuplet(Multiplier(2, 3), "r8 d'8 e'8")
                 Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
 
@@ -4808,7 +4738,7 @@ class Selection(AbjadValueObject):
                 ...     r f' \times 2/3 { e' d' r8 }
                 ...     """)
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4860,7 +4790,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Tuplet(Multiplier(2, 3), "r8 d'8 e'8")])
                 Selection([Tuplet(Multiplier(2, 3), "e'8 d'8 r8")])
 
@@ -4887,7 +4817,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -4991,7 +4921,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5025,7 +4955,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
 
         ..  container:: example
@@ -5046,7 +4976,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5092,7 +5022,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
 
@@ -5114,7 +5044,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5170,7 +5100,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8")])
@@ -5194,7 +5124,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -5250,7 +5180,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
 
@@ -5343,7 +5273,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
@@ -6061,7 +5991,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 d' r \times 2/3 { e' r f' } g' a' r")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -6122,7 +6052,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8'), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8"), Rest('r8')])
 
@@ -6201,7 +6131,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8')])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8"), Rest('r8')])
@@ -6414,7 +6344,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -6470,7 +6400,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
@@ -6490,7 +6420,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -6541,7 +6471,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Rest('r8')])
@@ -6568,7 +6498,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> manager = abjad.override(staff).sustain_pedal_line_spanner
                 >>> manager.staff_padding = 6
                 >>> abjad.setting(staff).auto_beaming = False
@@ -6631,7 +6561,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Note("e'8"), Rest('r8')])
@@ -6667,7 +6597,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -6723,7 +6653,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8"), Note("e'8")])
                 Selection([Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
@@ -6743,7 +6673,7 @@ class Selection(AbjadValueObject):
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> result = selector(staff)
-                >>> selector.color(result)
+                >>> abjad.label(result).color_selections(selector)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> show(staff) # doctest: +SKIP
 
@@ -6794,7 +6724,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selector.print(selector, result)
+                >>> abjad.Selection.print(selector, result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("d'8"), Note("e'8")])

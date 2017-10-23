@@ -1,4 +1,4 @@
-from abjad.tools.selectortools.Inequality import Inequality
+from .Inequality import Inequality
 
 
 class LengthInequality(Inequality):
@@ -69,9 +69,7 @@ class LengthInequality(Inequality):
 
         Returns true or false.
         '''
-        length = len(argument)
-        result = self._operator_function(length, self._length)
-        return result
+        return self._operator_function(len(argument), self.length)
 
     ### PUBLIC PROPERTIES ###
 

@@ -1211,6 +1211,107 @@ class Sequence(abctools.AbjadValueObject):
     ### PUBLIC METHODS ###
 
     @systemtools.Signature()
+    def filter(self, operand=None):
+        r'''Filters sequence by `operand`.
+
+        ..  container:: example
+
+            By length:
+
+            ..  container:: example
+
+                With lambda:
+
+                ::
+
+                    >>> items = [[1], [2, 3, [4]], [5], [6, 7, [8]]]
+                    >>> sequence = abjad.Sequence(items=items)
+
+                ::
+
+                    >>> sequence.filter(lambda _: len(_) == 1)
+                    Sequence([[1], [5]])
+
+            ..  container:: example
+
+                With inequality:
+
+                ::
+
+                    >>> items = [[1], [2, 3, [4]], [5], [6, 7, [8]]]
+                    >>> sequence = abjad.Sequence(items=items)
+
+                ::
+
+                    >>> sequence.filter(abjad.LengthInequality('==', 1))
+                    Sequence([[1], [5]])
+
+            ..  container:: example expression
+
+                As expression:
+
+                ::
+
+                    >>> expression = abjad.Expression(name='J')
+                    >>> expression = expression.sequence()
+                    >>> inequality = abjad.LengthInequality('==', 1)
+                    >>> expression = expression.filter(inequality)
+
+                ::
+
+                    >>> expression([[1], [2, 3, [4]], [5], [6, 7, [8]]])
+                    Sequence([[1], [5]])
+
+        ..  container:: example
+
+            By duration:
+
+            ..  container:: example
+
+                With inequality:
+
+                ::
+
+                    >>> staff = abjad.Staff("c'4. d'8 e'4. f'8 g'2")
+                    >>> sequence = abjad.Sequence(staff)
+
+                ::
+
+                    >>> sequence.filter(abjad.DurationInequality('==', (1, 8)))
+                    Sequence([Note("d'8"), Note("f'8")])
+
+            ..  container:: example expression
+
+                As expression:
+
+                ::
+
+                    >>> expression = abjad.Expression(name='J')
+                    >>> expression = expression.sequence()
+                    >>> inequality = abjad.DurationInequality('==', (1, 8))
+                    >>> expression = expression.filter(inequality)
+
+                ::
+
+                    >>> expression(staff)
+                    Sequence([Note("d'8"), Note("f'8")])
+
+        ..  todo:: supply with clean string and markup templates.
+
+        Returns new sequence.
+        '''
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        items = []
+        if operand is not None:
+            for item in self:
+                if operand(item):
+                    items.append(item)
+        else:
+            items = self[:]
+        return type(self)(items=items)
+
+    @systemtools.Signature()
     def flatten(self, classes=None, depth=-1, indices=None):
         r'''Flattens sequence.
 
@@ -5211,6 +5312,16 @@ class Sequence(abctools.AbjadValueObject):
             for item in self[-n:len(self)] + self[:-n]:
                 items.append(item)
         return type(self)(items=items)
+
+    def select(self):
+        r'''Selects sequence.
+
+        Returns selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return abjad.select(self)
 
     def sort(self, key=None, reverse=False):
         r'''Sorts sequence.

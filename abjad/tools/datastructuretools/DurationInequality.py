@@ -1,4 +1,4 @@
-from abjad.tools.selectortools.Inequality import Inequality
+from .Inequality import Inequality
 
 
 class DurationInequality(Inequality):
@@ -38,6 +38,7 @@ class DurationInequality(Inequality):
 
     __slots__ = (
         '_duration',
+        '_preprolated',
         )
 
     _publish_storage_format = True
@@ -48,6 +49,7 @@ class DurationInequality(Inequality):
         self,
         operator_string='<',
         duration=None,
+        preprolated=None,
         ):
         import abjad
         Inequality.__init__(self, operator_string=operator_string)
@@ -61,6 +63,7 @@ class DurationInequality(Inequality):
             duration = abjad.Duration(duration)
             assert 0 <= duration
         self._duration = duration
+        self._preprolated = preprolated
 
     ### SPECIAL METHODS ###
 
@@ -71,13 +74,18 @@ class DurationInequality(Inequality):
         '''
         import abjad
         if isinstance(argument, abjad.Component):
-            duration = abjad.inspect(argument).get_duration()
+            if self.preprolated:
+                duration = argument._get_preprolated_duration()
+            else:
+                duration = abjad.inspect(argument).get_duration()
         elif isinstance(argument, abjad.Selection):
-            duration = argument.get_duration()
+            if self.preprolated:
+                duration = argument._get_preprolated_duration()
+            else:
+                duration = abjad.inspect(argument).get_duration()
         else:
             duration = abjad.Duration(argument)
-        result = self._operator_function(duration, self._duration)
-        return result
+        return self._operator_function(duration, self.duration)
 
     ### PUBLIC PROPERTIES ###
 
@@ -88,3 +96,11 @@ class DurationInequality(Inequality):
         Returns duration.
         '''
         return self._duration
+
+    @property
+    def preprolated(self):
+        r'''Is true when inequality evaluates preprolated duration.
+
+        Returns true, false or none.
+        '''
+        return self._preprolated
