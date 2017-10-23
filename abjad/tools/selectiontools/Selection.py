@@ -4623,16 +4623,246 @@ class Selection(AbjadValueObject):
     def map(self, operand=None):
         r'''Maps `operand` to selection.
 
+        ..  container:: example
+
+            Selects tuplets:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_class(abjad.Tuplet)
+
+            ::
+
+                >>> staff = abjad.Staff(r"""
+                ...     \times 2/3 { r8 d' e' } f' r
+                ...     r f' \times 2/3 { e' d' r8 }
+                ...     """)
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \times 2/3 {
+                        \once \override Dots.color = #red
+                        \once \override Rest.color = #red
+                        r8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                    }
+                    f'8
+                    r8
+                    r8
+                    f'8
+                    \times 2/3 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        d'8
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
+                        r8
+                    }
+                }
+
+            ::
+
+                >>> selector.print(selector, result)
+                Tuplet(Multiplier(2, 3), "r8 d'8 e'8")
+                Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
+
+        ..  container:: example
+
+            Selects each tuplet:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_class(abjad.Tuplet)
+                >>> selector = selector.map(abjad.select())
+
+            ::
+
+                >>> staff = abjad.Staff(r"""
+                ...     \times 2/3 { r8 d' e' } f' r
+                ...     r f' \times 2/3 { e' d' r8 }
+                ...     """)
+                >>> result = selector(staff)
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \times 2/3 {
+                        \once \override Dots.color = #red
+                        \once \override Rest.color = #red
+                        r8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                    }
+                    f'8
+                    r8
+                    r8
+                    f'8
+                    \times 2/3 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        d'8
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
+                        r8
+                    }
+                }
+
+            ::
+
+                >>> selector.print(selector, result)
+                Selection([Tuplet(Multiplier(2, 3), "r8 d'8 e'8")])
+                Selection([Tuplet(Multiplier(2, 3), "e'8 d'8 r8")])
+
+        ..  container:: example
+
+            Selects leaves in each component:
+
+            ::
+
+                >>> staff = abjad.Staff(r"""
+                ...     \times 2/3 { r8 d' e' } f' r
+                ...     r f' \times 2/3 { e' d' r8 }
+                ...     """)
+                >>> result = staff[:].map(abjad.select().by_leaf())
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Rest('r8'), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Rest('r8')])
+                Selection([Rest('r8')])
+                Selection([Note("f'8")])
+                Selection([Note("e'8"), Note("d'8"), Rest('r8')])
+
+            ::
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \times 2/3 {
+                        \once \override Dots.color = #red
+                        \once \override Rest.color = #red
+                        r8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                    }
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \once \override Dots.color = #blue
+                    \once \override Rest.color = #blue
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'8
+                    \times 2/3 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        d'8
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
+                        r8
+                    }
+                }
+
         Returns list.
         '''
-        import abjad
         if self._expression:
             return self._update_expression(
                 inspect.currentframe(),
                 evaluation_template='map',
                 map_operand=operand,
                 )
-        raise Exception('evaluation handled in abjad.Expression (not here).')
         if operand is not None:
             return self._manifest([operand(_) for _ in self])
         else:
@@ -6460,160 +6690,16 @@ class Selection(AbjadValueObject):
 #        selector = self._append_callback(callback)
 #        return selector
 
-#    def wrap(self):
-#        r'''Wraps result in list.
-#
-#        ..  container:: example
-#
-#            Wraps tuplets:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_class(abjad.Tuplet)
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"""
-#                ...     \times 2/3 { r8 d' e' } f' r
-#                ...     r f' \times 2/3 { e' d' r8 }
-#                ...     """)
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \times 2/3 {
-#                        \once \override Dots.color = #red
-#                        \once \override Rest.color = #red
-#                        r8
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        d'8
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        e'8
-#                    }
-#                    f'8
-#                    r8
-#                    r8
-#                    f'8
-#                    \times 2/3 {
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        e'8
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        d'8
-#                        \once \override Dots.color = #blue
-#                        \once \override Rest.color = #blue
-#                        r8
-#                    }
-#                }
-#
-#            ::
-#
-#                >>> selector.print(selector, result)
-#                Tuplet(Multiplier(2, 3), "r8 d'8 e'8")
-#                Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
-#
-#        ..  container:: example
-#
-#            Wraps each tuplet:
-#
-#            ::
-#
-#                >>> selector = abjad.select()
-#                >>> selector = selector.by_class(abjad.Tuplet)
-#                >>> selector = selector.map(abjad.select().wrap())
-#
-#            ::
-#
-#                >>> staff = abjad.Staff(r"""
-#                ...     \times 2/3 { r8 d' e' } f' r
-#                ...     r f' \times 2/3 { e' d' r8 }
-#                ...     """)
-#                >>> result = selector(staff)
-#                >>> selector.color(result)
-#                >>> abjad.setting(staff).auto_beaming = False
-#                >>> show(staff) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> f(staff)
-#                \new Staff \with {
-#                    autoBeaming = ##f
-#                } {
-#                    \times 2/3 {
-#                        \once \override Dots.color = #red
-#                        \once \override Rest.color = #red
-#                        r8
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        d'8
-#                        \once \override Accidental.color = #red
-#                        \once \override Beam.color = #red
-#                        \once \override Dots.color = #red
-#                        \once \override NoteHead.color = #red
-#                        \once \override Stem.color = #red
-#                        e'8
-#                    }
-#                    f'8
-#                    r8
-#                    r8
-#                    f'8
-#                    \times 2/3 {
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        e'8
-#                        \once \override Accidental.color = #blue
-#                        \once \override Beam.color = #blue
-#                        \once \override Dots.color = #blue
-#                        \once \override NoteHead.color = #blue
-#                        \once \override Stem.color = #blue
-#                        d'8
-#                        \once \override Dots.color = #blue
-#                        \once \override Rest.color = #blue
-#                        r8
-#                    }
-#                }
-#
-#            ::
-#
-#                >>> selector.print(selector, result)
-#                [Tuplet(Multiplier(2, 3), "r8 d'8 e'8")]
-#                [Tuplet(Multiplier(2, 3), "e'8 d'8 r8")]
-#
-#        Returns new expression.
-#        '''
-#        import abjad
-#        callback = abjad.WrapCallback()
-#        selector = self._append_callback(callback)
-#        return selector
+    def wrap(self):
+        r'''Wraps result in list.
+
+
+        Returns list.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return [self]
 
 
 collections.Sequence.register(Selection)

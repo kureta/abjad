@@ -4,7 +4,7 @@ import random
 @pytest.mark.skip('run_selectors currently deprecated.')
 
 
-def test_selectortools_Selector_run_selectors_01():
+def test_selectiontools_Selection_run_selectors_01():
 
     staff = abjad.Staff("c'4 d'8 e'8 f'4 g'8 a'4 b'8 c'8")
 
