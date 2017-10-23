@@ -77,7 +77,7 @@ class SelectionAgent(abctools.AbjadObject):
 
         ::
 
-            >>> abjad.SelectionAgent.print(selector, result)
+            >>> selector.print(selector, result)
             Selection([Note("c'4"), Note("d'8")])
             Selection([Note("e'8")])
             Selection([Note("f'16"), Note("g'8"), Note("a'4")])
@@ -137,7 +137,7 @@ class SelectionAgent(abctools.AbjadObject):
 
         ::
 
-            >>> abjad.SelectionAgent.print(selector, result)
+            >>> selector.print(selector, result)
             Note("c'4")
             Note("e'8")
             Note("f'16")
@@ -203,32 +203,6 @@ class SelectionAgent(abctools.AbjadObject):
         callbacks = callbacks + (callback,)
         return type(self)(callbacks)
 
-    @staticmethod
-    def _by_class(argument, prototype=None, head=None, tail=None, trim=None):
-        import abjad
-        prototype = prototype or abjad.Component
-        if not isinstance(prototype, tuple):
-            prototype = (prototype,)
-        result = []
-        generator = abjad.iterate(argument).by_class(prototype)
-        components = list(generator)
-        if components:
-            if trim:
-                components = SelectionAgent._trim_subresult(components, trim)
-            if head is not None:
-                components = SelectionAgent._head_filter_subresult(
-                    components,
-                    head,
-                    )
-            if tail is not None:
-                components = SelectionAgent._tail_filter_subresult(components, tail)
-            result.extend(components)
-        return abjad.Selection._manifest(result)
-
-    def _get_format_specification(self):
-        import abjad
-        return super(SelectionAgent, self)._get_format_specification()
-
     def _get_template(self, frame):
         import abjad
         try:
@@ -242,110 +216,110 @@ class SelectionAgent(abctools.AbjadObject):
             del frame
         return template
 
-    @staticmethod
-    def _head_filter_subresult(result, head):
-        import abjad
-        result_ = []
-        for item in result:
-            if isinstance(item, abjad.Component):
-                logical_tie = abjad.inspect(item).get_logical_tie()
-                if head == (item is logical_tie.head):
-                    result_.append(item)
-                else:
-                    pass
-            elif isinstance(item, abjad.Selection):
-                if not all(isinstance(_, abjad.Component) for _ in item):
-                    raise NotImplementedError(item)
-                selection = []
-                for component in item:
-                    logical_tie = abjad.inspect(component).get_logical_tie()
-                    if head == logical_tie.head:
-                        selection.append(item)
-                    else:
-                        pass
-                selection = abjad.select(selection)
-                result_.append(selection)
-            else:
-                raise TypeError(item)
-        assert isinstance(result_, list), repr(result_)
-        return abjad.select(result_)
+#    @staticmethod
+#    def _head_filter_subresult(result, head):
+#        import abjad
+#        result_ = []
+#        for item in result:
+#            if isinstance(item, abjad.Component):
+#                logical_tie = abjad.inspect(item).get_logical_tie()
+#                if head == (item is logical_tie.head):
+#                    result_.append(item)
+#                else:
+#                    pass
+#            elif isinstance(item, abjad.Selection):
+#                if not all(isinstance(_, abjad.Component) for _ in item):
+#                    raise NotImplementedError(item)
+#                selection = []
+#                for component in item:
+#                    logical_tie = abjad.inspect(component).get_logical_tie()
+#                    if head == logical_tie.head:
+#                        selection.append(item)
+#                    else:
+#                        pass
+#                selection = abjad.select(selection)
+#                result_.append(selection)
+#            else:
+#                raise TypeError(item)
+#        assert isinstance(result_, list), repr(result_)
+#        return abjad.select(result_)
 
-    @staticmethod
-    def _tail_filter_subresult(result, tail):
-        import abjad
-        result_ = []
-        for item in result:
-            if isinstance(item, abjad.Component):
-                logical_tie = abjad.inspect(item).get_logical_tie()
-                if tail == (item is logical_tie.tail):
-                    result_.append(item)
-                else:
-                    pass
-            elif isinstance(item, abjad.Selection):
-                if not all(isinstance(_, abjad.Component) for _ in item):
-                    raise NotImplementedError(item)
-                selection = []
-                for component in item:
-                    logical_tie = abjad.inspect(component).get_logical_tie()
-                    if tail == logical_tie.tail:
-                        selection.append(item)
-                    else:
-                        pass
-                selection = abjad.select(selection)
-                result_.append(selection)
-            else:
-                raise TypeError(item)
-        assert isinstance(result_, list), repr(result_)
-        return abjad.select(result_)
+#    @staticmethod
+#    def _tail_filter_subresult(result, tail):
+#        import abjad
+#        result_ = []
+#        for item in result:
+#            if isinstance(item, abjad.Component):
+#                logical_tie = abjad.inspect(item).get_logical_tie()
+#                if tail == (item is logical_tie.tail):
+#                    result_.append(item)
+#                else:
+#                    pass
+#            elif isinstance(item, abjad.Selection):
+#                if not all(isinstance(_, abjad.Component) for _ in item):
+#                    raise NotImplementedError(item)
+#                selection = []
+#                for component in item:
+#                    logical_tie = abjad.inspect(component).get_logical_tie()
+#                    if tail == logical_tie.tail:
+#                        selection.append(item)
+#                    else:
+#                        pass
+#                selection = abjad.select(selection)
+#                result_.append(selection)
+#            else:
+#                raise TypeError(item)
+#        assert isinstance(result_, list), repr(result_)
+#        return abjad.select(result_)
 
-    @staticmethod
-    def _trim_subresult(result, trim):
-        import abjad
-        if trim is True:
-            trim = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
-        result_ = []
-        found_good_component = False
-        for item in result:
-            if isinstance(item, abjad.Component):
-                if not isinstance(item, trim):
-                    found_good_component = True
-            elif isinstance(item, abjad.Selection):
-                if not all(isinstance(_, abjad.Component) for _ in item):
-                    raise NotImplementedError(item)
-                selection = []
-                for component in item:
-                    if not isinstance(component, trim):
-                        found_good_component = True
-                    if found_good_component:
-                        selection.append(component)
-                item = abjad.select(selection)
-            else:
-                raise TypeError(item)
-            if found_good_component:
-                result_.append(item)
-        result__ = []
-        found_good_component = False
-        for item in reversed(result_):
-            if isinstance(item, abjad.Component):
-                if not isinstance(item, trim):
-                    found_good_component = True
-            elif isinstance(item, abjad.Selection):
-                if not all(isinstance(_, abjad.Component) for _ in item):
-                    raise NotImplementedError(item)
-                selection = []
-                for component in reversed(item):
-                    if not isinstance(component, trim):
-                        found_good_component = True
-                    if found_good_component:
-                        selection.insert(0, component)
-                item = abjad.select(selection)
-            else:
-                raise TypeError(item)
-            if found_good_component:
-                result__.insert(0, item)
-        assert isinstance(result__, list), repr(result__)
-        result = abjad.select(result__)
-        return result
+#    @staticmethod
+#    def _trim_subresult(result, trim):
+#        import abjad
+#        if trim is True:
+#            trim = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
+#        result_ = []
+#        found_good_component = False
+#        for item in result:
+#            if isinstance(item, abjad.Component):
+#                if not isinstance(item, trim):
+#                    found_good_component = True
+#            elif isinstance(item, abjad.Selection):
+#                if not all(isinstance(_, abjad.Component) for _ in item):
+#                    raise NotImplementedError(item)
+#                selection = []
+#                for component in item:
+#                    if not isinstance(component, trim):
+#                        found_good_component = True
+#                    if found_good_component:
+#                        selection.append(component)
+#                item = abjad.select(selection)
+#            else:
+#                raise TypeError(item)
+#            if found_good_component:
+#                result_.append(item)
+#        result__ = []
+#        found_good_component = False
+#        for item in reversed(result_):
+#            if isinstance(item, abjad.Component):
+#                if not isinstance(item, trim):
+#                    found_good_component = True
+#            elif isinstance(item, abjad.Selection):
+#                if not all(isinstance(_, abjad.Component) for _ in item):
+#                    raise NotImplementedError(item)
+#                selection = []
+#                for component in reversed(item):
+#                    if not isinstance(component, trim):
+#                        found_good_component = True
+#                    if found_good_component:
+#                        selection.insert(0, component)
+#                item = abjad.select(selection)
+#            else:
+#                raise TypeError(item)
+#            if found_good_component:
+#                result__.insert(0, item)
+#        assert isinstance(result__, list), repr(result__)
+#        result = abjad.select(result__)
+#        return result
 
     def _update_expression(
         self,
@@ -462,7 +436,7 @@ class SelectionAgent(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        return self._by_class(self.client, prototype=prototype)
+        return abjad.Selection._by_class(self.client, prototype=prototype)
 
     def by_contiguity(self):
         r'''Selects by contiguity.
@@ -1741,7 +1715,7 @@ class SelectionAgent(abctools.AbjadObject):
             prototype = (abjad.Chord, abjad.Note)
         elif prototype is None:
             prototype = abjad.Leaf
-        return self._by_class(
+        return abjad.Selection._by_class(
             self.client,
             prototype=prototype,
             head=head,
@@ -3805,26 +3779,6 @@ class SelectionAgent(abctools.AbjadObject):
 #        selector = self._append_callback(callback)
 #        return selector
 
-    @staticmethod
-    def print(expression, result):
-        r'''Prints `result`.
-
-        Returns none.
-        '''
-        import abjad
-        if isinstance(expression.callbacks[-1], abjad.GetItemCallback):
-            print(repr(result))
-        elif (hasattr(expression, '_expression') and
-            expression._expression.callbacks and
-            expression._expression.callbacks[-1].qualified_method_name ==
-                'abjad.SelectionAgent.__getitem__' and
-                'slice' not in 
-                    expression._expression.callbacks[-1].evaluation_template):
-            print(repr(result))
-        else:
-            for item in result:
-                print(repr(item))
-
 #    @staticmethod
 #    def run_selectors(argument, selectors):
 #        r'''Processes multiple selectors against a single selection.
@@ -3855,7 +3809,7 @@ class SelectionAgent(abctools.AbjadObject):
 #
 #            ::
 #
-#                >>> result = abjad.SelectionAgent.run_selectors(staff, selectors)
+#                >>> result = abjad.Selection.run_selectors(staff, selectors)
 #                >>> all(selector in result for selector in selectors)
 #                True
 #

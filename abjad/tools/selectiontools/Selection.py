@@ -233,6 +233,25 @@ class Selection(AbjadValueObject):
                 )
 
     @staticmethod
+    def _by_class(argument, prototype=None, head=None, tail=None, trim=None):
+        import abjad
+        prototype = prototype or abjad.Component
+        if not isinstance(prototype, tuple):
+            prototype = (prototype,)
+        result = []
+        generator = abjad.iterate(argument).by_class(prototype)
+        components = list(generator)
+        if components:
+            if trim:
+                components = Selection._trim_subresult(components, trim)
+            if head is not None:
+                components = Selection._head_filter_subresult(components, head)
+            if tail is not None:
+                components = Selection._tail_filter_subresult(components, tail)
+            result.extend(components)
+        return abjad.Selection._manifest(result)
+
+    @staticmethod
     def _coerce_music(music):
         import abjad
         if music in ([], None):
@@ -750,6 +769,34 @@ class Selection(AbjadValueObject):
             container._set_parent(parent)
             self._set_parents(None)
 
+    @staticmethod
+    def _head_filter_subresult(result, head):
+        import abjad
+        result_ = []
+        for item in result:
+            if isinstance(item, abjad.Component):
+                logical_tie = abjad.inspect(item).get_logical_tie()
+                if head == (item is logical_tie.head):
+                    result_.append(item)
+                else:
+                    pass
+            elif isinstance(item, abjad.Selection):
+                if not all(isinstance(_, abjad.Component) for _ in item):
+                    raise NotImplementedError(item)
+                selection = []
+                for component in item:
+                    logical_tie = abjad.inspect(component).get_logical_tie()
+                    if head == logical_tie.head:
+                        selection.append(item)
+                    else:
+                        pass
+                selection = abjad.select(selection)
+                result_.append(selection)
+            else:
+                raise TypeError(item)
+        assert isinstance(result_, list), repr(result_)
+        return abjad.select(result_)
+
     def _iterate_components(self, recurse=True, reverse=False):
         import abjad
         if recurse:
@@ -795,6 +842,83 @@ class Selection(AbjadValueObject):
         '''
         for component in self.components:
             component._set_parent(new_parent)
+
+    @staticmethod
+    def _tail_filter_subresult(result, tail):
+        import abjad
+        result_ = []
+        for item in result:
+            if isinstance(item, abjad.Component):
+                logical_tie = abjad.inspect(item).get_logical_tie()
+                if tail == (item is logical_tie.tail):
+                    result_.append(item)
+                else:
+                    pass
+            elif isinstance(item, abjad.Selection):
+                if not all(isinstance(_, abjad.Component) for _ in item):
+                    raise NotImplementedError(item)
+                selection = []
+                for component in item:
+                    logical_tie = abjad.inspect(component).get_logical_tie()
+                    if tail == logical_tie.tail:
+                        selection.append(item)
+                    else:
+                        pass
+                selection = abjad.select(selection)
+                result_.append(selection)
+            else:
+                raise TypeError(item)
+        assert isinstance(result_, list), repr(result_)
+        return abjad.select(result_)
+
+    @staticmethod
+    def _trim_subresult(result, trim):
+        import abjad
+        if trim is True:
+            trim = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
+        result_ = []
+        found_good_component = False
+        for item in result:
+            if isinstance(item, abjad.Component):
+                if not isinstance(item, trim):
+                    found_good_component = True
+            elif isinstance(item, abjad.Selection):
+                if not all(isinstance(_, abjad.Component) for _ in item):
+                    raise NotImplementedError(item)
+                selection = []
+                for component in item:
+                    if not isinstance(component, trim):
+                        found_good_component = True
+                    if found_good_component:
+                        selection.append(component)
+                item = abjad.select(selection)
+            else:
+                raise TypeError(item)
+            if found_good_component:
+                result_.append(item)
+        result__ = []
+        found_good_component = False
+        for item in reversed(result_):
+            if isinstance(item, abjad.Component):
+                if not isinstance(item, trim):
+                    found_good_component = True
+            elif isinstance(item, abjad.Selection):
+                if not all(isinstance(_, abjad.Component) for _ in item):
+                    raise NotImplementedError(item)
+                selection = []
+                for component in reversed(item):
+                    if not isinstance(component, trim):
+                        found_good_component = True
+                    if found_good_component:
+                        selection.insert(0, component)
+                item = abjad.select(selection)
+            else:
+                raise TypeError(item)
+            if found_good_component:
+                result__.insert(0, item)
+        assert isinstance(result__, list), repr(result__)
+        result = abjad.select(result__)
+        return result
 
     def _update_expression(
         self,
@@ -1481,7 +1605,7 @@ class Selection(AbjadValueObject):
 #            with_grace_notes=with_grace_notes,
 #            )
 #        return self._manifest(generator)
-        return abjad.SelectionAgent._by_class(
+        return self._by_class(
             self,
             prototype=prototype,
             head=head,
@@ -2870,12 +2994,10 @@ class Selection(AbjadValueObject):
         Returns none.
         '''
         import abjad
-        if isinstance(expression.callbacks[-1], abjad.GetItemCallback):
-            print(repr(result))
-        elif (hasattr(expression, '_expression') and
+        if (hasattr(expression, '_expression') and
             expression._expression.callbacks and
             expression._expression.callbacks[-1].qualified_method_name ==
-                'abjad.SelectionAgent.__getitem__' and
+                'abjad.Selection.__getitem__' and
                 'slice' not in 
                     expression._expression.callbacks[-1].evaluation_template):
             print(repr(result))

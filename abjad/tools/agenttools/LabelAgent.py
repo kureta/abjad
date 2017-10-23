@@ -660,13 +660,8 @@ class LabelAgent(abctools.AbjadObject):
         '''
         import abjad
         if (selector and selector.callbacks and
-            isinstance(selector.callbacks[-1], abjad.GetItemCallback)):
-            colors = colors or ['green']
-            color = colors[0]
-            abjad.label(self.client).color_leaves(color=color)
-        elif (selector and selector.callbacks and
             selector.callbacks[-1].qualified_method_name ==
-                'abjad.SelectionAgent.__getitem__' and
+                'abjad.Selection.__getitem__' and
                 'slice' not in selector.callbacks[-1].evaluation_template):
             colors = colors or ['green']
             color = colors[0]
