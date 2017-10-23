@@ -37,8 +37,7 @@ class GetSliceCallback(AbjadValueObject):
 
             ::
 
-                >>> selector = abjad.select()
-                >>> selector = selector.get_slice(start=-4)
+                >>> selector = abjad.select().by_leaf()[-4:]
                 >>> selector(staff)
                 Selection([Rest('r16'), Note("f'16"), Note("g'8"), Note("a'4")])
 

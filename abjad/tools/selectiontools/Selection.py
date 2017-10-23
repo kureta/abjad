@@ -1,5 +1,6 @@
 import collections
 import copy
+import inspect
 import itertools
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
@@ -239,11 +240,6 @@ class Selection(AbjadValueObject):
         elif isinstance(music, abjad.Component):
             return [music]
         else:
-            #items = []
-            #for item in music:
-            #    items_ = Selection._coerce_music(item)
-            #    items.extend(items_)
-            #return items
             assert isinstance(music, collections.Iterable), repr(music)
             return list(music)
 
@@ -799,6 +795,20 @@ class Selection(AbjadValueObject):
         '''
         for component in self.components:
             component._set_parent(new_parent)
+
+    def _update_expression(
+        self,
+        frame,
+        evaluation_template=None,
+        map_operand=None,
+        ):
+        import abjad
+        callback = abjad.Expression._frame_to_callback(
+            frame,
+            evaluation_template=evaluation_template,
+            map_operand=map_operand,
+            )
+        return self._expression.append_callback(callback)
 
     def _withdraw_from_crossing_spanners(self):
         r'''Not composer-safe.
@@ -1671,6 +1681,8 @@ class Selection(AbjadValueObject):
         Returns new selection.
         '''
         import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
         generator = abjad.iterate(self).by_logical_tie(
             nontrivial=nontrivial,
             pitched=pitched,
@@ -1753,6 +1765,8 @@ class Selection(AbjadValueObject):
         Returns new selection.
         '''
         import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
         generator = abjad.iterate(self).by_run(prototype=prototype)
         return self._manifest(generator)
 
@@ -1872,6 +1886,14 @@ class Selection(AbjadValueObject):
             reverse=reverse,
             )
         return self._manifest(generator)
+
+    def color(self, result, colors=None):
+        r'''Colors `result`.
+
+        Returns none.
+        '''
+        import abjad
+        abjad.label(result).color_selections(self._expression, colors=colors)
 
     def get_duration(self, in_seconds=False):
         r'''Gets duration of contiguous selection.
@@ -2128,7 +2150,11 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         if self._expression:
-            return self._update_expression(inspect.currentframe())
+            return self._update_expression(
+                inspect.currentframe(),
+                evaluation_template='map',
+                map_operand=operand,
+                )
         raise Exception('evaluation handled in abjad.Expression (not here).')
         if operand is not None:
             return self._manifest([operand(_) for _ in self])
@@ -2837,5 +2863,24 @@ class Selection(AbjadValueObject):
         result = [abjad.Selection(_) for _ in result]
         return self._manifest(result)
 
+    @staticmethod
+    def print(expression, result):
+        r'''Prints `result`.
+
+        Returns none.
+        '''
+        import abjad
+        if isinstance(expression.callbacks[-1], abjad.GetItemCallback):
+            print(repr(result))
+        elif (hasattr(expression, '_expression') and
+            expression._expression.callbacks and
+            expression._expression.callbacks[-1].qualified_method_name ==
+                'abjad.SelectionAgent.__getitem__' and
+                'slice' not in 
+                    expression._expression.callbacks[-1].evaluation_template):
+            print(repr(result))
+        else:
+            for item in result:
+                print(repr(item))
 
 collections.Sequence.register(Selection)

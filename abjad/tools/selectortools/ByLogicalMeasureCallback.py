@@ -44,7 +44,7 @@ class ByLogicalMeasureCallback(AbjadValueObject):
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
             >>> selector = selector.by_logical_measure()
-            >>> selector = selector.map(abjad.select().get_item(0))
+            >>> selector = selector.map(abjad.select()[0])
             >>> selector(staff)
             [Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")]
 
@@ -57,7 +57,7 @@ class ByLogicalMeasureCallback(AbjadValueObject):
             >>> selector = abjad.select()
             >>> selector = selector.by_leaf()
             >>> selector = selector.by_logical_measure()
-            >>> selector = selector.map(abjad.select().get_item(-1))
+            >>> selector = selector.map(abjad.select()[-1])
             >>> selector(staff)
             [Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")]
 
