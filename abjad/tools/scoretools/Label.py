@@ -653,29 +653,6 @@ class Label(abctools.AbjadObject):
                 if color is not None:
                     abjad.override(leaf).note_head.color = color
 
-    def color_selections(self, selector=None, colors=None):
-        r'''Colors client items in cyclic `colors`.
-
-        Returns none.
-        '''
-        import abjad
-        if (selector and selector.callbacks and
-            selector.callbacks[-1].qualified_method_name ==
-                'abjad.Selection.__getitem__' and
-                'slice' not in selector.callbacks[-1].evaluation_template and
-                'Pattern' not in selector.callbacks[-1].evaluation_template and
-                'abjad.index' not in selector.callbacks[-1].evaluation_template
-                ) :
-            colors = colors or ['green']
-            color = colors[0]
-            abjad.label(self.client).color_leaves(color=color)
-        else:
-            colors = colors or ['red', 'blue']
-            colors = abjad.CyclicTuple(colors)
-            for i, item in enumerate(self.client):
-                color = colors[i]
-                abjad.label(item).color_leaves(color=color)
-
     def remove_markup(self):
         r'''Removes markup from leaves.
 

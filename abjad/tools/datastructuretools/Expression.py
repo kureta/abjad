@@ -809,6 +809,21 @@ class Expression(AbjadValueObject):
             return method_name_callback(**argument_values)
         return function_name
 
+    def _is_singular_get_item(self):
+        if not self.callbacks:
+            return False
+        callback = self.callbacks[-1]
+        if not callback.qualified_method_name.endswith('__getitem__'):
+            return False
+        template = callback.evaluation_template
+        if 'slice' in template:
+            return False
+        if 'Pattern' in template:
+            return False
+        if 'abjad.index' in template:
+            return False
+        return True
+
     @staticmethod
     def _make___add___markup(markup, argument):
         import abjad
@@ -1617,6 +1632,23 @@ class Expression(AbjadValueObject):
         callbacks = callbacks + [callback]
         return abjad.new(self, callbacks=callbacks)
 
+    def color(self, argument, colors=None):
+        r'''Colors `argument`.
+
+        Returns none.
+        '''
+        import abjad
+        if self._is_singular_get_item():
+            colors = colors or ['green']
+            color = colors[0]
+            abjad.label(argument).color_leaves(color=color)
+        else:
+            colors = colors or ['red', 'blue']
+            colors = abjad.CyclicTuple(colors)
+            for i, item in enumerate(argument):
+                color = colors[i]
+                abjad.label(item).color_leaves(color=color)
+
     def establish_equivalence(self, name):
         r'''Makes new expression with `name`.
 
@@ -2064,6 +2096,17 @@ class Expression(AbjadValueObject):
             )
         expression = self.append_callback(callback)
         return abjad.new(expression, proxy_class=class_)
+
+    def print(self, argument):
+        r'''Prints `argument`.
+
+        Returns none.
+        '''
+        if self._is_singular_get_item():
+            print(repr(argument))
+        else:
+            for item in argument:
+                print(repr(item))
 
     def select(self, **keywords):
         r'''Makes select expression.
