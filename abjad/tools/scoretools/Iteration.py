@@ -1578,8 +1578,8 @@ class Iteration(abctools.AbjadObject):
                         logical_voice,
                         ):
                         yield x
-            if hasattr(self.client, '_music'):
-                for component in self.client._music:
+            if hasattr(self.client, 'components'):
+                for component in self.client.components:
                     for x in abjad.iterate(component).by_logical_voice(
                         prototype,
                         logical_voice,
@@ -1594,8 +1594,8 @@ class Iteration(abctools.AbjadObject):
                         reverse=True,
                         ):
                         yield x
-            if hasattr(self.client, '_music'):
-                for component in reversed(self.client._music):
+            if hasattr(self.client, 'components'):
+                for component in reversed(self.client.components):
                     for x in abjad.iterate(component).by_logical_voice(
                         prototype,
                         logical_voice,
@@ -3437,13 +3437,13 @@ class Iteration(abctools.AbjadObject):
         import abjad
         direction = direction or abjad.Left
         def _next_node_depth_first(component, total):
-            r'''If client has unvisited music, return next unvisited node in
-            client's music.
+            r'''If client has unvisited components, return next unvisited
+            component in client.
 
-            If client has no univisited music, return client's parent.
+            If client has no univisited components, return client's parent.
             '''
             # if component is a container with not-yet-returned children
-            if (hasattr(component, '_music') and
+            if (hasattr(component, 'components') and
                 0 < len(component) and
                 total < len(component)):
                 # return next not-yet-returned child
@@ -3479,12 +3479,12 @@ class Iteration(abctools.AbjadObject):
                     return None, None
                 return parent, parent.index(component) + 1
         def _previous_node_depth_first(component, total=0):
-            r'''If client has unvisited music, return previous unvisited node
-            in client's music.
+            r'''If client has unvisited components, return previous unvisited
+            component in client.
 
-            If client has no univisited music, return client's parent.
+            If client has no univisited components, return client's parent.
             '''
-            if (hasattr(component, '_music') and
+            if (hasattr(component, 'components') and
                 0 < len(component) and
                 total < len(component)):
                 return component[len(component) - 1 - total], 0
@@ -3517,7 +3517,7 @@ class Iteration(abctools.AbjadObject):
             else:
                 return isinstance(node, forbid)
         def _find_yield(node, rank, queue, unique):
-            if hasattr(node, '_music'):
+            if hasattr(node, 'components'):
                 try:
                     visited = node is queue[-1]
                 except IndexError:

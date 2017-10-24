@@ -214,8 +214,8 @@ class Component(AbjadObject):
             self._scale_contents(self.multiplier)
         selection = abjad.select([self])
         parent, start, stop = selection._get_parent_and_start_stop_indices()
-        music_list = list(getattr(self, '_music', ()))
-        parent.__setitem__(slice(start, stop + 1), music_list)
+        components = list(getattr(self, 'components', ()))
+        parent.__setitem__(slice(start, stop + 1), components)
         return self
 
     def _format_after_slot(self, bundle):
@@ -272,7 +272,7 @@ class Component(AbjadObject):
         result = []
         if include_self:
             result.append(self)
-        result.extend(getattr(self, '_music', []))
+        result.extend(getattr(self, 'components', []))
         result = abjad.select(result)
         return result
 
@@ -756,7 +756,7 @@ class Component(AbjadObject):
                 if wrapper.component is self:
                     parent._dependent_wrappers.remove(wrapper)
         if self._parent is not None:
-            self._parent._music.remove(self)
+            self._parent._components.remove(self)
         self._parent = None
 
     def _remove_named_children_from_parentage(self, name_dictionary):
@@ -825,7 +825,7 @@ class Component(AbjadObject):
                 if grow_spanners:
                     for component in reversed(components):
                         component._set_parent(parent)
-                        parent._music.insert(start + 1, component)
+                        parent._components.insert(start + 1, component)
                 else:
                     after = stop + 1
                     parent.__setitem__(slice(after, after), components)
@@ -854,7 +854,7 @@ class Component(AbjadObject):
                 if grow_spanners:
                     for component in reversed(components):
                         component._set_parent(parent)
-                        parent._music.insert(start, component)
+                        parent._components.insert(start, component)
                 else:
                     parent.__setitem__(slice(start, start), components)
             return components + [self]

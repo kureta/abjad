@@ -67,40 +67,37 @@ class Parentage(Selection):
         include_self=True,
         with_grace_notes=False,
         ):
-        from abjad.tools import scoretools
-        assert isinstance(component, (scoretools.Component, type(None)))
+        import abjad
+        assert isinstance(component, (abjad.Component, type(None)))
         if component is None:
-            music = ()
+            components = ()
         else:
-            music = []
+            components = []
             if include_self:
                 parent = component
             else:
                 parent = component._parent
-            prototype = (
-                scoretools.AfterGraceContainer,
-                scoretools.GraceContainer,
-                )
+            prototype = (abjad.AfterGraceContainer, abjad.GraceContainer)
             while parent is not None:
-                music.append(parent)
+                components.append(parent)
                 if with_grace_notes and isinstance(parent, prototype):
                     parent = parent._carrier
                 else:
                     parent = parent._parent
-            music = tuple(music)
-        Selection.__init__(self, music)
+            components = tuple(components)
+        Selection.__init__(self, components)
         self._component = component
 
     ### PRIVATE METHODS ###
 
     def _get_governor(self):
-        from abjad.tools import scoretools
+        import abjad
         for component in self:
-            if (isinstance(component, scoretools.Container) and
+            if (isinstance(component, abjad.Container) and
                 not component.is_simultaneous):
                 if component._parent is None:
                     return component
-                if (isinstance(component._parent, scoretools.Container) and
+                if (isinstance(component._parent, abjad.Container) and
                     component._parent.is_simultaneous):
                     return component
 

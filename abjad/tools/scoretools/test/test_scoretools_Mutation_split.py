@@ -292,8 +292,8 @@ def test_scoretools_Mutation_split_05():
         tie_split_notes=False,
         )
 
-    music = abjad.Sequence(result).flatten()
-    staff = abjad.Staff(music)
+    components = abjad.sequence(result).flatten()
+    staff = abjad.Staff(components)
 
     assert format(staff) == abjad.String.normalize(
         r'''
@@ -884,8 +884,8 @@ def test_scoretools_Mutation_split_14():
         fracture_spanners=True,
         )
 
-    music = abjad.Sequence(result).flatten()
-    staff = abjad.Staff(music)
+    components = abjad.Sequence(result).flatten()
+    staff = abjad.Staff(components)
 
     assert format(staff) == abjad.String.normalize(
         r'''
@@ -928,8 +928,8 @@ def test_scoretools_Mutation_split_15():
         tie_split_notes=False,
         )
 
-    music = abjad.Sequence(result).flatten()
-    staff = abjad.Staff(music)
+    components = abjad.sequence(result).flatten()
+    staff = abjad.Staff(components)
 
     assert format(staff) == abjad.String.normalize(
         r'''

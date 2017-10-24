@@ -102,9 +102,9 @@ class Tuplet(Container):
 
     ### INITIALIZER ###
 
-    def __init__(self, multiplier=None, music=None):
+    def __init__(self, multiplier=None, components=None):
         import abjad
-        Container.__init__(self, music)
+        Container.__init__(self, components)
         multiplier = multiplier or abjad.Multiplier(2, 3)
         self.multiplier = multiplier
         self._force_fraction = False
@@ -313,7 +313,7 @@ class Tuplet(Container):
 
     def _get_summary(self):
         if 0 < len(self):
-            return ', '.join([str(x) for x in self._music])
+            return ', '.join([str(x) for x in self.components])
         else:
             return ''
 
@@ -1248,8 +1248,8 @@ class Tuplet(Container):
             assert abjad.inspect(self).get_duration() == old_duration
 
     @staticmethod
-    def from_duration(duration, music):
-        r'''Makes tuplet from `duration` and `music`.
+    def from_duration(duration, components):
+        r'''Makes tuplet from `duration` and `components`.
 
         ..  container:: example
 
@@ -1272,12 +1272,12 @@ class Tuplet(Container):
         Returns newly constructed tuplet equal in duration to `duration`.
         '''
         import abjad
-        if not len(music):
-            message = 'music must be nonempty: {!r}.'
-            message = message.format(music)
+        if not len(components):
+            message = 'components must be nonempty: {!r}.'
+            message = message.format(components)
             raise Exception(message)
         target_duration = abjad.Duration(duration)
-        tuplet = Tuplet(1, music)
+        tuplet = Tuplet(1, components)
         contents_duration = abjad.inspect(tuplet).get_duration()
         multiplier = target_duration / contents_duration
         tuplet.multiplier = multiplier
@@ -2266,7 +2266,7 @@ class Tuplet(Container):
                 math.log(
                     abjad.mathtools.weight(ratio.numbers), 2) - math.log(numerator, 2))
             denominator = int(denominator * 2 ** exponent)
-            music = []
+            components = []
             for x in ratio.numbers:
                 if not x:
                     message = 'no divide zero values.'
@@ -2274,15 +2274,15 @@ class Tuplet(Container):
                 if 0 < x:
                     try:
                         note = abjad.Note(0, (x, denominator))
-                        music.append(note)
+                        components.append(note)
                     except AssignabilityError:
                         maker = abjad.NoteMaker()
                         notes = maker(0, (x, denominator))
-                        music.extend(notes)
+                        components.extend(notes)
                 else:
                     rests = abjad.Rest((-x, denominator))
-                    music.append(rests)
-            return abjad.Tuplet.from_duration(duration, music)
+                    components.append(rests)
+            return abjad.Tuplet.from_duration(duration, components)
 
     def set_minimum_denominator(self, denominator):
         r'''Sets preferred denominator of tuplet to at least `denominator`.

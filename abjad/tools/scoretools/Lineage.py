@@ -71,14 +71,15 @@ class Lineage(Selection):
     ### INITIALIZER ###
 
     def __init__(self, component=None):
-        from abjad.tools import scoretools
-        assert isinstance(component, (scoretools.Component, type(None)))
-        music = []
+        import abjad
+        assert isinstance(component, (abjad.Component, type(None)))
+        components = []
         if component is not None:
-            music.extend(reversed(component._get_parentage(include_self=False)))
-            music.append(component)
-            music.extend(component._get_descendants(include_self=False))
-        Selection.__init__(self, music)
+            components.extend(
+                reversed(component._get_parentage(include_self=False)))
+            components.append(component)
+            components.extend(component._get_descendants(include_self=False))
+        Selection.__init__(self, components)
         self._component = component
 
     ### PUBLIC PROPERTIES ###

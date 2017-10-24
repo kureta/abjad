@@ -2972,7 +2972,7 @@ class Mutation(abctools.AbjadObject):
         assert donors.in_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container, repr(container)
-        donors._give_music_to_empty_container(container)
+        donors._give_components_to_empty_container(container)
         donors._give_dominant_spanners([container])
         donors._give_position_in_parent_to_container(container)
 
@@ -3212,10 +3212,10 @@ class Mutation(abctools.AbjadObject):
             message += ' {!r}.'
             message = message.format(selection)
             raise Exception(message)
-        container._music = list(selection)
+        container._components = list(selection)
         container[:]._set_parents(container)
         if parent is not None:
-            parent._music.insert(start, container)
+            parent._components.insert(start, container)
             container._set_parent(parent)
 
     ### PUBLIC PROPERTIES ###

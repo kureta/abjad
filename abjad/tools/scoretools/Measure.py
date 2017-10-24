@@ -51,7 +51,7 @@ class Measure(Container):
     def __init__(
         self,
         time_signature=None,
-        music=None,
+        components=None,
         implicit_scaling=False,
         ):
         import abjad
@@ -60,7 +60,7 @@ class Measure(Container):
         time_signature = time_signature or abjad.TimeSignature((4, 4))
         time_signature = abjad.TimeSignature(time_signature)
         self.implicit_scaling = bool(implicit_scaling)
-        Container.__init__(self, music)
+        Container.__init__(self, components)
         self._always_format_time_signature = False
         self._measure_number = None
         time_signature = indicatortools.TimeSignature(time_signature)

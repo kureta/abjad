@@ -44,7 +44,7 @@ class Context(Container):
 
     def __init__(
         self,
-        music=None,
+        components=None,
         context_name='Context',
         is_simultaneous=None,
         name=None,
@@ -52,7 +52,7 @@ class Context(Container):
         Container.__init__(
             self,
             is_simultaneous=is_simultaneous,
-            music=music,
+            components=components,
             name=name,
             )
         self.context_name = context_name

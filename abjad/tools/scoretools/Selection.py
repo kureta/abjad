@@ -754,7 +754,7 @@ class Selection(AbjadValueObject):
 
     def __eq__(self, argument):
         r'''Is true when selection and `argument` are of the same type
-        and when music of selection equals music of `argument`.
+        and when items in selection equal item in `argument`.
         Otherwise false.
 
         Returns true or false.
@@ -844,8 +844,8 @@ class Selection(AbjadValueObject):
         Returns LilyPond file.
         '''
         import abjad
-        music = abjad.mutate(self).copy()
-        staff = abjad.Staff(music)
+        components = abjad.mutate(self).copy()
+        staff = abjad.Staff(components)
         found_different_pitch = False
         for pitch in abjad.iterate(staff).by_pitch():
             if pitch != abjad.NamedPitch("c'"):
@@ -1246,17 +1246,17 @@ class Selection(AbjadValueObject):
             new_duration,
             old_denominators,
             )
-        music = []
+        components = []
         for measure in self:
             # scale before reassignment to prevent logical tie scale drama
             signature = measure.time_signature
             prolation = signature.implied_prolation
             multiplier = prolation / new_time_signature.implied_prolation
             measure._scale_contents(multiplier)
-            measure_music = measure[:]
-            measure_music._set_parents(None)
-            music += measure_music
-        new_measure = abjad.Measure(new_time_signature, music)
+            measure_components = measure[:]
+            measure_components._set_parents(None)
+            components += measure_components
+        new_measure = abjad.Measure(new_time_signature, components)
         new_measure.implicit_scaling = self[0].implicit_scaling
         if parent is not None:
             self._give_dominant_spanners([new_measure])
@@ -1434,9 +1434,9 @@ class Selection(AbjadValueObject):
             )
 
     def _give_dominant_spanners(self, recipients):
-        r'''Find all spanners dominating music.
+        r'''Find all spanners dominating components.
         Insert each component in recipients into each dominant spanner.
-        Remove music from each dominating spanner.
+        Remove components from each dominating spanner.
         Returns none.
         Not composer-safe.
         '''
@@ -1450,17 +1450,17 @@ class Selection(AbjadValueObject):
             for component in self:
                 spanner._remove(component)
 
-    def _give_music_to_empty_container(self, container):
+    def _give_components_to_empty_container(self, container):
         r'''Not composer-safe.
         '''
         import abjad
         assert self.in_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container
-        music = []
+        components = []
         for component in self:
-            music.extend(getattr(component, '_music', ()))
-        container._music.extend(music)
+            components.extend(getattr(component, 'components', ()))
+        container._components.extend(components)
         container[:]._set_parents(container)
 
     def _give_position_in_parent_to_container(self, container):
@@ -1471,7 +1471,7 @@ class Selection(AbjadValueObject):
         assert isinstance(container, abjad.Container)
         parent, start, stop = self._get_parent_and_start_stop_indices()
         if parent is not None:
-            parent._music.__setitem__(slice(start, start), [container])
+            parent._components.__setitem__(slice(start, start), [container])
             container._set_parent(parent)
             self._set_parents(None)
 

@@ -17,7 +17,7 @@ def test_scoretools_Selection__set_component_parents_01():
     assert selection[0]._parent is voice_1
     assert selection[0] not in voice_1
 
-    voice_1._music.extend(selection)
+    voice_1._components.extend(selection)
 
     "Selection now in container voice_1."
 

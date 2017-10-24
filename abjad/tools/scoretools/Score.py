@@ -46,14 +46,14 @@ class Score(Context):
 
     def __init__(
         self,
-        music=None,
+        components=None,
         context_name='Score',
         is_simultaneous=True,
         name=None,
         ):
         Context.__init__(
             self,
-            music=music,
+            components=components,
             context_name=context_name,
             is_simultaneous=is_simultaneous,
             name=name,

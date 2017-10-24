@@ -182,7 +182,7 @@ class VerticalMoment(Selection):
         if (component._get_timespan().start_offset <=
             offset < component._get_timespan().stop_offset):
             result.append(component)
-            if hasattr(component, '_music'):
+            if hasattr(component, 'components'):
                 if component.is_simultaneous:
                     for x in component:
                         result.extend(VerticalMoment._recurse(x, offset))

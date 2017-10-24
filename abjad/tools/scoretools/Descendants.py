@@ -80,22 +80,22 @@ class Descendants(Selection):
         import abjad
         assert isinstance(component, (abjad.Component, type(None)))
         if component is None:
-            music = ()
+            components = ()
         else:
-            music = list(abjad.select(component).by_class())
+            components = list(abjad.select(component).by_class())
             if not include_self:
-                music.remove(component)
+                components.remove(component)
         result = []
         if cross_offset is None:
-            result = music
+            result = components
         else:
-            for x in music:
+            for component in components:
                 append_x = True
-                if not (x._get_timespan().start_offset < cross_offset and
-                    cross_offset < x._get_timespan().stop_offset):
+                if not (component._get_timespan().start_offset < cross_offset and
+                    cross_offset < component._get_timespan().stop_offset):
                     append_x = False
                 if append_x:
-                    result.append(x)
+                    result.append(component)
         Selection.__init__(self, result)
         self._component = component
 
