@@ -227,7 +227,7 @@ class NonreducedFraction(AbjadObject, Fraction):
         Returns string.
         '''
         if format_specification in ('', 'storage'):
-            return systemtools.StorageFormatAgent(self).get_storage_format()
+            return systemtools.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __ge__(self, argument):
@@ -395,7 +395,7 @@ class NonreducedFraction(AbjadObject, Fraction):
 
         Returns string.
         '''
-        return systemtools.StorageFormatAgent(self).get_repr_format()
+        return systemtools.StorageFormatManager(self).get_repr_format()
 
     def __rmul__(self, argument):
         r'''Multiplies `argument` by nonreduced fraction.

@@ -290,7 +290,7 @@ class WoodwindFingering(AbjadObject):
         '''
         from abjad.tools import systemtools
         if format_specification in ('', 'storage'):
-            return systemtools.StorageFormatAgent(self).get_storage_format()
+            return systemtools.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     ### PUBLIC METHODS ###

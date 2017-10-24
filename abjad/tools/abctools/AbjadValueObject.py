@@ -35,7 +35,7 @@ class AbjadValueObject(AbjadObject):
         Returns integer.
         '''
         from abjad.tools import systemtools
-        hash_values = systemtools.StorageFormatAgent(self).get_hash_values()
+        hash_values = systemtools.StorageFormatManager(self).get_hash_values()
         try:
             result = hash(hash_values)
         except TypeError:

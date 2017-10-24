@@ -33,7 +33,7 @@ ignored_classes = (
     systemtools.LilyPondFormatBundle,
     systemtools.SlotContributions,
     systemtools.RedirectedStreams,
-    systemtools.StorageFormatAgent,
+    systemtools.StorageFormatManager,
     systemtools.FormatSpecification,
     tonalanalysistools.TonalAnalysisAgent,
     tonalanalysistools.RootedChordClass

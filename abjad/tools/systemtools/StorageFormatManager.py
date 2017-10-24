@@ -5,7 +5,7 @@ import types
 from abjad.tools.abctools import AbjadValueObject
 
 
-class StorageFormatAgent(AbjadValueObject):
+class StorageFormatManager(AbjadValueObject):
     r'''Manages Abjad object storage formats.
     '''
 
@@ -357,7 +357,7 @@ class StorageFormatAgent(AbjadValueObject):
 
             ::
 
-                >>> types = abjad.StorageFormatAgent._get_types(flute)
+                >>> types = abjad.StorageFormatManager._get_types(flute)
                 >>> for type_ in types:
                 ...     type_
                 ...
@@ -376,7 +376,7 @@ class StorageFormatAgent(AbjadValueObject):
 
             ::
 
-                >>> types = abjad.StorageFormatAgent._get_types(dictionary)
+                >>> types = abjad.StorageFormatManager._get_types(dictionary)
                 >>> for _ in types:
                 ...     _
                 ...
@@ -389,7 +389,7 @@ class StorageFormatAgent(AbjadValueObject):
         type_type = type
         if result is None:
             result = set()
-        agent = StorageFormatAgent(subject)
+        agent = StorageFormatManager(subject)
         if isinstance(subject, str):
             return []
         arguments = []
@@ -511,7 +511,7 @@ class StorageFormatAgent(AbjadValueObject):
         as_storage_format,
         include_root_package=None,
         ):
-        agent = StorageFormatAgent(self._client)
+        agent = StorageFormatManager(self._client)
         if not isinstance(self._client, type):
             class_name = type(self._client).__name__
         else:
@@ -563,7 +563,7 @@ class StorageFormatAgent(AbjadValueObject):
 
             ::
 
-                >>> agent = abjad.StorageFormatAgent(flute)
+                >>> agent = abjad.StorageFormatManager(flute)
                 >>> for line in agent.get_import_statements():
                 ...     line
                 ...
@@ -576,7 +576,7 @@ class StorageFormatAgent(AbjadValueObject):
         import_statements = set()
         classes = self._get_types(self.client)
         for class_ in classes:
-            agent = StorageFormatAgent(class_)
+            agent = StorageFormatManager(class_)
             root_package_name = agent.get_root_package_name()
             if root_package_name in ('builtins', '__builtin__'):
                 continue

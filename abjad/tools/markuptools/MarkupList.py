@@ -277,7 +277,7 @@ class MarkupList(TypedList):
 
     def _get_format_specification(self):
         import abjad
-        agent = abjad.StorageFormatAgent(self)
+        agent = abjad.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         if self.item_class is abjad.Markup:
             names.remove('item_class')

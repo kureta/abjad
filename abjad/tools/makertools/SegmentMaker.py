@@ -33,7 +33,7 @@ class SegmentMaker(AbjadObject):
         r'''Hashes segment-maker.
         '''
         import abjad
-        hash_values = abjad.StorageFormatAgent(self).get_hash_values()
+        hash_values = abjad.StorageFormatManager(self).get_hash_values()
         return hash(hash_values)
 
     def __illustrate__(self, **kwargs):

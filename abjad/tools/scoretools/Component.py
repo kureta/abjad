@@ -89,7 +89,7 @@ class Component(AbjadObject):
         if format_specification in ('', 'lilypond'):
             return self._get_lilypond_format()
         elif format_specification == 'storage':
-            return abjad.StorageFormatAgent(self).get_storage_format()
+            return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __getnewargs__(self):
@@ -131,7 +131,7 @@ class Component(AbjadObject):
         Returns string.
         '''
         import abjad
-        return abjad.StorageFormatAgent(self).get_repr_format()
+        return abjad.StorageFormatManager(self).get_repr_format()
 
     def __rmul__(self, n):
         r'''Copies component `n` times and detach spanners.

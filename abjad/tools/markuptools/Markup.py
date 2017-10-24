@@ -348,7 +348,7 @@ class Markup(AbjadValueObject):
         if format_specification in ('', 'lilypond'):
             return self._get_lilypond_format()
         elif format_specification == 'storage':
-            return systemtools.StorageFormatAgent(self).get_storage_format()
+            return systemtools.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __hash__(self):
@@ -605,7 +605,7 @@ class Markup(AbjadValueObject):
         return tweaks + pieces
 
     def _get_format_specification(self):
-        agent = systemtools.StorageFormatAgent(self)
+        agent = systemtools.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         names.remove('stack_priority')
         return systemtools.FormatSpecification(

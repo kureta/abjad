@@ -158,7 +158,7 @@ class PersistenceManager(abctools.AbjadObject):
         Returns none.
         '''
         from abjad.tools import systemtools
-        agent = systemtools.StorageFormatAgent(self._client)
+        agent = systemtools.StorageFormatManager(self._client)
         result = []
         import_statements = agent.get_import_statements()
         result.extend(import_statements)

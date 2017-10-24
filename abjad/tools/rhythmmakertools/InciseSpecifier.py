@@ -167,7 +167,7 @@ class InciseSpecifier(AbjadValueObject):
 
     def _get_format_specification(self):
         from abjad.tools import systemtools
-        agent = systemtools.StorageFormatAgent(self)
+        agent = systemtools.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         for name in names[:]:
             if name == 'talea_denominator':

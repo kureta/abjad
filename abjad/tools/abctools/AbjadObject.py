@@ -40,7 +40,7 @@ class AbjadObject(AbstractBase):
         '''
         import abjad
         if format_specification in ('', 'storage'):
-            return abjad.StorageFormatAgent(self).get_storage_format()
+            return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __getstate__(self):
@@ -75,7 +75,7 @@ class AbjadObject(AbstractBase):
         Returns string.
         '''
         import abjad
-        return abjad.StorageFormatAgent(self).get_repr_format()
+        return abjad.StorageFormatManager(self).get_repr_format()
 
     def __setstate__(self, state):
         r'''Sets state of Abjad object.

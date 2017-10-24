@@ -349,7 +349,7 @@ class Spanner(AbjadObject):
 
     def _get_format_specification(self):
         import abjad
-        agent = abjad.StorageFormatAgent(self)
+        agent = abjad.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         if self._get_compact_summary() == '':
             values = []

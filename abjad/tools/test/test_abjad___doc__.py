@@ -38,7 +38,7 @@ ignored_classes = (
     lilypondparsertools.ReducedLyParser,
     lilypondparsertools.SchemeParser,
     rhythmtreetools.RhythmTreeParser,
-    abjad.StorageFormatAgent,
+    abjad.StorageFormatManager,
     abjad.FormatSpecification,
     abjad.TestCase,
     )

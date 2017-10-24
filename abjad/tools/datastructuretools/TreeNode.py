@@ -29,7 +29,7 @@ class TreeNode(AbjadObject):
         r'''Copies tree node.
         '''
         import copy
-        agent = systemtools.StorageFormatAgent(self)
+        agent = systemtools.StorageFormatManager(self)
         arguments = []
         for value in agent.get_template_dict().values():
             if isinstance(value, tuple):
@@ -54,7 +54,7 @@ class TreeNode(AbjadObject):
         return name_dictionary
 
     def _get_format_specification(self):
-        agent = systemtools.StorageFormatAgent(self)
+        agent = systemtools.StorageFormatManager(self)
         names = agent.signature_names
         return systemtools.FormatSpecification(
             client=self,

@@ -381,7 +381,7 @@ class BurnishSpecifier(AbjadValueObject):
 
     def _get_format_specification(self):
         import abjad
-        agent = abjad.StorageFormatAgent(self)
+        agent = abjad.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         for name in names[:]:
             if not getattr(self, name):

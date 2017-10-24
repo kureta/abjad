@@ -173,7 +173,7 @@ class Articulation(AbjadValueObject):
         '''
         from abjad.tools import systemtools
         if format_specification in ('', 'storage'):
-            return systemtools.StorageFormatAgent(self).get_storage_format()
+            return systemtools.StorageFormatManager(self).get_storage_format()
         elif format_specification == 'lilypond':
             return self._get_lilypond_format()
         return str(self)

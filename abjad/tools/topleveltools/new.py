@@ -55,7 +55,7 @@ def new(argument, **keywords):
     import abjad
     if argument is None:
         return argument
-    agent = abjad.StorageFormatAgent(argument)
+    agent = abjad.StorageFormatManager(argument)
     template_dict = agent.get_template_dict()
     recursive_arguments = {}
     for key, value in keywords.items():
@@ -73,7 +73,7 @@ def new(argument, **keywords):
             result = method(value)
             if isinstance(result, type(argument)):
                 argument = result
-                template_dict.update(abjad.StorageFormatAgent(
+                template_dict.update(abjad.StorageFormatManager(
                     argument).get_template_dict())
         else:
             message = '{} has no key {!r}'.format(type(argument), key)

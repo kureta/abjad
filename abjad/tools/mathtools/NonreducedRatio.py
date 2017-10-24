@@ -73,7 +73,7 @@ class NonreducedRatio(AbjadValueObject):
         '''
         import abjad
         if format_specification in ('', 'storage'):
-            return abjad.StorageFormatAgent(self).get_storage_format()
+            return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __getitem__(self, argument):

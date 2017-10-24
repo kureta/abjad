@@ -312,7 +312,7 @@ class TestManager(AbjadObject):
         Returns true or false.
         '''
         from abjad.tools import systemtools
-        agent_one = systemtools.StorageFormatAgent(object_one)
+        agent_one = systemtools.StorageFormatManager(object_one)
         if agent_one.format_specification.coerce_for_equality:
             try:
                 object_two = type(object_one)(object_two)
@@ -323,7 +323,7 @@ class TestManager(AbjadObject):
                 return False
         elif not isinstance(object_two, type(object_one)):
             return False
-        agent_two = systemtools.StorageFormatAgent(object_two)
+        agent_two = systemtools.StorageFormatManager(object_two)
         template_1 = agent_one.get_template_dict()
         template_2 = agent_two.get_template_dict()
         return template_1 == template_2

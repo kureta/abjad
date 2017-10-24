@@ -775,7 +775,7 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         if format_specification in ('', 'storage'):
-            return abjad.StorageFormatAgent(self).get_storage_format()
+            return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __getitem__(self, argument):
@@ -823,7 +823,7 @@ class Selection(AbjadValueObject):
         Returns integer.
         '''
         import abjad
-        agent = abjad.StorageFormatAgent(self)
+        agent = abjad.StorageFormatManager(self)
         hash_values = agent.get_hash_values()
         return hash(hash_values)
 
@@ -880,7 +880,7 @@ class Selection(AbjadValueObject):
         Returns string.
         '''
         import abjad
-        return abjad.StorageFormatAgent(self).get_repr_format()
+        return abjad.StorageFormatManager(self).get_repr_format()
 
     def __setstate__(self, state):
         r'''Sets state of selection.
