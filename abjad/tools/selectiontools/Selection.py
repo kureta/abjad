@@ -8,6 +8,7 @@ from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 class Selection(AbjadValueObject):
     r'''Selection of components and / or other selections.
 
+
     ..  container:: example
 
         ::
