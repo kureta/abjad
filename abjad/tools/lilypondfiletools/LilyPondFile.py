@@ -1486,7 +1486,7 @@ class LilyPondFile(AbjadObject):
                 staff = abjad.Staff(measures)
             else:
                 staff = abjad.Staff(measures, context_name='RhythmicStaff')
-            selections = abjad.Sequence(selections).flatten()
+            selections = abjad.sequence(selections).flatten()
             selections_ = copy.deepcopy(selections)
             try:
                 agent = abjad.mutate(staff)
@@ -1503,7 +1503,7 @@ class LilyPondFile(AbjadObject):
             voices = []
             for voice_name in sorted(selections):
                 selections_ = selections[voice_name]
-                selections_ = abjad.Sequence(selections_).flatten()
+                selections_ = abjad.sequence(selections_).flatten()
                 selections_ = copy.deepcopy(selections_)
                 voice = abjad.Voice(selections_, name=voice_name)
                 if attach_lilypond_voice_commands:

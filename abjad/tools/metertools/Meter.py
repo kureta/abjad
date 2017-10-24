@@ -680,7 +680,7 @@ class Meter(AbjadValueObject):
             )
         graph.append(offset_subgraph)
         make_offset_node(offset, leaves[0])
-        for one, two in abjad.Sequence(leaves).nwise():
+        for one, two in abjad.sequence(leaves).nwise():
             offset = one.stop_offset
             make_offset_node(offset, one, two)
         offset = leaves[-1].stop_offset
@@ -844,7 +844,7 @@ class Meter(AbjadValueObject):
             rhythm_number)
         binary_representation = binary_representation.zfill(grid_length)
         # partition binary representation of rhythm
-        parts = abjad.Sequence(binary_representation).group()
+        parts = abjad.sequence(binary_representation).group()
         # find durations
         durations = [
             abjad.Duration(len(part), denominator)
@@ -971,7 +971,7 @@ class Meter(AbjadValueObject):
                 #print()
                 logical_tie[:]._fuse()
         # Validate arguments.
-        assert abjad.Selection(components).in_contiguous_logical_voice()
+        assert abjad.select(components).in_contiguous_logical_voice()
         if not isinstance(meter, abjad.Meter):
             meter = abjad.Meter(meter)
         if boundary_depth is not None:
@@ -1152,7 +1152,7 @@ class Meter(AbjadValueObject):
         for _ in range(extra_depth):
             old_offsets = inventory[-1]
             new_offsets = []
-            for first, second in datastructuretools.Sequence(old_offsets).nwise():
+            for first, second in abjad.sequence(old_offsets).nwise():
                 new_offsets.append(first)
                 new_offsets.append((first + second) / 2)
             new_offsets.append(old_offsets[-1])

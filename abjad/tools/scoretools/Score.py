@@ -111,12 +111,12 @@ class Score(Context):
         import abjad
         double_bar = abjad.BarLine(abbreviation)
         if not to_each_voice:
-            selection = abjad.Selection(self)
+            selection = abjad.select(self)
             last_leaf = selection._get_component(abjad.Leaf, -1)
             abjad.attach(double_bar, last_leaf)
         else:
             for voice in abjad.iterate(self).by_class(abjad.Voice):
-                selection = abjad.Selection(voice)
+                selection = abjad.select(voice)
                 last_leaf = selection._get_component(abjad.Leaf, -1)
                 abjad.attach(double_bar, last_leaf)
         return double_bar
@@ -212,7 +212,7 @@ class Score(Context):
         Returns none.
         '''
         import abjad
-        selection = abjad.Selection(self)
+        selection = abjad.select(self)
         last_leaf = selection._get_component(abjad.Leaf, -1)
         markup = copy.copy(markup)
         abjad.attach(markup, last_leaf)

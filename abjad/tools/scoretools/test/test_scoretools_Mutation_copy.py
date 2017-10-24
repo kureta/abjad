@@ -244,7 +244,7 @@ def test_scoretools_Mutation_copy_05():
         '''
         )
 
-    selection = abjad.Selection(voice)
+    selection = abjad.select(voice)
     new_selection = abjad.mutate(selection).copy()
     new_voice = new_selection[0]
     for component in abjad.iterate(new_voice).by_class():

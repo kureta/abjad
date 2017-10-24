@@ -282,7 +282,7 @@ class IncisedRhythmMaker(RhythmMaker):
                 beam = abjad.MultipartBeam()
                 leaves = abjad.select(x).by_leaf()
                 abjad.attach(beam, leaves)
-        selections = [abjad.Selection(x) for x in result]
+        selections = [abjad.select(x) for x in result]
         selections = self._apply_division_masks(selections, rotation)
         duration_specifier = self._get_duration_specifier()
         if duration_specifier.rewrite_meter:
@@ -410,7 +410,7 @@ class IncisedRhythmMaker(RhythmMaker):
                         new_components.append(skip)
                     else:
                         new_components.append(component)
-                selection = abjad.Selection(new_components)
+                selection = abjad.select(new_components)
             selections.append(selection)
         return selections
 

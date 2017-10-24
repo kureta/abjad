@@ -109,7 +109,7 @@ class TupletSpecifier(AbjadValueObject):
                     abjad.attach(new_spanner, contents)
                 new_selection.extend(contents)
                 del(component[:])
-            new_selection = abjad.Selection(new_selection)
+            new_selection = abjad.select(new_selection)
             new_selections.append(new_selection)
         return new_selections
 
@@ -131,7 +131,7 @@ class TupletSpecifier(AbjadValueObject):
                 abjad.mutate(component[:]).replace(new_rests)
                 component.multiplier = abjad.Multiplier(1)
                 new_selection.append(component)
-            new_selection = abjad.Selection(new_selection)
+            new_selection = abjad.select(new_selection)
             new_selections.append(new_selection)
         return new_selections
 

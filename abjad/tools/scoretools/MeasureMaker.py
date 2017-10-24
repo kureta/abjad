@@ -77,7 +77,7 @@ class MeasureMaker(AbjadValueObject):
             measure[:] = [skip]
             for spanner in measure._get_spanners():
                 spanner._remove(measure)
-        return abjad.Selection(measures)
+        return abjad.select(measures)
 
     ### PUBLIC PROPERTIES ###
 

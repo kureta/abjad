@@ -1579,7 +1579,7 @@ class Pattern(AbjadValueObject):
             if self.matches_index(i, length):
                 item = sequence[i]
                 items.append(item)
-        return abjad.Sequence(items=items)
+        return abjad.sequence(items=items)
 
     @staticmethod
     def index(indices, inverted=None):

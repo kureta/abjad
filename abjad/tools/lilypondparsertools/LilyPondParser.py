@@ -399,7 +399,7 @@ class LilyPondParser(abctools.Parser):
         first_leaf = None
         if leaves:
             first_leaf = leaves[0]
-        pairs = datastructuretools.Sequence(leaves).nwise(wrapped=True)
+        pairs = abjad.sequence(leaves).nwise(wrapped=True)
         for leaf, next_leaf in pairs:
 
             span_events = _get_span_events(leaf)

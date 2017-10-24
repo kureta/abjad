@@ -37,7 +37,7 @@ def test_scoretools_Selection_run_selectors_01():
         assert duration_selector in result
         assert contiguity_selector in result
 
-    pairs = abjad.Sequence(all_results).nwise()
+    pairs = abjad.sequence(all_results).nwise()
     for results_one, results_two in pairs:
         for selector in selectors:
             assert results_one[selector] == results_two[selector]

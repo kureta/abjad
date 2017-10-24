@@ -1051,18 +1051,18 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         vertical_moments = self.by_vertical_moment()
-        for moment_1, moment_2 in abjad.Sequence(vertical_moments).nwise():
+        for moment_1, moment_2 in abjad.sequence(vertical_moments).nwise():
             enumerator = abjad.Enumerator(moment_1.start_leaves)
             for pair in enumerator.yield_pairs():
-                yield abjad.Selection(pair)
+                yield abjad.select(pair)
             sequences = [moment_1.leaves, moment_2.start_leaves]
             enumerator = abjad.Enumerator(sequences)
             for pair in enumerator.yield_outer_product():
-                yield abjad.Selection(pair)
+                yield abjad.select(pair)
         else:
             enumerator = abjad.Enumerator(moment_2.start_leaves)
             for pair in enumerator.yield_pairs():
-                yield abjad.Selection(pair)
+                yield abjad.select(pair)
 
     def by_logical_tie(
         self,
@@ -2352,16 +2352,16 @@ class Iteration(abctools.AbjadObject):
         prototype = prototype or abjad.Leaf
         if not isinstance(prototype, collections.Sequence):
             prototype = (prototype,)
-        selection = abjad.Selection(self.client)
+        selection = abjad.select(self.client)
         current_run = ()
         for run in selection.group(type):
             if isinstance(run[0], prototype):
                 current_run = current_run + run
             elif current_run:
-                yield abjad.Selection(current_run)
+                yield abjad.select(current_run)
                 current_run = ()
         if current_run:
-            yield abjad.Selection(current_run)
+            yield abjad.select(current_run)
 
     def by_spanner(
         self,
@@ -3219,7 +3219,7 @@ class Iteration(abctools.AbjadObject):
                 _update_buffer(current_offset, buffer, stop_offsets)
         def _next_in_parent(component):
             assert isinstance(component, abjad.Component), repr(component)
-            selection = abjad.Selection(component)
+            selection = abjad.select(component)
             result = selection._get_parent_and_start_stop_indices()
             parent, start, stop = result
             assert start == stop

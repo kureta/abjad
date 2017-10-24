@@ -1317,7 +1317,7 @@ class MetronomeMark(AbjadValueObject):
             if Fraction(1, 2) <= _ <= Fraction(2)
             ]
         multipliers.sort()
-        multipliers = abjad.Sequence(multipliers).remove_repeats()
+        multipliers = abjad.sequence(multipliers).remove_repeats()
         pairs = []
         for multiplier in multipliers:
             new_units_per_minute = multiplier * self.units_per_minute

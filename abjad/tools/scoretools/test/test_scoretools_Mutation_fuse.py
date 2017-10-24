@@ -117,7 +117,7 @@ def test_scoretools_Mutation_fuse_06():
         '''
         )
 
-    tuplets = abjad.Selection([tuplet_1, tuplet_2])
+    tuplets = abjad.select([tuplet_1, tuplet_2])
     new = abjad.mutate(tuplets).fuse()
 
     assert format(new) == abjad.String.normalize(
@@ -251,7 +251,7 @@ def test_scoretools_Mutation_fuse_09():
 
     tuplet_1 = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
     tuplet_2 = abjad.Tuplet ((4, 5), "c'8 d'8 e'8 f'8 g'8")
-    tuplets = abjad.Selection([tuplet_1, tuplet_2])
+    tuplets = abjad.select([tuplet_1, tuplet_2])
 
     assert pytest.raises(Exception, 'abjad.mutate(tuplets).fuse()')
 

@@ -243,7 +243,7 @@ class Leaf(Component):
                 x for x in candidates if isinstance(x, abjad.Leaf)
                 ]
             for candidate in candidates:
-                selection = abjad.Selection([component, candidate])
+                selection = abjad.select([component, candidate])
                 if selection.in_logical_voice():
                     return candidate
 
@@ -256,7 +256,7 @@ class Leaf(Component):
                 x for x in candidates if isinstance(x, abjad.Leaf)
                 ]
             for candidate in candidates:
-                selection = abjad.Selection([component, candidate])
+                selection = abjad.select([component, candidate])
                 if selection.in_logical_voice():
                     return candidate
         current_leaf = self
@@ -341,11 +341,11 @@ class Leaf(Component):
             detach(abjad.Multiplier, self)
             multiplier = new_duration.__div__(self.written_duration)
             attach(multiplier, self)
-            return abjad.Selection(self)
+            return abjad.select(self)
         # change written duration if new duration is assignable
         try:
             self.written_duration = new_duration
-            return abjad.Selection(self)
+            return abjad.select(self)
         except AssignabilityError:
             pass
         # make new notes or tuplets if new duration is nonassignable
@@ -368,7 +368,7 @@ class Leaf(Component):
                         use_messiaen_style_ties=use_messiaen_style_ties,
                         )
                     abjad.attach(tie, all_leaves)
-            return abjad.Selection(all_leaves)
+            return abjad.select(all_leaves)
         else:
             assert isinstance(components[0], abjad.Tuplet)
             tuplet = components[0]
@@ -389,7 +389,7 @@ class Leaf(Component):
             multiplier = tuplet.multiplier
             tuplet = abjad.Tuplet(multiplier, [])
             abjad.mutate(all_leaves).wrap(tuplet)
-            return abjad.Selection(tuplet)
+            return abjad.select(tuplet)
 
     def _split_by_durations(
         self,
@@ -401,7 +401,7 @@ class Leaf(Component):
         ):
         import abjad
         durations = [abjad.Duration(_) for _ in durations]
-        durations = abjad.Sequence(durations)
+        durations = abjad.sequence(durations)
         leaf_duration = abjad.inspect(self).get_duration()
         if cyclic:
             durations = durations.repeat_to_weight(leaf_duration)
@@ -425,7 +425,7 @@ class Leaf(Component):
                 )
             result_selections.append(selection)
         result_components = abjad.sequence(result_selections).flatten()
-        result_components = abjad.Selection(result_components)
+        result_components = abjad.select(result_components)
         result_leaves = abjad.select(result_components).by_leaf()
         assert all(isinstance(_, abjad.Selection) for _ in result_selections)
         assert all(isinstance(_, abjad.Component) for _ in result_components)
@@ -439,7 +439,7 @@ class Leaf(Component):
             abjad.detach(object, leaf)
             abjad.attach(multiplier, leaf)
         # replace leaf with flattened result
-        selection = abjad.Selection(self)
+        selection = abjad.select(self)
         parent, start, stop = selection._get_parent_and_start_stop_indices()
         if parent:
             parent.__setitem__(slice(start, stop + 1), result_components)
@@ -527,7 +527,7 @@ class Leaf(Component):
                 ]
             notes = maker(0, note_durations)
         # make tuplet
-        notes = abjad.Selection(notes)
+        notes = abjad.select(notes)
         contents_duration = notes.get_duration()
         multiplier = target_duration / contents_duration
         tuplet = abjad.Tuplet(multiplier, notes)

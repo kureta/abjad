@@ -884,7 +884,7 @@ def test_scoretools_Mutation_split_14():
         fracture_spanners=True,
         )
 
-    components = abjad.Sequence(result).flatten()
+    components = abjad.sequence(result).flatten()
     staff = abjad.Staff(components)
 
     assert format(staff) == abjad.String.normalize(
@@ -1519,7 +1519,7 @@ def test_scoretools_Mutation_split_24():
     '''
 
     note = abjad.Note("c'4")
-    note = abjad.Selection(note)
+    note = abjad.select(note)
 
     result = abjad.mutate(note).split(
         [(1, 32), (5, 32)],
@@ -1528,7 +1528,7 @@ def test_scoretools_Mutation_split_24():
         tie_split_notes=False,
         )
 
-    notes = abjad.Sequence(result).flatten()
+    notes = abjad.sequence(result).flatten()
     staff = abjad.Staff(notes)
 
     assert format(staff) == abjad.String.normalize(

@@ -208,7 +208,7 @@ class InciseSpecifier(AbjadValueObject):
     def _rotate_tuple(argument, n):
         import abjad
         if argument is not None:
-            return tuple(abjad.Sequence(argument).rotate(n=n))
+            return tuple(abjad.sequence(argument).rotate(n=n))
 
     ### PUBLIC PROPERTIES ###
 

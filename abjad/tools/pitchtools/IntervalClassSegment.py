@@ -92,7 +92,7 @@ class IntervalClassSegment(Segment):
 
                 >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
                 >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.Selection((staff_1, staff_2))
+                >>> selection = abjad.select((staff_1, staff_2))
                 >>> abjad.IntervalClassSegment.from_selection(selection)
                 IntervalClassSegment(['-M2', '-M3', '-m3', '+m7', '+M7', '-P5'])
 

@@ -558,7 +558,7 @@ class ReducedLyParser(abctools.Parser):
         }
 
         first_leaf = leaves[0]
-        pairs = abjad.Sequence(leaves).nwise(wrapped=True)
+        pairs = abjad.sequence(leaves).nwise(wrapped=True)
         for leaf, next_leaf in pairs:
             span_events = self._get_span_events(leaf)
             for current_class, directions in span_events.items():
@@ -584,7 +584,7 @@ class ReducedLyParser(abctools.Parser):
                         previous_tie[0]._append(next_leaf)
                     else:
                         tie = abjad.Tie()
-                        selection = abjad.Selection([leaf, next_leaf])
+                        selection = abjad.select([leaf, next_leaf])
                         attach(tie, selection)
 
                 elif current_class is abjad.Beam:

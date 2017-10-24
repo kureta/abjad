@@ -174,7 +174,7 @@ class EvenRunRhythmMaker(RhythmMaker):
             assert isinstance(division, prototype), division
         for division in divisions:
             container = self._make_container(division)
-            selection = abjad.Selection(container)
+            selection = abjad.select(container)
             selections.append(selection)
         beam_specifier = self._get_beam_specifier()
         if beam_specifier.beam_divisions_together:

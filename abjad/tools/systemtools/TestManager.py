@@ -465,7 +465,7 @@ class TestManager(AbjadObject):
 #            title_lines.append(parts.pop(0))
 #        lengths = [len(part) for part in parts]
 #        if 35 < sum(lengths):
-#            halves = baca.Sequence(halves)
+#            halves = baca.sequence(halves)
 #            halves = halves.partition_by_ratio_of_weights(ratio=[1, 1])
 #            left_count = len(halves[0])
 #            right_count = len(halves[-1])

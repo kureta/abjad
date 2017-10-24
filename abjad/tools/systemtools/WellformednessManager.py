@@ -152,7 +152,7 @@ class WellformednessManager(AbjadObject):
         violators = []
         components = abjad.iterate(argument).by_class()
         total_ids = [id(_) for _ in components]
-        unique_ids = abjad.Sequence(total_ids).remove_repeats()
+        unique_ids = abjad.sequence(total_ids).remove_repeats()
         if len(unique_ids) < len(total_ids):
             for current_id in unique_ids:
                 if 1 < total_ids.count(current_id):

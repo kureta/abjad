@@ -98,7 +98,7 @@ class TieSpecifier(AbjadValueObject):
         if not isinstance(tie_across_divisions, abjad.Pattern):
             tie_across_divisions = abjad.Pattern.from_vector(
                 tie_across_divisions)
-        pairs = abjad.Sequence(divisions).nwise()
+        pairs = abjad.sequence(divisions).nwise()
         rest_prototype = (abjad.Rest, abjad.MultimeasureRest)
         for i, pair in enumerate(pairs):
             if not tie_across_divisions.matches_index(i, length):
@@ -158,7 +158,7 @@ class TieSpecifier(AbjadValueObject):
                     continue
                 tie = abjad.Tie()
                 assert tie._attachment_test_all(subgroup)
-                abjad.attach(tie, abjad.Selection(subgroup))
+                abjad.attach(tie, abjad.select(subgroup))
 
     ### PUBLIC PROPERTIES ###
 

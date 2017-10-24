@@ -739,7 +739,7 @@ class TonalAnalysis(abctools.AbjadObject):
         import abjad
         direction_string = None
         notes = abjad.iterate(self._client).by_class(abjad.Note)
-        for left, right in abjad.Sequence(notes).nwise():
+        for left, right in abjad.sequence(notes).nwise():
             try:
                 assert not (left.written_pitch == right.written_pitch)
                 mdi = pitchtools.NamedInterval.from_pitch_carriers(
@@ -800,7 +800,7 @@ class TonalAnalysis(abctools.AbjadObject):
         '''
         import abjad
         notes = abjad.iterate(self._client).by_class(abjad.Note)
-        for left, right in abjad.Sequence(notes).nwise():
+        for left, right in abjad.sequence(notes).nwise():
             try:
                 assert not (left.written_pitch == right.written_pitch)
                 mdi = pitchtools.NamedInterval.from_pitch_carriers(
@@ -858,7 +858,7 @@ class TonalAnalysis(abctools.AbjadObject):
         '''
         import abjad
         notes = abjad.iterate(self._client).by_class(abjad.Note)
-        for left, right in abjad.Sequence(notes).nwise():
+        for left, right in abjad.sequence(notes).nwise():
             try:
                 assert not (left.written_pitch == right.written_pitch)
                 mdi = pitchtools.NamedInterval.from_pitch_carriers(
@@ -915,7 +915,7 @@ class TonalAnalysis(abctools.AbjadObject):
         '''
         import abjad
         notes = abjad.iterate(self._client).by_class(abjad.Note)
-        for left, right in abjad.Sequence(notes).nwise():
+        for left, right in abjad.sequence(notes).nwise():
             try:
                 assert not (left.written_pitch == right.written_pitch)
                 hdi = pitchtools.NamedInterval.from_pitch_carriers(

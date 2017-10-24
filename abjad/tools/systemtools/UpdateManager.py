@@ -264,15 +264,13 @@ class UpdateManager(AbjadObject):
         component,
         logical_measure_number_start_offsets,
         ):
-        from abjad.tools import datastructuretools
-        from abjad.tools import mathtools
-        from abjad.tools.topleveltools import inspect
-        inspector = inspect(component)
+        import abjad
+        inspector = abjad.inspect(component)
         component_start_offset = inspector.get_timespan()._start_offset
         logical_measure_number_start_offsets = \
             logical_measure_number_start_offsets[:]
-        logical_measure_number_start_offsets.append(mathtools.Infinity())
-        pairs = datastructuretools.Sequence(logical_measure_number_start_offsets)
+        logical_measure_number_start_offsets.append(abjad.mathtools.Infinity())
+        pairs = abjad.sequence(logical_measure_number_start_offsets)
         pairs = pairs.nwise()
         for logical_measure_index, pair in enumerate(pairs):
             if pair[0] <= component_start_offset < pair[-1]:

@@ -111,7 +111,7 @@ class TaleaRhythmMaker(RhythmMaker):
         if not talea:
             return talea
         voice_index, measure_index = rotation
-        talea = datastructuretools.Sequence(talea).rotate(n=-voice_index)
+        talea = abjad.sequence(talea).rotate(n=-voice_index)
         return talea
 
     # used in a piece with four voices:
@@ -126,7 +126,7 @@ class TaleaRhythmMaker(RhythmMaker):
         voice_index, measure_index = rotation
         index_of_rotation = -voice_index * (len(talea) // 4)
         index_of_rotation += -4 * measure_index
-        talea = datastructuretools.Sequence(talea).rotate(n=index_of_rotation)
+        talea = abjad.sequence(talea).rotate(n=index_of_rotation)
         return talea
     '''
 
@@ -547,7 +547,7 @@ class TaleaRhythmMaker(RhythmMaker):
                     )
                 attach(tie, leaves[:])
             result.extend(leaves)
-        result = abjad.Selection(result)
+        result = abjad.select(result)
         return result
 
     def _make_music(self, divisions, rotation):
@@ -699,6 +699,7 @@ class TaleaRhythmMaker(RhythmMaker):
             }
 
     def _split_sequence_extended_to_weights(self, sequence, weights):
+        import abjad
         assert mathtools.all_are_positive_integers(weights), repr(weights)
         sequence_weight = mathtools.weight(sequence)
         weight = mathtools.weight(weights)
@@ -708,7 +709,7 @@ class TaleaRhythmMaker(RhythmMaker):
                 message += '\n{!r} in {!r}.'
                 message = message.format(sequence, weights)
                 raise Exception(message)
-        sequence = datastructuretools.Sequence(sequence).repeat_to_weight(weight)
+        sequence = abjad.sequence(sequence).repeat_to_weight(weight)
         sequence = sequence.split(weights, cyclic=True)
         return sequence
 

@@ -3634,7 +3634,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> for leaf in abjad.Selection(score).by_timeline():
+                >>> for leaf in abjad.select(score).by_timeline():
                 ...     leaf
                 ...
                 Note("c'4")
@@ -3696,7 +3696,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> selection = abjad.Selection(score)
+                >>> selection = abjad.select(score)
                 >>> for item in selection.by_timeline_and_logical_tie():
                 ...     item
                 ...

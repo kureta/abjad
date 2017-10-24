@@ -370,7 +370,7 @@ class PitchSet(Set):
 
                 >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
                 >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.Selection((staff_1, staff_2))
+                >>> selection = abjad.select((staff_1, staff_2))
                 >>> abjad.PitchSet.from_selection(selection)
                 PitchSet(['c', 'g', 'b', "c'", "d'", "fs'", "a'"])
 
@@ -488,7 +488,7 @@ class PitchSet(Set):
                 [_ for _ in self if _.number % 12 == pc]
                 for pc in [x % 12 for x in pitch_classes]
                 ]
-            result = abjad.Sequence(result).flatten()
+            result = abjad.sequence(result).flatten()
         elif isinstance(pitch_classes, int):
             result = [p for p in pitch_classes if p % 12 == pitch_classes][0]
         else:

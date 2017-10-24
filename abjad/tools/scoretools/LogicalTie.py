@@ -143,7 +143,7 @@ class LogicalTie(Selection):
             tie = self[0]._get_spanner(prototype=abjad.Tie)
         except MissingSpannerError:
             assert self.is_trivial
-            return abjad.Selection(self[0])
+            return abjad.select(self[0])
         selection = tie.leaves
         assert isinstance(selection, abjad.Selection)
         return selection

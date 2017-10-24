@@ -33,7 +33,7 @@ def test_scoretools_Selection__withdraw_from_crossing_spanners_01():
         '''
         )
 
-    voice_selection = abjad.Selection([voice])
+    voice_selection = abjad.select([voice])
     voice_selection._withdraw_from_crossing_spanners()
 
     assert format(voice) == abjad.String.normalize(

@@ -192,7 +192,7 @@ class DuratedComplexBeam(ComplexBeam):
             abjad.inspect(right).get_duration(),
             ]
         assert sum(self.durations) == sum(weights)
-        split_durations = datastructuretools.Sequence(self.durations)
+        split_durations = abjad.sequence(self.durations)
         split_durations = split_durations.split(
             weights,
             cyclic=False,
@@ -211,7 +211,7 @@ class DuratedComplexBeam(ComplexBeam):
             abjad.inspect(right).get_duration(),
             ]
         assert sum(self.durations) == sum(weights)
-        split_durations = datastructuretools.Sequence(self.durations)
+        split_durations = abjad.sequence(self.durations)
         split_durations = split_durations.split(
             weights,
             cyclic=False,

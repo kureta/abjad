@@ -279,19 +279,20 @@ class RhythmMaker(AbjadValueObject):
         divisions,
         split_divisions_by_counts,
         ):
+        import abjad
         if not split_divisions_by_counts:
             return divisions[:]
         numerators = [
             division.numerator
             for division in divisions
             ]
-        secondary_numerators = datastructuretools.Sequence(numerators)
+        secondary_numerators = abjad.sequence(numerators)
         secondary_numerators = secondary_numerators.split(
             split_divisions_by_counts,
             cyclic=True,
             overhang=True,
             )
-        secondary_numerators = datastructuretools.Sequence(secondary_numerators)
+        secondary_numerators = abjad.sequence(secondary_numerators)
         secondary_numerators = secondary_numerators.flatten()
         denominator = divisions[0].denominator
         secondary_divisions = [
@@ -341,8 +342,9 @@ class RhythmMaker(AbjadValueObject):
 
     @staticmethod
     def _rotate_tuple(argument, n):
+        import abjad
         if argument is not None:
-            return tuple(datastructuretools.Sequence(argument).rotate(n=n))
+            return tuple(abjad.sequence(argument).rotate(n=n))
 
     def _scale_taleas(self, divisions, talea_denominator, taleas):
         import abjad

@@ -110,7 +110,7 @@ class Tie(Spanner):
                 written_pitches.append(set(component.written_pitches))
             else:
                 return False
-        for pair in abjad.Sequence(written_pitches).nwise():
+        for pair in abjad.sequence(written_pitches).nwise():
             if not set.intersection(*pair):
                 return False
         for component in component_expression:

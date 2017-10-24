@@ -314,7 +314,7 @@ class Inspection(abctools.AbjadObject):
                 for descendant_ in descendants_:
                     if descendant_ not in descendants:
                         descendants.append(descendant_)
-            descendants = abjad.Selection(descendants)
+            descendants = abjad.select(descendants)
         return descendants
 
     def get_duration(self, in_seconds=False):

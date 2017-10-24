@@ -382,7 +382,7 @@ class Measure(Container):
                 logical_tie_duration = item._get_preprolated_duration()
                 numerator = logical_tie_duration.numerator
                 logical_tie_duration_numerators.append(numerator)
-        numerators = abjad.Sequence(logical_tie_duration_numerators)
+        numerators = abjad.sequence(logical_tie_duration_numerators)
         if len(numerators.remove_repeats()) == 1:
             numerator = logical_tie_duration_numerators[0]
             denominator = abjad.mathtools.greatest_power_of_two_less_equal(

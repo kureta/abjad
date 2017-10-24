@@ -233,7 +233,7 @@ class RhythmTreeMixin(abctools.AbjadObject):
         import abjad
         prolations = [abjad.Multiplier(1)]
         improper_parentage = self.improper_parentage
-        pairs = datastructuretools.Sequence(improper_parentage).nwise()
+        pairs = abjad.sequence(improper_parentage).nwise()
         for child, parent in pairs:
             prolations.append(abjad.Multiplier(
                 parent.preprolated_duration, parent._get_contents_duration()))

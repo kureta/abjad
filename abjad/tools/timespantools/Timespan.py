@@ -934,18 +934,19 @@ class Timespan(BoundedObject):
 
         Returns tuple of newly constructed timespans.
         '''
+        import abjad
         if isinstance(ratio, int):
             ratio = ratio * (1, )
-        ratio = mathtools.Ratio(ratio)
+        ratio = abjad.Ratio(ratio)
         unit_duration = self.duration / sum(ratio.numbers)
         part_durations = [
             numerator * unit_duration for numerator in ratio.numbers
             ]
-        start_offsets = mathtools.cumulative_sums(
+        start_offsets = abjad.mathtools.cumulative_sums(
             [self._start_offset] + part_durations,
             start=None,
             )
-        offset_pairs = datastructuretools.Sequence(start_offsets).nwise()
+        offset_pairs = abjad.sequence(start_offsets).nwise()
         result = [type(self)(*offset_pair) for offset_pair in offset_pairs]
         return tuple(result)
 

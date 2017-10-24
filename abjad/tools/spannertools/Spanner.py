@@ -80,7 +80,7 @@ class Spanner(AbjadObject):
         import abjad
         if isinstance(argument, slice):
             leaves = self.leaves.__getitem__(argument)
-            return abjad.Selection(leaves)
+            return abjad.select(leaves)
         return self.leaves.__getitem__(argument)
 
     def __getnewargs__(self):
@@ -130,7 +130,7 @@ class Spanner(AbjadObject):
             raise Exception(message)
         if self._contiguity_constraint == 'logical voice':
             leaves = self[-1:] + [leaf]
-            leaves = abjad.Selection(leaves)
+            leaves = abjad.select(leaves)
             if not leaves.in_contiguous_logical_voice():
                 raise Exception(leaves)
         leaf._spanners.add(self)
@@ -139,7 +139,7 @@ class Spanner(AbjadObject):
     def _append_left(self, leaf):
         import abjad
         leaves = [leaf] + self[:1]
-        leaves = abjad.Selection(leaves)
+        leaves = abjad.select(leaves)
         assert leaves.in_contiguous_logical_voice()
         leaf._spanners.add(self)
         self._leaves.insert(0, leaf)
@@ -236,7 +236,7 @@ class Spanner(AbjadObject):
         import abjad
         leaf_input = list(self[-1:])
         leaf_input.extend(leaves)
-        leaf_input = abjad.Selection(leaf_input)
+        leaf_input = abjad.select(leaf_input)
         if self._contiguity_constraint == 'logical voice':
             if not leaf_input.in_contiguous_logical_voice():
                 message = 'must be contiguous leaves'
@@ -249,7 +249,7 @@ class Spanner(AbjadObject):
     def _extend_left(self, leaves):
         import abjad
         leaf_input = leaves + list(self[:1])
-        leaf_input = abjad.Selection(leaf_input)
+        leaf_input = abjad.select(leaf_input)
         assert leaf_input.in_contiguous_logical_voice()
         for leaf in reversed(leaves):
             self._append_left(leaf)
@@ -607,7 +607,7 @@ class Spanner(AbjadObject):
                 message = 'spanners attach only to leaves: {!s}.'
                 message = message.format(leaf)
                 raise Exception(message)
-        return abjad.Selection(self._leaves)
+        return abjad.select(self._leaves)
 
     @property
     def name(self):

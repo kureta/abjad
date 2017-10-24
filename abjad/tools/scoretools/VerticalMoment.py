@@ -233,7 +233,7 @@ class VerticalMoment(Selection):
         for component in self.components:
             if isinstance(component, abjad.Leaf):
                 result.append(component)
-        result = abjad.Selection(result)
+        result = abjad.select(result)
         return result
 
     @property

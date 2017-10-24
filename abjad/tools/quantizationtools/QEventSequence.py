@@ -76,6 +76,7 @@ class QEventSequence(AbjadObject):
     ### INITIALIZER ###
 
     def __init__(self, sequence=None):
+        import abjad
         from abjad.tools import quantizationtools
         q_event_classes = (
             quantizationtools.PitchedQEvent,
@@ -91,7 +92,7 @@ class QEventSequence(AbjadObject):
                 for q_event in sequence[:-1])
             assert isinstance(sequence[-1], quantizationtools.TerminalQEvent)
             offsets = [x.offset for x in sequence]
-            offsets = datastructuretools.Sequence(offsets)
+            offsets = abjad.sequence(offsets)
             assert offsets.is_increasing(strict=False)
             assert 0 <= sequence[0].offset
             self._sequence = tuple(sequence)
@@ -479,7 +480,7 @@ class QEventSequence(AbjadObject):
         assert isinstance(tempo, indicatortools.MetronomeMark)
         durations = [
             x for x in
-            datastructuretools.Sequence(durations).sum_by_sign(sign=[-1])
+            abjad.sequence(durations).sum_by_sign(sign=[-1])
             if x
             ]
         durations = [tempo.duration_to_milliseconds(_) for _ in durations]
@@ -551,7 +552,7 @@ class QEventSequence(AbjadObject):
         Return ``QEventSequence`` instance.
         '''
         import abjad
-        assert abjad.Selection(leaves).in_contiguous_logical_voice()
+        assert abjad.select(leaves).in_contiguous_logical_voice()
         assert len(leaves)
         if tempo is None:
             prototype = abjad.MetronomeMark

@@ -38,7 +38,7 @@ def test_scoretools_Selection_in_contiguous_logical_voice_01():
     }
     '''
 
-    selection = abjad.Selection([voice, voice[0]])
+    selection = abjad.select([voice, voice[0]])
     assert not selection.in_contiguous_logical_voice()
     selection = voice[0:1] + voice[0][:]
     assert not selection.in_contiguous_logical_voice()
@@ -62,8 +62,8 @@ def test_scoretools_Selection_in_contiguous_logical_voice_03():
     notes = [
         abjad.Note("c'8"),
         abjad.Note("d'8"), abjad.Note("e'8"), abjad.Note("f'8")]
-    assert abjad.Selection(notes).in_contiguous_logical_voice()
-    assert not abjad.Selection(notes).in_contiguous_logical_voice(
+    assert abjad.select(notes).in_contiguous_logical_voice()
+    assert not abjad.select(notes).in_contiguous_logical_voice(
         allow_orphans=False,
         )
 
@@ -81,7 +81,7 @@ def test_scoretools_Selection_in_contiguous_logical_voice_05():
     r'''Is true for unincorporated component.
     '''
 
-    abjad.Selection(abjad.Staff("c'8 d'8 e'8 f'8")).in_contiguous_logical_voice()
+    abjad.select(abjad.Staff("c'8 d'8 e'8 f'8")).in_contiguous_logical_voice()
 
 
 def test_scoretools_Selection_in_contiguous_logical_voice_06():

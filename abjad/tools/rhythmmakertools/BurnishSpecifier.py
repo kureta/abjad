@@ -437,8 +437,9 @@ class BurnishSpecifier(AbjadValueObject):
         return input_
 
     def _trivial_helper(self, sequence_, rotation):
+        import abjad
         if isinstance(rotation, int) and len(sequence_):
-            return datastructuretools.Sequence(sequence_).rotate(n=rotation)
+            return abjad.sequence(sequence_).rotate(n=rotation)
         return sequence_
 
     ### PUBLIC PROPERTIES ###

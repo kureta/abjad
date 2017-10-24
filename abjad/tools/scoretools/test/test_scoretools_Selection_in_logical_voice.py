@@ -10,8 +10,8 @@ def test_scoretools_Selection_in_logical_voice_01():
     notes = [
         abjad.Note("c'8"),
         abjad.Note("d'8"), abjad.Note("e'8"), abjad.Note("f'8")]
-    assert abjad.Selection(notes).in_logical_voice()
-    assert not abjad.Selection(notes).in_logical_voice(allow_orphans=False)
+    assert abjad.select(notes).in_logical_voice()
+    assert not abjad.select(notes).in_logical_voice(allow_orphans=False)
 
 
 def test_scoretools_Selection_in_logical_voice_02():
@@ -1255,9 +1255,9 @@ def test_scoretools_Selection_in_logical_voice_33():
         )
 
     leaves = abjad.select(container).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in middle]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in inner]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in middle]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
     assert not leaves[:4].in_logical_voice()
 
 
@@ -1313,9 +1313,9 @@ def test_scoretools_Selection_in_logical_voice_34():
         )
 
     leaves = abjad.select(staff).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in middle]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in inner]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in middle]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
     assert not leaves[:4].in_logical_voice()
 
 
@@ -1414,8 +1414,8 @@ def test_scoretools_Selection_in_logical_voice_36():
     inner = (2, 3, 4, 5)
 
     leaves = abjad.select(container).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in inner]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
     assert not leaves.in_logical_voice()
 
 
@@ -1518,8 +1518,8 @@ def test_scoretools_Selection_in_logical_voice_38():
     inner = (2, 3, 4, 5)
 
     leaves = abjad.select(container).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in inner]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
     assert not leaves.in_logical_voice()
 
 
@@ -1586,8 +1586,8 @@ def test_scoretools_Selection_in_logical_voice_39():
     inner = (6, 7, 8, 9)
 
     leaves = abjad.select(voice).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.Selection([leaves[i] for i in inner]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
     assert not leaves.in_logical_voice()
 
 
@@ -1699,7 +1699,7 @@ def test_scoretools_Selection_in_logical_voice_41():
     outer = (0, 1, 10, 11)
 
     leaves = abjad.select(container).by_leaf()
-    assert abjad.Selection([leaves[i] for i in outer]).in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
     assert leaves[2:6].in_logical_voice()
     assert leaves[6:10].in_logical_voice()
     assert not leaves[:6].in_logical_voice()

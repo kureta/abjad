@@ -36,10 +36,10 @@ class IntervalSegment(Segment):
     ### INITIALIZER ###
 
     def __init__(self, items=None, item_class=None):
-        from abjad.tools import pitchtools
-        if isinstance(items, pitchtools.PitchSegment):
+        import abjad
+        if isinstance(items, abjad.PitchSegment):
             intervals = []
-            for one, two in datastructuretools.Sequence(items).nwise():
+            for one, two in abjad.sequence(items).nwise():
                 intervals.append(one - two)
             items = intervals
         Segment.__init__(

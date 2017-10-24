@@ -110,7 +110,7 @@ class Mutation(abctools.AbjadObject):
         '''
         import abjad
         if isinstance(self._client, abjad.Component):
-            selection = abjad.Selection(self._client)
+            selection = abjad.select(self._client)
         else:
             selection = self._client
         result = selection._copy(
@@ -442,13 +442,13 @@ class Mutation(abctools.AbjadObject):
         '''
         import abjad
         if isinstance(self._client, abjad.Component):
-            selection = abjad.Selection(self._client)
+            selection = abjad.select(self._client)
             return selection._fuse()
         elif (
             isinstance(self._client, abjad.Selection) and
             self._client.in_contiguous_logical_voice()
             ):
-            selection = abjad.Selection(self._client)
+            selection = abjad.select(self._client)
             return selection._fuse()
 
     def replace(self, recipients):
@@ -551,10 +551,10 @@ class Mutation(abctools.AbjadObject):
         if isinstance(self._client, abjad.Selection):
             donors = self._client
         else:
-            donors = abjad.Selection(self._client)
+            donors = abjad.select(self._client)
         assert donors.in_same_parent()
         if not isinstance(recipients, abjad.Selection):
-            recipients = abjad.Selection(recipients)
+            recipients = abjad.select(recipients)
         assert recipients.in_same_parent()
         if donors:
             parent, start, stop = donors._get_parent_and_start_stop_indices()
@@ -2771,10 +2771,10 @@ class Mutation(abctools.AbjadObject):
         single_component_input = False
         if isinstance(components, abjad.Component):
             single_component_input = True
-            components = abjad.Selection(components)
+            components = abjad.select(components)
         assert all(isinstance(_, abjad.Component) for _ in components)
         if not isinstance(components, abjad.Selection):
-            components = abjad.Selection(components)
+            components = abjad.select(components)
         durations = [abjad.Duration(_) for _ in durations]
         # return if no split to be done
         if not durations:
@@ -2787,7 +2787,7 @@ class Mutation(abctools.AbjadObject):
         total_split_duration = sum(durations)
         # calculate durations
         if cyclic:
-            durations = abjad.Sequence(durations)
+            durations = abjad.sequence(durations)
             durations = durations.repeat_to_weight(total_component_duration)
             durations = list(durations)
         elif total_split_duration < total_component_duration:
@@ -2795,7 +2795,7 @@ class Mutation(abctools.AbjadObject):
             durations.append(final_offset)
         elif total_component_duration < total_split_duration:
             weight = total_component_duration
-            durations = abjad.Sequence(durations).truncate(weight=weight)
+            durations = abjad.sequence(durations).truncate(weight=weight)
             durations = list(durations)
         # keep copy of durations to partition result components
         durations_copy = durations[:]
@@ -2843,7 +2843,7 @@ class Mutation(abctools.AbjadObject):
                     current_duration = duration_
                     additional_required_duration = current_duration
                     additional_required_duration -= local_split_duration
-                    split_durations = abjad.Sequence(durations)
+                    split_durations = abjad.sequence(durations)
                     split_durations = split_durations.split(
                         [additional_required_duration],
                         cyclic=False,
@@ -2895,13 +2895,13 @@ class Mutation(abctools.AbjadObject):
         if len(remaining_components):
             result.append(remaining_components)
         # partition split components according to input durations
-        result = abjad.Sequence(result).flatten()
-        result = abjad.Selection(result).partition_by_durations(
+        result = abjad.sequence(result).flatten()
+        result = abjad.select(result).partition_by_durations(
             durations_copy,
             fill=abjad.Exact,
             )
         # return list of shards
-        #return [abjad.Selection(_) for _ in result]
+        #return [abjad.select(_) for _ in result]
         assert all(isinstance(_, abjad.Selection) for _ in result), repr(result)
         return result
 
@@ -2968,7 +2968,7 @@ class Mutation(abctools.AbjadObject):
         if isinstance(self._client, abjad.Selection):
             donors = self._client
         else:
-            donors = abjad.Selection(self._client)
+            donors = abjad.select(self._client)
         assert donors.in_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container, repr(container)
@@ -3202,7 +3202,7 @@ class Mutation(abctools.AbjadObject):
             message = message.format(container)
             raise Exception(message)
         if isinstance(self._client, abjad.Component):
-            selection = abjad.Selection(self._client)
+            selection = abjad.select(self._client)
         else:
             selection = self._client
         assert isinstance(selection, abjad.Selection), repr(selection)

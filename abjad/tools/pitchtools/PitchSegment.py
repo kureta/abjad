@@ -485,7 +485,7 @@ class PitchSegment(Segment):
 
                 >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
                 >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.Selection((staff_1, staff_2))
+                >>> selection = abjad.select((staff_1, staff_2))
                 >>> segment = abjad.PitchSegment.from_selection(selection)
 
             ::
@@ -528,7 +528,7 @@ class PitchSegment(Segment):
         '''
         import abjad
         if not isinstance(selection, abjad.Selection):
-            selection = abjad.Selection(selection)
+            selection = abjad.select(selection)
         named_pitches = []
         prototype = (abjad.Note, abjad.Chord)
         for component in abjad.iterate(selection).by_class(prototype):
@@ -965,7 +965,7 @@ class PitchSegment(Segment):
         Returns new pitch segment.
         '''
         import abjad
-        rotated_pitches = abjad.Sequence(self._collection).rotate(n=n)
+        rotated_pitches = abjad.sequence(self._collection).rotate(n=n)
         new_segment = abjad.new(self, items=rotated_pitches)
         if stravinsky:
             if self[0] != new_segment[0]:
