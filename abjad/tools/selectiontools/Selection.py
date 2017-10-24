@@ -1528,8 +1528,15 @@ class Selection(AbjadValueObject):
                 use_messiaen_style_ties=use_messiaen_style_ties,
                 )
 
-    @staticmethod
-    def _by_class(argument, prototype=None, head=None, tail=None, trim=None):
+    @classmethod
+    def _by_class(
+        class_,
+        argument,
+        prototype=None,
+        head=None,
+        tail=None,
+        trim=None,
+        ):
         import abjad
         prototype = prototype or abjad.Component
         if not isinstance(prototype, tuple):
@@ -1545,7 +1552,7 @@ class Selection(AbjadValueObject):
             if tail is not None:
                 components = Selection._tail_filter_subresult(components, tail)
             result.extend(components)
-        return abjad.Selection._manifest(result)
+        return class_(result)
 
     @staticmethod
     def _check(items):
@@ -2106,14 +2113,6 @@ class Selection(AbjadValueObject):
             for component in self:
                 yield component
 
-    @staticmethod
-    def _manifest(generator):
-        import abjad
-        items = list(generator)
-        if all(isinstance(_, abjad.Component) for _ in items):
-            items = Selection(items)
-        return items
-
     def _make_spanner_schema(self):
         import abjad
         schema = {}
@@ -2399,7 +2398,7 @@ class Selection(AbjadValueObject):
             stop=stop,
             with_grace_notes=with_grace_notes,
             )
-        return self._manifest(generator)
+        return type(self)(generator)
 
     def by_contiguity(self):
         r'''Selects by contiguity.
@@ -2690,10 +2689,10 @@ class Selection(AbjadValueObject):
             if this_timespan.stop_offset == that_timespan.start_offset:
                 selection.append(item)
             else:
-                selections.append(abjad.Selection._manifest(selection))
+                selections.append(type(self)(selection))
                 selection = [item]
         if selection:
-            selections.append(abjad.Selection._manifest(selection))
+            selections.append(type(self)(selection))
         return selections
 
     def by_leaf(
@@ -3591,7 +3590,7 @@ class Selection(AbjadValueObject):
                 >>> selector = selector.by_logical_measure()
                 >>> selector = selector.map(abjad.select()[0])
                 >>> selector(staff)
-                [Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")]
+                Selection([Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")])
 
         ..  container:: example
 
@@ -3604,7 +3603,7 @@ class Selection(AbjadValueObject):
                 >>> selector = selector.by_logical_measure()
                 >>> selector = selector.map(abjad.select()[-1])
                 >>> selector(staff)
-                [Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")]
+                Selection([Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")])
 
         ..  container:: example
 
@@ -3650,9 +3649,9 @@ class Selection(AbjadValueObject):
         first_component._update_logical_measure_numbers()
         pairs = itertools.groupby(self, _get_logical_measure_number)
         for value, group in pairs:
-            selection = abjad.Selection._manifest(group)
+            selection = type(self)(group)
             selections.append(selection)
-        return abjad.Selection._manifest(selections)
+        return type(self)(selections)
 
     def by_logical_tie(
         self,
@@ -4009,9 +4008,9 @@ class Selection(AbjadValueObject):
             ::
 
                 >>> abjad.Selection.print(selector, result)
-                [LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])]
-                [LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])]
-                [LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])]
+                Selection([LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])])
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
         ..  container:: example
 
@@ -4093,8 +4092,8 @@ class Selection(AbjadValueObject):
             ::
 
                 >>> abjad.Selection.print(selector, result)
-                [LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])]
-                [LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])]
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
         Returns new selection.
         '''
@@ -4107,7 +4106,7 @@ class Selection(AbjadValueObject):
             reverse=reverse,
             with_grace_notes=with_grace_notes,
             )
-        return self._manifest(generator)
+        return type(self)(generator)
 
     def by_run(self, prototype=None):
         r'''Select components by run.
@@ -4249,7 +4248,7 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         generator = abjad.iterate(self).by_run(prototype=prototype)
-        return self._manifest(generator)
+        return type(self)(generator)
 
     def by_timeline(self, prototype=None, reverse=False):
         r'''Select components by timeline.
@@ -4303,7 +4302,7 @@ class Selection(AbjadValueObject):
             prototype=prototype,
             reverse=reverse,
             )
-        return self._manifest(generator)
+        return type(self)(generator)
 
     def by_timeline_and_logical_tie(
         self,
@@ -4366,7 +4365,7 @@ class Selection(AbjadValueObject):
             pitched=pitched,
             reverse=reverse,
             )
-        return self._manifest(generator)
+        return type(self)(generator)
 
     def color(self, result, colors=None):
         r'''Colors `result`.
@@ -4457,18 +4456,18 @@ class Selection(AbjadValueObject):
                 >>> for group in leaves.group_by(type):
                 ...     group
                 ...
-                (Note("c'8"), Note("d'8"), Note("e'8"))
-                (Rest('r8'), Rest('r8'))
-                (Note("f'8"), Note("g'8"))
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Rest('r8'), Rest('r8')])
+                Selection([Note("f'8"), Note("g'8")])
 
         Returns list of tuples.
         '''
         result = []
         grouper = itertools.groupby(self, predicate)
         for label, generator in grouper:
-            selection = tuple(generator)
+            selection = type(self)(generator)
             result.append(selection)
-        return self._manifest(result)
+        return type(self)(result)
 
     def in_contiguous_logical_voice(
         self,
@@ -4868,9 +4867,9 @@ class Selection(AbjadValueObject):
                 map_operand=operand,
                 )
         if operand is not None:
-            return self._manifest([operand(_) for _ in self])
+            return type(self)([operand(_) for _ in self])
         else:
-            return self._manifest(self)
+            return type(self)(self)
 
     def partition_by_counts(
         self,
@@ -5285,10 +5284,10 @@ class Selection(AbjadValueObject):
                 raise Exception(counts, i)
             if count < 0:
                 continue
-            items = abjad.Selection._manifest(group)
+            items = type(self)(group)
             subresult.append(items)
         if nonempty and not subresult:
-            group = abjad.Selection._manifest(groups[0])
+            group = type(self)(groups[0])
             subresult.append(group)
         result.extend(subresult)
         return result
@@ -5950,7 +5949,7 @@ class Selection(AbjadValueObject):
             if overhang:
                 result.append(components_copy)
         result = [abjad.Selection(_) for _ in result]
-        return self._manifest(result)
+        return type(self)(result)
 
     def partition_by_ratio(self, ratio):
         r'''Partitions by ratio.
@@ -6125,7 +6124,7 @@ class Selection(AbjadValueObject):
             ratio,
             )
         parts = abjad.Sequence(self).partition_by_counts(counts=counts)
-        selections = [self._manifest(_) for _ in parts]
+        selections = [type(self)(_) for _ in parts]
         return selections
 
     @staticmethod
@@ -6302,7 +6301,7 @@ class Selection(AbjadValueObject):
                     if component_ not in result:
                         result.append(component_)
                     break
-        return self._manifest(result)
+        return type(self)(result)
 
     def with_next_leaf(self):
         r'''Selects with next leaf.
@@ -6554,7 +6553,7 @@ class Selection(AbjadValueObject):
         next_leaf = leaves[-1]._get_leaf(1)
         if next_leaf is not None:
             leaves.append(next_leaf)
-        return self._manifest(leaves)
+        return type(self)(leaves)
 
     def with_previous_leaf(self):
         r'''Selects with previous leaf.
@@ -6717,7 +6716,7 @@ class Selection(AbjadValueObject):
         previous_leaf = leaves[0]._get_leaf(-1)
         if previous_leaf is not None:
             leaves.insert(0, previous_leaf)
-        return self._manifest(leaves)
+        return type(self)(leaves)
 
     def wrap(self):
         r'''Wraps result in list.

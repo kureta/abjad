@@ -69,7 +69,7 @@ class Container(Component):
             ...     abjad.Note("e'8"),
             ...     abjad.Note("f'8"),
             ...     ]
-            >>> selection = abjad.Selection(notes)
+            >>> selection = abjad.select(notes)
             >>> container = abjad.Container(selection)
             >>> show(container) # doctest: +SKIP
 
@@ -92,8 +92,8 @@ class Container(Component):
 
             >>> items = [
             ...     abjad.Note("c'4"),
-            ...     abjad.Selection(abjad.Note("e'4")),
-            ...     abjad.Selection(abjad.Note("d'4")),
+            ...     abjad.select(abjad.Note("e'4")),
+            ...     abjad.select(abjad.Note("d'4")),
             ...     abjad.Note("e'8"),
             ...     abjad.Note("f'8"),
             ...     ]
@@ -258,9 +258,10 @@ class Container(Component):
 
         Returns none.
         '''
+        import abjad
         components = self[i]
-        if not isinstance(components, selectiontools.Selection):
-            components = selectiontools.Selection([components])
+        if not isinstance(components, abjad.Selection):
+            components = abjad.select([components])
         if not self.is_simultaneous:
             components._withdraw_from_crossing_spanners()
         components._set_parents(None)
@@ -272,12 +273,13 @@ class Container(Component):
 
         Returns component.
         '''
+        import abjad
         if isinstance(argument, int):
             return self._music.__getitem__(argument)
         elif isinstance(argument, slice) and not self.is_simultaneous:
-            return selectiontools.Selection(self._music.__getitem__(argument))
+            return abjad.select(self._music.__getitem__(argument))
         elif isinstance(argument, slice) and self.is_simultaneous:
-            return selectiontools.Selection(self._music.__getitem__(argument))
+            return abjad.select(self._music.__getitem__(argument))
         elif isinstance(argument, str):
             if argument not in self._named_children:
                 message = 'can not find component named {!r}.'
@@ -762,7 +764,7 @@ class Container(Component):
             self.is_simultaneous = parsed.is_simultaneous
             if (
                 parsed.is_simultaneous or
-                not abjad.Selection(parsed[:]).in_contiguous_logical_voice()
+                not abjad.select(parsed[:]).in_contiguous_logical_voice()
                 ):
                 while len(parsed):
                     self.append(parsed.pop(0))
@@ -908,7 +910,7 @@ class Container(Component):
         # must withdraw before setting in self!
         # otherwise circular withdraw ensues!
         if withdraw_components_from_crossing_spanners:
-            selection = abjad.Selection(argument)
+            selection = abjad.select(argument)
             if selection.in_contiguous_logical_voice():
                 selection._withdraw_from_crossing_spanners()
         self._music.__setitem__(slice(start, start), argument)
@@ -975,7 +977,7 @@ class Container(Component):
         # give my attached spanners to my children
         self._move_spanners_to_children()
         # incorporate left and right parents in score if possible
-        selection = abjad.Selection(self)
+        selection = abjad.select(self)
         parent, start, stop = selection._get_parent_and_start_stop_indices()
         if parent is not None:
             parent._music.__setitem__(slice(start, stop + 1), nonempty_halves)
@@ -1161,7 +1163,7 @@ class Container(Component):
                         leaf_left_of_split,
                         leaf_right_of_split,
                         )
-                    selection = abjad.Selection(leaves_around_split)
+                    selection = abjad.select(leaves_around_split)
                     selection._attach_tie_spanner_to_leaf_pair(
                         use_messiaen_style_ties=use_messiaen_style_ties,
                         )
@@ -1188,8 +1190,8 @@ class Container(Component):
             left_components_, right_components_ = halves
             left_components.extend(left_components_)
             right_components.extend(right_components_)
-        left_components = abjad.Selection(left_components)
-        right_components = abjad.Selection(right_components)
+        left_components = abjad.select(left_components)
+        right_components = abjad.select(right_components)
         left_container = \
             self._copy_with_indicators_but_without_children_or_spanners()
         right_container = \
@@ -1197,7 +1199,7 @@ class Container(Component):
         left_container.extend(left_components)
         right_container.extend(right_components)
         if abjad.inspect(self).get_parentage().parent is not None:
-            containers = abjad.Selection([left_container, right_container])
+            containers = abjad.select([left_container, right_container])
             abjad.mutate(self).replace(containers)
         # return list-wrapped halves of container
         return [left_container], [right_container]
