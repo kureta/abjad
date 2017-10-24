@@ -1,5 +1,5 @@
-def select(client=None):
-    r'''Selects `client` or makes empty selector.
+def select(items=None):
+    r'''Selects `items` or makes select expression.
 
     ..  container:: example
 
@@ -52,8 +52,6 @@ def select(client=None):
 
     '''
     import abjad
-    if client is not None:
-        return abjad.Selection(components=client)
-    expression = abjad.Expression()
-    expression = expression.select()
-    return expression
+    if items is None:
+        return abjad.Expression().select()
+    return abjad.Selection(items=items)

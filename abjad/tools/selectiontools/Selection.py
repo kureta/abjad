@@ -6,7 +6,7 @@ from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
 
 class Selection(AbjadValueObject):
-    r'''Selection of components.
+    r'''Selection of components and / or other selections.
 
     ..  container:: example
 
@@ -1317,20 +1317,21 @@ class Selection(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_components',
         '_expression',
+        '_items',
         )
 
     ### INITIALIZER ###
 
-    def __init__(self, components=None):
+    def __init__(self, items=None):
         import abjad
-        components = self._coerce_music(components)
-        if not all(isinstance(_, abjad.Component) for _ in components):
-            message = 'selections initialize only components: {!r}.'
-            message = message.format(components)
-            raise TypeError(message)
-        self._components = tuple(components)
+        if items is None:
+            items = []
+        if isinstance(items, abjad.Component):
+            items = [items]
+        items = tuple(items)
+        self._check(items)
+        self._items = tuple(items)
         self._expression = None
 
     ### SPECIAL METHODS ###
@@ -1341,15 +1342,15 @@ class Selection(AbjadValueObject):
         Returns new selection.
         '''
         assert isinstance(argument, collections.Iterable)
-        components = self.components + tuple(argument)
-        return type(self)(components=components)
+        items = self.items + tuple(argument)
+        return type(self)(items=items)
 
     def __contains__(self, argument):
         r'''Is true when `argument` is in selection. Otherwise false.
 
         Returns true or false.
         '''
-        return argument in self.components
+        return argument in self.items
 
     def __eq__(self, argument):
         r'''Is true when selection and `argument` are of the same type
@@ -1359,9 +1360,9 @@ class Selection(AbjadValueObject):
         Returns true or false.
         '''
         if isinstance(argument, type(self)):
-            return self.components == argument.components
+            return self.items == argument.items
         elif isinstance(argument, collections.Sequence):
-            return self.components == tuple(argument)
+            return self.items == tuple(argument)
         return False
 
     def __format__(self, format_specification=''):
@@ -1380,13 +1381,13 @@ class Selection(AbjadValueObject):
     def __getitem__(self, argument):
         r'''Gets item or slice identified by `argument`.
 
-        Returns component when `argument` is an integer.
+        Returns item when `argument` is an integer.
 
         Returns new selection when `argument` is a slice.
         '''
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        result = self.components.__getitem__(argument)
+        result = self.items.__getitem__(argument)
         if isinstance(result, tuple):
             result = Selection(result)
         return result
@@ -1454,11 +1455,11 @@ class Selection(AbjadValueObject):
         return lilypond_file
 
     def __len__(self):
-        r'''Gets number of components in selection.
+        r'''Gets number of items in selection.
 
         Returns nonnegative integer.
         '''
-        return len(self.components)
+        return len(self.items)
 
     def __radd__(self, argument):
         r'''Concatenates selection to `argument`.
@@ -1466,8 +1467,8 @@ class Selection(AbjadValueObject):
         Returns newly created selection.
         '''
         assert isinstance(argument, collections.Iterable)
-        components = tuple(argument) + self.components
-        return type(self)(components=components)
+        items = tuple(argument) + self.items
+        return type(self)(items=items)
 
     def __repr__(self):
         r'''Gets interpreter representation of selection.
@@ -1547,28 +1548,26 @@ class Selection(AbjadValueObject):
         return abjad.Selection._manifest(result)
 
     @staticmethod
-    def _coerce_music(music):
+    def _check(items):
         import abjad
-        if music in ([], None):
-            return []
-        elif isinstance(music, abjad.Component):
-            return [music]
-        else:
-            assert isinstance(music, collections.Iterable), repr(music)
-            return list(music)
+        for item in items:
+            if not isinstance(item, (abjad.Component, abjad.Selection)):
+                message = 'components / selections only: {!r}.'
+                message = message.format(items)
+                raise TypeError(message)
 
     def _copy(self, n=1, include_enclosing_containers=False):
         r'''Copies components in selection and fractures crossing spanners.
 
-        Components in selection must be logical-voice-contiguous.
+        Selection must be logical-voice-contiguous components.
 
         The steps this function takes are as follows:
 
-            * Deep copy `components`.
+            * Deep copy components in selection.
 
-            * Deep copy spanners that attach to any component in `components`.
+            * Deep copy spanners that attach to any component in selection.
 
-            * Fracture spanners that attach to components not in `components`.
+            * Fracture spanners that attach to components not in selection.
 
             * Returns Python list of copied components.
 
@@ -1623,7 +1622,7 @@ class Selection(AbjadValueObject):
 
             Copy components multiple times:
 
-            Copy `components` a total of `n` times:
+            Copy components a total of `n` times:
 
             ::
 
@@ -1891,7 +1890,7 @@ class Selection(AbjadValueObject):
             if recurse:
                 components = abjad.iterate(self).by_class(prototype)
             else:
-                components = self.components
+                components = self.items
             for i, x in enumerate(components):
                 if i == n:
                     return x
@@ -1900,7 +1899,7 @@ class Selection(AbjadValueObject):
                 components = abjad.iterate(self).by_class(
                     prototype, reverse=True)
             else:
-                components = reversed(self.components)
+                components = reversed(self.items)
             for i, x in enumerate(components):
                 if i == abs(n) - 1:
                     return x
@@ -1957,8 +1956,8 @@ class Selection(AbjadValueObject):
     def _get_format_specification(self):
         import abjad
         values = []
-        if self.components:
-            values = [list(self.components)]
+        if self.items:
+            values = [list(self.items)]
         return abjad.FormatSpecification(
             client=self,
             storage_format_args_values=values,
@@ -2135,7 +2134,7 @@ class Selection(AbjadValueObject):
     def _set_parents(self, new_parent):
         r'''Not composer-safe.
         '''
-        for component in self.components:
+        for component in self.items:
             component._set_parent(new_parent)
 
     @staticmethod
@@ -2246,12 +2245,14 @@ class Selection(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def components(self):
-        r'''Gets components.
+    def items(self):
+        r'''Gets items.
 
-        Returns tuple of components.
+        Returns tuple of items.
+
+        Each item is either a component or another selection.
         '''
-        return self._components
+        return self._items
 
     ### PUBLIC METHODS ###
 

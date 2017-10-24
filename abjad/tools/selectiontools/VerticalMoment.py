@@ -1,9 +1,9 @@
 import collections
-from abjad.tools.selectiontools.Selection import Selection
+from .Selection import Selection
 
 
 class VerticalMoment(Selection):
-    r'''Vertical moment of a component.
+    r'''Vertical moment.
 
     ..  container:: example
 
@@ -51,7 +51,6 @@ class VerticalMoment(Selection):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_components',
         '_governors',
         '_offset',
         )
@@ -60,12 +59,10 @@ class VerticalMoment(Selection):
 
     def __init__(self, components=None, offset=None):
         import abjad
-        #self._music = music
         if components is None:
             self._offset = offset
-            self._components = ()
+            self._items = ()
             self._governors = ()
-            #return
         else:
             governors, components = self._from_offset(components, offset)
             offset = abjad.Offset(offset)
@@ -76,8 +73,7 @@ class VerticalMoment(Selection):
             assert isinstance(components, collections.Iterable)
             components = list(components)
             components.sort(key=lambda _: _._get_parentage().score_index)
-            #self._components = tuple(components)
-        Selection.__init__(self, components=components)
+        Selection.__init__(self, items=components)
 
     ### SPECIAL METHODS ###
 
@@ -203,10 +199,10 @@ class VerticalMoment(Selection):
         r'''Positive integer number of pitch carriers starting at vertical
         moment.
         '''
-        from abjad.tools import scoretools
+        import abjad
         attack_carriers = []
         for leaf in self.start_leaves:
-            if isinstance(leaf, (scoretools.Note, scoretools.Chord)):
+            if isinstance(leaf, (abjad.Note, abjad.Chord)):
                 attack_carriers.append(leaf)
         return len(attack_carriers)
 
@@ -216,8 +212,10 @@ class VerticalMoment(Selection):
 
         It is always the case that ``self.components =
         self.overlap_components + self.start_components``.
+
+        Aliases items.
         '''
-        return self._components
+        return self.items
 
     @property
     def governors(self):
@@ -325,9 +323,9 @@ class VerticalMoment(Selection):
         r'''Tuple of measures in vertical moment starting before vertical
         moment, ordered by score index.
         '''
-        from abjad.tools import scoretools
-        result = [x for x in self.overlap_components
-            if isinstance(x, scoretools.Measure)]
+        import abjad
+        result = self.overlap_components
+        result = [_ for _ in result if isinstance(_, abjad.Measure)]
         result = tuple(result)
         return result
 
@@ -336,9 +334,9 @@ class VerticalMoment(Selection):
         r'''Tuple of notes in vertical moment starting before vertical moment,
         ordered by score index.
         '''
-        from abjad.tools import scoretools
-        result = [x for x in self.overlap_components
-            if isinstance(x, scoretools.Note)]
+        import abjad
+        result = self.overlap_components
+        result = [_ for _ in result if isinstance(_, abjad.Note)]
         result = tuple(result)
         return result
 

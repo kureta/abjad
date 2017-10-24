@@ -4196,7 +4196,7 @@ class IterationAgent(abctools.AbjadObject):
                 components.sort(key=lambda x: x._get_parentage().score_index)
                 vertical_moment._offset = offset
                 vertical_moment._governors = governors
-                vertical_moment._components = components
+                vertical_moment._items = components
                 yield vertical_moment
                 current_offset, stop_offsets = min(stop_offsets), []
                 _update_buffer(current_offset, buffer, stop_offsets)

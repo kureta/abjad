@@ -1,7 +1,5 @@
 import itertools
-from abjad.tools import mathtools
-from abjad.tools.topleveltools import attach
-from abjad.tools.selectiontools.Selection import Selection
+from .Selection import Selection
 
 
 class LogicalTie(Selection):
@@ -71,7 +69,7 @@ class LogicalTie(Selection):
                 if not ties:
                     tie = abjad.Tie()
                     if all(tie._attachment_test(_) for _ in self):
-                        attach(tie, self.leaves)
+                        abjad.attach(tie, self.leaves)
                 self[-1]._splice(extra_leaves, grow_spanners=True)
         else:
             durations = maker(0, new_written_duration)
@@ -114,8 +112,8 @@ class LogicalTie(Selection):
 
         Returns component.
         '''
-        if self.components:
-            return self.components[0]
+        if self.items:
+            return self.items[0]
 
     @property
     def is_pitched(self):
@@ -156,8 +154,8 @@ class LogicalTie(Selection):
 
         Returns leaf.
         '''
-        if self.components:
-            return self.components[-1]
+        if self.items:
+            return self.items[-1]
 
     @property
     def tie_spanner(self):
