@@ -12,7 +12,7 @@ pdf_path = os.path.join(
 paths = [ly_path, pdf_path]
 
 
-def test_agenttools_PersistenceAgent_as_pdf_01():
+def test_systemtools_PersistenceManager_as_pdf_01():
     r'''Agent abjad.persists PDF file when no PDF file exists.
     '''
 
@@ -23,7 +23,7 @@ def test_agenttools_PersistenceAgent_as_pdf_01():
         assert isinstance(result, tuple)
 
 
-def test_agenttools_PersistenceAgent_as_pdf_02():
+def test_systemtools_PersistenceManager_as_pdf_02():
     r'''Agent abjad.persists PDF file when equivalent PDF file already exists.
     '''
 

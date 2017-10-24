@@ -5,8 +5,8 @@ import tempfile
 from abjad.tools import abctools
 
 
-class PersistenceAgent(abctools.AbjadObject):
-    r'''Persistence agent.
+class PersistenceManager(abctools.AbjadObject):
+    r'''Persistence manager.
 
     ..  container:: example
 
@@ -18,7 +18,7 @@ class PersistenceAgent(abctools.AbjadObject):
         ::
 
             >>> abjad.persist(staff)
-            PersistenceAgent(client=Staff("c'4 e'4 d'4 f'4"))
+            PersistenceManager(client=Staff("c'4 e'4 d'4 f'4"))
 
     '''
 
@@ -357,8 +357,8 @@ class PersistenceAgent(abctools.AbjadObject):
 
     @property
     def client(self):
-        r'''Client of persistence agent.
+        r'''Client of persistence manager.
 
-        Returns selection or component.
+        Returns component or selection.
         '''
         return self._client

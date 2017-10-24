@@ -10,6 +10,7 @@ from .IndicatorWrapper import IndicatorWrapper
 from .LilyPondFormatBundle import LilyPondFormatBundle
 from .LilyPondFormatManager import LilyPondFormatManager
 from .NullContextManager import NullContextManager
+from .PersistenceManager import PersistenceManager
 from .ProgressIndicator import ProgressIndicator
 from .RedirectedStreams import RedirectedStreams
 from .Signature import Signature

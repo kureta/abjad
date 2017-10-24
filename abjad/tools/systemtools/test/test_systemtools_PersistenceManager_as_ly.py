@@ -7,7 +7,7 @@ ly_path = os.path.join(
     )
 
 
-def test_agenttools_PersistenceAgent_as_ly_01():
+def test_systemtools_PersistenceManager_as_ly_01():
     r'''Agent abjad.persists LilyPond file when no LilyPond file exists.
     '''
 
@@ -18,7 +18,7 @@ def test_agenttools_PersistenceAgent_as_ly_01():
         assert isinstance(result, tuple)
 
         
-def test_agenttools_PersistenceAgent_as_ly_02():
+def test_systemtools_PersistenceManager_as_ly_02():
     r'''Agent abjad.persists LilyPond file when LilyPond file already exists.
     '''
 
