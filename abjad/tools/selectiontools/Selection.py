@@ -323,594 +323,6 @@ class Selection(AbjadValueObject):
 
     ..  container:: example
 
-        Selects notes runs with length greater than 1:
-
-        ::
-
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.by_run(abjad.Note)
-            >>> selector = selector.sequence()
-            >>> inequality = abjad.LengthInequality('>', 1)
-            >>> selector = selector.filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                c'8
-                r8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                d'8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                e'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                f'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                g'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                a'8
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Selection([Note("d'8"), Note("e'8")])
-            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-
-    ..  container:: example
-
-        Selects note runs with length less than 3:
-
-        ::
-
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.by_run(abjad.Note)
-            >>> selector = selector.sequence()
-            >>> inequality = abjad.LengthInequality('<', 3)
-            >>> selector = selector.filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                c'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                d'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                e'8
-                r8
-                f'8
-                g'8
-                a'8
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Selection([Note("c'8")])
-            Selection([Note("d'8"), Note("e'8")])
-
-    ..  container:: example
-
-        Selects note runs with duration equal to 2/8:
-
-        ::
-
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.by_run(abjad.Note)
-            >>> selector = selector.sequence()
-            >>> inequality = abjad.DurationInequality('==', (2, 8))
-            >>> selector = selector.filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                c'8
-                r8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                d'8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                e'8
-                r8
-                f'8
-                g'8
-                a'8
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Selection([Note("d'8"), Note("e'8")])
-
-    ..  container:: example
-
-        Selects note runs with duration less than 3/8:
-
-        ::
-
-            >>> inequality = abjad.DurationInequality('<', (3, 8))
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.by_run(abjad.Note)
-            >>> selector = selector.sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                c'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                d'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                e'8
-                r8
-                f'8
-                g'8
-                a'8
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Selection([Note("c'8")])
-            Selection([Note("d'8"), Note("e'8")])
-
-    ..  container:: example
-
-        Selects note runs with duration greater than or equal to 1/4:
-
-        ::
-
-            >>> inequality = abjad.DurationInequality('>=', (1, 4))
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.by_run(abjad.Note)
-            >>> selector = selector.sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                c'8
-                r8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                d'8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                e'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                f'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                g'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                a'8
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Selection([Note("d'8"), Note("e'8")])
-            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-
-    ..  container:: example
-
-        Selects logical ties with preprolated duration equal to 1/8:
-
-        ::
-
-            >>> inequality = abjad.DurationInequality(
-            ...     '==', (1, 8), preprolated=True,
-            ...     )
-            >>> selector = abjad.select()
-            >>> selector = selector.by_logical_tie()
-            >>> selector = selector.sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff(r"""
-            ...     \times 3/4 { c'16 d'16 ~ d'16 e'16 ~ }
-            ...     {e'16 f'16 ~ f'16 g'16 ~ }
-            ...     \times 5/4 { g'16 a'16 ~ a'16 b'16 }
-            ...     """)
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \tweak text #tuplet-number::calc-fraction-text
-                \times 3/4 {
-                    c'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'16 ~
-                }
-                {
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    g'16 ~
-                }
-                \tweak text #tuplet-number::calc-fraction-text
-                \times 5/4 {
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    g'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'16
-                    b'16
-                }
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            LogicalTie([Note("d'16"), Note("d'16")])
-            LogicalTie([Note("e'16"), Note("e'16")])
-            LogicalTie([Note("f'16"), Note("f'16")])
-            LogicalTie([Note("g'16"), Note("g'16")])
-            LogicalTie([Note("a'16"), Note("a'16")])
-
-    ..  container:: example
-
-        Selects leaves with C4:
-
-        ::
-
-            >>> inequality = abjad.PitchInequality('intersects', 'C4')
-            >>> selector = abjad.select().by_leaf()
-            >>> selector = selector.sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                c'8
-                d'8 ~
-                d'8
-                e'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                <c' e' g'>8 ~
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                <c' e' g'>4
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Note("c'8")
-            Chord("<c' e' g'>8")
-            Chord("<c' e' g'>4")
-
-    ..  container:: example
-
-        Selects leaves with C4 or E4:
-
-        ::
-
-            >>> inequality = abjad.PitchInequality('intersects', 'C4 E4')
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf().sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                c'8
-                d'8 ~
-                d'8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                e'8
-                r8
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                <c' e' g'>8 ~
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                <c' e' g'>4
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            Note("c'8")
-            Note("e'8")
-            Chord("<c' e' g'>8")
-            Chord("<c' e' g'>4")
-
-    ..  container:: example
-
-        Selects logical ties with C4:
-
-        ::
-
-            >>> inequality = abjad.PitchInequality('intersects', 'C4')
-            >>> selector = abjad.select().by_logical_tie()
-            >>> selector = selector.sequence().filter(inequality)
-
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
-            >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
-            >>> result = selector(staff)
-            >>> abjad.label(result).color_selections(selector)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff \with {
-                autoBeaming = ##f
-            } {
-                \once \override Accidental.color = #red
-                \once \override Beam.color = #red
-                \once \override Dots.color = #red
-                \once \override NoteHead.color = #red
-                \once \override Stem.color = #red
-                c'8
-                d'8 ~
-                d'8
-                e'8
-                r8
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                <c' e' g'>8 ~
-                \once \override Accidental.color = #blue
-                \once \override Beam.color = #blue
-                \once \override Dots.color = #blue
-                \once \override NoteHead.color = #blue
-                \once \override Stem.color = #blue
-                <c' e' g'>4
-            }
-
-        ::
-
-            >>> abjad.Selection.print(selector, result)
-            LogicalTie([Note("c'8")])
-            LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
-
-    ..  container:: example
-
         Groups pitched leaves by pitch:
 
         ::
@@ -2407,7 +1819,7 @@ class Selection(AbjadValueObject):
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
                 >>> inequality = abjad.DurationInequality('==', (1, 16))
-                >>> selector = selector.sequence().filter(inequality)
+                >>> selector = selector.filter(inequality)
                 >>> selector = selector.select()
                 >>> selector = selector.by_contiguity()
 
@@ -2541,7 +1953,7 @@ class Selection(AbjadValueObject):
                 >>> selector = abjad.select()
                 >>> selector = selector.by_leaf()
                 >>> inequality = abjad.DurationInequality('==', (1, 16))
-                >>> selector = selector.sequence().filter(inequality).select()
+                >>> selector = selector.filter(inequality).select()
                 >>> selector = selector.by_contiguity()
 
             ::
@@ -4369,6 +3781,605 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         abjad.label(result).color_selections(self._expression, colors=colors)
+
+    def filter(self, predicate=None):
+        r'''Filters selection by `predicate`.
+
+        ..  container:: example
+
+            Selects notes runs with length greater than 1:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> inequality = abjad.LengthInequality('>', 1)
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+        ..  container:: example
+
+            Selects note runs with length less than 3:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> inequality = abjad.LengthInequality('<', 3)
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Selection([Note("c'8")])
+                Selection([Note("d'8"), Note("e'8")])
+
+        ..  container:: example
+
+            Selects note runs with duration equal to 2/8:
+
+            ::
+
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> inequality = abjad.DurationInequality('==', (2, 8))
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Selection([Note("d'8"), Note("e'8")])
+
+        ..  container:: example
+
+            Selects note runs with duration less than 3/8:
+
+            ::
+
+                >>> inequality = abjad.DurationInequality('<', (3, 8))
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Selection([Note("c'8")])
+                Selection([Note("d'8"), Note("e'8")])
+
+        ..  container:: example
+
+            Selects note runs with duration greater than or equal to 1/4:
+
+            ::
+
+                >>> inequality = abjad.DurationInequality('>=', (1, 4))
+                >>> selector = abjad.select()
+                >>> selector = selector.by_leaf()
+                >>> selector = selector.by_run(abjad.Note)
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+        ..  container:: example
+
+            Selects logical ties with preprolated duration equal to 1/8:
+
+            ::
+
+                >>> inequality = abjad.DurationInequality(
+                ...     '==', (1, 8), preprolated=True,
+                ...     )
+                >>> selector = abjad.select()
+                >>> selector = selector.by_logical_tie()
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff(r"""
+                ...     \times 3/4 { c'16 d'16 ~ d'16 e'16 ~ }
+                ...     {e'16 f'16 ~ f'16 g'16 ~ }
+                ...     \times 5/4 { g'16 a'16 ~ a'16 b'16 }
+                ...     """)
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \tweak text #tuplet-number::calc-fraction-text
+                    \times 3/4 {
+                        c'16
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'16 ~
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'16
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'16 ~
+                    }
+                    {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'16
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        f'16 ~
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        f'16
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        g'16 ~
+                    }
+                    \tweak text #tuplet-number::calc-fraction-text
+                    \times 5/4 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        g'16
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        a'16 ~
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        a'16
+                        b'16
+                    }
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                LogicalTie([Note("d'16"), Note("d'16")])
+                LogicalTie([Note("e'16"), Note("e'16")])
+                LogicalTie([Note("f'16"), Note("f'16")])
+                LogicalTie([Note("g'16"), Note("g'16")])
+                LogicalTie([Note("a'16"), Note("a'16")])
+
+        ..  container:: example
+
+            Selects leaves with C4:
+
+            ::
+
+                >>> inequality = abjad.PitchInequality('intersects', 'C4')
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    d'8 ~
+                    d'8
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    <c' e' g'>8 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    <c' e' g'>4
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Note("c'8")
+                Chord("<c' e' g'>8")
+                Chord("<c' e' g'>4")
+
+        ..  container:: example
+
+            Selects leaves with C4 or E4:
+
+            ::
+
+                >>> inequality = abjad.PitchInequality('intersects', 'C4 E4')
+                >>> selector = abjad.select().by_leaf().filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    d'8 ~
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    <c' e' g'>8 ~
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    <c' e' g'>4
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                Note("c'8")
+                Note("e'8")
+                Chord("<c' e' g'>8")
+                Chord("<c' e' g'>4")
+
+        ..  container:: example
+
+            Selects logical ties with C4:
+
+            ::
+
+                >>> inequality = abjad.PitchInequality('intersects', 'C4')
+                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = selector.filter(inequality)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d'8 ~ d'8 e'8")
+                >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
+                >>> result = selector(staff)
+                >>> abjad.label(result).color_selections(selector)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    d'8 ~
+                    d'8
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    <c' e' g'>8 ~
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    <c' e' g'>4
+                }
+
+            ::
+
+                >>> abjad.Selection.print(selector, result)
+                LogicalTie([Note("c'8")])
+                LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+
+        Returns new selection.
+        '''
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        if predicate is None:
+            return self[:]
+        items = []
+        for item in self:
+            if predicate(item):
+                items.append(item)
+        return type(self)(items)
 
     def get_duration(self, in_seconds=False):
         r'''Gets duration of contiguous selection.

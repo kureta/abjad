@@ -324,7 +324,7 @@ class Sequence(abctools.AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         argument = type(self)(items=argument)
         items = self.items + argument.items
-        return type(self)(items=items)
+        return type(self)(items)
 
     def __eq__(self, argument):
         r'''Is true when `argument` is a sequence with items equal to those of
@@ -671,7 +671,7 @@ class Sequence(abctools.AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         result = self._items.__getitem__(argument)
         if isinstance(argument, slice):
-            return type(self)(items=result)
+            return type(self)(result)
         return result
 
     def __hash__(self):
@@ -865,7 +865,7 @@ class Sequence(abctools.AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         argument = type(self)(items=argument)
         items = argument.items + self.items
-        return type(self)(items=items)
+        return type(self)(items)
 
     def __repr__(self):
         r'''Gets interpreter representation of sequence.
@@ -1214,8 +1214,8 @@ class Sequence(abctools.AbjadValueObject):
     ### PUBLIC METHODS ###
 
     @systemtools.Signature()
-    def filter(self, operand=None):
-        r'''Filters sequence by `operand`.
+    def filter(self, predicate=None):
+        r'''Filters sequence by `predicate`.
 
         ..  container:: example
 
@@ -1305,14 +1305,13 @@ class Sequence(abctools.AbjadValueObject):
         '''
         if self._expression:
             return self._update_expression(inspect.currentframe())
+        if predicate is None:
+            return self[:]
         items = []
-        if operand is not None:
-            for item in self:
-                if operand(item):
-                    items.append(item)
-        else:
-            items = self[:]
-        return type(self)(items=items)
+        for item in self:
+            if predicate(item):
+                items.append(item)
+        return type(self)(items)
 
     @systemtools.Signature()
     def flatten(self, classes=None, depth=-1, indices=None):
@@ -1641,7 +1640,7 @@ class Sequence(abctools.AbjadValueObject):
             classes = tuple(list(classes) + [Sequence])
         if indices is None:
             items = self._flatten_helper(self, classes, depth)
-            return type(self)(items=items)
+            return type(self)(items)
         else:
             return type(self)(
                 self._flatten_at_indices_helper(self, indices, classes, depth)
@@ -1710,14 +1709,14 @@ class Sequence(abctools.AbjadValueObject):
         if predicate is None:
             pairs = itertools.groupby(self, lambda _: _)
             for count, group in pairs:
-                item = type(self)(items=group)
+                item = type(self)(group)
                 items.append(item)
         else:
             pairs = itertools.groupby(self, predicate)
             for count, group in pairs:
-                item = type(self)(items=group)
+                item = type(self)(group)
                 items.append(item)
-        return type(self)(items=items)
+        return type(self)(items)
 
     def is_decreasing(self, strict=True):
         r'''Is true when sequence decreases.
@@ -2002,7 +2001,7 @@ class Sequence(abctools.AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         cumulative_sum = abjad.mathtools.cumulative_sums(self, start=None)[-1]
-        return type(self)(items=[cumulative_sum])
+        return type(self)([cumulative_sum])
 
     @systemtools.Signature(
         markup_maker_callback='_make_map_markup',
@@ -2104,7 +2103,7 @@ class Sequence(abctools.AbjadValueObject):
             items = [operand(_) for _ in self]
         else:
             items = self.items[:]
-        return type(self)(items=items)
+        return type(self)(items)
 
     def nwise(self, n=2, cyclic=False, wrapped=False):
         '''Iterates sequence `n` at a time.
@@ -2282,7 +2281,7 @@ class Sequence(abctools.AbjadValueObject):
                     if n <= len(item_buffer):
                         long_enough = True
                 if long_enough:
-                    yield type(self)(items=item_buffer[-n:])
+                    yield type(self)(item_buffer[-n:])
             len_sequence = len(item_buffer)
             current = len_sequence - n + 1
             while True:
@@ -2290,7 +2289,7 @@ class Sequence(abctools.AbjadValueObject):
                 for local_offset in range(n):
                     index = (current + local_offset) % len_sequence
                     output.append(item_buffer[index])
-                yield type(self)(items=output)
+                yield type(self)(output)
                 current += 1
                 current %= len_sequence
         elif wrapped:
@@ -2299,7 +2298,7 @@ class Sequence(abctools.AbjadValueObject):
             for item in self:
                 item_buffer.append(item)
                 if len(item_buffer) == n:
-                    yield type(self)(items=item_buffer)
+                    yield type(self)(item_buffer)
                     item_buffer.pop(0)
                 if len(first_n_minus_1) < n - 1:
                     first_n_minus_1.append(item)
@@ -2307,13 +2306,13 @@ class Sequence(abctools.AbjadValueObject):
             if item_buffer:
                 for x in range(n - 1):
                     stop = x + n
-                    yield type(self)(items=item_buffer[x:stop])
+                    yield type(self)(item_buffer[x:stop])
         else:
             item_buffer = []
             for item in self:
                 item_buffer.append(item)
                 if len(item_buffer) == n:
-                    yield type(self)(items=item_buffer)
+                    yield type(self)(item_buffer)
                     item_buffer.pop(0)
 
     @systemtools.Signature(
@@ -3679,7 +3678,7 @@ class Sequence(abctools.AbjadValueObject):
                 part = part_type(part)
                 result_.append(part)
             result = result_
-        return type(self)(items=result)
+        return type(self)(result)
 
     @systemtools.Signature(
         argument_list_callback='_make_partition_ratio_indicator',
@@ -3819,7 +3818,7 @@ class Sequence(abctools.AbjadValueObject):
             cyclic=False,
             overhang=abjad.Exact,
             )
-        return type(self)(items=parts)
+        return type(self)(parts)
 
     def partition_by_ratio_of_weights(self, weights):
         '''Partitions sequence by ratio of `weights`.
@@ -3993,15 +3992,15 @@ class Sequence(abctools.AbjadValueObject):
                 raise TypeError(message)
             sublist.append(item)
             while current_cumulative_weight <= abjad.mathtools.weight(
-                type(self)(items=items).flatten()):
+                type(self)(items).flatten()):
                 try:
                     current_cumulative_weight = cumulative_weights.pop(0)
                     sublist = []
                     items.append(sublist)
                 except IndexError:
                     break
-        items = [type(self)(items=_) for _ in items]
-        return type(self)(items=items)
+        items = [type(self)(_) for _ in items]
+        return type(self)(items)
 
     def partition_by_weights(
         self,
@@ -4253,7 +4252,7 @@ class Sequence(abctools.AbjadValueObject):
         '''
         import abjad
         if allow_part_weights == abjad.Exact:
-            candidate = type(self)(items=self)
+            candidate = type(self)(self)
             candidate = candidate.split(
                 weights,
                 cyclic=cyclic,
@@ -4368,7 +4367,7 @@ class Sequence(abctools.AbjadValueObject):
         '''
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        permutation = type(self)(items=permutation)
+        permutation = type(self)(permutation)
         if not permutation.is_permutation():
             message = 'must be permutation: {!r}.'
             message = message.format(permutation)
@@ -4382,7 +4381,7 @@ class Sequence(abctools.AbjadValueObject):
             j = permutation[i]
             item_ = self[j]
             result.append(item_)
-        return type(self)(items=result)
+        return type(self)(result)
 
     # TODO: change input to pattern
     def remove(self, indices=None, period=None):
@@ -4474,7 +4473,7 @@ class Sequence(abctools.AbjadValueObject):
         for i, item in enumerate(self):
             if i % period not in indices:
                 items.append(item)
-        return type(self)(items=items)
+        return type(self)(items)
 
     def remove_repeats(self):
         r'''Removes repeats from `sequence`.
@@ -4494,7 +4493,7 @@ class Sequence(abctools.AbjadValueObject):
         for item in self[1:]:
             if item != items[-1]:
                 items.append(item)
-        return type(self)(items=items)
+        return type(self)(items)
 
     @systemtools.Signature()
     def repeat(self, n=1):
@@ -4642,7 +4641,7 @@ class Sequence(abctools.AbjadValueObject):
         items = []
         for i in range(n):
             items.append(self[:])
-        return type(self)(items=items)
+        return type(self)(items)
 
     def repeat_to_length(self, length=None, start=0):
         '''Repeats sequence to `length`.
@@ -4696,7 +4695,7 @@ class Sequence(abctools.AbjadValueObject):
         for i in range(repetitions):
             for item in self:
                 items.append(item)
-        return type(self)(items=items[start:stop_index])
+        return type(self)(items[start:stop_index])
 
     def repeat_to_weight(self, weight, allow_total=Exact):
         '''Repeats sequence to `weight`.
