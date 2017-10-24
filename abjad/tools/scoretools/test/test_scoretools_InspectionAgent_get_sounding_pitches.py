@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_agenttools_InspectionAgent_get_sounding_pitches_01():
+def test_scoretools_InspectionAgent_get_sounding_pitches_01():
 
     staff = abjad.Staff("<c''' e'''>4 <d''' fs'''>4")
     glockenspiel = abjad.instrumenttools.Glockenspiel()

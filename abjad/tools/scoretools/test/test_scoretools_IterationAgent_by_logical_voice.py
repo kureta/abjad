@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_agenttools_IterationAgent_by_logical_voice_01():
+def test_scoretools_IterationAgent_by_logical_voice_01():
     r'''Yields nothing when class not present.
     '''
 
@@ -17,7 +17,7 @@ def test_agenttools_IterationAgent_by_logical_voice_01():
     assert len(list(iterator)) == 0
 
 
-def test_agenttools_IterationAgent_by_logical_voice_02():
+def test_scoretools_IterationAgent_by_logical_voice_02():
     r'''Yields internal nodes only.
     '''
 
@@ -33,7 +33,7 @@ def test_agenttools_IterationAgent_by_logical_voice_02():
     assert len(list(iterator)) == 3
 
 
-def test_agenttools_IterationAgent_by_logical_voice_03():
+def test_scoretools_IterationAgent_by_logical_voice_03():
     r'''Yields exact leaves.
     '''
 
@@ -49,7 +49,7 @@ def test_agenttools_IterationAgent_by_logical_voice_03():
     assert len(list(iterator)) == 9
 
 
-def test_agenttools_IterationAgent_by_logical_voice_04():
+def test_scoretools_IterationAgent_by_logical_voice_04():
     r'''Yields leaves based on names higher in inheritence hierarchy.
     '''
 
@@ -65,7 +65,7 @@ def test_agenttools_IterationAgent_by_logical_voice_04():
     assert len(list(iterator)) == 9
 
 
-def test_agenttools_IterationAgent_by_logical_voice_05():
+def test_scoretools_IterationAgent_by_logical_voice_05():
     r'''Yields notes in two contiguous Voices with the same name.
     '''
 
@@ -86,7 +86,7 @@ def test_agenttools_IterationAgent_by_logical_voice_05():
         assert isinstance(note, abjad.Note)
 
 
-def test_agenttools_IterationAgent_by_logical_voice_06():
+def test_scoretools_IterationAgent_by_logical_voice_06():
     r'''Yields only notes matching the given logical voice.
     '''
 
@@ -107,7 +107,7 @@ def test_agenttools_IterationAgent_by_logical_voice_06():
         assert note.written_pitch.number == 2
 
 
-def test_agenttools_IterationAgent_by_logical_voice_07():
+def test_scoretools_IterationAgent_by_logical_voice_07():
     r'''Yields only notes matching the given logical voice.
     '''
 
@@ -130,7 +130,7 @@ def test_agenttools_IterationAgent_by_logical_voice_07():
         assert e.written_pitch.number == 2
 
 
-def test_agenttools_IterationAgent_by_logical_voice_08():
+def test_scoretools_IterationAgent_by_logical_voice_08():
     r'''Yields nothing when class not present.
     '''
 
@@ -145,7 +145,7 @@ def test_agenttools_IterationAgent_by_logical_voice_08():
     assert len(list(iterator)) == 0
 
 
-def test_agenttools_IterationAgent_by_logical_voice_09():
+def test_scoretools_IterationAgent_by_logical_voice_09():
     r'''Yields internal nodes only.
     '''
 
@@ -159,7 +159,7 @@ def test_agenttools_IterationAgent_by_logical_voice_09():
     assert len(list(iterator)) == 3
 
 
-def test_agenttools_IterationAgent_by_logical_voice_10():
+def test_scoretools_IterationAgent_by_logical_voice_10():
     r'''Yields exact leaves.
     '''
 
@@ -174,7 +174,7 @@ def test_agenttools_IterationAgent_by_logical_voice_10():
     assert len(list(iterator)) == 9
 
 
-def test_agenttools_IterationAgent_by_logical_voice_11():
+def test_scoretools_IterationAgent_by_logical_voice_11():
     r'''Yields leaves based on names higher in inheritence hierarchy.
     '''
 
@@ -189,7 +189,7 @@ def test_agenttools_IterationAgent_by_logical_voice_11():
     assert len(list(iterator)) == 9
 
 
-def test_agenttools_IterationAgent_by_logical_voice_12():
+def test_scoretools_IterationAgent_by_logical_voice_12():
     r'''Yields notes in two contiguous Voices with the same name.
     '''
 
@@ -209,7 +209,7 @@ def test_agenttools_IterationAgent_by_logical_voice_12():
         assert isinstance(note, abjad.Note)
 
 
-def test_agenttools_IterationAgent_by_logical_voice_13():
+def test_scoretools_IterationAgent_by_logical_voice_13():
     r'''Yields only notes matching the given logical voice.
     '''
 
@@ -229,7 +229,7 @@ def test_agenttools_IterationAgent_by_logical_voice_13():
         assert note.written_pitch.number == 0
 
 
-def test_agenttools_IterationAgent_by_logical_voice_14():
+def test_scoretools_IterationAgent_by_logical_voice_14():
     r'''Yields only notes matching the given logical voice.
     '''
 

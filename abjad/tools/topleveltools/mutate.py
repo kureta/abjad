@@ -45,5 +45,5 @@ def mutate(client):
             MutationAgent(client=Selection([Note("d'4."), Note("f'4.")]))
 
     '''
-    from abjad.tools import agenttools
-    return agenttools.MutationAgent(client)
+    import abjad
+    return abjad.MutationAgent(client=client)

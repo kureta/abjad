@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_agenttools_InspectionAgent_get_effective_01():
+def test_scoretools_InspectionAgent_get_effective_01():
     r'''Clef defaults to none.
     '''
 
@@ -12,7 +12,7 @@ def test_agenttools_InspectionAgent_get_effective_01():
         assert clef is None
 
 
-def test_agenttools_InspectionAgent_get_effective_02():
+def test_scoretools_InspectionAgent_get_effective_02():
     r'''Clefs carry over to notes following.
     '''
 
@@ -24,7 +24,7 @@ def test_agenttools_InspectionAgent_get_effective_02():
         assert clef == abjad.Clef('treble')
 
 
-def test_agenttools_InspectionAgent_get_effective_03():
+def test_scoretools_InspectionAgent_get_effective_03():
     r'''Clef defaults to none. abjad.Clefs carry over to notes following.
     '''
 
@@ -40,7 +40,7 @@ def test_agenttools_InspectionAgent_get_effective_03():
             assert clef == abjad.Clef('bass')
 
 
-def test_agenttools_InspectionAgent_get_effective_04():
+def test_scoretools_InspectionAgent_get_effective_04():
     r'''Clefs carry over to notes following.
     '''
 
@@ -61,7 +61,7 @@ def test_agenttools_InspectionAgent_get_effective_04():
     assert result == clefs
 
 
-def test_agenttools_InspectionAgent_get_effective_05():
+def test_scoretools_InspectionAgent_get_effective_05():
     r'''None cancels an explicit clef.
     '''
 
@@ -78,7 +78,7 @@ def test_agenttools_InspectionAgent_get_effective_05():
         assert clef == abjad.Clef('treble')
 
 
-def test_agenttools_InspectionAgent_get_effective_06():
+def test_scoretools_InspectionAgent_get_effective_06():
     r'''Redudant clefs are allowed.
     '''
 
@@ -108,7 +108,7 @@ def test_agenttools_InspectionAgent_get_effective_06():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_agenttools_InspectionAgent_get_effective_07():
+def test_scoretools_InspectionAgent_get_effective_07():
     r'''Clefs with transposition are allowed and work as expected.
     '''
 
@@ -138,7 +138,7 @@ def test_agenttools_InspectionAgent_get_effective_07():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_agenttools_InspectionAgent_get_effective_08():
+def test_scoretools_InspectionAgent_get_effective_08():
     r'''Attaching and then abjad.detaching works as expected.
     '''
 
@@ -153,7 +153,7 @@ def test_agenttools_InspectionAgent_get_effective_08():
         assert clef is None
 
 
-def test_agenttools_InspectionAgent_get_effective_09():
+def test_scoretools_InspectionAgent_get_effective_09():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     dynamic = abjad.Dynamic('f')
@@ -177,7 +177,7 @@ def test_agenttools_InspectionAgent_get_effective_09():
     assert abjad.inspect(staff[3]).get_effective(abjad.Dynamic) == abjad.Dynamic('f')
 
 
-def test_agenttools_InspectionAgent_get_effective_10():
+def test_scoretools_InspectionAgent_get_effective_10():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     flute = abjad.instrumenttools.Flute()
@@ -204,7 +204,7 @@ def test_agenttools_InspectionAgent_get_effective_10():
     assert abjad.inspect(staff[3]).get_effective(abjad.instrumenttools.Instrument) == flute
 
 
-def test_agenttools_InspectionAgent_get_effective_11():
+def test_scoretools_InspectionAgent_get_effective_11():
     r'''Attach key signature.
     '''
 
@@ -230,7 +230,7 @@ def test_agenttools_InspectionAgent_get_effective_11():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_agenttools_InspectionAgent_get_effective_12():
+def test_scoretools_InspectionAgent_get_effective_12():
     r'''There is no default key signature.
     '''
 
@@ -239,7 +239,7 @@ def test_agenttools_InspectionAgent_get_effective_12():
     assert key_signature is None
 
 
-def test_agenttools_InspectionAgent_get_effective_13():
+def test_scoretools_InspectionAgent_get_effective_13():
     r'''Attaches metronome mark to staff.
     '''
 
@@ -270,7 +270,7 @@ def test_agenttools_InspectionAgent_get_effective_13():
     assert abjad.inspect(staff[3]).get_effective(abjad.MetronomeMark) == mark_2
 
 
-def test_agenttools_InspectionAgent_get_effective_14():
+def test_scoretools_InspectionAgent_get_effective_14():
     r'''Attaches metronome mark to chord in staff.
     '''
 
@@ -288,7 +288,7 @@ def test_agenttools_InspectionAgent_get_effective_14():
         )
 
 
-def test_agenttools_InspectionAgent_get_effective_15():
+def test_scoretools_InspectionAgent_get_effective_15():
 
     staff = abjad.Staff([abjad.Note("c'4")])
     mark = abjad.MetronomeMark(abjad.Duration(1, 8), 38)
@@ -304,7 +304,7 @@ def test_agenttools_InspectionAgent_get_effective_15():
         )
 
 
-def test_agenttools_InspectionAgent_get_effective_16():
+def test_scoretools_InspectionAgent_get_effective_16():
     r'''Detaches metronome mark.
     '''
 
@@ -322,7 +322,7 @@ def test_agenttools_InspectionAgent_get_effective_16():
         )
 
 
-def test_agenttools_InspectionAgent_get_effective_17():
+def test_scoretools_InspectionAgent_get_effective_17():
     r'''The default effective time signature is none.
     '''
 
@@ -333,7 +333,7 @@ def test_agenttools_InspectionAgent_get_effective_17():
         assert time_signature is None
 
 
-def test_agenttools_InspectionAgent_get_effective_18():
+def test_scoretools_InspectionAgent_get_effective_18():
     r'''Forced time signature abjad.settings propagate to later leaves.
     '''
 
@@ -358,7 +358,7 @@ def test_agenttools_InspectionAgent_get_effective_18():
         assert time_signature == abjad.TimeSignature((2, 8))
 
 
-def test_agenttools_InspectionAgent_get_effective_19():
+def test_scoretools_InspectionAgent_get_effective_19():
     r'''Attach then abjad.detach.
     '''
 
@@ -383,7 +383,7 @@ def test_agenttools_InspectionAgent_get_effective_19():
         assert time_signature is None
 
 
-def test_agenttools_InspectionAgent_get_effective_20():
+def test_scoretools_InspectionAgent_get_effective_20():
     r'''Effective value of arbitrary object.
     '''
 
@@ -397,7 +397,7 @@ def test_agenttools_InspectionAgent_get_effective_20():
     assert abjad.inspect(staff[3]).get_effective(str) == 'color'
 
 
-def test_agenttools_InspectionAgent_get_effective_21():
+def test_scoretools_InspectionAgent_get_effective_21():
     staff = abjad.Staff("c'8 d'8 e'8 f'8 g'8")
     abjad.attach('red', staff[0], scope=abjad.Staff)
     abjad.attach('blue', staff[2], scope=abjad.Staff)
@@ -424,7 +424,7 @@ def test_agenttools_InspectionAgent_get_effective_21():
     assert abjad.inspect(staff[4]).get_effective(str, n=1) is None
 
 
-def test_agenttools_InspectionAgent_get_effective_22():
+def test_scoretools_InspectionAgent_get_effective_22():
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     abjad.attach('red', staff[-1], scope=abjad.Staff, synthetic_offset=-1)
     abjad.attach('blue', staff[0], scope=abjad.Staff)

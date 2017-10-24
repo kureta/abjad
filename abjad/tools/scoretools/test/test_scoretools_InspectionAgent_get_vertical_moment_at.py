@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_agenttools_InspectionAgent_get_vertical_moment_at_01():
+def test_scoretools_InspectionAgent_get_vertical_moment_at_01():
 
     score = abjad.Score([])
     tuplet = abjad.Tuplet((4, 3), "d''8 c''8 b'8")
@@ -58,7 +58,7 @@ def test_agenttools_InspectionAgent_get_vertical_moment_at_01():
     assert moment.leaves == ()
 
 
-def test_agenttools_InspectionAgent_get_vertical_moment_at_02():
+def test_scoretools_InspectionAgent_get_vertical_moment_at_02():
 
     score = abjad.Score([])
     tuplet = abjad.Tuplet((4, 3), "d''8 c''8 b'8")

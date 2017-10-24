@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_agenttools_InspectionAgent_is_bar_line_crossing_01():
+def test_scoretools_InspectionAgent_is_bar_line_crossing_01():
     r'''Works with partial.
     '''
 
@@ -28,7 +28,7 @@ def test_agenttools_InspectionAgent_is_bar_line_crossing_01():
     assert not abjad.inspect(staff[3]).is_bar_line_crossing()
 
 
-def test_agenttools_InspectionAgent_is_bar_line_crossing_02():
+def test_scoretools_InspectionAgent_is_bar_line_crossing_02():
     r'''Works when no explicit time signature is abjad.attached.
     '''
 

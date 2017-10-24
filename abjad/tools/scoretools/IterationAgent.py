@@ -75,6 +75,8 @@ class IterationAgent(abctools.AbjadObject):
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Collaborators'
+
     __slots__ = (
         '_client',
         )

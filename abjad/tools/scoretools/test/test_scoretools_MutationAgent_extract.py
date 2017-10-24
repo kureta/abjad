@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_agenttools_MutationAgent_extract_01():
+def test_scoretools_MutationAgent_extract_01():
     r'''Extracts note.
     '''
 
@@ -39,7 +39,7 @@ def test_agenttools_MutationAgent_extract_01():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_agenttools_MutationAgent_extract_02():
+def test_scoretools_MutationAgent_extract_02():
     r'''Extracts multiple notes.
     '''
 
@@ -79,7 +79,7 @@ def test_agenttools_MutationAgent_extract_02():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_agenttools_MutationAgent_extract_03():
+def test_scoretools_MutationAgent_extract_03():
     r'''Extracts container.
     '''
 
@@ -125,7 +125,7 @@ def test_agenttools_MutationAgent_extract_03():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_agenttools_MutationAgent_extract_04():
+def test_scoretools_MutationAgent_extract_04():
     r'''Extracts multiple containers.
     '''
 

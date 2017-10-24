@@ -31,7 +31,6 @@ del AbjadConfiguration
 # import all tools packages
 from abjad.tools import *
 from abjad.tools.abctools import *
-from abjad.tools.agenttools import *
 from abjad.tools.datastructuretools import *
 
 # instantiate ordinal constants
