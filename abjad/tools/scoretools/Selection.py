@@ -359,7 +359,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects note 1 (or nothing) in each pitched logical tie:
+            Gets note 1 (or nothing) in each pitched logical tie:
 
             ..  container:: example
 
@@ -422,10 +422,9 @@ class Selection(AbjadValueObject):
 
         Returns a single item when `argument` is an integer.
 
-        Returns new selection of zero or more items when `argument` is a slice.
+        Returns new selection when `argument` is a slice.
 
-        Returns new selection of zero or more items when `argument` is a
-        pattern.
+        Returns new selection when `argument` is a pattern.
         '''
         import abjad
         if self._expression:
@@ -1282,14 +1281,14 @@ class Selection(AbjadValueObject):
             >>> abjad.Staff("c'4 d'4 e'4 f'4")[:].items
             (Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4"))
 
-        Returns tuple of items (components and / or other selections).
+        Returns tuple of items.
         '''
         return self._items
 
     ### PUBLIC METHODS ###
 
     def are_leaves(self):
-        r'''Is true when components are all leaves.
+        r'''Is true when items in selection are all leaves.
 
         ..  container:: example
 
@@ -1311,57 +1310,43 @@ class Selection(AbjadValueObject):
         stop=None,
         with_grace_notes=True,
         ):
-        r'''Select components by class.
+        r'''Selects items by class.
 
         ..  container:: example
 
-            >>> staff = abjad.Staff()
-            >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
-            >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
-            >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    {
-                        \time 2/8
-                        c'8
-                        d'8
-                    }
-                    {
-                        e'8
-                        f'8
-                    }
-                    {
-                        g'8
-                        a'8
-                    }
-                }
-
-            >>> for note in abjad.select(staff).by_class(prototype=abjad.Note):
-            ...     note
-            ...
-            Note("c'8")
-            Note("d'8")
-            Note("e'8")
-            Note("f'8")
-            Note("g'8")
-            Note("a'8")
-
-        ..  container:: example expression
-
             Selects notes:
 
-            >>> expression = abjad.select()
-            >>> expression = expression.by_class(abjad.Note)
+            ..  container:: example
 
-            >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
-            >>> result = expression(staff)
-            >>> expression.color(result)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> abjad.show(staff) # doctest: +SKIP
+                >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> for note in abjad.select(staff).by_class(abjad.Note):
+                ...     note
+                ...
+                Note("c'4")
+                Note("d'8")
+                Note("d'16")
+                Note("e'16")
+                Note("e'8")
+                Note("g'8")
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_class(abjad.Note)
+                >>> result = expression(staff)
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> expression.print(result)
+                Note("c'4")
+                Note("d'8")
+                Note("d'16")
+                Note("e'16")
+                Note("e'8")
+                Note("g'8")
 
             ..  docs::
 
@@ -1407,14 +1392,6 @@ class Selection(AbjadValueObject):
                     \once \override Stem.color = #blue
                     g'8
                 }
-
-            >>> expression.print(result)
-            Note("c'4")
-            Note("d'8")
-            Note("d'16")
-            Note("e'16")
-            Note("e'8")
-            Note("g'8")
 
         Returns new selection.
         '''
@@ -1818,7 +1795,7 @@ class Selection(AbjadValueObject):
                 Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
                 Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-        Returns new expression.
+        Returns new selection.
         '''
         import abjad
         if self._expression:
@@ -2704,7 +2681,7 @@ class Selection(AbjadValueObject):
             Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
             Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
 
-        Returns new expression.
+        Returns new selection.
         '''
         import abjad
         if self._expression:
@@ -4679,7 +4656,7 @@ class Selection(AbjadValueObject):
             Note("e'8")
             Note("f'16")
 
-        Returns list.
+        Returns new selection.
         '''
         if self._expression:
             return self._update_expression(
@@ -5621,7 +5598,7 @@ class Selection(AbjadValueObject):
         Returns remaining components at end in final part when `overhang`
         is true.
 
-        Returns list of selections.
+        Returns nested selection.
         '''
         import abjad
         if self._expression:
@@ -5856,7 +5833,7 @@ class Selection(AbjadValueObject):
             Selection([Note("e'8"), Rest('r8'), Note("f'8")])
             Selection([Note("g'8"), Note("a'8"), Rest('r8')])
 
-        Returns new expression.
+        Returns new selection.
         '''
         import abjad
         if self._expression:
@@ -6110,7 +6087,7 @@ class Selection(AbjadValueObject):
             Selection([Note("e'8"), Note("e'8"), Rest('r8')])
             Selection([Note("f'8")])
 
-        Returns new expression.
+        Returns new selection.
         '''
         import abjad
         if self._expression:
@@ -6261,7 +6238,7 @@ class Selection(AbjadValueObject):
             Selection([Note("d'8"), Note("e'8")])
             Selection([Rest('r8'), Note("f'8")])
 
-        Returns new expression.
+        Returns new selection.
         '''
         import abjad
         if self._expression:
