@@ -1900,7 +1900,7 @@ class EvenDivisionRhythmMaker(RhythmMaker):
                 >>> pattern_2 = abjad.index_first(2)
                 >>> pattern_3 = abjad.index_last(2)
                 >>> pattern = pattern_1 ^ pattern_2 ^ pattern_3
-                >>> mask = abjad.silence(pattern)
+                >>> mask = abjad.SilenceMask(pattern)
                 >>> rhythm_maker = abjad.rhythmmakertools.EvenDivisionRhythmMaker(
                 ...     logical_tie_masks=mask,
                 ...     )

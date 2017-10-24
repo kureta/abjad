@@ -5020,13 +5020,6 @@ class Sequence(abctools.AbjadValueObject):
 
             ::
 
-                >>> sequence.retain_pattern(abjad.index())
-                Sequence([])
-
-        ..  container:: example
-
-            ::
-
                 >>> sequence.retain_pattern(abjad.index([97, 98, 99]))
                 Sequence([])
 

@@ -158,11 +158,8 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector = abjad.select()
-            >>> selector = selector.by_leaf()
-            >>> selector = selector.sequence()
             >>> pattern = abjad.index_every([0], 2)
-            >>> selector = selector.retain_pattern(pattern)
+            >>> selector = abjad.select().by_leaf()[pattern]
 
         ::
 
@@ -219,12 +216,8 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector = abjad.select()
-            >>> selector = selector.by_logical_tie(pitched=True)
-            >>> selector = selector.sequence()
-            >>> selector = selector.retain_pattern(
-            ...     pattern=abjad.index_every([0], period=2),
-            ...     )
+            >>> selector = abjad.select().by_logical_tie(pitched=True)
+            >>> selector = selector[abjad.index_every([0], 2)]
 
         ::
 
@@ -282,11 +275,8 @@ class Selection(AbjadValueObject):
 
         ::
 
-            >>> selector = abjad.select()
-            >>> selector = selector.by_logical_tie(pitched=True)
-            >>> get = abjad.select().by_leaf().sequence().retain_pattern(
-            ...     abjad.index([1]),
-            ...     )
+            >>> selector = abjad.select().by_logical_tie(pitched=True)
+            >>> get = abjad.select().by_leaf()[abjad.index([1])]
             >>> selector = selector.map(get)
 
         ::
@@ -1385,9 +1375,13 @@ class Selection(AbjadValueObject):
 
         Returns new selection when `argument` is a slice.
         '''
+        import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        result = self.items.__getitem__(argument)
+        if isinstance(argument, abjad.Pattern):
+            result = abjad.sequence(self.items).retain_pattern(argument)
+        else:
+            result = self.items.__getitem__(argument)
         if isinstance(result, tuple):
             result = Selection(result)
         return result
@@ -1516,14 +1510,14 @@ class Selection(AbjadValueObject):
             tie = abjad.Tie(
                 use_messiaen_style_ties=use_messiaen_style_ties,
                 )
-            leaves = abjad.Selection([left_leaf, right_leaf])
+            leaves = abjad.select([left_leaf, right_leaf])
             abjad.attach(tie, leaves)
 
     def _attach_tie_spanner_to_leaves(self, use_messiaen_style_ties=False):
         import abjad
         pairs = abjad.sequence(self).nwise()
         for leaf_pair in pairs:
-            selection = abjad.Selection(leaf_pair)
+            selection = abjad.select(leaf_pair)
             selection._attach_tie_spanner_to_leaf_pair(
                 use_messiaen_style_ties=use_messiaen_style_ties,
                 )
@@ -1830,7 +1824,7 @@ class Selection(AbjadValueObject):
         implicit_scaling = self[0].implicit_scaling
         assert all(
             x.implicit_scaling == implicit_scaling for x in self)
-        selection = abjad.Selection(self)
+        selection = abjad.select(self)
         parent, start, stop = selection._get_parent_and_start_stop_indices()
         old_denominators = []
         new_duration = abjad.Duration(0)
@@ -2036,8 +2030,9 @@ class Selection(AbjadValueObject):
         Returns none.
         Not composer-safe.
         '''
+        import abjad
         assert self.in_contiguous_logical_voice()
-        assert Selection(recipients).in_contiguous_logical_voice()
+        assert abjad.select(recipients).in_contiguous_logical_voice()
         receipt = self._get_dominant_spanners()
         for spanner, index in receipt:
             for recipient in reversed(recipients):
@@ -5948,7 +5943,7 @@ class Selection(AbjadValueObject):
         if len(components_copy):
             if overhang:
                 result.append(components_copy)
-        result = [abjad.Selection(_) for _ in result]
+        result = [type(self)(_) for _ in result]
         return type(self)(result)
 
     def partition_by_ratio(self, ratio):
@@ -6139,6 +6134,10 @@ class Selection(AbjadValueObject):
             expression._expression.callbacks[-1].qualified_method_name ==
                 'abjad.Selection.__getitem__' and
                 'slice' not in 
+                    expression._expression.callbacks[-1].evaluation_template
+                and 'Pattern' not in
+                    expression._expression.callbacks[-1].evaluation_template
+                and 'abjad.index' not in
                     expression._expression.callbacks[-1].evaluation_template):
             print(repr(result))
         else:
