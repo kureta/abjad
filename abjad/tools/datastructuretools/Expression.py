@@ -596,7 +596,7 @@ class Expression(AbjadValueObject):
         assert self.evaluation_template
         if self.evaluation_template == 'map':
             return self._evaluate_map(*arguments)
-        if self.evaluation_template == 'group_by':
+        if self.evaluation_template == 'group':
             return self._evaluate_group_by(*arguments)
         if self.subclass_hook:
             assert isinstance(self.subclass_hook, str)

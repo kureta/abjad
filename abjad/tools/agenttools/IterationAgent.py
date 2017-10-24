@@ -3065,7 +3065,7 @@ class IterationAgent(abctools.AbjadObject):
         selection = abjad.Selection(self.client)
         def _closure():
             current_run = ()
-            for run in selection.group_by(type):
+            for run in selection.group(type):
                 if isinstance(run[0], prototype):
                     current_run = current_run + run
                 elif current_run:

@@ -329,7 +329,7 @@ class Selection(AbjadValueObject):
 
             >>> predicate = abjad.select().by_leaf().pitch_set()
             >>> selector = abjad.select().by_leaf(pitched=True)
-            >>> selector = selector.sequence().group_by(predicate)
+            >>> selector = selector.group(predicate)
 
         ::
 
@@ -415,8 +415,8 @@ class Selection(AbjadValueObject):
         ::
 
             >>> abjad.Selection.print(selector, result)
-            Sequence([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
-            Sequence([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
+            Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
+            Selection([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
 
         Groups pitched leaves by pitch and then contiguity:
 
@@ -424,7 +424,7 @@ class Selection(AbjadValueObject):
 
             >>> predicate = abjad.select().by_leaf().pitch_set()
             >>> selector = abjad.select().by_leaf(pitched=True)
-            >>> selector = selector.sequence().group_by(predicate)
+            >>> selector = selector.group(predicate)
             >>> selector = selector.map(abjad.select().by_contiguity())
             >>> selector = selector.flatten(depth=1)
 
@@ -523,7 +523,7 @@ class Selection(AbjadValueObject):
 
             >>> predicate = abjad.select().by_leaf().pitch_set()
             >>> selector = abjad.select().by_logical_tie(pitched=True)
-            >>> selector = selector.sequence().group_by(predicate)
+            >>> selector = selector.group(predicate)
 
         ::
 
@@ -609,8 +609,8 @@ class Selection(AbjadValueObject):
         ::
 
             >>> abjad.Selection.print(selector, result)
-            Sequence([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
-            Sequence([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
+            Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
+            Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
 #        ..  container:: example
 #
@@ -621,7 +621,7 @@ class Selection(AbjadValueObject):
 #                >>> selector = abjad.select().by_logical_tie(pitched=True)
 #                >>> selector = selector.by_contiguity()
 #                >>> pred = abjad.select().by_leaf().pitch_set()
-#                >>> get = abjad.select().by_leaf().sequence().group_by(pred)
+#                >>> get = abjad.select().by_leaf().group(pred)
 #                >>> selector = selector.map(get)
 #                >>> selector = selector.flatten(depth=1)
 #
@@ -2100,7 +2100,7 @@ class Selection(AbjadValueObject):
                 selection = [item]
         if selection:
             selections.append(type(self)(selection))
-        return selections
+        return type(self)(selections)
 
     def by_leaf(
         self,
@@ -3782,6 +3782,16 @@ class Selection(AbjadValueObject):
         import abjad
         abjad.label(result).color_selections(self._expression, colors=colors)
 
+    def flatten(self, depth=-1):
+        r'''Flattens selection to `depth`.
+
+        Returns new selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return type(self)(abjad.sequence(self).flatten(depth=depth))
+
     def filter(self, predicate=None):
         r'''Filters selection by `predicate`.
 
@@ -4432,8 +4442,8 @@ class Selection(AbjadValueObject):
         import abjad
         return abjad.VerticalMoment(self, offset)
 
-    def group_by(self, predicate):
-        r'''Groups components in contiguous selection by `predicate`.
+    def group(self, predicate=None):
+        r'''Groups items in selection by `predicate`.
 
         ..  container:: example
 
@@ -4459,7 +4469,7 @@ class Selection(AbjadValueObject):
 
             ::
 
-                >>> for group in leaves.group_by(type):
+                >>> for group in leaves.group(type):
                 ...     group
                 ...
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
@@ -4468,12 +4478,24 @@ class Selection(AbjadValueObject):
 
         Returns list of tuples.
         '''
-        result = []
-        grouper = itertools.groupby(self, predicate)
-        for label, generator in grouper:
-            selection = type(self)(generator)
-            result.append(selection)
-        return type(self)(result)
+        if self._expression:
+            return self._update_expression(
+                inspect.currentframe(),
+                evaluation_template='group',
+                map_operand=predicate,
+                )
+        items = []
+        if predicate is None:
+            pairs = itertools.groupby(self, lambda _: _)
+            for count, group in pairs:
+                item = type(self)(group)
+                items.append(item)
+        else:
+            pairs = itertools.groupby(self, predicate)
+            for count, group in pairs:
+                item = type(self)(group)
+                items.append(item)
+        return type(self)(items)
 
     def in_contiguous_logical_voice(
         self,
@@ -5269,7 +5291,7 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         result = []
-        groups = abjad.Sequence(self).partition_by_counts(
+        groups = abjad.sequence(self).partition_by_counts(
             [abs(_) for _ in counts],
             cyclic=cyclic,
             overhang=overhang,
@@ -6129,7 +6151,7 @@ class Selection(AbjadValueObject):
             len(self),
             ratio,
             )
-        parts = abjad.Sequence(self).partition_by_counts(counts=counts)
+        parts = abjad.sequence(self).partition_by_counts(counts=counts)
         selections = [type(self)(_) for _ in parts]
         return selections
 
@@ -6283,16 +6305,6 @@ class Selection(AbjadValueObject):
 #                argument = callback(previous_expr)
 #                results_by_prefix[this_prefix] = argument
 #        return results_by_selector
-
-    def sequence(self):
-        r'''Changes selection into sequence.
-
-        Returns sequence.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        return abjad.sequence(self)
 
     def top(self):
         r'''Selects top components.
