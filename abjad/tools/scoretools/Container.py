@@ -1,9 +1,4 @@
-from abjad.tools import durationtools
-from abjad.tools import selectiontools
-from abjad.tools import systemtools
-from abjad.tools.topleveltools import inspect
-from abjad.tools.topleveltools import iterate
-from abjad.tools.scoretools.Component import Component
+from .Component import Component
 
 
 class Container(Component):
@@ -299,13 +294,14 @@ class Container(Component):
 
         Returns Graphviz graph.
         '''
+        import abjad
         def recurse(component, leaf_cluster):
             component_node = component._as_graphviz_node()
             node_mapping[component] = component_node
             node_order = [component_node.name]
             if isinstance(component, abjad.Container):
                 graph.append(component_node)
-                this_leaf_cluster = graphtools.GraphvizSubgraph(
+                this_leaf_cluster = abjad.graphtools.GraphvizSubgraph(
                     name=component_node.name,
                     attributes={
                         'color': 'grey75',
@@ -331,8 +327,6 @@ class Container(Component):
                 leaf_cluster.append(component_node)
             return component_node, node_order
 
-        import abjad
-        from abjad.tools import graphtools
         node_order = []
         node_mapping = {}
         graph = abjad.graphtools.GraphvizGraph(
@@ -373,7 +367,7 @@ class Container(Component):
                 table.attributes['border'] = 4
                 table.attributes['bgcolor'] = 'grey80'
                 if isinstance(component, Container):
-                    for child in iterate(component).depth_first():
+                    for child in abjad.iterate(component).depth_first():
                         if child is component:
                             continue
                         node = node_mapping[child]
@@ -458,11 +452,11 @@ class Container(Component):
             )
 
     def _as_graphviz_node(self):
-        from abjad.tools import graphtools
+        import abjad
         node = Component._as_graphviz_node(self)
         node[0].append(
-            graphtools.GraphvizTableRow([
-                graphtools.GraphvizTableCell(
+            abjad.graphtools.GraphvizTableRow([
+                abjad.graphtools.GraphvizTableCell(
                     label=type(self).__name__,
                     attributes={'border': 0},
                     ),
@@ -486,7 +480,8 @@ class Container(Component):
         return new
 
     def _eject_contents(self):
-        if inspect(self).get_parentage().parent is not None:
+        import abjad
+        if abjad.inspect(self).get_parentage().parent is not None:
             message = 'can not eject contents of in-score container.'
             raise Exception(message)
         contents = self[:]
@@ -497,9 +492,10 @@ class Container(Component):
 
     @staticmethod
     def _flatten_selections(music):
+        import abjad
         components = []
         for item in music:
-            if isinstance(item, selectiontools.Selection):
+            if isinstance(item, abjad.Selection):
                 components.extend(item)
             else:
                 components.append(item)
@@ -534,8 +530,8 @@ class Container(Component):
         return self._format_slot_contributions_with_indent(result)
 
     def _format_content_pieces(self):
-        from abjad.tools import systemtools
-        indent = systemtools.LilyPondFormatManager.indent
+        import abjad
+        indent = abjad.LilyPondFormatManager.indent
         result = []
         for m in self._music:
             result.extend(format(m).split('\n'))
@@ -565,7 +561,8 @@ class Container(Component):
         return self._format_slot_contributions_with_indent(result)
 
     def _format_slot_contributions_with_indent(self, slot):
-        indent = systemtools.LilyPondFormatManager.indent
+        import abjad
+        indent = abjad.LilyPondFormatManager.indent
         result = []
         for contributor, contributions in slot:
             result.append(
@@ -611,13 +608,14 @@ class Container(Component):
         return '{{ {} }}'.format(self._get_contents_summary())
 
     def _get_contents_duration(self):
+        import abjad
         if self.is_simultaneous:
             return max(
-                [durationtools.Duration(0)] +
+                [abjad.Duration(0)] +
                 [x._get_preprolated_duration() for x in self]
                 )
         else:
-            duration = durationtools.Duration(0)
+            duration = abjad.Duration(0)
             for x in self:
                 duration += x._get_preprolated_duration()
             return duration
@@ -637,14 +635,15 @@ class Container(Component):
             return ''
 
     def _get_duration_in_seconds(self):
+        import abjad
         if self.is_simultaneous:
             return max(
-                [durationtools.Duration(0)] +
+                [abjad.Duration(0)] +
                 [x._get_duration(in_seconds=True) for x in self]
                 )
         else:
-            duration = durationtools.Duration(0)
-            for leaf in iterate(self).by_leaf():
+            duration = abjad.Duration(0)
+            for leaf in abjad.iterate(self).by_leaf():
                 duration += leaf._get_duration(in_seconds=True)
             return duration
 
@@ -811,13 +810,9 @@ class Container(Component):
 
     def _parse_string(self, string):
         import abjad
-        from abjad.tools import lilypondfiletools
-        from abjad.tools import lilypondparsertools
-        from abjad.tools import rhythmtreetools
-        from abjad.tools.topleveltools import parse
         user_input = string.strip()
         if user_input.startswith('abj:'):
-            parser = lilypondparsertools.ReducedLyParser()
+            parser = abjad.lilypondparsertools.ReducedLyParser()
             parsed = parser(user_input[4:])
             if parser._toplevel_component_count == 1:
                 parent = abjad.inspect(parsed).get_parentage().parent
@@ -826,15 +821,15 @@ class Container(Component):
                 else:
                     parsed = parent
         elif user_input.startswith('rtm:'):
-            parsed = rhythmtreetools.parse_rtm_syntax(user_input[4:])
+            parsed = abjad.rhythmtreetools.parse_rtm_syntax(user_input[4:])
         else:
             if (
                 not user_input.startswith('<<') or
                 not user_input.endswith('>>')
                 ):
                 user_input = '{{ {} }}'.format(user_input)
-            parsed = parse(user_input)
-            if isinstance(parsed, lilypondfiletools.LilyPondFile):
+            parsed = abjad.parse(user_input)
+            if isinstance(parsed, abjad.LilyPondFile):
                 parsed = Container(parsed.items[:])
             assert isinstance(parsed, Container)
         return parsed
@@ -851,7 +846,9 @@ class Container(Component):
         self._scale_contents(multiplier)
 
     def _scale_contents(self, multiplier):
-        for argument in iterate(self[:]).by_topmost_logical_ties_and_components():
+        import abjad
+        for argument in abjad.iterate(
+            self[:]).by_topmost_logical_ties_and_components():
             argument._scale(multiplier)
 
     def _set_item(
@@ -870,7 +867,7 @@ class Container(Component):
         '''
         import abjad
         argument_indicators = []
-        for component in iterate(argument).by_class():
+        for component in abjad.iterate(argument).by_class():
             indicators = component._get_indicators(unwrap=False)
             argument_indicators.extend(indicators)
         if isinstance(i, int):

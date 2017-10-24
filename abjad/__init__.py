@@ -65,7 +65,6 @@ from abjad.tools.markuptools import *
 from abjad.tools.pitchtools import *
 from abjad.tools.schemetools import *
 from abjad.tools.scoretools import *
-from abjad.tools.selectiontools import *
 from abjad.tools.spannertools import *
 from abjad.tools.systemtools import *
 from abjad.tools.templatetools import *

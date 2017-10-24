@@ -7,7 +7,7 @@ from abjad.tools.topleveltools import attach
 from abjad.tools.topleveltools import detach
 from abjad.tools.topleveltools import override
 from abjad.tools.topleveltools import setting
-from abjad.tools.scoretools.Component import Component
+from .Component import Component
 
 
 class Leaf(Component):

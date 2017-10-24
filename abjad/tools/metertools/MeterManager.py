@@ -169,39 +169,35 @@ class MeterManager(abctools.AbjadObject):
 
         Returns generator.
         '''
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        from abjad.tools import spannertools
-
+        import abjad
         last_tie_spanner = None
         current_leaf_group = None
         current_leaf_group_is_silent = False
-
         for x in argument:
-            if isinstance(x, (scoretools.Note, scoretools.Chord)):
-                this_tie_spanner = x._get_spanners(spannertools.Tie) or None
+            if isinstance(x, (abjad.Note, abjad.Chord)):
+                this_tie_spanner = x._get_spanners(abjad.Tie) or None
                 if current_leaf_group is None:
                     current_leaf_group = []
-                elif current_leaf_group_is_silent or \
-                    this_tie_spanner is None or \
-                    last_tie_spanner != this_tie_spanner:
-                    yield selectiontools.LogicalTie(current_leaf_group)
+                elif (current_leaf_group_is_silent or
+                    this_tie_spanner is None or
+                    last_tie_spanner != this_tie_spanner):
+                    yield abjad.LogicalTie(current_leaf_group)
                     current_leaf_group = []
                 current_leaf_group_is_silent = False
                 current_leaf_group.append(x)
                 last_tie_spanner = this_tie_spanner
-            elif isinstance(x, (scoretools.Rest, scoretools.Skip)):
+            elif isinstance(x, (abjad.Rest, abjad.Skip)):
                 if current_leaf_group is None:
                     current_leaf_group = []
                 elif not current_leaf_group_is_silent:
-                    yield selectiontools.LogicalTie(current_leaf_group)
+                    yield abjad.LogicalTie(current_leaf_group)
                     current_leaf_group = []
                 current_leaf_group_is_silent = True
                 current_leaf_group.append(x)
                 last_tie_spanner = None
-            elif isinstance(x, scoretools.Container):
+            elif isinstance(x, abjad.Container):
                 if current_leaf_group is not None:
-                    yield selectiontools.LogicalTie(current_leaf_group)
+                    yield abjad.LogicalTie(current_leaf_group)
                     current_leaf_group = None
                     last_tie_spanner = None
                 yield x
@@ -211,4 +207,4 @@ class MeterManager(abctools.AbjadObject):
                 message = message.format(x)
                 raise Exception(message)
         if current_leaf_group is not None:
-            yield selectiontools.LogicalTie(current_leaf_group)
+            yield abjad.LogicalTie(current_leaf_group)

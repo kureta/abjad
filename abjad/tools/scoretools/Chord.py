@@ -3,9 +3,9 @@ from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import pitchtools
-from abjad.tools.scoretools.Leaf import Leaf
 from abjad.tools.topleveltools import detach
 from abjad.tools.topleveltools import inspect
+from .Leaf import Leaf
 
 
 class Chord(Leaf):

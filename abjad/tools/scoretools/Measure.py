@@ -9,7 +9,7 @@ from abjad.tools.topleveltools import detach
 from abjad.tools.topleveltools import iterate
 from abjad.tools.topleveltools import override
 from abjad.tools.topleveltools import setting
-from abjad.tools.scoretools.Container import Container
+from .Container import Container
 
 
 class Measure(Container):

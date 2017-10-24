@@ -1,6 +1,6 @@
 import copy
 from abjad.tools import systemtools
-from abjad.tools.scoretools.Container import Container
+from .Container import Container
 
 
 class Context(Container):

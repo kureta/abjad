@@ -2,7 +2,6 @@ from abjad.tools import datastructuretools
 from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
-from abjad.tools import selectiontools
 from abjad.tools import spannertools
 from abjad.tools.rhythmmakertools.RhythmMaker import RhythmMaker
 from abjad.tools.topleveltools import attach
@@ -413,26 +412,23 @@ class TaleaRhythmMaker(RhythmMaker):
         written_durations = [leaf.written_duration for leaf in leaves]
         weights = []
         for numerator in unscaled_talea:
-            duration = durationtools.Duration(
-                numerator,
-                self.talea.denominator,
-                )
+            duration = abjad.Duration(numerator, self.talea.denominator)
             weight = abs(duration)
             weights.append(weight)
-        parts = datastructuretools.Sequence(written_durations).partition_by_weights(
+        parts = abjad.sequence(written_durations).partition_by_weights(
             weights=weights,
             allow_part_weights=abjad.More,
             cyclic=True,
             overhang=True,
             )
         counts = [len(part) for part in parts]
-        parts = datastructuretools.Sequence(leaves).partition_by_counts(counts)
-        prototype = (spannertools.Tie,)
+        parts = abjad.sequence(leaves).partition_by_counts(counts)
+        prototype = (abjad.Tie,)
         for part in parts:
-            if any(isinstance(_, scoretools.Rest) for _ in part):
+            if any(isinstance(_, abjad.Rest) for _ in part):
                 continue
-            part = selectiontools.Selection(part)
-            tie_spanner = spannertools.Tie()
+            part = abjad.select(part)
+            tie_spanner = abjad.Tie()
             # voodoo to temporarily neuter the contiguity constraint
             tie_spanner._unconstrain_contiguity()
             for component in part:
@@ -594,7 +590,7 @@ class TaleaRhythmMaker(RhythmMaker):
             else:
                 tuplets = self._make_tuplets(secondary_divisions, leaf_lists)
                 result = tuplets
-            selections = [selectiontools.Selection(x) for x in result]
+            selections = [abjad.select(_) for _ in result]
         else:
             selections = []
             for division in secondary_divisions:

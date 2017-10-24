@@ -4,11 +4,11 @@ from abjad.tools import durationtools
 from abjad.tools import graphtools
 from abjad.tools import mathtools
 from abjad.tools import systemtools
-from abjad.tools.scoretools.Container import Container
 from abjad.tools.topleveltools import inspect
 from abjad.tools.topleveltools import iterate
 from abjad.tools.topleveltools import override
 from abjad.tools.topleveltools import select
+from .Container import Container
 
 
 class Tuplet(Container):

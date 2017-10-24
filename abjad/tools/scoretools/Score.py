@@ -1,5 +1,5 @@
 import copy
-from abjad.tools.scoretools.Context import Context
+from .Context import Context
 
 
 class Score(Context):

@@ -2120,11 +2120,11 @@ class MutationAgent(abctools.AbjadObject):
 
         Returns none.
         '''
-        from abjad.tools import selectiontools
+        import abjad
         if hasattr(self._client, '_scale'):
             self._client._scale(multiplier)
         else:
-            assert isinstance(self._client, selectiontools.Selection)
+            assert isinstance(self._client, abjad.Selection)
             for component in self._client:
                 component._scale(multiplier)
 

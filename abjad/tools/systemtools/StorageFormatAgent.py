@@ -32,7 +32,6 @@ class StorageFormatAgent(AbjadValueObject):
         'pitchtools',
         'schemetools',
         'scoretools',
-        'selectiontools',
         'timespantools',
         )
 

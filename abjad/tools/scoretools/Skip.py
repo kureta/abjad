@@ -1,5 +1,5 @@
 from abjad.tools import durationtools
-from abjad.tools.scoretools.Leaf import Leaf
+from .Leaf import Leaf
 
 
 class Skip(Leaf):

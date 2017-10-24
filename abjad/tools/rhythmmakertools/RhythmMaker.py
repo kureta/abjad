@@ -3,7 +3,6 @@ from abjad.tools import datastructuretools
 from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
-from abjad.tools import selectiontools
 from abjad.tools import spannertools
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 from abjad.tools.topleveltools import attach
@@ -384,10 +383,11 @@ class RhythmMaker(AbjadValueObject):
         return sequence_
 
     def _validate_selections(self, selections):
+        import abjad
         assert isinstance(selections, collections.Sequence), repr(selections)
         assert len(selections), repr(selections)
         for selection in selections:
-            assert isinstance(selection, selectiontools.Selection), selection
+            assert isinstance(selection, abjad.Selection), selection
 
     def _validate_tuplets(self, selections):
         for tuplet in iterate(selections).by_class(scoretools.Tuplet):

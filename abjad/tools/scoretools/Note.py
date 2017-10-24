@@ -1,8 +1,8 @@
 import copy
 from abjad.tools import durationtools
-from abjad.tools.scoretools.Leaf import Leaf
 from abjad.tools.topleveltools import detach
 from abjad.tools.topleveltools import inspect
+from .Leaf import Leaf
 
 
 class Note(Leaf):

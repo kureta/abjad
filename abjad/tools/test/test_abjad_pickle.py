@@ -6,7 +6,7 @@ from abjad.tools import documentationtools
 from abjad.tools import lilypondparsertools
 from abjad.tools import quantizationtools
 from abjad.tools import rhythmtreetools
-from abjad.tools import selectiontools
+from abjad.tools import scoretools
 from abjad.tools import systemtools
 from abjad.tools import tonalanalysistools
 
@@ -22,14 +22,14 @@ ignored_classes = (
     lilypondparsertools.ReducedLyParser,
     quantizationtools.ParallelJobHandlerWorker,
     rhythmtreetools.RhythmTreeParser,
-    selectiontools.Selection,
-    selectiontools.Descendants,
-    selectiontools.LogicalTie,
-    selectiontools.Lineage,
-    selectiontools.Parentage,
-    selectiontools.Selection,
-    selectiontools.Selection,
-    selectiontools.VerticalMoment,
+    scoretools.Selection,
+    scoretools.Descendants,
+    scoretools.LogicalTie,
+    scoretools.Lineage,
+    scoretools.Parentage,
+    scoretools.Selection,
+    scoretools.Selection,
+    scoretools.VerticalMoment,
     systemtools.LilyPondFormatBundle,
     systemtools.SlotContributions,
     systemtools.RedirectedStreams,

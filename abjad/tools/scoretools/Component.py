@@ -3,7 +3,6 @@ import bisect
 import copy
 from abjad.tools import durationtools
 from abjad.tools import mathtools
-from abjad.tools import selectiontools
 from abjad.tools import timespantools
 from abjad.tools.topleveltools import attach
 from abjad.tools.topleveltools import detach
@@ -115,15 +114,15 @@ class Component(AbjadObject):
 
         Returns list of new components.
         '''
-        from abjad.tools import spannertools
-        result = mutate(self).copy(n=n)
-        for component in iterate(result).by_class():
-            detach(spannertools.Spanner, component)
+        import abjad
+        result = abjad.mutate(self).copy(n=n)
+        for component in abjad.iterate(result).by_class():
+            detach(abjad.Spanner, component)
         if isinstance(result, type(self)):
             result = [result]
         else:
             result = list(result)
-        result = selectiontools.Selection(result)
+        result = abjad.select(result)
         return result
 
     def __repr__(self):
@@ -211,10 +210,10 @@ class Component(AbjadObject):
         return spanners
 
     def _extract(self, scale_contents=False):
-        from abjad.tools import selectiontools
+        import abjad
         if scale_contents:
             self._scale_contents(self.multiplier)
-        selection = selectiontools.Selection([self])
+        selection = abjad.select([self])
         parent, start, stop = selection._get_parent_and_start_stop_indices()
         music_list = list(getattr(self, '_music', ()))
         parent.__setitem__(slice(start, stop + 1), music_list)
@@ -270,27 +269,26 @@ class Component(AbjadObject):
         return [_ for _ in self._indicator_wrappers if _.is_annotation]
 
     def _get_contents(self, include_self=True):
+        import abjad
         result = []
         if include_self:
             result.append(self)
         result.extend(getattr(self, '_music', []))
-        result = selectiontools.Selection(result)
+        result = abjad.select(result)
         return result
 
-    def _get_descendants(
-        self,
-        include_self=True,
-        ):
-        return selectiontools.Descendants(
+    def _get_descendants(self, include_self=True):
+        import abjad
+        return abjad.Descendants(
             self,
             include_self=include_self,
             )
 
     def _get_descendants_starting_with(self):
-        from abjad.tools import scoretools
+        import abjad
         result = []
         result.append(self)
-        if isinstance(self, scoretools.Container):
+        if isinstance(self, abjad.Container):
             if self.is_simultaneous:
                 for x in self:
                     result.extend(x._get_descendants_starting_with())
@@ -299,10 +297,10 @@ class Component(AbjadObject):
         return result
 
     def _get_descendants_stopping_with(self):
-        from abjad.tools import scoretools
+        import abjad
         result = []
         result.append(self)
-        if isinstance(self, scoretools.Container):
+        if isinstance(self, abjad.Container):
             if self.is_simultaneous:
                 for x in self:
                     result.extend(x._get_descendants_stopping_with())
@@ -481,7 +479,8 @@ class Component(AbjadObject):
         return self._format_component()
 
     def _get_lineage(self):
-        return selectiontools.Lineage(self)
+        import abjad
+        return abjad.Lineage(self)
 
     def _get_markup(self, direction=None):
         import abjad
@@ -542,7 +541,8 @@ class Component(AbjadObject):
         return result
 
     def _get_parentage(self, include_self=True, with_grace_notes=False):
-        return selectiontools.Parentage(
+        import abjad
+        return abjad.Parentage(
             self,
             include_self=include_self,
             with_grace_notes=with_grace_notes,
@@ -655,13 +655,15 @@ class Component(AbjadObject):
             return self._timespan
 
     def _get_vertical_moment(self, governor=None):
+        import abjad
         offset = self._get_timespan()._start_offset
         if governor is None:
             governor = self._get_parentage().root
-        return selectiontools.VerticalMoment(governor, offset)
+        return abjad.VerticalMoment(governor, offset)
 
     def _get_vertical_moment_at(self, offset):
-        return selectiontools.VerticalMoment(self, offset)
+        import abjad
+        return abjad.VerticalMoment(self, offset)
 
     def _has_effective_indicator(self, prototype=None):
         indicator = self._get_effective(prototype=prototype)

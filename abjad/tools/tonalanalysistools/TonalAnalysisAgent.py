@@ -63,9 +63,9 @@ class TonalAnalysisAgent(abctools.AbjadObject):
     ### INITIALIZER ###
 
     def __init__(self, client=None):
-        from abjad.tools import selectiontools
-        if not isinstance(client, selectiontools.Selection):
-            client = selectiontools.Selection(client)
+        import abjad
+        if not isinstance(client, abjad.Selection):
+            client = abjad.select(client)
         self._client = client
 
     ### PRIVATE METHODS ###

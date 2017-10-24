@@ -903,17 +903,16 @@ class MetricModulation(AbjadValueObject):
         return markup
 
     def _initialize_rhythm(self, rhythm):
-        from abjad.tools import scoretools
-        from abjad.tools import selectiontools
-        if isinstance(rhythm, scoretools.Component):
-            selection = selectiontools.Selection([rhythm])
-        elif isinstance(rhythm, selectiontools.Selection):
+        import abjad
+        if isinstance(rhythm, abjad.Component):
+            selection = abjad.select([rhythm])
+        elif isinstance(rhythm, abjad.Selection):
             selection = rhythm
         else:
             message = 'rhythm must be duration, component or selection: {!r}.'
             message = message.format(rhythm)
             raise TypeError(message)
-        assert isinstance(selection, selectiontools.Selection)
+        assert isinstance(selection, abjad.Selection)
         return selection
 
     ### PUBLIC PROPERTIES ###
