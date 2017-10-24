@@ -1,4 +1,5 @@
 import collections
+import inspect
 from abjad.tools.pitchtools.Set import Set
 
 
@@ -49,7 +50,8 @@ class PitchSet(Set):
 
     ### CLASS VARIABLES ###
 
-    __slots__ = ()
+    __slots__ = (
+        )
 
     ### SPECIAL METHODS ###
 

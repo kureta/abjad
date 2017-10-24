@@ -954,10 +954,13 @@ class Sequence(abctools.AbjadValueObject):
 
     @staticmethod
     def _make_map_string_template(operand):
-        string_template = '{operand} /@ {{}}'
-        operand = operand.get_string(name='X')
-        string_template = string_template.format(operand=operand)
-        return string_template
+        try:
+            string_template = '{operand} /@ {{}}'
+            operand = operand.get_string(name='X')
+            string_template = string_template.format(operand=operand)
+            return string_template
+        except ValueError:
+            return 'unknown string template'
 
     @staticmethod
     def _make_partition_indicator(counts, cyclic, overhang, reversed_):
@@ -1644,7 +1647,7 @@ class Sequence(abctools.AbjadValueObject):
                 self._flatten_at_indices_helper(self, indices, classes, depth)
                 )
 
-    def group_by(self):
+    def group_by(self, predicate=None):
         '''Groups sequence items by value of items.
 
         ..  container:: example
@@ -1665,13 +1668,55 @@ class Sequence(abctools.AbjadValueObject):
                 Sequence([5])
                 Sequence([-5])
 
+        ..  container:: example
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d' d' e' e' e'")
+                >>> predicate = abjad.PitchSet.from_selection
+                >>> for item in abjad.sequence(staff).group_by(predicate):
+                ...     item
+                ...
+                Sequence([Note("c'8")])
+                Sequence([Note("d'8"), Note("d'8")])
+                Sequence([Note("e'8"), Note("e'8"), Note("e'8")])
+
+        ..  container:: expression
+
+            ::
+
+                >>> predicate = abjad.select().by_leaf().pitch_set()
+                >>> expression = abjad.sequence().group_by(predicate)
+
+            ::
+
+                >>> staff = abjad.Staff("c'8 d' d' e' e' e'")
+                >>> for item in expression(staff):
+                ...     item
+                ...
+                Sequence([Note("c'8")])
+                Sequence([Note("d'8"), Note("d'8")])
+                Sequence([Note("e'8"), Note("e'8"), Note("e'8")])
+
         Returns nested sequence.
         '''
+        if self._expression:
+            return self._update_expression(
+                inspect.currentframe(),
+                evaluation_template='group_by',
+                map_operand=predicate,
+                )
         items = []
-        pairs = itertools.groupby(self, lambda _: _)
-        for count, group in pairs:
-            item = type(self)(items=group)
-            items.append(item)
+        if predicate is None:
+            pairs = itertools.groupby(self, lambda _: _)
+            for count, group in pairs:
+                item = type(self)(items=group)
+                items.append(item)
+        else:
+            pairs = itertools.groupby(self, predicate)
+            for count, group in pairs:
+                item = type(self)(items=group)
+                items.append(item)
         return type(self)(items=items)
 
     def is_decreasing(self, strict=True):

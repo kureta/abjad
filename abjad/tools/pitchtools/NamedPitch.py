@@ -151,6 +151,8 @@ class NamedPitch(Pitch):
             named_pitch_class = abjad.NamedPitchClass(number)
             octave = number // 12 + 4
             name = named_pitch_class.name + abjad.Octave(octave).ticks
+        elif isinstance(name, abjad.Note):
+            name = name.written_pitch.name
         else:
             message = 'can not initialize {} from {!r}.'
             message = message.format(type(self).__name__, name)

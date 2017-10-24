@@ -1,4 +1,5 @@
 import inspect
+import itertools
 import numbers
 from abjad.tools import systemtools
 from abjad.tools.abctools import AbjadValueObject
@@ -595,6 +596,8 @@ class Expression(AbjadValueObject):
         assert self.evaluation_template
         if self.evaluation_template == 'map':
             return self._evaluate_map(*arguments)
+        if self.evaluation_template == 'group_by':
+            return self._evaluate_group_by(*arguments)
         if self.subclass_hook:
             assert isinstance(self.subclass_hook, str)
             subclass_hook = getattr(self, self.subclass_hook)
@@ -661,6 +664,38 @@ class Expression(AbjadValueObject):
             result = __argument_0
         return result
 
+    def _evaluate_group_by(self, *arguments):
+        assert len(arguments) == 1, repr(arguments)
+        assert self.map_operand is not None
+        globals_ = self._make_globals()
+        assert '__argument_0' not in globals_
+        __argument_0 = arguments[0]
+        class_ = type(__argument_0)
+        map_operand = self.map_operand
+        globals_['__argument_0'] = __argument_0
+        globals_['class_'] = class_
+        globals_['map_operand'] = map_operand
+        globals_['itertools'] = itertools
+        statement = 'itertools.groupby(__argument_0, map_operand)'
+        try:
+            pairs = eval(statement, globals_)
+        except (NameError, SyntaxError, TypeError) as e:
+            message = '{!r} raises {!r}.'
+            message = message.format(statement, e)
+            raise Exception(message)
+        items = []
+        for count, group in pairs:
+            try:
+                item = class_(items=group)
+            except TypeError:
+                pass
+            items.append(item)
+        try:
+            result = class_(items)
+        except TypeError:
+            result = items
+        return result
+
     def _evaluate_map(self, *arguments):
         assert len(arguments) == 1, repr(arguments)
         assert self.map_operand is not None
@@ -672,7 +707,6 @@ class Expression(AbjadValueObject):
         globals_['__argument_0'] = __argument_0
         globals_['class_'] = class_
         globals_['map_operand'] = map_operand
-        #statement = 'class_([map_operand(_) for _ in __argument_0])'
         statement = '[map_operand(_) for _ in __argument_0]'
         try:
             result = eval(statement, globals_)
@@ -2071,6 +2105,22 @@ class Expression(AbjadValueObject):
         '''
         import abjad
         class_ = abjad.PitchClassSegment
+        callback = self._make_initializer_callback(
+            class_,
+            string_template='{}',
+            **keywords
+            )
+        expression = self.append_callback(callback)
+        return abjad.new(expression, proxy_class=class_)
+
+    # TODO: add examples
+    def pitch_set(self, **keywords):
+        r'''Makes pitch set expression.
+
+        Returns expression.
+        '''
+        import abjad
+        class_ = abjad.PitchSet
         callback = self._make_initializer_callback(
             class_,
             string_template='{}',

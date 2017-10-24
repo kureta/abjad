@@ -33,7 +33,6 @@ class StorageFormatAgent(AbjadValueObject):
         'schemetools',
         'scoretools',
         'selectiontools',
-        'selectortools',
         'timespantools',
         )
 
