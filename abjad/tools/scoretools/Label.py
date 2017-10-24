@@ -4,8 +4,8 @@ from abjad.tools import abctools
 from abjad.tools import schemetools
 
 
-class LabelAgent(abctools.AbjadObject):
-    r'''Label agent.
+class Label(abctools.AbjadObject):
+    r'''Label.
 
     ..  container:: example
 
@@ -58,15 +58,15 @@ class LabelAgent(abctools.AbjadObject):
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(
-                            evaluation_template='abjad.LabelAgent',
+                            evaluation_template='abjad.Label',
                             is_initializer=True,
                             ),
                         abjad.Expression(
                             evaluation_template="{}.with_pitches(locale='us')",
-                            qualified_method_name='abjad.LabelAgent.with_pitches',
+                            qualified_method_name='abjad.Label.with_pitches',
                             ),
                         ],
-                    proxy_class=abjad.LabelAgent,
+                    proxy_class=abjad.Label,
                     )
 
             ::
@@ -151,15 +151,15 @@ class LabelAgent(abctools.AbjadObject):
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(
-                            evaluation_template='abjad.LabelAgent',
+                            evaluation_template='abjad.Label',
                             is_initializer=True,
                             ),
                         abjad.Expression(
                             evaluation_template='{}.with_durations()',
-                            qualified_method_name='abjad.LabelAgent.with_durations',
+                            qualified_method_name='abjad.Label.with_durations',
                             ),
                         ],
-                    proxy_class=abjad.LabelAgent,
+                    proxy_class=abjad.Label,
                     )
 
             ::
@@ -260,7 +260,7 @@ class LabelAgent(abctools.AbjadObject):
 
     @property
     def client(self):
-        r'''Gets client of label agent.
+        r'''Gets client of label.
 
         Returns component, selection, spanner or none.
         '''

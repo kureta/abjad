@@ -29,7 +29,7 @@ def label(client=None):
                 ef'4 ^ \markup { 3/4 }
             }
 
-        See the ``LabelAgent`` API entry for many more examples.
+        See the ``Label`` API entry for many more examples.
 
     ..  container:: example expression
 
@@ -39,7 +39,7 @@ def label(client=None):
 
             >>> expression = abjad.label()
             >>> expression(staff)
-            LabelAgent(client=<Staff{3}>)
+            Label(client=<Staff{3}>)
 
         Initializes from keyword:
 
@@ -47,7 +47,7 @@ def label(client=None):
 
             >>> expression = abjad.label()
             >>> expression(client=staff)
-            LabelAgent(client=<Staff{3}>)
+            Label(client=<Staff{3}>)
 
         Makes label expression:
 
@@ -78,7 +78,7 @@ def label(client=None):
                 ef'4 ^ \markup { 3/4 }
             }
 
-        See the ``LabelAgent`` API entry for many more examples.
+        See the ``Label`` API entry for many more examples.
 
     Returns label agent when `client` is not none.
 
@@ -86,7 +86,7 @@ def label(client=None):
     '''
     import abjad
     if client is not None:
-        return abjad.LabelAgent(client=client)
+        return abjad.Label(client=client)
     expression = abjad.Expression()
     expression = expression.label()
     return expression

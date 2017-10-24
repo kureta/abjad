@@ -3,8 +3,8 @@ import inspect
 from abjad.tools import abctools
 
 
-class IterationAgent(abctools.AbjadObject):
-    r'''Iteration agent.
+class Iteration(abctools.AbjadObject):
+    r'''Iteration.
 
     ..  container:: example
 
@@ -104,7 +104,7 @@ class IterationAgent(abctools.AbjadObject):
             if (with_grace_notes and
                 getattr(argument, '_grace_container', None) is not None):
                 for component in argument._grace_container:
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -113,12 +113,12 @@ class IterationAgent(abctools.AbjadObject):
                         ):
                         yield x
             if isinstance(argument, prototype):
-                if IterationAgent._matches_pitched(argument, pitched=pitched):
+                if Iteration._matches_pitched(argument, pitched=pitched):
                     yield argument
             if (with_grace_notes and
                 getattr(argument, '_after_grace_container', None) is not None):
                 for component in argument._after_grace_container:
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -128,7 +128,7 @@ class IterationAgent(abctools.AbjadObject):
                         yield x
             if isinstance(argument, collections.Iterable):
                 for component in argument:
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -140,7 +140,7 @@ class IterationAgent(abctools.AbjadObject):
             if (with_grace_notes and
                 getattr(argument, '_after_grace_container', None) is not None):
                 for component in reversed(argument._after_grace_container):
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -149,12 +149,12 @@ class IterationAgent(abctools.AbjadObject):
                         ):
                         yield x
             if isinstance(argument, prototype):
-                if IterationAgent._matches_pitched(argument, pitched=pitched):
+                if Iteration._matches_pitched(argument, pitched=pitched):
                     yield argument
             if (with_grace_notes and
                 getattr(argument, '_grace_container', None) is not None):
                 for component in reversed(argument._grace_container):
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -164,7 +164,7 @@ class IterationAgent(abctools.AbjadObject):
                         yield x
             if isinstance(argument, collections.Iterable):
                 for component in reversed(argument):
-                    for x in IterationAgent._iterate_components(
+                    for x in Iteration._iterate_components(
                         component,
                         pitched=pitched,
                         prototype=prototype,
@@ -221,7 +221,7 @@ class IterationAgent(abctools.AbjadObject):
 
     @property
     def client(self):
-        r'''Gets client of iteration agent.
+        r'''Gets client of iteration.
 
         ..  container:: example
 

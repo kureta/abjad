@@ -1,12 +1,12 @@
 from abjad.tools import abctools
 
 
-class MutationAgent(abctools.AbjadObject):
-    r'''Mutation agent.
+class Mutation(abctools.AbjadObject):
+    r'''Mutation.
 
     ..  container:: example
 
-        Creates mutation agent for last two notes in staff:
+        Creates mutation for last two notes in staff:
 
         ::
 
@@ -16,7 +16,7 @@ class MutationAgent(abctools.AbjadObject):
         ::
 
             >>> abjad.mutate(staff[2:])
-            MutationAgent(client=Selection([Note("d'4"), Note("f'4")]))
+            Mutation(client=Selection([Note("d'4"), Note("f'4")]))
 
     '''
 
@@ -3222,7 +3222,7 @@ class MutationAgent(abctools.AbjadObject):
 
     @property
     def client(self):
-        r'''Returns client of mutation agent.
+        r'''Returns client of mutation.
 
         Returns selection or component.
         '''

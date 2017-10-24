@@ -2,8 +2,8 @@ from abjad.tools import abctools
 from abjad.tools import durationtools
 
 
-class InspectionAgent(abctools.AbjadObject):
-    r'''Inspection agent.
+class Inspection(abctools.AbjadObject):
+    r'''Inspection.
 
     ..  container:: example
 
@@ -15,7 +15,7 @@ class InspectionAgent(abctools.AbjadObject):
         ::
 
             >>> abjad.inspect(staff)
-            InspectionAgent(client=Staff("c'4 e'4 d'4 f'4"))
+            Inspection(client=Staff("c'4 e'4 d'4 f'4"))
 
     '''
 
@@ -47,7 +47,7 @@ class InspectionAgent(abctools.AbjadObject):
 
     @property
     def client(self):
-        r'''Gets client of inspection agent.
+        r'''Gets client of inspection.
 
         ..  container:: example
 

@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_scoretools_MutationAgent_fuse_01():
+def test_scoretools_Mutation_fuse_01():
     r'''Works with list of leaves.
     '''
 
@@ -13,7 +13,7 @@ def test_scoretools_MutationAgent_fuse_01():
     assert fused[0].written_duration == abjad.Duration(2)
 
 
-def test_scoretools_MutationAgent_fuse_02():
+def test_scoretools_Mutation_fuse_02():
     r'''Works with Leaf component.
     '''
 
@@ -22,7 +22,7 @@ def test_scoretools_MutationAgent_fuse_02():
     assert fused[0].written_duration == abjad.Duration(1, 4)
 
 
-def test_scoretools_MutationAgent_fuse_03():
+def test_scoretools_Mutation_fuse_03():
     r'''Works with containers.
     '''
 
@@ -33,7 +33,7 @@ def test_scoretools_MutationAgent_fuse_03():
     assert voice[0] is fused[0]
 
 
-def test_scoretools_MutationAgent_fuse_04():
+def test_scoretools_Mutation_fuse_04():
     r'''Fusion results in tied notes.
     '''
 
@@ -53,7 +53,7 @@ def test_scoretools_MutationAgent_fuse_04():
     assert voice[0].written_pitch == voice[1].written_pitch
 
 
-def test_scoretools_MutationAgent_fuse_05():
+def test_scoretools_Mutation_fuse_05():
     r'''Fuses leaves with differing LilyPond multipliers.
     '''
 
@@ -86,7 +86,7 @@ def test_scoretools_MutationAgent_fuse_05():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_06():
+def test_scoretools_Mutation_fuse_06():
     r'''Fuses two unincorporated tuplets with same multiplier.
     '''
 
@@ -139,7 +139,7 @@ def test_scoretools_MutationAgent_fuse_06():
     assert abjad.inspect(new).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_07():
+def test_scoretools_Mutation_fuse_07():
     r'''Fuses tuplets with same multiplier in score.
     '''
 
@@ -189,7 +189,7 @@ def test_scoretools_MutationAgent_fuse_07():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_08():
+def test_scoretools_Mutation_fuse_08():
     r'''Fuses fixed-multiplier tuplets with same multiplier in score.
     '''
 
@@ -245,7 +245,7 @@ def test_scoretools_MutationAgent_fuse_08():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_09():
+def test_scoretools_Mutation_fuse_09():
     r'''Tuplets must carry same multiplier.
     '''
 
@@ -256,7 +256,7 @@ def test_scoretools_MutationAgent_fuse_09():
     assert pytest.raises(Exception, 'abjad.mutate(tuplets).fuse()')
 
 
-def test_scoretools_MutationAgent_fuse_10():
+def test_scoretools_Mutation_fuse_10():
     r'''Dominant spanners on contents are preserved.
     '''
 
@@ -301,7 +301,7 @@ def test_scoretools_MutationAgent_fuse_10():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_11():
+def test_scoretools_Mutation_fuse_11():
     r'''Fuses unicorporated measures carrying
     time signatures with power-of-two denominators.
     '''
@@ -352,7 +352,7 @@ def test_scoretools_MutationAgent_fuse_11():
     assert abjad.inspect(new).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_12():
+def test_scoretools_Mutation_fuse_12():
     r'''Fuses measures carrying time signatures with differing
     power-of-two denominators. Helpers abjad.selects minimum of two denominators.
     Beams are OK because they abjad.attach to leaves rather than containers.
@@ -399,7 +399,7 @@ def test_scoretools_MutationAgent_fuse_12():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_13():
+def test_scoretools_Mutation_fuse_13():
     r'''Fuses measures with differing power-of-two denominators.
     Helpers abjad.selects minimum of two denominators.
     Beam abjad.attaches to container rather than leaves.
@@ -446,7 +446,7 @@ def test_scoretools_MutationAgent_fuse_13():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_14():
+def test_scoretools_Mutation_fuse_14():
     r'''Fuses measures with power-of-two-denominators together with measures
     without power-of-two denominators.
     Helpers abjad.selects least common multiple of denominators.
@@ -498,7 +498,7 @@ def test_scoretools_MutationAgent_fuse_14():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_15():
+def test_scoretools_Mutation_fuse_15():
     r'''Fusing empty selection returns none.
     '''
 
@@ -507,7 +507,7 @@ def test_scoretools_MutationAgent_fuse_15():
     assert result == abjad.Selection()
 
 
-def test_scoretools_MutationAgent_fuse_16():
+def test_scoretools_Mutation_fuse_16():
     r'''Fusing selection of only one measure returns measure unaltered.
     '''
 
@@ -518,7 +518,7 @@ def test_scoretools_MutationAgent_fuse_16():
     assert new is measure
 
 
-def test_scoretools_MutationAgent_fuse_17():
+def test_scoretools_Mutation_fuse_17():
     r'''Fuses three measures.
     '''
 
@@ -568,7 +568,7 @@ def test_scoretools_MutationAgent_fuse_17():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_fuse_18():
+def test_scoretools_Mutation_fuse_18():
     r'''Fusing measures with power-of-two denominators
     to measures without power-of-two denominators.
     With change in number of note-heads because of non-power-of-two multiplier.

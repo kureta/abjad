@@ -35,7 +35,7 @@ ignored_classes = (
     systemtools.RedirectedStreams,
     systemtools.StorageFormatManager,
     systemtools.FormatSpecification,
-    tonalanalysistools.TonalAnalysisAgent,
+    tonalanalysistools.TonalAnalysis,
     tonalanalysistools.RootedChordClass
     )
 

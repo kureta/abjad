@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_scoretools_MutationAgent_scale_01():
+def test_scoretools_Mutation_scale_01():
     r'''Scales leaves by dot-generating multiplier.
     '''
 
@@ -22,7 +22,7 @@ def test_scoretools_MutationAgent_scale_01():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_02():
+def test_scoretools_Mutation_scale_02():
     r'''Scales leaves by tie-generating multiplier.
     '''
 
@@ -47,7 +47,7 @@ def test_scoretools_MutationAgent_scale_02():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_03():
+def test_scoretools_Mutation_scale_03():
     r'''Scales leaves by tuplet-generating multiplier.
     '''
 
@@ -80,7 +80,7 @@ def test_scoretools_MutationAgent_scale_03():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_04():
+def test_scoretools_Mutation_scale_04():
     r'''Scales leaves by tie- and tuplet-generating multiplier.
     '''
 
@@ -117,7 +117,7 @@ def test_scoretools_MutationAgent_scale_04():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_05():
+def test_scoretools_Mutation_scale_05():
     r'''Undo scale of 5/4 with scale of 4/5.
     '''
 
@@ -155,7 +155,7 @@ def test_scoretools_MutationAgent_scale_05():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_06():
+def test_scoretools_Mutation_scale_06():
     r'''Doubles measures.
     '''
 
@@ -200,7 +200,7 @@ def test_scoretools_MutationAgent_scale_06():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_scale_07():
+def test_scoretools_Mutation_scale_07():
     r'''Scales measures by 5/4.
     '''
 

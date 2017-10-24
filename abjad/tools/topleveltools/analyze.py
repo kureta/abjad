@@ -5,9 +5,9 @@ def analyze(argument):
     '''
     import abjad
     if isinstance(argument, abjad.Component):
-        return abjad.tonalanalysistools.TonalAnalysisAgent(argument)
+        return abjad.tonalanalysistools.TonalAnalysis(argument)
     elif hasattr(argument, '_music'):
         music = argument._music
-        return abjad.tonalanalysistools.TonalAnalysisAgent(music)
+        return abjad.tonalanalysistools.TonalAnalysis(music)
     else:
-        return abjad.tonalanalysistools.TonalAnalysisAgent(argument)
+        return abjad.tonalanalysistools.TonalAnalysis(argument)

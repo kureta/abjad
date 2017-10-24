@@ -3,7 +3,7 @@ from abjad.tools import mathtools
 from abjad.tools import pitchtools
 
 
-class TonalAnalysisAgent(abctools.AbjadObject):
+class TonalAnalysis(abctools.AbjadObject):
     r'''Tonal analysis agent.
 
     ..  container:: example
@@ -119,22 +119,22 @@ class TonalAnalysisAgent(abctools.AbjadObject):
             item_class=pitchtools.NamedInversionEquivalentIntervalClass,
             )
         # TODO: eliminate code duplication #
-        if dicv == TonalAnalysisAgent._make_dicv('c', 'ef'):
+        if dicv == TonalAnalysis._make_dicv('c', 'ef'):
             model_npcs = ['c', 'ef']
             quality, extent = 'minor', 'triad'
-        elif dicv == TonalAnalysisAgent._make_dicv('c', 'e'):
+        elif dicv == TonalAnalysis._make_dicv('c', 'e'):
             model_npcs = ['c', 'e']
             quality, extent = 'major', 'triad'
-        elif dicv == TonalAnalysisAgent._make_dicv('c', 'ef', 'bff'):
+        elif dicv == TonalAnalysis._make_dicv('c', 'ef', 'bff'):
             model_npcs = ['c', 'ef', 'bff']
             quality, extent = 'diminished', 'seventh'
-        elif dicv == TonalAnalysisAgent._make_dicv('c', 'ef', 'bf'):
+        elif dicv == TonalAnalysis._make_dicv('c', 'ef', 'bf'):
             model_npcs = ['c', 'ef', 'bf']
             quality, extent = 'minor', 'seventh'
-        elif dicv == TonalAnalysisAgent._make_dicv('c', 'e', 'bf'):
+        elif dicv == TonalAnalysis._make_dicv('c', 'e', 'bf'):
             model_npcs = ['c', 'e', 'bf']
             quality, extent = 'dominant', 'seventh'
-        elif dicv == TonalAnalysisAgent._make_dicv('c', 'e', 'b'):
+        elif dicv == TonalAnalysis._make_dicv('c', 'e', 'b'):
             model_npcs = ['c', 'e', 'b']
             quality, extent = 'major', 'seventh'
         else:

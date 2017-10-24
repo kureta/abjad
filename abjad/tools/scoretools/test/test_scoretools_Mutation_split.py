@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_scoretools_MutationAgent_split_01():
+def test_scoretools_Mutation_split_01():
     r'''Cyclically splits note in score.
     
     Doesn't fracture spanners.
@@ -64,7 +64,7 @@ def test_scoretools_MutationAgent_split_01():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_02():
+def test_scoretools_Mutation_split_02():
     r'''Cyclically splits consecutive notes in score.
 
     Doesn't fracture spanners.
@@ -125,7 +125,7 @@ def test_scoretools_MutationAgent_split_02():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_03():
+def test_scoretools_Mutation_split_03():
     r'''Cyclically splits measure in score.
     
     Doesn't fracture spanners.
@@ -192,7 +192,7 @@ def test_scoretools_MutationAgent_split_03():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_04():
+def test_scoretools_Mutation_split_04():
     r'''Cyclically splits consecutive measures in score.
 
     Doesn't fracture spanners.
@@ -269,7 +269,7 @@ def test_scoretools_MutationAgent_split_04():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_05():
+def test_scoretools_Mutation_split_05():
     r'''Cyclically splits orphan measures.
 
     Doesn't fracture spanners.
@@ -333,7 +333,7 @@ def test_scoretools_MutationAgent_split_05():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_06():
+def test_scoretools_Mutation_split_06():
     r'''Cyclically splits note in score.
 
     Doesn't fracture spanners.
@@ -395,7 +395,7 @@ def test_scoretools_MutationAgent_split_06():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_07():
+def test_scoretools_Mutation_split_07():
     r'''Cyclically splits consecutive notes in score.
 
     Doesn't fracture spanners.
@@ -457,7 +457,7 @@ def test_scoretools_MutationAgent_split_07():
     assert len(result) == 8
 
 
-def test_scoretools_MutationAgent_split_08():
+def test_scoretools_Mutation_split_08():
     r'''Cyclically splits measure in score.
 
     Doesn't fracture spanners.
@@ -525,7 +525,7 @@ def test_scoretools_MutationAgent_split_08():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_09():
+def test_scoretools_Mutation_split_09():
     r'''Cyclically splits consecutive measures in score.
 
     Doesn't fracture spanners.
@@ -602,7 +602,7 @@ def test_scoretools_MutationAgent_split_09():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_10():
+def test_scoretools_Mutation_split_10():
     r'''Cyclically splits note in score.
 
     Fractures spanners.
@@ -662,7 +662,7 @@ def test_scoretools_MutationAgent_split_10():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_11():
+def test_scoretools_Mutation_split_11():
     r'''Cyclically splits consecutive notes in score.
 
     Fractures spanners.
@@ -723,7 +723,7 @@ def test_scoretools_MutationAgent_split_11():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_12():
+def test_scoretools_Mutation_split_12():
     r'''Cyclically splits measure in score.
     
     Fractures spanners.
@@ -790,7 +790,7 @@ def test_scoretools_MutationAgent_split_12():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_13():
+def test_scoretools_Mutation_split_13():
     r'''Cyclically splits consecutive measures in score.
 
     Fractures spanners.
@@ -867,7 +867,7 @@ def test_scoretools_MutationAgent_split_13():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_14():
+def test_scoretools_Mutation_split_14():
     r'''Cyclically splits orphan notes.
     '''
 
@@ -906,7 +906,7 @@ def test_scoretools_MutationAgent_split_14():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_15():
+def test_scoretools_Mutation_split_15():
     r'''Cyclically splits orphan measures.
 
     Fractures spanners.
@@ -969,7 +969,7 @@ def test_scoretools_MutationAgent_split_15():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_16():
+def test_scoretools_Mutation_split_16():
     r'''Cyclically splits note in score.
 
     Fractures spanners.
@@ -1031,7 +1031,7 @@ def test_scoretools_MutationAgent_split_16():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_17():
+def test_scoretools_Mutation_split_17():
     r'''Cyclically splits consecutive notes in score.
 
     Fractures spanners.
@@ -1093,7 +1093,7 @@ def test_scoretools_MutationAgent_split_17():
     assert len(result) == 8
 
 
-def test_scoretools_MutationAgent_split_18():
+def test_scoretools_Mutation_split_18():
     r'''Cyclically splits measure in score.
 
     Fractures spanners.
@@ -1161,7 +1161,7 @@ def test_scoretools_MutationAgent_split_18():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_19():
+def test_scoretools_Mutation_split_19():
     r'''Cyclically splits consecutive measures in score.
     
     Fractures spanners.
@@ -1238,7 +1238,7 @@ def test_scoretools_MutationAgent_split_19():
     assert len(result) == 6
 
 
-def test_scoretools_MutationAgent_split_20():
+def test_scoretools_Mutation_split_20():
     r'''Force-splits measure in score.
 
     Does not fracture spanners.
@@ -1305,7 +1305,7 @@ def test_scoretools_MutationAgent_split_20():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_21():
+def test_scoretools_Mutation_split_21():
     r'''Force-splits consecutive measures in score.
 
     Does not fracture spanners.
@@ -1376,7 +1376,7 @@ def test_scoretools_MutationAgent_split_21():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_22():
+def test_scoretools_Mutation_split_22():
     r'''Force-splits measure in score.
     
     Fractures spanners.
@@ -1443,7 +1443,7 @@ def test_scoretools_MutationAgent_split_22():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_23():
+def test_scoretools_Mutation_split_23():
     r'''Force-splits consecutive measures in score.
     
     Fractures spanners.
@@ -1512,7 +1512,7 @@ def test_scoretools_MutationAgent_split_23():
         ), format(staff)
 
 
-def test_scoretools_MutationAgent_split_24():
+def test_scoretools_Mutation_split_24():
     r'''Force-splits orphan note.
     
     Offsets sum to less than note duration.
@@ -1546,7 +1546,7 @@ def test_scoretools_MutationAgent_split_24():
     assert len(result) == 3
 
 
-def test_scoretools_MutationAgent_split_25():
+def test_scoretools_Mutation_split_25():
     r'''Force-splits note in score.
     
     Fractures spanners.
@@ -1584,7 +1584,7 @@ def test_scoretools_MutationAgent_split_25():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_26():
+def test_scoretools_Mutation_split_26():
     r'''Splits tuplet in score
     
     Does not fracture spanners.
@@ -1627,7 +1627,7 @@ def test_scoretools_MutationAgent_split_26():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_27():
+def test_scoretools_Mutation_split_27():
     r'''Splits in-score measure with power-of-two denominator.
 
     Does not fracture spanners.
@@ -1671,7 +1671,7 @@ def test_scoretools_MutationAgent_split_27():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_28():
+def test_scoretools_Mutation_split_28():
     r'''Splits in-score measure without power-of-two denominator.
 
     Does not frature spanners.
@@ -1721,7 +1721,7 @@ def test_scoretools_MutationAgent_split_28():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_29():
+def test_scoretools_Mutation_split_29():
     r'''Splits container in middle.
     '''
 
@@ -1760,7 +1760,7 @@ def test_scoretools_MutationAgent_split_29():
     assert abjad.inspect(voice_2).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_30():
+def test_scoretools_Mutation_split_30():
     r'''Splits voice at negative index.
     '''
 
@@ -1818,7 +1818,7 @@ def test_scoretools_MutationAgent_split_30():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_31():
+def test_scoretools_Mutation_split_31():
     r'''Slpits container in score.
     
     Does not fracture spanners.
@@ -1896,7 +1896,7 @@ def test_scoretools_MutationAgent_split_31():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_32():
+def test_scoretools_Mutation_split_32():
     r'''Splits tuplet in score.
     
     Does not fracture spanners.
@@ -1985,7 +1985,7 @@ def test_scoretools_MutationAgent_split_32():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_33():
+def test_scoretools_Mutation_split_33():
     r'''Splits tuplet in score
     
     Fractures spanners.
@@ -2069,7 +2069,7 @@ def test_scoretools_MutationAgent_split_33():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_34():
+def test_scoretools_Mutation_split_34():
     r'''Splits measure with power-of-two time signature denominator.
 
     Fractures spanners.
@@ -2155,7 +2155,7 @@ def test_scoretools_MutationAgent_split_34():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_35():
+def test_scoretools_Mutation_split_35():
     r'''Splits measure without power-of-two denominator.
 
     Fractures spanners.
@@ -2257,7 +2257,7 @@ def test_scoretools_MutationAgent_split_35():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_36():
+def test_scoretools_Mutation_split_36():
     r'''Splits voice outside of score.
 
     Fractures spanners.
@@ -2312,7 +2312,7 @@ def test_scoretools_MutationAgent_split_36():
         ), format(voice)
 
 
-def test_scoretools_MutationAgent_split_37():
+def test_scoretools_Mutation_split_37():
     r'''Splits measure in score.
     
     Fractures spanners.
@@ -2376,7 +2376,7 @@ def test_scoretools_MutationAgent_split_37():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_38():
+def test_scoretools_Mutation_split_38():
     r'''Splits in-score measure with power-of-two denominator.
 
     Fractures spanners but does not tie over split.
@@ -2427,7 +2427,7 @@ def test_scoretools_MutationAgent_split_38():
     assert len(result) == 2
 
 
-def test_scoretools_MutationAgent_split_39():
+def test_scoretools_Mutation_split_39():
     r'''Splits cyclically.
 
     Leave spanner untouched.
@@ -2490,7 +2490,7 @@ def test_scoretools_MutationAgent_split_39():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_40():
+def test_scoretools_Mutation_split_40():
     r'''Cyclically splits all components in container.
     '''
 
@@ -2543,7 +2543,7 @@ def test_scoretools_MutationAgent_split_40():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_41():
+def test_scoretools_Mutation_split_41():
     r'''Cyclically splits all components in container.
     '''
 
@@ -2597,7 +2597,7 @@ def test_scoretools_MutationAgent_split_41():
     assert len(result) == 4
 
 
-def test_scoretools_MutationAgent_split_42():
+def test_scoretools_Mutation_split_42():
     r'''Ignores extra durations.
 
     Result contains no empty shards.
@@ -2649,7 +2649,7 @@ def test_scoretools_MutationAgent_split_42():
     assert len(result) == 2
 
 
-def test_scoretools_MutationAgent_split_43():
+def test_scoretools_Mutation_split_43():
     r'''Leaves container unchanged because of empty duration list.
     '''
 
@@ -2697,7 +2697,7 @@ def test_scoretools_MutationAgent_split_43():
     assert len(result) == 1
 
 
-def test_scoretools_MutationAgent_split_44():
+def test_scoretools_Mutation_split_44():
     r'''Ignores extra durations.
 
     Result contains no empty shards.
@@ -2749,7 +2749,7 @@ def test_scoretools_MutationAgent_split_44():
     assert len(result) == 2
 
 
-def test_scoretools_MutationAgent_split_45():
+def test_scoretools_Mutation_split_45():
     r'''Splits leaf at non-assignable, non-power-of-two offset.
     '''
 
@@ -2775,7 +2775,7 @@ def test_scoretools_MutationAgent_split_45():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_split_46():
+def test_scoretools_Mutation_split_46():
     r'''Splits in-score measure without power-of-two denominator.
 
     Fractures spanners but does not tie over split.

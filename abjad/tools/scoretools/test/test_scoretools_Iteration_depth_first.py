@@ -23,7 +23,7 @@ staff = abjad.Staff(
     )
 
 
-def test_scoretools_IterationAgent_depth_first_01():
+def test_scoretools_Iteration_depth_first_01():
     '''
     Default depth-first search:
         * capped iteration returns no elements above self._client
@@ -80,7 +80,7 @@ def test_scoretools_IterationAgent_depth_first_01():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_02():
+def test_scoretools_Iteration_depth_first_02():
     r'''Uncapped depth-first search: uncapped iteration returns
     all elements above self._client
     '''
@@ -149,7 +149,7 @@ def test_scoretools_IterationAgent_depth_first_02():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_03():
+def test_scoretools_Iteration_depth_first_03():
     r'''Duplicates-allowed depth-first search: nodes yield every time they are
     traversed.  '''
 
@@ -229,7 +229,7 @@ def test_scoretools_IterationAgent_depth_first_03():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_04():
+def test_scoretools_Iteration_depth_first_04():
     r'''Restricted depth-first search: iteration will yield -- but will not
     enter -- forbidden classes.
     '''
@@ -282,7 +282,7 @@ def test_scoretools_IterationAgent_depth_first_04():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_05():
+def test_scoretools_Iteration_depth_first_05():
     r'''Uncapped depth-first search with duplicates allowed.
     '''
 
@@ -384,7 +384,7 @@ def test_scoretools_IterationAgent_depth_first_05():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_06():
+def test_scoretools_Iteration_depth_first_06():
     r'''Uncapped and restricted depth-first search.
     '''
 
@@ -428,7 +428,7 @@ def test_scoretools_IterationAgent_depth_first_06():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_07():
+def test_scoretools_Iteration_depth_first_07():
     r'''Restricted depth-first search with duplicates allowed.
     '''
 
@@ -502,7 +502,7 @@ def test_scoretools_IterationAgent_depth_first_07():
     '''
 
 
-def test_scoretools_IterationAgent_depth_first_08():
+def test_scoretools_Iteration_depth_first_08():
     r'''Uncapped but restricted depth-first serach with duplicates allowed.
     '''
 

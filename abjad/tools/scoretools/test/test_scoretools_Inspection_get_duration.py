@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_scoretools_InspectionAgent_get_duration_01():
+def test_scoretools_Inspection_get_duration_01():
     r'''Spanner duration in seconds equals sum of duration
     of all leaves in spanner, in seconds.
     '''
@@ -47,7 +47,7 @@ def test_scoretools_InspectionAgent_get_duration_01():
         abjad.Duration(20, 7)
 
 
-def test_scoretools_InspectionAgent_get_duration_02():
+def test_scoretools_Inspection_get_duration_02():
 
     voice = abjad.Voice(
         [abjad.Measure((2, 12), "c'8 d'8", implicit_scaling=True),
@@ -85,7 +85,7 @@ def test_scoretools_InspectionAgent_get_duration_02():
     assert abjad.inspect(decrescendo).get_duration() == abjad.Duration(2, 8)
 
 
-def test_scoretools_InspectionAgent_get_duration_03():
+def test_scoretools_Inspection_get_duration_03():
     r'''Container duration in seconds equals
     sum of leaf durations in seconds.
     '''
@@ -115,7 +115,7 @@ def test_scoretools_InspectionAgent_get_duration_03():
     assert abjad.inspect(score).get_duration(in_seconds=True) == abjad.Duration(400, 133)
 
 
-def test_scoretools_InspectionAgent_get_duration_04():
+def test_scoretools_Inspection_get_duration_04():
     r'''Container can not calculate duration in seconds
     without metronome mark.
     '''
@@ -125,7 +125,7 @@ def test_scoretools_InspectionAgent_get_duration_04():
     assert pytest.raises(Exception, statement)
 
 
-def test_scoretools_InspectionAgent_get_duration_05():
+def test_scoretools_Inspection_get_duration_05():
     r'''Clock duration equals duration divide by effective tempo.
     '''
 
@@ -155,7 +155,7 @@ def test_scoretools_InspectionAgent_get_duration_05():
     assert abjad.inspect(staff[3]).get_duration(in_seconds=True) == abjad.Duration(5, 7)
 
 
-def test_scoretools_InspectionAgent_get_duration_06():
+def test_scoretools_Inspection_get_duration_06():
     r'''Clock duration can not calculate without metronome mark.
     '''
 

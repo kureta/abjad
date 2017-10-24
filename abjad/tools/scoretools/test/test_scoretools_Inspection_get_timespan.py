@@ -2,21 +2,21 @@ import abjad
 import pytest
 
 
-def test_scoretools_InspectionAgent_get_timespan_01():
+def test_scoretools_Inspection_get_timespan_01():
 
     voice = abjad.Voice("c'8 d'8 e'8 f'8")
     for i, x in enumerate(voice):
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_02():
+def test_scoretools_Inspection_get_timespan_02():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     for i, x in enumerate(staff):
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_03():
+def test_scoretools_Inspection_get_timespan_03():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     staff[-1] = abjad.Rest((1, 8))
@@ -24,7 +24,7 @@ def test_scoretools_InspectionAgent_get_timespan_03():
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_04():
+def test_scoretools_Inspection_get_timespan_04():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     staff[10:10] = [abjad.Rest((1, 8))]
@@ -32,7 +32,7 @@ def test_scoretools_InspectionAgent_get_timespan_04():
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_05():
+def test_scoretools_Inspection_get_timespan_05():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     staff[10:12] = [abjad.Rest((1, 8))]
@@ -40,7 +40,7 @@ def test_scoretools_InspectionAgent_get_timespan_05():
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_06():
+def test_scoretools_Inspection_get_timespan_06():
     r'''Offset works with voices.
     '''
 
@@ -53,14 +53,14 @@ def test_scoretools_InspectionAgent_get_timespan_06():
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_07():
+def test_scoretools_Inspection_get_timespan_07():
 
     tuplet = abjad.Tuplet((2, 3), "c'8 c'8 c'8")
     for i, x in enumerate(tuplet):
         assert abjad.inspect(x).get_timespan().start_offset == i * abjad.Offset(1, 12)
 
 
-def test_scoretools_InspectionAgent_get_timespan_08():
+def test_scoretools_Inspection_get_timespan_08():
 
     tuplet_1 = abjad.Tuplet((2, 3), "c'8 c'8 c'8")
     voice = abjad.Voice([abjad.Note(0, (1, 8)), tuplet_1, abjad.Note(0, (1, 8))])
@@ -72,7 +72,7 @@ def test_scoretools_InspectionAgent_get_timespan_08():
         offset += abjad.Offset(*duration)
 
 
-def test_scoretools_InspectionAgent_get_timespan_09():
+def test_scoretools_Inspection_get_timespan_09():
     r'''Offset works on nested tuplets.
     '''
 
@@ -86,7 +86,7 @@ def test_scoretools_InspectionAgent_get_timespan_09():
         offset += abjad.Offset(*duration)
 
 
-def test_scoretools_InspectionAgent_get_timespan_10():
+def test_scoretools_Inspection_get_timespan_10():
     r'''Offset works with simultaneous structures.
     '''
 
@@ -102,7 +102,7 @@ def test_scoretools_InspectionAgent_get_timespan_10():
         assert start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_11():
+def test_scoretools_Inspection_get_timespan_11():
     r'''Offset on leaves works in nested contexts.
     '''
 
@@ -118,7 +118,7 @@ def test_scoretools_InspectionAgent_get_timespan_11():
         assert start_offset == i * abjad.Offset(1, 8) + abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_12():
+def test_scoretools_Inspection_get_timespan_12():
     r'''Offset on leaves works in sequential contexts.
     '''
 
@@ -133,7 +133,7 @@ def test_scoretools_InspectionAgent_get_timespan_12():
         assert start_offset == i * abjad.Offset(1, 8) + abjad.Offset(1, 2)
 
 
-def test_scoretools_InspectionAgent_get_timespan_13():
+def test_scoretools_Inspection_get_timespan_13():
     r'''Offset on leaves works in nested simultaneous contexts.
     '''
 
@@ -149,7 +149,7 @@ def test_scoretools_InspectionAgent_get_timespan_13():
         assert start_offset == i * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_14():
+def test_scoretools_Inspection_get_timespan_14():
     r'''Offset on leaves works in nested simultaneous and sequential contexts.
     '''
 
@@ -163,7 +163,7 @@ def test_scoretools_InspectionAgent_get_timespan_14():
         assert start_offset == i * abjad.Offset(1, 8) + abjad.Offset(1, 2)
 
 
-def test_scoretools_InspectionAgent_get_timespan_15():
+def test_scoretools_Inspection_get_timespan_15():
     r'''Offset on leaves works in nested simultaneous and sequential contexts.
     '''
 
@@ -180,7 +180,7 @@ def test_scoretools_InspectionAgent_get_timespan_15():
         assert start_offset == i * abjad.Offset(1, 8) + abjad.Offset(1, 2)
 
 
-def test_scoretools_InspectionAgent_get_timespan_16():
+def test_scoretools_Inspection_get_timespan_16():
     r'''Offsets works on sequential voices.
     '''
 
@@ -191,7 +191,7 @@ def test_scoretools_InspectionAgent_get_timespan_16():
         assert start_offset == i * abjad.Offset(4, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_17():
+def test_scoretools_Inspection_get_timespan_17():
     r'''Prolated offset does NOT go across sequential staves.
     '''
 
@@ -203,7 +203,7 @@ def test_scoretools_InspectionAgent_get_timespan_17():
     assert start_offset == abjad.Offset(1, 2)
 
 
-def test_scoretools_InspectionAgent_get_timespan_18():
+def test_scoretools_Inspection_get_timespan_18():
     r'''Offsets works with nested voices.
     '''
 
@@ -213,7 +213,7 @@ def test_scoretools_InspectionAgent_get_timespan_18():
         assert start_offset == i * abjad.Offset(4, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_19():
+def test_scoretools_Inspection_get_timespan_19():
     r'''Offsets works on sequential tuplets.
     '''
 
@@ -223,7 +223,7 @@ def test_scoretools_InspectionAgent_get_timespan_19():
     assert abjad.inspect(voice[2]).get_timespan().start_offset == 2 * abjad.Offset(1, 4)
 
 
-def test_scoretools_InspectionAgent_get_timespan_20():
+def test_scoretools_Inspection_get_timespan_20():
     r'''Offsets work on tuplets between notes.
     '''
 
@@ -234,7 +234,7 @@ def test_scoretools_InspectionAgent_get_timespan_20():
     assert abjad.inspect(voice[2]).get_timespan().start_offset == 3 * abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_21():
+def test_scoretools_Inspection_get_timespan_21():
     r'''Offsets work on nested tuplets.
     '''
 
@@ -246,7 +246,7 @@ def test_scoretools_InspectionAgent_get_timespan_21():
     assert abjad.inspect(tuplet[2]).get_timespan().start_offset == 2 * abjad.Offset(1, 6)
 
 
-def test_scoretools_InspectionAgent_get_timespan_22():
+def test_scoretools_Inspection_get_timespan_22():
     r'''Offsets work on nested contexts.
     '''
 
@@ -258,7 +258,7 @@ def test_scoretools_InspectionAgent_get_timespan_22():
     assert abjad.inspect(outer_voice).get_timespan().start_offset == abjad.Offset(1, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_23():
+def test_scoretools_Inspection_get_timespan_23():
     r'''Offsets work on nested simultaneous contexts.
     '''
 
@@ -270,7 +270,7 @@ def test_scoretools_InspectionAgent_get_timespan_23():
     assert abjad.inspect(staff[1]).get_timespan().start_offset == 0
 
 
-def test_scoretools_InspectionAgent_get_timespan_24():
+def test_scoretools_Inspection_get_timespan_24():
     r'''Offsets works in nested simultaneous and sequential contexts.
     '''
 
@@ -288,7 +288,7 @@ def test_scoretools_InspectionAgent_get_timespan_24():
     assert abjad.inspect(voice_2b).get_timespan().start_offset == abjad.Offset(4, 8)
 
 
-def test_scoretools_InspectionAgent_get_timespan_25():
+def test_scoretools_Inspection_get_timespan_25():
     r'''Offset seconds can not calculate without excplit metronome mark.
     '''
 
@@ -298,7 +298,7 @@ def test_scoretools_InspectionAgent_get_timespan_25():
     assert pytest.raises(Exception, statement)
 
 
-def test_scoretools_InspectionAgent_get_timespan_26():
+def test_scoretools_Inspection_get_timespan_26():
     r'''Offset seconds work with explicit metronome mark.
     '''
 

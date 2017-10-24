@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_01():
+def test_scoretools_Mutation_replace_measure_contents_01():
     r'''Contents duration less than sum of duration of measures.
     abjad.Note spacer skip at end of second measure.
     '''
@@ -34,7 +34,7 @@ def test_scoretools_MutationAgent_replace_measure_contents_01():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_02():
+def test_scoretools_Mutation_replace_measure_contents_02():
     r'''Some contents too big for some measures.
     Small measures skipped.
     '''
@@ -74,7 +74,7 @@ def test_scoretools_MutationAgent_replace_measure_contents_02():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_03():
+def test_scoretools_Mutation_replace_measure_contents_03():
     r'''Raise MissingMeasureError when input expression
     contains no measures.
     '''
@@ -86,7 +86,7 @@ def test_scoretools_MutationAgent_replace_measure_contents_03():
     assert pytest.raises(abjad.MissingMeasureError, statement)
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_04():
+def test_scoretools_Mutation_replace_measure_contents_04():
     r'''Raise StopIteration when not enough measures.
     '''
 
@@ -100,7 +100,7 @@ def test_scoretools_MutationAgent_replace_measure_contents_04():
     assert pytest.raises(StopIteration, statement)
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_05():
+def test_scoretools_Mutation_replace_measure_contents_05():
     r'''Populate measures even when not enough total measures.
     '''
 
@@ -134,7 +134,7 @@ def test_scoretools_MutationAgent_replace_measure_contents_05():
     assert abjad.inspect(staff).is_well_formed()
 
 
-def test_scoretools_MutationAgent_replace_measure_contents_06():
+def test_scoretools_Mutation_replace_measure_contents_06():
     r'''Preserves ties.
     '''
 

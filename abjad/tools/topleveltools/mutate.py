@@ -42,8 +42,8 @@ def mutate(client):
         ::
 
             >>> abjad.mutate(staff[-2:])
-            MutationAgent(client=Selection([Note("d'4."), Note("f'4.")]))
+            Mutation(client=Selection([Note("d'4."), Note("f'4.")]))
 
     '''
     import abjad
-    return abjad.MutationAgent(client=client)
+    return abjad.Mutation(client=client)

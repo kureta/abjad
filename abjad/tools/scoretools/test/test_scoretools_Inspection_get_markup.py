@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_scoretools_InspectionAgent_get_markup_01():
+def test_scoretools_Inspection_get_markup_01():
 
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
     slur = abjad.Slur()
@@ -41,7 +41,7 @@ def test_scoretools_InspectionAgent_get_markup_01():
     assert markup_2 in markup
 
 
-def test_scoretools_InspectionAgent_get_markup_02():
+def test_scoretools_Inspection_get_markup_02():
 
     chord = abjad.Chord([-11, 2, 5], (1, 4))
     up_markup = abjad.Markup('UP', abjad.Up)
@@ -52,7 +52,7 @@ def test_scoretools_InspectionAgent_get_markup_02():
     assert found_markup == (down_markup,)
 
 
-def test_scoretools_InspectionAgent_get_markup_03():
+def test_scoretools_Inspection_get_markup_03():
 
     chord = abjad.Chord([-11, 2, 5], (1, 4))
     up_markup = abjad.Markup('UP', abjad.Up)

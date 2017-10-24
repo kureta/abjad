@@ -1930,7 +1930,7 @@ class Expression(AbjadValueObject):
         Returns expression.
         '''
         import abjad
-        class_ = abjad.LabelAgent
+        class_ = abjad.Label
         callback = self._make_initializer_callback(class_, **keywords)
         expression = self.append_callback(callback)
         return abjad.new(expression, proxy_class=class_)

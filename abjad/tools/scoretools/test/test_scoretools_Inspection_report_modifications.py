@@ -2,7 +2,7 @@ import abjad
 import pytest
 
 
-def test_scoretools_InspectionAgent_report_modifications_01():
+def test_scoretools_Inspection_report_modifications_01():
 
     voice = abjad.Voice("c'8 d'8 e'8 f'8")
     comment = abjad.LilyPondComment('Example voice', 'before')
@@ -46,7 +46,7 @@ def test_scoretools_InspectionAgent_report_modifications_01():
         )
 
 
-def test_scoretools_InspectionAgent_report_modifications_02():
+def test_scoretools_Inspection_report_modifications_02():
 
     tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
     comment = abjad.LilyPondComment('Example tuplet', 'before')

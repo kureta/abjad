@@ -45,8 +45,8 @@ def inspect(client):
         ::
 
             >>> abjad.inspect(staff)
-            InspectionAgent(client=Staff("c'4 e'4 d'4 f'4"))
+            Inspection(client=Staff("c'4 e'4 d'4 f'4"))
 
     '''
     import abjad
-    return abjad.InspectionAgent(client=client)
+    return abjad.Inspection(client=client)

@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_scoretools_InspectionAgent_get_leaf_01():
+def test_scoretools_Inspection_get_leaf_01():
 
     staff = abjad.Staff([abjad.Voice("c'8 d'8 e'8 f'8"), abjad.Voice("g'8 a'8 b'8 c''8")])
 
@@ -37,7 +37,7 @@ def test_scoretools_InspectionAgent_get_leaf_01():
     assert abjad.inspect(leaves[0]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_02():
+def test_scoretools_Inspection_get_leaf_02():
     r'''Voice.
     '''
 
@@ -65,7 +65,7 @@ def test_scoretools_InspectionAgent_get_leaf_02():
         )
 
 
-def test_scoretools_InspectionAgent_get_leaf_03():
+def test_scoretools_Inspection_get_leaf_03():
     r'''Staff.
     '''
 
@@ -93,7 +93,7 @@ def test_scoretools_InspectionAgent_get_leaf_03():
         )
 
 
-def test_scoretools_InspectionAgent_get_leaf_04():
+def test_scoretools_Inspection_get_leaf_04():
     r'''Container.
     '''
 
@@ -121,7 +121,7 @@ def test_scoretools_InspectionAgent_get_leaf_04():
     assert abjad.inspect(container[3]).get_leaf(-1) is container[2]
 
 
-def test_scoretools_InspectionAgent_get_leaf_05():
+def test_scoretools_Inspection_get_leaf_05():
     r'''Tuplet.
     '''
 
@@ -146,7 +146,7 @@ def test_scoretools_InspectionAgent_get_leaf_05():
     assert abjad.inspect(tuplet[2]).get_leaf(-1) is tuplet[1]
 
 
-def test_scoretools_InspectionAgent_get_leaf_06():
+def test_scoretools_Inspection_get_leaf_06():
     r'''Contiguous containers inside a voice.
     '''
 
@@ -184,7 +184,7 @@ def test_scoretools_InspectionAgent_get_leaf_06():
     assert abjad.inspect(container_2[0]).get_leaf(-1) is container_1[3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_07():
+def test_scoretools_Inspection_get_leaf_07():
     r'''Tuplets inside a voice.
     '''
 
@@ -218,7 +218,7 @@ def test_scoretools_InspectionAgent_get_leaf_07():
     assert abjad.inspect(tuplet_2[0]).get_leaf(-1) is tuplet_1[2]
 
 
-def test_scoretools_InspectionAgent_get_leaf_08():
+def test_scoretools_Inspection_get_leaf_08():
     r'''Does not continue across contiguous anonymous voices inside a staff.
     '''
 
@@ -249,7 +249,7 @@ def test_scoretools_InspectionAgent_get_leaf_08():
     assert abjad.inspect(voice_2[0]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_09():
+def test_scoretools_Inspection_get_leaf_09():
     r'''Does cross contiguous equally named voices inside a staff.
     '''
 
@@ -289,7 +289,7 @@ def test_scoretools_InspectionAgent_get_leaf_09():
     assert abjad.inspect(voice_2[0]).get_leaf(-1) is voice_1[3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_10():
+def test_scoretools_Inspection_get_leaf_10():
     r'''Does not connect through contiguous unequally named voices.
     '''
 
@@ -332,7 +332,7 @@ def test_scoretools_InspectionAgent_get_leaf_10():
     assert abjad.inspect(voice_2[0]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_11():
+def test_scoretools_Inspection_get_leaf_11():
     r'''Does connect through like-named staves
     containing like-named voices.
     '''
@@ -376,7 +376,7 @@ def test_scoretools_InspectionAgent_get_leaf_11():
     assert abjad.inspect(voice_2[0]).get_leaf(-1) is voice_1[3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_12():
+def test_scoretools_Inspection_get_leaf_12():
     r'''Does connect through like-named staves containing
     like-named voices.
     '''
@@ -441,7 +441,7 @@ def test_scoretools_InspectionAgent_get_leaf_12():
     assert abjad.inspect(higher_voice_2[0]).get_leaf(-1) is higher_voice_1[3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_13():
+def test_scoretools_Inspection_get_leaf_13():
     r'''Does connect through symmetrical nested containers in a voice.
     '''
 
@@ -485,7 +485,7 @@ def test_scoretools_InspectionAgent_get_leaf_13():
     assert abjad.inspect(container_2[0][0]).get_leaf(-1) is container_1[0][3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_14():
+def test_scoretools_Inspection_get_leaf_14():
     r'''Tautological parentage asymmetries result in symmetric (balanced)
     logical voice parentage.
     '''
@@ -530,7 +530,7 @@ def test_scoretools_InspectionAgent_get_leaf_14():
     assert abjad.inspect(container_2[0][0][0]).get_leaf(-1) is container_1[3]
 
 
-def test_scoretools_InspectionAgent_get_leaf_15():
+def test_scoretools_Inspection_get_leaf_15():
     r'''Tautological parentage asymmetries result in symmetric (balanced)
     lgoical voice parentage.
     '''
@@ -575,7 +575,7 @@ def test_scoretools_InspectionAgent_get_leaf_15():
     assert abjad.inspect(container_2[3]).get_leaf(-1) is container_2[2]
 
 
-def test_scoretools_InspectionAgent_get_leaf_16():
+def test_scoretools_Inspection_get_leaf_16():
     r'''Does connect in sequence of alternating containers and notes.
     '''
 
@@ -606,7 +606,7 @@ def test_scoretools_InspectionAgent_get_leaf_16():
     assert abjad.inspect(container_2[0]).get_leaf(-1) is voice[1]
 
 
-def test_scoretools_InspectionAgent_get_leaf_17():
+def test_scoretools_Inspection_get_leaf_17():
     r'''Does connect in sequence of alternating tuplets and notes.
     '''
 
@@ -641,7 +641,7 @@ def test_scoretools_InspectionAgent_get_leaf_17():
     assert abjad.inspect(tuplet_2[0]).get_leaf(-1) is voice[1]
 
 
-def test_scoretools_InspectionAgent_get_leaf_18():
+def test_scoretools_Inspection_get_leaf_18():
     r'''Does connect through asymmetrically nested tuplets.
     '''
 
@@ -669,7 +669,7 @@ def test_scoretools_InspectionAgent_get_leaf_18():
     assert abjad.inspect(inner_tuplet[0]).get_leaf(-1) is tuplet[0]
 
 
-def test_scoretools_InspectionAgent_get_leaf_19():
+def test_scoretools_Inspection_get_leaf_19():
     r'''Returns none in asymmetric logical voice parentage structures.
     '''
 
@@ -704,7 +704,7 @@ def test_scoretools_InspectionAgent_get_leaf_19():
     assert abjad.inspect(note).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_20():
+def test_scoretools_Inspection_get_leaf_20():
     r'''Noncontiguous or broken logical voices do not connect.
     '''
 
@@ -752,7 +752,7 @@ def test_scoretools_InspectionAgent_get_leaf_20():
     assert abjad.inspect(voice_2[0]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_21():
+def test_scoretools_Inspection_get_leaf_21():
     r'''Does not connect through nested anonymous voices.
     '''
 
@@ -781,7 +781,7 @@ def test_scoretools_InspectionAgent_get_leaf_21():
     assert abjad.inspect(outer_voice[1]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_22():
+def test_scoretools_Inspection_get_leaf_22():
     r'''Does not connect through nested anonymous voices.
     '''
 
@@ -811,7 +811,7 @@ def test_scoretools_InspectionAgent_get_leaf_22():
 
 
 
-def test_scoretools_InspectionAgent_get_leaf_23():
+def test_scoretools_Inspection_get_leaf_23():
     r'''Does connect through nested equally named voices.
     '''
 
@@ -842,7 +842,7 @@ def test_scoretools_InspectionAgent_get_leaf_23():
     assert abjad.inspect(outer_voice[1]).get_leaf(-1) is inner_voice[-1]
 
 
-def test_scoretools_InspectionAgent_get_leaf_24():
+def test_scoretools_Inspection_get_leaf_24():
     r'''Does connect through nested equally named voices.
     '''
 
@@ -873,7 +873,7 @@ def test_scoretools_InspectionAgent_get_leaf_24():
     assert abjad.inspect(inner_voice[0]).get_leaf(-1) is outer_voice[0]
 
 
-def test_scoretools_InspectionAgent_get_leaf_25():
+def test_scoretools_Inspection_get_leaf_25():
     r'''Returns none on nested differently named voices.
     '''
 
@@ -904,7 +904,7 @@ def test_scoretools_InspectionAgent_get_leaf_25():
     assert abjad.inspect(outer_voice[1]).get_leaf(-1) is None
 
 
-def test_scoretools_InspectionAgent_get_leaf_26():
+def test_scoretools_Inspection_get_leaf_26():
     r'''Returns none on nested differently named voices.
     '''
 

@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_scoretools_MutationAgent_splice_01():
+def test_scoretools_Mutation_splice_01():
 
     voice = abjad.Voice("c'8 d'8 e'8")
     beam = abjad.Beam()
@@ -28,7 +28,7 @@ def test_scoretools_MutationAgent_splice_01():
         )
 
 
-def test_scoretools_MutationAgent_splice_02():
+def test_scoretools_Mutation_splice_02():
     r'''Splices leaf after interior leaf.
     '''
 
@@ -55,7 +55,7 @@ def test_scoretools_MutationAgent_splice_02():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_splice_03():
+def test_scoretools_Mutation_splice_03():
     r'''Splices tuplet after tuplet.
     '''
 
@@ -90,7 +90,7 @@ def test_scoretools_MutationAgent_splice_03():
     assert result == voice[:]
 
 
-def test_scoretools_MutationAgent_splice_04():
+def test_scoretools_Mutation_splice_04():
     r'''Splices after container with underspanners.
     '''
 
@@ -123,7 +123,7 @@ def test_scoretools_MutationAgent_splice_04():
     assert result == voice[0:2]
 
 
-def test_scoretools_MutationAgent_splice_05():
+def test_scoretools_Mutation_splice_05():
     r'''Extends leaves rightwards after leaf.
     '''
 
@@ -153,7 +153,7 @@ def test_scoretools_MutationAgent_splice_05():
     assert result == voice[-4:]
 
 
-def test_scoretools_MutationAgent_splice_06():
+def test_scoretools_Mutation_splice_06():
     r'''Extends leaf rightwards after interior leaf.
     '''
 
@@ -181,7 +181,7 @@ def test_scoretools_MutationAgent_splice_06():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_splice_07():
+def test_scoretools_Mutation_splice_07():
     r'''Splices leaves left of leaf.
     '''
 
@@ -212,7 +212,7 @@ def test_scoretools_MutationAgent_splice_07():
     assert result == voice[:4]
 
 
-def test_scoretools_MutationAgent_splice_08():
+def test_scoretools_Mutation_splice_08():
     r'''Splices leaf left of interior leaf.
     '''
 
@@ -240,7 +240,7 @@ def test_scoretools_MutationAgent_splice_08():
     assert result == voice[1:3]
 
 
-def test_scoretools_MutationAgent_splice_09():
+def test_scoretools_Mutation_splice_09():
     r'''Splices tuplet left of tuplet.
     '''
 
@@ -276,7 +276,7 @@ def test_scoretools_MutationAgent_splice_09():
     assert result == voice[:]
 
 
-def test_scoretools_MutationAgent_splice_10():
+def test_scoretools_Mutation_splice_10():
     r'''Splices left of container with underspanners.
     '''
 
@@ -310,7 +310,7 @@ def test_scoretools_MutationAgent_splice_10():
     assert abjad.inspect(voice).is_well_formed()
 
 
-def test_scoretools_MutationAgent_splice_11():
+def test_scoretools_Mutation_splice_11():
     r'''Extends leaves leftwards of leaf. Do not extend edge spanners.
     '''
 
@@ -341,7 +341,7 @@ def test_scoretools_MutationAgent_splice_11():
     assert result == voice[:4]
 
 
-def test_scoretools_MutationAgent_splice_12():
+def test_scoretools_Mutation_splice_12():
     r'''Extends leaf leftwards of interior leaf. Does extend interior spanners.
     '''
 
