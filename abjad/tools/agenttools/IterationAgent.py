@@ -39,20 +39,6 @@ class IterationAgent(abctools.AbjadObject):
                 Note("d'4")
                 Note("f'4")
 
-        ..  container:: example expression
-
-            ::
-
-                >>> expression = abjad.iterate()
-                >>> expression = expression.by_class()
-                >>> for component in expression(staff):
-                ...     component
-                Staff("c'4 e'4 d'4 f'4")
-                Note("c'4")
-                Note("e'4")
-                Note("d'4")
-                Note("f'4")
-
     ..  container:: example
 
         Iterates leaves:
@@ -85,26 +71,12 @@ class IterationAgent(abctools.AbjadObject):
                 Note("d'4")
                 Note("f'4")
 
-        ..  container:: example expression
-
-            ::
-
-                >>> expression = abjad.iterate()
-                >>> expression = expression.by_leaf()
-                >>> for leaf in expression(staff):
-                ...     leaf
-                Note("c'4")
-                Note("e'4")
-                Note("d'4")
-                Note("f'4")
-
     '''
 
     ### CLASS VARIABLES ###
 
     __slots__ = (
         '_client',
-        '_expression'
         )
 
     ### INITIALIZER ###
@@ -112,7 +84,6 @@ class IterationAgent(abctools.AbjadObject):
     def __init__(self, client=None):
         assert not isinstance(client, str), repr(client)
         self._client = client
-        self._expression = None
 
     ### PRIVATE METHODS ###
 
@@ -244,11 +215,6 @@ class IterationAgent(abctools.AbjadObject):
         else:
             return False
 
-    def _update_expression(self, frame):
-        import abjad
-        callback = abjad.Expression._frame_to_callback(frame)
-        return self._expression.append_callback(callback)
-
     ### PUBLIC PROPERTIES ###
 
     @property
@@ -348,22 +314,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("g'8")
                     Note("a'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(prototype=abjad.Note)
-                    >>> for note in expression(staff):
-                    ...     note
-                    ...
-                    Note("c'8")
-                    Note("d'8")
-                    Note("e'8")
-                    Note("f'8")
-                    Note("g'8")
-                    Note("a'8")
-
         ..  container:: example
 
             Iterates notes constrained by index:
@@ -424,37 +374,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("e'8")
                     Note("f'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     prototype=abjad.Note,
-                    ...     start=0,
-                    ...     stop=3,
-                    ...     )
-                    >>> for note in expression(staff):
-                    ...     note
-                    ...
-                    Note("c'8")
-                    Note("d'8")
-                    Note("e'8")
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     prototype=abjad.Note,
-                    ...     start=2,
-                    ...     stop=4,
-                    ...     )
-                    >>> for note in expression(staff):
-                    ...     note
-                    ...
-                    Note("e'8")
-                    Note("f'8")
-
         ..  container:: example
 
             Iterates notes in reverse:
@@ -496,25 +415,6 @@ class IterationAgent(abctools.AbjadObject):
                     ...     prototype=abjad.Note,
                     ...     reverse=True,
                     ...     ):
-                    ...     note
-                    ...
-                    Note("a'8")
-                    Note("g'8")
-                    Note("f'8")
-                    Note("e'8")
-                    Note("d'8")
-                    Note("c'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(
-                    ...     prototype=abjad.Note,
-                    ...     reverse=True,
-                    ...     )
-                    >>> for note in expression(staff):
                     ...     note
                     ...
                     Note("a'8")
@@ -566,23 +466,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("e'8")
                     Note("f'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class()
-                    >>> for component in expression(voice):
-                    ...     component
-                    ...
-                    Voice("c'8 d'8 e'8 f'8")
-                    Note("c'8")
-                    Note("cf''16")
-                    Note("bf'16")
-                    Note("d'8")
-                    Note("e'8")
-                    Note("f'8")
-
         ..  container:: example
 
             Iterates notes together with both grace notes and after grace
@@ -623,25 +506,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(voice).by_class():
-                    ...     leaf
-                    ...
-                    Voice("c'8 d'8 e'8 f'8")
-                    Note("c'8")
-                    Note("cf''16")
-                    Note("bf'16")
-                    Note("d'8")
-                    Note("af'16")
-                    Note("gf'16")
-                    Note("e'8")
-                    Note("f'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class()
-                    >>> for leaf in expression(voice):
                     ...     leaf
                     ...
                     Voice("c'8 d'8 e'8 f'8")
@@ -707,25 +571,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("cf''16")
                     Note("c'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(reverse=True)
-                    >>> for leaf in expression(voice):
-                    ...     leaf
-                    ...
-                    Voice("c'8 d'8 e'8 f'8")
-                    Note("f'8")
-                    Note("e'8")
-                    Note("gf'16")
-                    Note("af'16")
-                    Note("d'8")
-                    Note("bf'16")
-                    Note("cf''16")
-                    Note("c'8")
-
         ..  container:: example
 
             Iterates pitched components:
@@ -764,20 +609,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(staff).by_class(pitched=True):
-                    ...     leaf
-                    ...
-                    Chord("<c' bf'>8")
-                    Chord("<g' a'>8")
-                    Note("af'8")
-                    Note("gf'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(pitched=True)
-                    >>> for leaf in expression(staff):
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -832,27 +663,9 @@ class IterationAgent(abctools.AbjadObject):
                     Measure((2, 8), "r8 gf'8")
                     Rest('r8')
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_class(pitched=False)
-                    >>> for leaf in expression(staff):
-                    ...     leaf
-                    ...
-                    <Staff{3}>
-                    Measure((2, 8), "<c' bf'>8 <g' a'>8")
-                    Measure((2, 8), "af'8 r8")
-                    Rest('r8')
-                    Measure((2, 8), "r8 gf'8")
-                    Rest('r8')
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.Component
         iterator = self._iterate_components(
             self.client,
@@ -921,22 +734,6 @@ class IterationAgent(abctools.AbjadObject):
                     Rest('r8')
                     Note("gf'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf()
-                    >>> for leaf in expression(staff):
-                    ...     leaf
-                    ...
-                    Chord("<c' bf'>8")
-                    Chord("<g' a'>8")
-                    Note("af'8")
-                    Rest('r8')
-                    Rest('r8')
-                    Note("gf'8")
-
         ..  container:: example
 
             Iterates leaves constrained by index:
@@ -989,29 +786,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("af'8")
                     Rest('r8')
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(start=0, stop=3)
-                    >>> for leaf in expression(staff):
-                    ...     leaf
-                    ...
-                    Chord("<c' bf'>8")
-                    Chord("<g' a'>8")
-                    Note("af'8")
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(start=2, stop=4)
-                    >>> for leaf in expression(staff):
-                    ...     leaf
-                    ...
-                    Note("af'8")
-                    Rest('r8')
-
         ..  container:: example
 
             Iterates leaves in reverse:
@@ -1050,22 +824,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(staff).by_leaf(reverse=True):
-                    ...     leaf
-                    ...
-                    Note("gf'8")
-                    Rest('r8')
-                    Rest('r8')
-                    Note("af'8")
-                    Chord("<g' a'>8")
-                    Chord("<c' bf'>8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(reverse=True)
-                    >>> for leaf in expression(staff):
                     ...     leaf
                     ...
                     Note("gf'8")
@@ -1125,24 +883,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("e'8")
                     Note("f'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf()
-                    >>> for leaf in expression(voice):
-                    ...     leaf
-                    ...
-                    Note("c'8")
-                    Note("cf''16")
-                    Note("bf'16")
-                    Note("d'8")
-                    Note("af'16")
-                    Note("gf'16")
-                    Note("e'8")
-                    Note("f'8")
-
         ..  container:: example
 
             Iterates pitched leaves:
@@ -1181,20 +921,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(staff).by_leaf(pitched=True):
-                    ...     leaf
-                    ...
-                    Chord("<c' bf'>8")
-                    Chord("<g' a'>8")
-                    Note("af'8")
-                    Note("gf'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(pitched=True)
-                    >>> for leaf in expression(staff):
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -1245,23 +971,9 @@ class IterationAgent(abctools.AbjadObject):
                     Rest('r8')
                     Rest('r8')
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf(pitched=False)
-                    >>> for leaf in expression(staff):
-                    ...     leaf
-                    ...
-                    Rest('r8')
-                    Rest('r8')
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.Leaf
         return self.by_class(
             prototype=prototype,
@@ -1331,53 +1043,24 @@ class IterationAgent(abctools.AbjadObject):
                     Selection([Note('a,4'), Note('g,4')])
                     Selection([Note("g'4"), Note('g,4')])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_leaf_pair()
-                    >>> for leaf_pair in expression(score):
-                    ...     leaf_pair
-                    ...
-                    Selection([Note("c'8"), Note('c4')])
-                    Selection([Note("c'8"), Note("d'8")])
-                    Selection([Note('c4'), Note("d'8")])
-                    Selection([Note("d'8"), Note("e'8")])
-                    Selection([Note("d'8"), Note('a,4')])
-                    Selection([Note('c4'), Note("e'8")])
-                    Selection([Note('c4'), Note('a,4')])
-                    Selection([Note("e'8"), Note('a,4')])
-                    Selection([Note("e'8"), Note("f'8")])
-                    Selection([Note('a,4'), Note("f'8")])
-                    Selection([Note("f'8"), Note("g'4")])
-                    Selection([Note("f'8"), Note('g,4')])
-                    Selection([Note('a,4'), Note("g'4")])
-                    Selection([Note('a,4'), Note('g,4')])
-                    Selection([Note("g'4"), Note('g,4')])
-
         Iterates leaf pairs left-to-right and top-to-bottom.
 
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         vertical_moments = self.by_vertical_moment()
-        def _closure(vertical_moments):
-            for moment_1, moment_2 in abjad.Sequence(vertical_moments).nwise():
-                enumerator = abjad.Enumerator(moment_1.start_leaves)
-                for pair in enumerator.yield_pairs():
-                    yield abjad.Selection(pair)
-                sequences = [moment_1.leaves, moment_2.start_leaves]
-                enumerator = abjad.Enumerator(sequences)
-                for pair in enumerator.yield_outer_product():
-                    yield abjad.Selection(pair)
-            else:
-                enumerator = abjad.Enumerator(moment_2.start_leaves)
-                for pair in enumerator.yield_pairs():
-                    yield abjad.Selection(pair)
-        return _closure(vertical_moments)
+        for moment_1, moment_2 in abjad.Sequence(vertical_moments).nwise():
+            enumerator = abjad.Enumerator(moment_1.start_leaves)
+            for pair in enumerator.yield_pairs():
+                yield abjad.Selection(pair)
+            sequences = [moment_1.leaves, moment_2.start_leaves]
+            enumerator = abjad.Enumerator(sequences)
+            for pair in enumerator.yield_outer_product():
+                yield abjad.Selection(pair)
+        else:
+            enumerator = abjad.Enumerator(moment_2.start_leaves)
+            for pair in enumerator.yield_pairs():
+                yield abjad.Selection(pair)
 
     def by_logical_tie(
         self,
@@ -1427,20 +1110,6 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("e'8")])
                     LogicalTie([Note("f'4"), Note("f'16")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> for logical_tie in expression(staff):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c'4"), Note("c'16")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("f'4"), Note("f'16")])
-
         ..  container:: example
 
             Iterates logical ties in reverse:
@@ -1475,23 +1144,6 @@ class IterationAgent(abctools.AbjadObject):
                     ...     reverse=True,
                     ...     with_grace_notes=False,
                     ...     ):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("f'4"), Note("f'16")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("c'4"), Note("c'16")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(
-                    ...     reverse=True,
-                    ...     with_grace_notes=False,
-                    ...     )
-                    >>> for logical_tie in expression(staff):
                     ...     logical_tie
                     ...
                     LogicalTie([Note("f'4"), Note("f'16")])
@@ -1539,20 +1191,6 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("e'8")])
                     LogicalTie([Note("f'4"), Note("f'16")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(pitched=True)
-                    >>> for logical_tie in expression(staff):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c'4"), Note("c'16")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("f'4"), Note("f'16")])
-
         ..  container:: example
 
             Iterates nontrivial logical ties:
@@ -1586,18 +1224,6 @@ class IterationAgent(abctools.AbjadObject):
                     >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
                     ...     nontrivial=True,
                     ...     ):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c'4"), Note("c'16")])
-                    LogicalTie([Note("f'4"), Note("f'16")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(nontrivial=True)
-                    >>> for logical_tie in expression(staff):
                     ...     logical_tie
                     ...
                     LogicalTie([Note("c'4"), Note("c'16")])
@@ -1655,28 +1281,6 @@ class IterationAgent(abctools.AbjadObject):
                     ...
                     LogicalTie([Note("d'2")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> for logical_tie in expression(staff[1]):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("d'2"), Note("d'1")])
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie(
-                    ...     parentage_mask=staff[1],
-                    ...     )
-
-                ..  todo:: Reimplement `parentage_mask` to work with
-                    persistable values (like component name or score position).
-                    Method will then work with expression protocol.
-
         ..  container:: example
 
             Iterates logical ties together with grace notes:
@@ -1710,22 +1314,6 @@ class IterationAgent(abctools.AbjadObject):
 
                     >>> for item in abjad.iterate(voice).by_logical_tie():
                     ...     item
-                    ...
-                    LogicalTie([Note("c'8")])
-                    LogicalTie([Note("cf''16")])
-                    LogicalTie([Note("bf'16")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("f'8")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> for logical_tie in expression(voice):
-                    ...     logical_tie
                     ...
                     LogicalTie([Note("c'8")])
                     LogicalTie([Note("cf''16")])
@@ -1768,22 +1356,6 @@ class IterationAgent(abctools.AbjadObject):
 
                     >>> for item in abjad.iterate(voice).by_logical_tie():
                     ...     item
-                    ...
-                    LogicalTie([Note("c'8")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("af'16")])
-                    LogicalTie([Note("gf'16")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("f'8")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> for logical_tie in expression(voice):
-                    ...     logical_tie
                     ...
                     LogicalTie([Note("c'8")])
                     LogicalTie([Note("d'8")])
@@ -1843,24 +1415,6 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("e'8")])
                     LogicalTie([Note("f'8")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> for logical_tie in expression(voice):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c'8")])
-                    LogicalTie([Note("cf''16")])
-                    LogicalTie([Note("bf'16")])
-                    LogicalTie([Note("d'8")])
-                    LogicalTie([Note("af'16")])
-                    LogicalTie([Note("gf'16")])
-                    LogicalTie([Note("e'8")])
-                    LogicalTie([Note("f'8")])
-
         ..  container:: example
 
             Regression: returns at least one logical tie even when note all
@@ -1893,51 +1447,35 @@ class IterationAgent(abctools.AbjadObject):
                     ...
                     LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_tie()
-                    >>> selection = voice[:2]
-                    >>> for logical_tie in expression(selection):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         if pitched:
             prototype = (abjad.Chord, abjad.Note)
         else:
             prototype = abjad.Leaf
         yielded_logical_ties = set()
-        def _closure():
-            for leaf in self.by_class(
-                prototype=prototype,
-                reverse=reverse,
-                with_grace_notes=with_grace_notes,
-                ):
-                logical_tie = abjad.inspect(leaf).get_logical_tie()
-                if leaf is not logical_tie.head:
+        for leaf in self.by_class(
+            prototype=prototype,
+            reverse=reverse,
+            with_grace_notes=with_grace_notes,
+            ):
+            logical_tie = abjad.inspect(leaf).get_logical_tie()
+            if leaf is not logical_tie.head:
+                continue
+            if parentage_mask:
+                leaves = []
+                for leaf in logical_tie:
+                    parentage = abjad.inspect(leaf).get_parentage()
+                    if parentage_mask in parentage:
+                        leaves.append(leaf)
+                logical_tie = abjad.LogicalTie(leaves)
+                if not logical_tie:
                     continue
-                if parentage_mask:
-                    leaves = []
-                    for leaf in logical_tie:
-                        parentage = abjad.inspect(leaf).get_parentage()
-                        if parentage_mask in parentage:
-                            leaves.append(leaf)
-                    logical_tie = abjad.LogicalTie(leaves)
-                    if not logical_tie:
-                        continue
-                if not bool(nontrivial) or not logical_tie.is_trivial:
-                    if logical_tie not in yielded_logical_ties:
-                        yielded_logical_ties.add(logical_tie)
-                        yield logical_tie
-        return _closure()
+            if not bool(nontrivial) or not logical_tie.is_trivial:
+                if logical_tie not in yielded_logical_ties:
+                    yielded_logical_ties.add(logical_tie)
+                    yield logical_tie
 
     def by_logical_voice(
         self,
@@ -2024,63 +1562,44 @@ class IterationAgent(abctools.AbjadObject):
                     Note("g'8")
                     Note("a'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> selector = abjad.select().by_leaf()
-                    >>> leaves = selector(staff)
-                    >>> leaf = leaves[0]
-                    >>> agent = abjad.inspect(leaf)
-                    >>> signature = agent.get_parentage().logical_voice
-                    >>> expression = abjad.iterate()
-
-                ..  todo:: Implement a persistable signature (in terms of
-                    container names or score position). Method will then work
-                    with expression protocol.
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _closure():
-            if (isinstance(self.client, prototype) and
-                self.client._get_parentage().logical_voice == logical_voice):
-                yield self.client
-            if not reverse:
-                if isinstance(self.client, (list, tuple)):
-                    for component in self.client:
-                        for x in abjad.iterate(component).by_logical_voice(
-                            prototype,
-                            logical_voice,
-                            ):
-                            yield x
-                if hasattr(self.client, '_music'):
-                    for component in self.client._music:
-                        for x in abjad.iterate(component).by_logical_voice(
-                            prototype,
-                            logical_voice,
-                            ):
-                            yield x
-            else:
-                if isinstance(self.client, (list, tuple)):
-                    for component in reversed(self.client):
-                        for x in abjad.iterate(component).by_logical_voice(
-                            prototype,
-                            logical_voice,
-                            reverse=True,
-                            ):
-                            yield x
-                if hasattr(self.client, '_music'):
-                    for component in reversed(self.client._music):
-                        for x in abjad.iterate(component).by_logical_voice(
-                            prototype,
-                            logical_voice,
-                            reverse=True,
-                            ):
-                            yield x
-        return _closure()
+        if (isinstance(self.client, prototype) and
+            self.client._get_parentage().logical_voice == logical_voice):
+            yield self.client
+        if not reverse:
+            if isinstance(self.client, (list, tuple)):
+                for component in self.client:
+                    for x in abjad.iterate(component).by_logical_voice(
+                        prototype,
+                        logical_voice,
+                        ):
+                        yield x
+            if hasattr(self.client, '_music'):
+                for component in self.client._music:
+                    for x in abjad.iterate(component).by_logical_voice(
+                        prototype,
+                        logical_voice,
+                        ):
+                        yield x
+        else:
+            if isinstance(self.client, (list, tuple)):
+                for component in reversed(self.client):
+                    for x in abjad.iterate(component).by_logical_voice(
+                        prototype,
+                        logical_voice,
+                        reverse=True,
+                        ):
+                        yield x
+            if hasattr(self.client, '_music'):
+                for component in reversed(self.client._music):
+                    for x in abjad.iterate(component).by_logical_voice(
+                        prototype,
+                        logical_voice,
+                        reverse=True,
+                        ):
+                        yield x
 
     def by_logical_voice_from_component(
         self,
@@ -2163,25 +1682,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("g'8")
                     Note("a'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> selector = abjad.select().by_leaf()
-                    >>> leaves = selector(staff)
-                    >>> leaf = leaves[0]
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_voice_from_component(
-                    ...     prototype=abjad.Note,
-                    ...     )
-                    >>> for note in expression(leaf):
-                    ...     note
-                    ...
-                    Note("c'8")
-                    Note("d'8")
-                    Note("g'8")
-                    Note("a'8")
-
         ..  container:: example
 
             Iterates from second leaf in score:
@@ -2252,22 +1752,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("g'8")
                     Note("a'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> leaf = leaves[1]
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_voice_from_component(
-                    ...     prototype=abjad.Note,
-                    ...     )
-                    >>> for note in expression(leaf):
-                    ...     note
-                    ...
-                    Note("d'8")
-                    Note("g'8")
-                    Note("a'8")
-
         ..  container:: example
 
             Iterates all components in logical voice:
@@ -2331,23 +1815,6 @@ class IterationAgent(abctools.AbjadObject):
 
                     >>> leaf = leaves[0]
                     >>> for component in abjad.iterate(leaf).by_logical_voice_from_component():
-                    ...     component
-                    ...
-                    Note("c'8")
-                    Voice("c'8 d'8", name='Voice 1')
-                    Note("d'8")
-                    Voice("g'8 a'8", name='Voice 1')
-                    Note("g'8")
-                    Note("a'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> leaf = leaves[0]
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_voice_from_component()
-                    >>> for component in expression(leaf):
                     ...     component
                     ...
                     Note("c'8")
@@ -2445,67 +1912,28 @@ class IterationAgent(abctools.AbjadObject):
                     Note("f'8")
                     Note("e'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> leaf = leaves[-1]
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_voice_from_component(
-                    ...     prototype=abjad.Note,
-                    ...     reverse=True,
-                    ...     )
-                    >>> for note in expression(leaf):
-                    ...     note
-                    ...
-                    Note("c''8")
-                    Note("b'8")
-                    Note("f'8")
-                    Note("e'8")
-
-                ::
-
-                    >>> leaf = leaves[-1]
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_logical_voice_from_component(
-                    ...     reverse=True,
-                    ...     )
-                    >>> for component in expression(leaf):
-                    ...     component
-                    ...
-                    Note("c''8")
-                    Voice("b'8 c''8", name='Voice 2')
-                    Note("b'8")
-                    Voice("e'8 f'8", name='Voice 2')
-                    Note("f'8")
-                    Note("e'8")
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         if prototype is None:
             prototype = abjad.Component
-        def _closure():
-            signature = self.client._get_parentage().logical_voice
-            if not reverse:
-                for x in abjad.iterate(self.client).depth_first(
-                    capped=False,
-                    direction=abjad.Left,
-                    ):
-                    if isinstance(x, prototype):
-                        if x._get_parentage().logical_voice == signature:
-                            yield x
-            else:
-                for x in abjad.iterate(self.client).depth_first(
-                    capped=False,
-                    direction=abjad.Right,
-                    ):
-                    if isinstance(x, prototype):
-                        if x._get_parentage().logical_voice == signature:
-                            yield x
-        return _closure()
+        signature = self.client._get_parentage().logical_voice
+        if not reverse:
+            for x in abjad.iterate(self.client).depth_first(
+                capped=False,
+                direction=abjad.Left,
+                ):
+                if isinstance(x, prototype):
+                    if x._get_parentage().logical_voice == signature:
+                        yield x
+        else:
+            for x in abjad.iterate(self.client).depth_first(
+                capped=False,
+                direction=abjad.Right,
+                ):
+                if isinstance(x, prototype):
+                    if x._get_parentage().logical_voice == signature:
+                        yield x
 
     def by_pitch(self):
         r'''Iterates by pitch.
@@ -2538,20 +1966,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for pitch in abjad.iterate(staff).by_pitch():
-                    ...     pitch
-                    ...
-                    NamedPitch("c'")
-                    NamedPitch("d'")
-                    NamedPitch("e'")
-                    NamedPitch("f'")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch()
-                    >>> for pitch in expression(staff):
                     ...     pitch
                     ...
                     NamedPitch("c'")
@@ -2594,20 +2008,6 @@ class IterationAgent(abctools.AbjadObject):
                     NamedPitch("e'")
                     NamedPitch("f'")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch()
-                    >>> for pitch in expression(beam):
-                    ...     pitch
-                    ...
-                    NamedPitch("c'")
-                    NamedPitch("d'")
-                    NamedPitch("e'")
-                    NamedPitch("f'")
-
         ..  container:: example
 
             Iterates pitches in pitch set:
@@ -2623,20 +2023,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for pitch in abjad.iterate(pitch_set).by_pitch():
-                    ...     pitch
-                    ...
-                    NumberedPitch(0)
-                    NumberedPitch(2)
-                    NumberedPitch(4)
-                    NumberedPitch(5)
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch()
-                    >>> for pitch in expression(pitch_set):
                     ...     pitch
                     ...
                     NumberedPitch(0)
@@ -2671,66 +2057,47 @@ class IterationAgent(abctools.AbjadObject):
                     NamedPitch("e'")
                     NamedPitch("fs'")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch()
-                    >>> for pitch in expression(pitches):
-                    ...     pitch
-                    ...
-                    NamedPitch("c'")
-                    NamedPitch("d'")
-                    NamedPitch('g')
-                    NamedPitch("e'")
-                    NamedPitch("fs'")
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _closure():
-            if isinstance(self.client, abjad.Pitch):
-                pitch = abjad.NamedPitch.from_pitch_carrier(self.client)
-                yield pitch
-            result = []
-            try:
-                result.extend(self.client.pitches)
-            except AttributeError:
-                pass
-            if isinstance(self.client, abjad.Chord):
-                result.extend(self.client.written_pitches)
-            elif isinstance(self.client, abjad.Spanner):
-                for leaf in self.client.leaves:
-                    try:
-                        result.append(leaf.written_pitch)
-                    except AttributeError:
-                        pass
-                    try:
-                        result.extedn(leaf.written_pitches)
-                    except AttributeError:
-                        pass
-            elif isinstance(self.client, abjad.PitchSet):
-                result.extend(sorted(list(self.client)))
-            elif isinstance(self.client, (list, tuple, set)):
-                for item in self.client:
-                    for pitch_ in abjad.iterate(item).by_pitch():
-                        result.append(pitch_)
-            else:
-                for leaf in abjad.iterate(self.client).by_leaf():
-                    try:
-                        result.append(leaf.written_pitch)
-                    except AttributeError:
-                        pass
-                    try:
-                        result.extedn(leaf.written_pitches)
-                    except AttributeError:
-                        pass
-            for pitch in result:
-                yield pitch
-        return _closure()
+        if isinstance(self.client, abjad.Pitch):
+            pitch = abjad.NamedPitch.from_pitch_carrier(self.client)
+            yield pitch
+        result = []
+        try:
+            result.extend(self.client.pitches)
+        except AttributeError:
+            pass
+        if isinstance(self.client, abjad.Chord):
+            result.extend(self.client.written_pitches)
+        elif isinstance(self.client, abjad.Spanner):
+            for leaf in self.client.leaves:
+                try:
+                    result.append(leaf.written_pitch)
+                except AttributeError:
+                    pass
+                try:
+                    result.extedn(leaf.written_pitches)
+                except AttributeError:
+                    pass
+        elif isinstance(self.client, abjad.PitchSet):
+            result.extend(sorted(list(self.client)))
+        elif isinstance(self.client, (list, tuple, set)):
+            for item in self.client:
+                for pitch_ in abjad.iterate(item).by_pitch():
+                    result.append(pitch_)
+        else:
+            for leaf in abjad.iterate(self.client).by_leaf():
+                try:
+                    result.append(leaf.written_pitch)
+                except AttributeError:
+                    pass
+                try:
+                    result.extedn(leaf.written_pitches)
+                except AttributeError:
+                    pass
+        for pitch in result:
+            yield pitch
 
     def by_pitch_pair(self):
         r'''Iterates by pitch pair.
@@ -2791,31 +2158,6 @@ class IterationAgent(abctools.AbjadObject):
                     PitchSegment("a, g,")
                     PitchSegment("g' g,")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch_pair()
-                    >>> for pair in expression(score):
-                    ...     pair
-                    ...
-                    PitchSegment("c' c")
-                    PitchSegment("c' d'")
-                    PitchSegment("c d'")
-                    PitchSegment("d' e'")
-                    PitchSegment("d' a,")
-                    PitchSegment("c e'")
-                    PitchSegment("c a,")
-                    PitchSegment("e' a,")
-                    PitchSegment("e' f'")
-                    PitchSegment("a, f'")
-                    PitchSegment("f' g'")
-                    PitchSegment("f' g,")
-                    PitchSegment("a, g'")
-                    PitchSegment("a, g,")
-                    PitchSegment("g' g,")
-
         ..  container:: example
 
             Iterates chords by pitch pair:
@@ -2854,47 +2196,23 @@ class IterationAgent(abctools.AbjadObject):
                     PitchSegment("e' g''")
                     PitchSegment("f'' g''")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_pitch_pair()
-                    >>> for pair in expression(staff):
-                    ...     pair
-                    ...
-                    PitchSegment("c' d'")
-                    PitchSegment("c' e'")
-                    PitchSegment("d' e'")
-                    PitchSegment("c' f''")
-                    PitchSegment("c' g''")
-                    PitchSegment("d' f''")
-                    PitchSegment("d' g''")
-                    PitchSegment("e' f''")
-                    PitchSegment("e' g''")
-                    PitchSegment("f'' g''")
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _closure():
-            for leaf_pair in self.by_leaf_pair():
-                leaf_pair_list = list(leaf_pair)
-                for pair in self._list_unordered_pitch_pairs(
-                    leaf_pair_list[0]):
+        for leaf_pair in self.by_leaf_pair():
+            leaf_pair_list = list(leaf_pair)
+            for pair in self._list_unordered_pitch_pairs(
+                leaf_pair_list[0]):
+                yield abjad.PitchSegment(items=pair)
+            if isinstance(leaf_pair, set):
+                for pair in self._list_unordered_pitch_pairs(leaf_pair):
                     yield abjad.PitchSegment(items=pair)
-                if isinstance(leaf_pair, set):
-                    for pair in self._list_unordered_pitch_pairs(leaf_pair):
-                        yield abjad.PitchSegment(items=pair)
-                else:
-                    for pair in self._list_ordered_pitch_pairs(*leaf_pair):
-                        yield abjad.PitchSegment(items=pair)
-                for pair in self._list_unordered_pitch_pairs(
-                    leaf_pair_list[1]):
+            else:
+                for pair in self._list_ordered_pitch_pairs(*leaf_pair):
                     yield abjad.PitchSegment(items=pair)
-        return _closure()
+            for pair in self._list_unordered_pitch_pairs(
+                leaf_pair_list[1]):
+                yield abjad.PitchSegment(items=pair)
 
     def by_run(self, prototype=None):
         r'''Iterates by run.
@@ -2942,19 +2260,6 @@ class IterationAgent(abctools.AbjadObject):
                     >>> for run in abjad.iterate(staff[:]).by_run(
                     ...     prototype=prototype,
                     ...     ):
-                    ...     run
-                    ...
-                    Selection([Note("g'8"), Note("a'8")])
-                    Selection([Chord("<b' d''>8"), Chord("<c'' e''>8")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> prototype = (abjad.Note, abjad.Chord)
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_run(prototype=prototype)
-                    >>> for run in expression(staff[:]):
                     ...     run
                     ...
                     Selection([Note("g'8"), Note("a'8")])
@@ -3010,21 +2315,6 @@ class IterationAgent(abctools.AbjadObject):
                     Selection([Chord("<e' g'>8"), Chord("<f' a'>8"), Note("g'8"), Note("a'8")])
                     Selection([Chord("<b' d''>8"), Chord("<c'' e''>8")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> leaves = abjad.iterate(staff).by_leaf()
-                    >>> prototype = (abjad.Note, abjad.Chord)
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_run(prototype=prototype)
-                    >>> for run in expression(leaves):
-                    ...     run
-                    ...
-                    Selection([Note("c'8"), Note("d'8")])
-                    Selection([Chord("<e' g'>8"), Chord("<f' a'>8"), Note("g'8"), Note("a'8")])
-                    Selection([Chord("<b' d''>8"), Chord("<c'' e''>8")])
-
         ..  container:: example
 
             Interprets none prototype equal to leaves:
@@ -3057,23 +2347,19 @@ class IterationAgent(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.Leaf
         if not isinstance(prototype, collections.Sequence):
             prototype = (prototype,)
         selection = abjad.Selection(self.client)
-        def _closure():
-            current_run = ()
-            for run in selection.group(type):
-                if isinstance(run[0], prototype):
-                    current_run = current_run + run
-                elif current_run:
-                    yield abjad.Selection(current_run)
-                    current_run = ()
-            if current_run:
+        current_run = ()
+        for run in selection.group(type):
+            if isinstance(run[0], prototype):
+                current_run = current_run + run
+            elif current_run:
                 yield abjad.Selection(current_run)
-        return _closure()
+                current_run = ()
+        if current_run:
+            yield abjad.Selection(current_run)
 
     def by_spanner(
         self,
@@ -3122,19 +2408,6 @@ class IterationAgent(abctools.AbjadObject):
                     Slur("c'8, d'8, e'8, f'8")
                     Slur("g'8, a'8, f'8, b'8, c''8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_spanner()
-                    >>> for spanner in expression(staff):
-                    ...     spanner
-                    ...
-                    Beam("c'8, d'8, ... [5] ..., b'8, c''8")
-                    Slur("c'8, d'8, e'8, f'8")
-                    Slur("g'8, a'8, f'8, b'8, c''8")
-
         ..  container:: example
 
             Iterates spanners in reverse:
@@ -3175,42 +2448,25 @@ class IterationAgent(abctools.AbjadObject):
                     Slur("g'8, a'8, f'8, b'8, c''8")
                     Slur("c'8, d'8, e'8, f'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_spanner(reverse=True)
-                    >>> for spanner in expression(staff):
-                    ...     spanner
-                    ...
-                    Beam("c'8, d'8, ... [5] ..., b'8, c''8")
-                    Slur("g'8, a'8, f'8, b'8, c''8")
-                    Slur("c'8, d'8, e'8, f'8")
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _closure():
-            visited_spanners = set()
-            for component in self.by_class(reverse=reverse):
-                spanners = abjad.inspect(component).get_spanners(
-                    prototype=prototype,
-                    )
-                spanners = sorted(spanners,
-                    key=lambda x: (
-                        type(x).__name__,
-                        abjad.inspect(x).get_timespan(),
-                        ),
-                    )
-                for spanner in spanners:
-                    if spanner in visited_spanners:
-                        continue
-                    visited_spanners.add(spanner)
-                    yield spanner
-        return _closure()
+        visited_spanners = set()
+        for component in self.by_class(reverse=reverse):
+            spanners = abjad.inspect(component).get_spanners(
+                prototype=prototype,
+                )
+            spanners = sorted(spanners,
+                key=lambda x: (
+                    type(x).__name__,
+                    abjad.inspect(x).get_timespan(),
+                    ),
+                )
+            for spanner in spanners:
+                if spanner in visited_spanners:
+                    continue
+                visited_spanners.add(spanner)
+                yield spanner
 
     # TODO: optimize to avoid behind-the-scenes full-score traversal.
     def by_timeline(self, prototype=None, reverse=False):
@@ -3252,24 +2508,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for leaf in abjad.iterate(score).by_timeline():
-                    ...     leaf
-                    ...
-                    Note("c'4")
-                    Note("g'8")
-                    Note("a'8")
-                    Note("d'4")
-                    Note("b'8")
-                    Note("c''8")
-                    Note("e'4")
-                    Note("f'4")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline()
-                    >>> for leaf in expression(score):
                     ...     leaf
                     ...
                     Note("c'4")
@@ -3328,24 +2566,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("a'8")
                     Note("g'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline(reverse=True)
-                    >>> for leaf in expression(score):
-                    ...     leaf
-                    ...
-                    Note("f'4")
-                    Note("e'4")
-                    Note("d'4")
-                    Note("c''8")
-                    Note("b'8")
-                    Note("c'4")
-                    Note("a'8")
-                    Note("g'8")
-
         ..  container:: example
 
             Timeline-iterates leaves together grace notes:
@@ -3387,105 +2607,85 @@ class IterationAgent(abctools.AbjadObject):
 
                 ..  todo:: Incorrect because grace notes are not included.
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline()
-                    >>> for component in expression(voice):
-                    ...     component
-                    ...
-                    Note("c'8")
-                    Note("d'8")
-                    Note("e'8")
-                    Note("f'8")
-
-                ..  todo:: Incorrect because grace notes are not included.
-
         Iterates leaves when `prototype` is none.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.Leaf
-        def _closure():
-            if isinstance(self.client, abjad.Component):
-                components = [self.client]
-            else:
-                components = list(self.client)
-            if not reverse:
-                while components:
-                    current_start_offset = min(
-                        _._get_timespan().start_offset
-                        for _ in components
-                        )
-                    components.sort(
-                        key=lambda x: x._get_parentage(
-                            with_grace_notes=True).score_index,
-                        reverse=True,
-                        )
-                    components_to_process = components[:]
-                    components = []
-                    while components_to_process:
-                        component = components_to_process.pop()
-                        start_offset = component._get_timespan().start_offset
-                        #print('    COMPONENT:', component)
-                        if current_start_offset < start_offset:
-                            components.append(component)
-                            #print('        TOO EARLY')
-                            continue
-                        if isinstance(component, prototype):
-                            #print('        YIELDING', component)
-                            yield component
-                        sibling = component._get_sibling(1)
-                        if sibling is not None:
-                            #print('        SIBLING:', sibling)
-                            components.append(sibling)
-                        if not isinstance(component, abjad.Container):
-                            continue
-                        if not len(component):
-                            continue
-                        if not component.is_simultaneous:
-                            components_to_process.append(component[0])
-                        else:
-                            components_to_process.extend(reversed(component))
-            else:
-                while components:
-                    #print('STEP')
-                    #print()
-                    current_stop_offset = max(
-                        _._get_timespan().stop_offset
-                        for _ in components
-                        )
-                    components.sort(
-                        key=lambda x: x._get_parentage(
-                            with_grace_notes=True).score_index,
-                        reverse=True,
-                        )
-                    components_to_process = components[:]
-                    components = []
-                    while components_to_process:
-                        component = components_to_process.pop()
-                        stop_offset = component._get_timespan().stop_offset
-                        #print('\tCOMPONENT:', component)
-                        if stop_offset < current_stop_offset:
-                            components.insert(0, component)
-                            continue
-                        if isinstance(component, prototype):
-                            yield component
-                        sibling = component._get_sibling(-1)
-                        if sibling is not None:
-                            components.insert(0, sibling)
-                        if not isinstance(component, abjad.Container):
-                            continue
-                        if not len(component):
-                            continue
-                        if not component.is_simultaneous:
-                            components_to_process.append(component[-1])
-                        else:
-                            components_to_process.extend(reversed(component))
-        return _closure()
+        if isinstance(self.client, abjad.Component):
+            components = [self.client]
+        else:
+            components = list(self.client)
+        if not reverse:
+            while components:
+                current_start_offset = min(
+                    _._get_timespan().start_offset
+                    for _ in components
+                    )
+                components.sort(
+                    key=lambda x: x._get_parentage(
+                        with_grace_notes=True).score_index,
+                    reverse=True,
+                    )
+                components_to_process = components[:]
+                components = []
+                while components_to_process:
+                    component = components_to_process.pop()
+                    start_offset = component._get_timespan().start_offset
+                    #print('    COMPONENT:', component)
+                    if current_start_offset < start_offset:
+                        components.append(component)
+                        #print('        TOO EARLY')
+                        continue
+                    if isinstance(component, prototype):
+                        #print('        YIELDING', component)
+                        yield component
+                    sibling = component._get_sibling(1)
+                    if sibling is not None:
+                        #print('        SIBLING:', sibling)
+                        components.append(sibling)
+                    if not isinstance(component, abjad.Container):
+                        continue
+                    if not len(component):
+                        continue
+                    if not component.is_simultaneous:
+                        components_to_process.append(component[0])
+                    else:
+                        components_to_process.extend(reversed(component))
+        else:
+            while components:
+                #print('STEP')
+                #print()
+                current_stop_offset = max(
+                    _._get_timespan().stop_offset
+                    for _ in components
+                    )
+                components.sort(
+                    key=lambda x: x._get_parentage(
+                        with_grace_notes=True).score_index,
+                    reverse=True,
+                    )
+                components_to_process = components[:]
+                components = []
+                while components_to_process:
+                    component = components_to_process.pop()
+                    stop_offset = component._get_timespan().stop_offset
+                    #print('\tCOMPONENT:', component)
+                    if stop_offset < current_stop_offset:
+                        components.insert(0, component)
+                        continue
+                    if isinstance(component, prototype):
+                        yield component
+                    sibling = component._get_sibling(-1)
+                    if sibling is not None:
+                        components.insert(0, sibling)
+                    if not isinstance(component, abjad.Container):
+                        continue
+                    if not len(component):
+                        continue
+                    if not component.is_simultaneous:
+                        components_to_process.append(component[-1])
+                    else:
+                        components_to_process.extend(reversed(component))
 
     def by_timeline_and_logical_tie(
         self,
@@ -3535,24 +2735,6 @@ class IterationAgent(abctools.AbjadObject):
 
                     >>> agent = abjad.iterate(score)
                     >>> for logical_tie in agent.by_timeline_and_logical_tie():
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c''4"), Note("c''8")])
-                    LogicalTie([Rest('r8')])
-                    LogicalTie([Note("g'4."), Note("g'8")])
-                    LogicalTie([Note("d''8")])
-                    LogicalTie([Rest('r4')])
-                    LogicalTie([Rest('r16')])
-                    LogicalTie([Note("f'8."), Note("f'8")])
-                    LogicalTie([Note("ef''4")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_and_logical_tie()
-                    >>> for logical_tie in expression(score):
                     ...     logical_tie
                     ...
                     LogicalTie([Note("c''4"), Note("c''8")])
@@ -3617,26 +2799,6 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("c''4"), Note("c''8")])
                     LogicalTie([Rest('r8')])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_and_logical_tie(
-                    ...     reverse=True,
-                    ...     )
-                    >>> for logical_tie in expression(score):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("ef''4")])
-                    LogicalTie([Note("f'8."), Note("f'8")])
-                    LogicalTie([Rest('r4')])
-                    LogicalTie([Rest('r16')])
-                    LogicalTie([Note("g'4."), Note("g'8")])
-                    LogicalTie([Note("d''8")])
-                    LogicalTie([Note("c''4"), Note("c''8")])
-                    LogicalTie([Rest('r8')])
-
         ..  container:: example
 
             Timeline-iterates pitched logical ties:
@@ -3649,23 +2811,6 @@ class IterationAgent(abctools.AbjadObject):
                     >>> for logical_tie in agent.by_timeline_and_logical_tie(
                     ...     pitched=True,
                     ...     ):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c''4"), Note("c''8")])
-                    LogicalTie([Note("g'4."), Note("g'8")])
-                    LogicalTie([Note("d''8")])
-                    LogicalTie([Note("f'8."), Note("f'8")])
-                    LogicalTie([Note("ef''4")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_and_logical_tie(
-                    ...     pitched=True,
-                    ...     )
-                    >>> for logical_tie in expression(score):
                     ...     logical_tie
                     ...
                     LogicalTie([Note("c''4"), Note("c''8")])
@@ -3692,39 +2837,20 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("g'4."), Note("g'8")])
                     LogicalTie([Note("f'8."), Note("f'8")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_and_logical_tie(
-                    ...     nontrivial=True,
-                    ...     )
-                    >>> for logical_tie in expression(score):
-                    ...     logical_tie
-                    ...
-                    LogicalTie([Note("c''4"), Note("c''8")])
-                    LogicalTie([Note("g'4."), Note("g'8")])
-                    LogicalTie([Note("f'8."), Note("f'8")])
-
+        Returns generator.
         '''
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-
-        def _closure():
-            visited_logical_ties = set()
-            iterator = self.by_timeline(reverse=reverse)
-            for leaf in iterator:
-                logical_tie = leaf._get_logical_tie()
-                if logical_tie in visited_logical_ties:
-                    continue
-                if nontrivial and logical_tie.is_trivial:
-                    continue
-                if pitched and not logical_tie.is_pitched:
-                    continue
-                visited_logical_ties.add(logical_tie)
-                yield logical_tie
-        return _closure()
+        visited_logical_ties = set()
+        iterator = self.by_timeline(reverse=reverse)
+        for leaf in iterator:
+            logical_tie = leaf._get_logical_tie()
+            if logical_tie in visited_logical_ties:
+                continue
+            if nontrivial and logical_tie.is_trivial:
+                continue
+            if pitched and not logical_tie.is_pitched:
+                continue
+            visited_logical_ties.add(logical_tie)
+            yield logical_tie
 
     # TODO: optimize to avoid behind-the-scenes full-score traversal
     def by_timeline_from_component(
@@ -3778,20 +2904,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("e'4")
                     Note("f'4")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_from_component()
-                    >>> for leaf in expression(score[1][2]):
-                    ...     leaf
-                    ...
-                    Note("b'8")
-                    Note("c''8")
-                    Note("e'4")
-                    Note("f'4")
-
         ..  container:: example
 
             Timeline-iterates from note in reverse:
@@ -3838,27 +2950,9 @@ class IterationAgent(abctools.AbjadObject):
                     Note("a'8")
                     Note("g'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_timeline_from_component(
-                    ...     reverse=True,
-                    ...     )
-                    >>> for leaf in expression(score[1][2]):
-                    ...     leaf
-                    ...
-                    Note("b'8")
-                    Note("c'4")
-                    Note("a'8")
-                    Note("g'8")
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         assert isinstance(self.client, abjad.Component)
         prototype = prototype or abjad.Leaf
         root = self.client._get_parentage().root
@@ -3866,15 +2960,13 @@ class IterationAgent(abctools.AbjadObject):
             prototype=prototype,
             reverse=reverse,
             )
-        def _closure():
-            yielded_expr = False
-            for component in component_generator:
-                if yielded_expr:
-                    yield component
-                elif component is self.client:
-                    yield component
-                    yielded_expr = True
-        return _closure()
+        yielded_expr = False
+        for component in component_generator:
+            if yielded_expr:
+                yield component
+            elif component is self.client:
+                yield component
+                yielded_expr = True
 
     def by_topmost_logical_ties_and_components(self):
         r'''Iterates by topmost logical ties and components.
@@ -3925,44 +3017,25 @@ class IterationAgent(abctools.AbjadObject):
                     LogicalTie([Note("a'8"), Note("a'32")])
                     LogicalTie([Note("b'8"), Note("b'32")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_topmost_logical_ties_and_components()
-                    >>> for item in expression(staff):
-                    ...     item
-                    ...
-                    LogicalTie([Note("c'8"), Note("c'32")])
-                    LogicalTie([Note("d'8"), Note("d'32")])
-                    Tuplet(Multiplier(2, 3), "e'8 f'8 g'8")
-                    LogicalTie([Note("a'8"), Note("a'32")])
-                    LogicalTie([Note("b'8"), Note("b'32")])
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _closure():
-            if isinstance(self.client, abjad.Leaf):
-                logical_tie = self.client._get_logical_tie()
-                if len(logical_tie) == 1:
-                    yield logical_tie
-                else:
-                    message = 'can not have only one leaf in logical tie.'
-                    raise ValueError(message)
-            elif isinstance(self.client, collections.Iterable):
-                for component in self.client:
-                    if isinstance(component, abjad.Leaf):
-                        ties = component._get_spanners(abjad.Tie)
-                        if (not ties or
-                            tuple(ties)[0]._is_my_last_leaf(component)):
-                            yield component._get_logical_tie()
-                    elif isinstance(component, abjad.Container):
-                        yield component
-        return _closure()
+        if isinstance(self.client, abjad.Leaf):
+            logical_tie = self.client._get_logical_tie()
+            if len(logical_tie) == 1:
+                yield logical_tie
+            else:
+                message = 'can not have only one leaf in logical tie.'
+                raise ValueError(message)
+        elif isinstance(self.client, collections.Iterable):
+            for component in self.client:
+                if isinstance(component, abjad.Leaf):
+                    ties = component._get_spanners(abjad.Tie)
+                    if (not ties or
+                        tuple(ties)[0]._is_my_last_leaf(component)):
+                        yield component._get_logical_tie()
+                elif isinstance(component, abjad.Container):
+                    yield component
 
     def by_vertical_moment(self, reverse=False):
         r'''Iterates by vertical moment.
@@ -4029,34 +3102,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for vertical_moment in abjad.iterate(staff_group).by_vertical_moment():
-                    ...     vertical_moment.leaves
-                    ...
-                    Selection([Note("a'4"), Note("f'8")])
-                    Selection([Note("a'4"), Note("e'8")])
-                    Selection([Note("g'4"), Note("d'8")])
-                    Selection([Note("g'4"), Note("c'8")])
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_vertical_moment()
-                    >>> for vertical_moment in expression(score):
-                    ...     vertical_moment.leaves
-                    ...
-                    Selection([Note("d''8"), Note("a'4"), Note("f'8")])
-                    Selection([Note("d''8"), Note("a'4"), Note("e'8")])
-                    Selection([Note("c''8"), Note("a'4"), Note("e'8")])
-                    Selection([Note("c''8"), Note("g'4"), Note("d'8")])
-                    Selection([Note("b'8"), Note("g'4"), Note("d'8")])
-                    Selection([Note("b'8"), Note("g'4"), Note("c'8")])
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_vertical_moment()
-                    >>> for vertical_moment in expression(staff_group):
                     ...     vertical_moment.leaves
                     ...
                     Selection([Note("a'4"), Note("f'8")])
@@ -4139,39 +3184,9 @@ class IterationAgent(abctools.AbjadObject):
                     Selection([Note("a'4"), Note("e'8")])
                     Selection([Note("a'4"), Note("f'8")])
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_vertical_moment(reverse=True)
-                    >>> for vertical_moment in expression(score):
-                    ...     vertical_moment.leaves
-                    ...
-                    Selection([Note("b'8"), Note("g'4"), Note("c'8")])
-                    Selection([Note("b'8"), Note("g'4"), Note("d'8")])
-                    Selection([Note("c''8"), Note("g'4"), Note("d'8")])
-                    Selection([Note("c''8"), Note("a'4"), Note("e'8")])
-                    Selection([Note("d''8"), Note("a'4"), Note("e'8")])
-                    Selection([Note("d''8"), Note("a'4"), Note("f'8")])
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.by_vertical_moment(reverse=True)
-                    >>> for vertical_moment in expression(staff_group):
-                    ...     vertical_moment.leaves
-                    ...
-                    Selection([Note("g'4"), Note("c'8")])
-                    Selection([Note("g'4"), Note("d'8")])
-                    Selection([Note("a'4"), Note("e'8")])
-                    Selection([Note("a'4"), Note("f'8")])
-
         Returns generator.
         '''
         import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         def _buffer_components_starting_with(component, buffer, stop_offsets):
             buffer.append(component)
             stop_offsets.append(component._get_timespan().stop_offset)
@@ -4226,21 +3241,19 @@ class IterationAgent(abctools.AbjadObject):
                         pass
                 else:
                     stop_offsets.append(component._get_timespan().stop_offset)
-        def _closure():
-            if not reverse:
-                for x in _iterate_vertical_moments(self.client):
-                    yield x
-            else:
-                moments_in_governor = []
-                for component in self.by_class():
-                    offset = component._get_timespan().start_offset
-                    if offset not in moments_in_governor:
-                        moments_in_governor.append(offset)
-                moments_in_governor.sort()
-                for moment_in_governor in reversed(moments_in_governor):
-                    yield self.client._get_vertical_moment_at(
-                        moment_in_governor)
-        return _closure()
+        if not reverse:
+            for x in _iterate_vertical_moments(self.client):
+                yield x
+        else:
+            moments_in_governor = []
+            for component in self.by_class():
+                offset = component._get_timespan().start_offset
+                if offset not in moments_in_governor:
+                    moments_in_governor.append(offset)
+            moments_in_governor.sort()
+            for moment_in_governor in reversed(moments_in_governor):
+                yield self.client._get_vertical_moment_at(
+                    moment_in_governor)
 
     def depth_first(
         self,
@@ -4290,30 +3303,6 @@ class IterationAgent(abctools.AbjadObject):
                 ::
 
                     >>> for component in abjad.iterate(score).depth_first():
-                    ...     component
-                    ...
-                    <Score<<2>>>
-                    Staff("c''4 ~ c''8 d''8 r4 ef''4")
-                    Note("c''4")
-                    Note("c''8")
-                    Note("d''8")
-                    Rest('r4')
-                    Note("ef''4")
-                    Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8")
-                    Rest('r8')
-                    Note("g'4.")
-                    Note("g'8")
-                    Rest('r16')
-                    Note("f'8.")
-                    Note("f'8")
-
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.depth_first()
-                    >>> for component in expression(score):
                     ...     component
                     ...
                     <Score<<2>>>
@@ -4388,30 +3377,6 @@ class IterationAgent(abctools.AbjadObject):
                     Note("c''8")
                     Note("c''4")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.depth_first(direction=abjad.Right)
-                    >>> for component in expression(score):
-                    ...     component
-                    ...
-                    <Score<<2>>>
-                    Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8")
-                    Note("f'8")
-                    Note("f'8.")
-                    Rest('r16')
-                    Note("g'8")
-                    Note("g'4.")
-                    Rest('r8')
-                    Staff("c''4 ~ c''8 d''8 r4 ef''4")
-                    Note("ef''4")
-                    Rest('r4')
-                    Note("d''8")
-                    Note("c''8")
-                    Note("c''4")
-
         ..  container:: example
 
             Iterates depth first with grace notes:
@@ -4465,33 +3430,10 @@ class IterationAgent(abctools.AbjadObject):
                     Note("e'8")
                     Note("f'8")
 
-            ..  container:: example expression
-
-                ::
-
-                    >>> expression = abjad.iterate()
-                    >>> expression = expression.depth_first()
-                    >>> for component in expression(voice):
-                    ...     component
-                    ...
-                    Voice("c'8 d'8 e'8 f'8")
-                    Note("c'8")
-                    Note("d'8")
-                    GraceContainer("cf''16 bf'16")
-                    Note("cf''16")
-                    Note("bf'16")
-                    AfterGraceContainer("af'16 gf'16")
-                    Note("af'16")
-                    Note("gf'16")
-                    Note("e'8")
-                    Note("f'8")
-
         Returns generator.
         '''
         import abjad
         direction = direction or abjad.Left
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
         def _next_node_depth_first(component, total):
             r'''If client has unvisited music, return next unvisited node in
             client's music.
@@ -4587,21 +3529,19 @@ class IterationAgent(abctools.AbjadObject):
             else:
                 return node
         assert isinstance(self.client, abjad.Component)
-        def _closure():
-            component = self.client
-            client_parent, node, rank = component._parent, component, 0
-            queue = collections.deque([])
-            while node is not None and not (capped and node is client_parent):
-                result = _find_yield(node, rank, queue, unique)
-                if result is not None:
-                    yield result
-                if _is_node_forbidden(node, forbid):
-                    node, rank = _handle_forbidden_node(node, queue)
-                else:
-                    node, rank = _advance_node_depth_first(
-                        node, rank, direction)
-            queue.clear()
-        return _closure()
+        component = self.client
+        client_parent, node, rank = component._parent, component, 0
+        queue = collections.deque([])
+        while node is not None and not (capped and node is client_parent):
+            result = _find_yield(node, rank, queue, unique)
+            if result is not None:
+                yield result
+            if _is_node_forbidden(node, forbid):
+                node, rank = _handle_forbidden_node(node, queue)
+            else:
+                node, rank = _advance_node_depth_first(
+                    node, rank, direction)
+        queue.clear()
 
     def out_of_range(self):
         r'''Iterates notes and chords outside traditional instrument ranges.
