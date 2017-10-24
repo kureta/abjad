@@ -88,6 +88,30 @@ class Parentage(Selection):
         Selection.__init__(self, components)
         self._component = component
 
+    ### SPECIAL METHODS ###
+
+    def __getitem__(self, argument):
+        r'''Gets `argument`.
+
+        Returns component or vanilla selection (not parentage).
+        '''
+        result = self.items.__getitem__(argument)
+        if isinstance(result, tuple):
+            result = Selection(result)
+        return result
+
+    ### PRIVATE PROPERTIES ###
+
+    @property
+    def _prolations(self):
+        import abjad
+        prolations = []
+        default = abjad.Multiplier(1)
+        for parent in self:
+            prolation = getattr(parent, 'implied_prolation', default)
+            prolations.append(prolation)
+        return prolations
+
     ### PRIVATE METHODS ###
 
     def _get_governor(self):
@@ -106,34 +130,6 @@ class Parentage(Selection):
         lhs = component.__class__.__name__
         rhs = getattr(component, 'name', None) or id(component)
         return '{}-{!r}'.format(lhs, rhs)
-
-    ### PUBLIC METHODS ###
-
-    def get_first(self, prototype=None):
-        r'''Gets first instance of `prototype` in parentage.
-
-        Returns component or none.
-        '''
-        from abjad.tools import scoretools
-        if prototype is None:
-            prototype = (scoretools.Component,)
-        if not isinstance(prototype, tuple):
-            prototype = (prototype,)
-        for component in self:
-            if isinstance(component, prototype):
-                return component
-
-    ### PRIVATE PROPERTIES ###
-
-    @property
-    def _prolations(self):
-        import abjad
-        prolations = []
-        default = abjad.Multiplier(1)
-        for parent in self:
-            prolation = getattr(parent, 'implied_prolation', default)
-            prolations.append(prolation)
-        return prolations
 
     ### PUBLIC PROPERTIES ###
 
@@ -467,3 +463,19 @@ class Parentage(Selection):
             if isinstance(parent, scoretools.Tuplet):
                 result += 1
         return result
+
+    ### PUBLIC METHODS ###
+
+    def get_first(self, prototype=None):
+        r'''Gets first instance of `prototype` in parentage.
+
+        Returns component or none.
+        '''
+        from abjad.tools import scoretools
+        if prototype is None:
+            prototype = (scoretools.Component,)
+        if not isinstance(prototype, tuple):
+            prototype = (prototype,)
+        for component in self:
+            if isinstance(component, prototype):
+                return component

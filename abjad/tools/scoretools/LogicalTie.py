@@ -23,6 +23,18 @@ class LogicalTie(Selection):
 
     __slots__ = ()
 
+    ### SPECIAL METHODS ###
+
+    def __getitem__(self, argument):
+        r'''Gets `argument`.
+
+        Returns component or vanilla selection (not logical tie).
+        '''
+        result = self.items.__getitem__(argument)
+        if isinstance(result, tuple):
+            result = Selection(result)
+        return result
+
     ### PRIVATE METHODS ###
 
     def _add_or_remove_notes_to_achieve_written_duration(

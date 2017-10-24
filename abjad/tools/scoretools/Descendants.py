@@ -99,6 +99,18 @@ class Descendants(Selection):
         Selection.__init__(self, result)
         self._component = component
 
+    ### SPECIAL METHODS ###
+
+    def __getitem__(self, argument):
+        r'''Gets `argument`.
+
+        Returns component or vanilla selection (not descendants).
+        '''
+        result = self.items.__getitem__(argument)
+        if isinstance(result, tuple):
+            result = Selection(result)
+        return result
+
     ### PUBLIC PROPERTIES ###
 
     @property

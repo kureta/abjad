@@ -92,10 +92,9 @@ class VerticalMoment(Selection):
                     return True
         return False
 
+    # redefined because of custom __eq__()
     def __hash__(self):
         r'''Hases vertical moment.
-
-        Reimplemented here together with `__eq__()`.
 
         Returns integer.
         '''

@@ -357,26 +357,42 @@ class Selection(AbjadValueObject):
                     f'8
                 }
 
-        ..  container:: example expression
+        ..  container:: example
 
             Selects note 1 (or nothing) in each pitched logical tie:
 
-            >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
+            ..  container:: example
 
-            >>> expression = abjad.select().by_logical_tie(pitched=True)
-            >>> get = abjad.select().by_leaf()[abjad.index([1])]
-            >>> expression = expression.map(get)
-            >>> result = expression(staff)
+                >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
+                >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> expression.print(result)
-            Sequence([])
-            Sequence([Note("d'8")])
-            Sequence([Note("e'8")])
-            Sequence([])
+                >>> getter = abjad.select().by_leaf()[abjad.index([1])]
+                >>> for selection in abjad.select(staff).by_logical_tie(
+                ...     pitched=True,
+                ...     ).map(getter):
+                ...     selection
+                ...
+                Selection(items=())
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection(items=())
 
-            >>> expression.color(result)
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example expression
+
+                >>> getter = abjad.select().by_leaf()[abjad.index([1])]
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
+                >>> expression = expression.map(getter)
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection(items=())
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection(items=())
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -415,11 +431,12 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if isinstance(argument, abjad.Pattern):
-            result = abjad.sequence(self.items).retain_pattern(argument)
+            items = abjad.sequence(self.items).retain_pattern(argument)
+            result = type(self)(items)
         else:
             result = self.items.__getitem__(argument)
-        if isinstance(result, tuple):
-            result = Selection(result)
+            if isinstance(result, tuple):
+                result = type(self)(result)
         return result
 
     def __getstate__(self):
@@ -439,10 +456,9 @@ class Selection(AbjadValueObject):
                     pass
         return state
 
+    # redefined because of custom __eq__()
     def __hash__(self):
         r'''Hashes selection.
-
-        Reimplemented together with `__eq__()`.
 
         Returns integer.
         '''
