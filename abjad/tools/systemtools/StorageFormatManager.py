@@ -23,7 +23,6 @@ class StorageFormatManager(AbjadValueObject):
         )
 
     _exclude_tools_package = (
-        'durationtools',
         'datastructuretools',
         'indicatortools',
         'markuptools',

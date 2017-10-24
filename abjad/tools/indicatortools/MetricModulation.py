@@ -1,5 +1,4 @@
 import collections
-from abjad.tools import durationtools
 from abjad.tools import markuptools
 from abjad.tools import mathtools
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
@@ -864,9 +863,10 @@ class MetricModulation(AbjadValueObject):
     ### PRIVATE METHODS ###
 
     def _get_left_markup(self):
+        import abjad
         if self.left_markup is not None:
             return self.left_markup
-        markup = durationtools.Duration._to_score_markup(self.left_rhythm)
+        markup = abjad.Duration._to_score_markup(self.left_rhythm)
         return markup
 
     def _get_lilypond_format(self):
@@ -897,9 +897,10 @@ class MetricModulation(AbjadValueObject):
         return markup
 
     def _get_right_markup(self):
+        import abjad
         if self.right_markup is not None:
             return self.right_markup
-        markup = durationtools.Duration._to_score_markup(self.right_rhythm)
+        markup = abjad.Duration._to_score_markup(self.right_rhythm)
         return markup
 
     def _initialize_rhythm(self, rhythm):

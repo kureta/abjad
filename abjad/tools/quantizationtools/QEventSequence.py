@@ -3,7 +3,6 @@ import copy
 import itertools
 import numbers
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
@@ -260,11 +259,12 @@ class QEventSequence(AbjadObject):
 
         Returns ``QEventSequence`` instance.
         '''
+        import abjad
         from abjad.tools import quantizationtools
         if fuse_silences:
             durations = [
                 x for x in
-                datastructuretools.Sequence(milliseconds).sum_by_sign(sign=[-1])
+                abjad.sequence(milliseconds).sum_by_sign(sign=[-1])
                 if x
                 ]
         else:
@@ -272,7 +272,7 @@ class QEventSequence(AbjadObject):
         offsets = mathtools.cumulative_sums([abs(x) for x in durations])
         q_events = []
         for pair in zip(offsets, durations):
-            offset = durationtools.Offset(pair[0])
+            offset = abjad.Offset(pair[0])
             duration = pair[1]
             # negative duration indicates silence
             if duration < 0:
@@ -281,7 +281,7 @@ class QEventSequence(AbjadObject):
                 q_event = quantizationtools.PitchedQEvent(offset, [0])
             q_events.append(q_event)
         q_events.append(quantizationtools.TerminalQEvent(
-            durationtools.Offset(offsets[-1])))
+            abjad.Offset(offsets[-1])))
         return class_(q_events)
 
     @classmethod
@@ -392,6 +392,7 @@ class QEventSequence(AbjadObject):
 
         Returns ``QEventSequence`` instance.
         '''
+        import abjad
         from abjad.tools import quantizationtools
         assert isinstance(pairs, collections.Iterable)
         assert all(isinstance(x, collections.Iterable) for x in pairs)
@@ -417,7 +418,7 @@ class QEventSequence(AbjadObject):
         # build QEvents
         q_events = []
         for pair in zip(offsets, groups):
-            offset = durationtools.Offset(pair[0])
+            offset = abjad.Offset(pair[0])
             pitches = pair[1][1]
             if isinstance(pitches, collections.Iterable):
                 assert all(isinstance(x, numbers.Number) for x in pitches)
@@ -427,7 +428,7 @@ class QEventSequence(AbjadObject):
             elif isinstance(pitches, numbers.Number):
                 q_events.append(quantizationtools.PitchedQEvent(offset, [pitches]))
         q_events.append(quantizationtools.TerminalQEvent(
-            durationtools.Offset(offsets[-1])))
+            abjad.Offset(offsets[-1])))
         return class_(q_events)
 
     @classmethod
@@ -472,8 +473,9 @@ class QEventSequence(AbjadObject):
 
         Returns ``QEventSequence`` instance.
         '''
+        import abjad
         from abjad.tools import quantizationtools
-        durations = [durationtools.Duration(x) for x in durations]
+        durations = [abjad.Duration(x) for x in durations]
         assert isinstance(tempo, indicatortools.MetronomeMark)
         durations = [
             x for x in
@@ -484,7 +486,7 @@ class QEventSequence(AbjadObject):
         offsets = mathtools.cumulative_sums([abs(_) for _ in durations])
         q_events = []
         for pair in zip(offsets, durations):
-            offset = durationtools.Offset(pair[0])
+            offset = abjad.Offset(pair[0])
             duration = pair[1]
             # negative duration indicates silence
             if duration < 0:
@@ -619,7 +621,8 @@ class QEventSequence(AbjadObject):
 
         Return ``Duration`` instance.
         '''
-        return durationtools.Duration(self[-1].offset)
+        import abjad
+        return abjad.Duration(self[-1].offset)
 
     @property
     def sequence(self):

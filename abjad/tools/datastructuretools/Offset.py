@@ -1,5 +1,5 @@
 from abjad.tools import systemtools
-from abjad.tools.durationtools.Duration import Duration
+from .Duration import Duration
 
 
 class Offset(Duration):
@@ -739,9 +739,9 @@ class Offset(Duration):
             )
 
     def _get_grace_displacement(self):
-        from abjad.tools import durationtools
+        import abjad
         if self.grace_displacement is None:
-            return durationtools.Duration(0)
+            return abjad.Duration(0)
         return self.grace_displacement
 
     ### PUBLIC PROPERTIES ###

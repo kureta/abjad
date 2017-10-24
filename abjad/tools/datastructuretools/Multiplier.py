@@ -1,4 +1,4 @@
-from abjad.tools.durationtools.Duration import Duration
+from .Duration import Duration
 
 
 class Multiplier(Duration):

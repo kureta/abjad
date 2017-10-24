@@ -1,5 +1,4 @@
 import collections
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from .Selection import Selection
 
@@ -131,8 +130,9 @@ class Parentage(Selection):
 
     @property
     def _prolations(self):
+        import abjad
         prolations = []
-        default = durationtools.Multiplier(1)
+        default = abjad.Multiplier(1)
         for parent in self:
             prolation = getattr(parent, 'implied_prolation', default)
             prolations.append(prolation)
@@ -303,7 +303,8 @@ class Parentage(Selection):
 
         Returns multiplier.
         '''
-        prolations = [durationtools.Multiplier(1)] + self._prolations
+        import abjad
+        prolations = [abjad.Multiplier(1)] + self._prolations
         products = mathtools.cumulative_products(prolations)
         return products[-1]
 

@@ -1,5 +1,4 @@
 import copy
-from abjad.tools import durationtools
 from abjad.tools import graphtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
@@ -196,10 +195,10 @@ class Measure(Container):
     ### PRIVATE METHODS ###
 
     def _all_contents_are_scalable_by_multiplier(self, multiplier):
-        from abjad.tools import scoretools
-        multiplier = durationtools.Multiplier(multiplier)
+        import abjad
+        multiplier = abjad.Multiplier(multiplier)
         for component in self:
-            if isinstance(component, scoretools.Leaf):
+            if isinstance(component, abjad.Leaf):
                 candidate_duration = multiplier * component.written_duration
                 if not candidate_duration.is_assignable:
                     return False
@@ -292,8 +291,8 @@ class Measure(Container):
         denominators=None,
         factor=None,
         ):
-        # check input
-        duration = durationtools.Duration(duration)
+        import abjad
+        duration = abjad.Duration(duration)
         if denominators is not None:
             if factor is not None:
                 denominators = [
@@ -643,10 +642,11 @@ class Measure(Container):
 
         Returns positive multiplier.
         '''
+        import abjad
         if self.implicit_scaling:
             time_signature = self.time_signature
             return time_signature.implied_prolation
-        return durationtools.Multiplier(1)
+        return abjad.Multiplier(1)
 
     @property
     def is_full(self):

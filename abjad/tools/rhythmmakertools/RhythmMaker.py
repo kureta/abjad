@@ -1,6 +1,5 @@
 import collections
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
 from abjad.tools import spannertools
@@ -153,6 +152,7 @@ class RhythmMaker(AbjadValueObject):
         return new_selections
 
     def _apply_logical_tie_masks(self, selections):
+        import abjad
         from abjad.tools import rhythmmakertools
         if self.logical_tie_masks is None:
             return selections
@@ -160,10 +160,10 @@ class RhythmMaker(AbjadValueObject):
         # this allows the call to mutate().replace() to work
         containers = []
         for selection in selections:
-            container = scoretools.Container(selection)
-            attach('temporary container', container)
+            container = abjad.Container(selection)
+            abjad.attach('temporary container', container)
             containers.append(container)
-        logical_ties = iterate(selections).by_logical_tie()
+        logical_ties = abjad.iterate(selections).by_logical_tie()
         logical_ties = list(logical_ties)
         total_logical_ties = len(logical_ties)
         for index, logical_tie in enumerate(logical_ties[:]):
@@ -173,25 +173,23 @@ class RhythmMaker(AbjadValueObject):
                 )
             if not isinstance(matching_mask, rhythmmakertools.SilenceMask):
                 continue
-            if isinstance(logical_tie.head, scoretools.Rest):
+            if isinstance(logical_tie.head, abjad.Rest):
                 continue
             for leaf in logical_tie:
                 rest = scoretools.Rest(leaf.written_duration)
-                inspector = inspect(leaf)
-                if inspector.has_indicator(durationtools.Multiplier):
-                    multiplier = inspector.get_indicator(
-                        durationtools.Multiplier,
-                        )
-                    multiplier = durationtools.Multiplier(multiplier)
-                    attach(multiplier, rest)
-                mutate(leaf).replace([rest])
-                detach(spannertools.Tie, rest)
+                inspector = abjad.inspect(leaf)
+                if inspector.has_indicator(abjad.Multiplier):
+                    multiplier = inspector.get_indicator(abjad.Multiplier)
+                    multiplier = abjad.Multiplier(multiplier)
+                    abjad.attach(multiplier, rest)
+                abjad.mutate(leaf).replace([rest])
+                abjad.detach(abjad.Tie, rest)
         # remove every temporary container and recreate selections
         new_selections = []
         for container in containers:
-            inspector = inspect(container)
+            inspector = abjad.inspect(container)
             assert inspector.get_indicator(str) == 'temporary container'
-            new_selection = mutate(container).eject_contents()
+            new_selection = abjad.mutate(container).eject_contents()
             new_selections.append(new_selection)
         return new_selections
 
@@ -347,11 +345,11 @@ class RhythmMaker(AbjadValueObject):
             return tuple(datastructuretools.Sequence(argument).rotate(n=n))
 
     def _scale_taleas(self, divisions, talea_denominator, taleas):
+        import abjad
         talea_denominator = talea_denominator or 1
         dummy_division = (1, talea_denominator)
         divisions.append(dummy_division)
-        Duration = durationtools.Duration
-        divisions = Duration.durations_to_nonreduced_fractions(divisions)
+        divisions = abjad.Duration.durations_to_nonreduced_fractions(divisions)
         dummy_division = divisions.pop()
         lcd = dummy_division.denominator
         multiplier = lcd / talea_denominator
@@ -360,7 +358,7 @@ class RhythmMaker(AbjadValueObject):
         scaled_taleas = []
         for talea in taleas:
             talea = [multiplier * _ for _ in talea]
-            talea = datastructuretools.CyclicTuple(talea)
+            talea = abjad.CyclicTuple(talea)
             scaled_taleas.append(talea)
         result = [divisions, lcd]
         result.extend(scaled_taleas)
@@ -378,8 +376,9 @@ class RhythmMaker(AbjadValueObject):
         return result
 
     def _trivial_helper(self, sequence_, rotation):
+        import abjad
         if isinstance(rotation, int) and len(sequence_):
-            return datastructuretools.Sequence(sequence_).rotate(n=rotation)
+            return abjad.sequence(sequence_).rotate(n=rotation)
         return sequence_
 
     def _validate_selections(self, selections):
@@ -390,7 +389,8 @@ class RhythmMaker(AbjadValueObject):
             assert isinstance(selection, abjad.Selection), selection
 
     def _validate_tuplets(self, selections):
-        for tuplet in iterate(selections).by_class(scoretools.Tuplet):
+        import abjad
+        for tuplet in iterate(selections).by_class(abjad.Tuplet):
             assert tuplet.multiplier.is_proper_tuplet_multiplier, repr(
                 tuplet)
             assert len(tuplet), repr(tuplet)

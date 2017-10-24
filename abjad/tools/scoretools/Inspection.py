@@ -1,5 +1,4 @@
 from abjad.tools import abctools
-from abjad.tools import durationtools
 
 
 class Inspection(abctools.AbjadObject):

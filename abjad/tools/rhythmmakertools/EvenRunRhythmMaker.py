@@ -1,4 +1,3 @@
-from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
@@ -150,7 +149,7 @@ class EvenRunRhythmMaker(RhythmMaker):
         exponent = self.exponent or 0
         denominator_multiplier = 2 ** exponent
         denominator *= denominator_multiplier
-        unit_duration = durationtools.Duration(1, denominator)
+        unit_duration = abjad.Duration(1, denominator)
         if forbidden_duration is not None:
             multiplier = 1
             while forbidden_duration <= unit_duration:

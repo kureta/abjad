@@ -1,5 +1,4 @@
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import rhythmtreetools
@@ -593,8 +592,6 @@ class Meter(AbjadValueObject):
         Returns Graphviz graph.
         '''
         import abjad
-        from abjad.tools import graphtools
-        from abjad.tools import metertools
         def make_offset_node(
             offset,
             leaf_one=None,
@@ -602,7 +599,7 @@ class Meter(AbjadValueObject):
             is_last=False,
             ):
             if not is_last:
-                offset_node = graphtools.GraphvizNode(
+                offset_node = abjad.graphtools.GraphvizNode(
                     attributes={
                         'shape': 'Mrecord',
                         'style': 'filled',
@@ -613,35 +610,35 @@ class Meter(AbjadValueObject):
                         },
                     )
             else:
-                offset_node = graphtools.GraphvizNode(
+                offset_node = abjad.graphtools.GraphvizNode(
                     attributes={
                         'shape': 'Mrecord',
                         },
                     )
-            offset_field = graphtools.GraphvizField(
+            offset_field = abjad.graphtools.GraphvizField(
                 label=str(offset),
                 )
-            weight_field = graphtools.GraphvizField(
+            weight_field = abjad.graphtools.GraphvizField(
                 label='+' * offsets[offset],
                 )
-            group = graphtools.GraphvizGroup()
+            group = abjad.graphtools.GraphvizGroup()
             group.extend([offset_field, weight_field])
             offset_node.append(group)
             offset_subgraph.append(offset_node)
             leaf_one_node = node_mapping[leaf_one]
-            edge = graphtools.GraphvizEdge(
+            edge = abjad.graphtools.GraphvizEdge(
                 attributes={'style': 'dotted'},
                 )
             edge.attach(leaf_one_node, offset_node)
             if leaf_two:
                 leaf_two_node = node_mapping[leaf_two]
-                edge = graphtools.GraphvizEdge(
+                edge = abjad.graphtools.GraphvizEdge(
                     attributes={'style': 'dotted'},
                     )
                 edge.attach(leaf_two_node, offset_node)
-        offsets = metertools.MetricAccentKernel.count_offsets(
-            abjad.Sequence(self.depthwise_offset_inventory).flatten())
-        graph = graphtools.GraphvizGraph(
+        offsets = abjad.MetricAccentKernel.count_offsets(
+            abjad.sequence(self.depthwise_offset_inventory).flatten())
+        graph = abjad.graphtools.GraphvizGraph(
             name='G',
             attributes={
                 'bgcolor': 'transparent',
@@ -660,7 +657,7 @@ class Meter(AbjadValueObject):
             )
         node_mapping = {}
         for node in self._root_node.nodes:
-            graphviz_node = graphtools.GraphvizNode()
+            graphviz_node = abjad.graphtools.GraphvizNode()
             graphviz_node.attributes['label'] = str(node.preprolated_duration)
             if isinstance(node, rhythmtreetools.RhythmTreeContainer):
                 graphviz_node.attributes['shape'] = 'triangle'
@@ -669,13 +666,13 @@ class Meter(AbjadValueObject):
             graph.append(graphviz_node)
             node_mapping[node] = graphviz_node
             if node.parent is not None:
-                graphtools.GraphvizEdge().attach(
+                abjad.graphtools.GraphvizEdge().attach(
                     node_mapping[node.parent],
                     node_mapping[node],
                     )
         leaves = self._root_node.leaves
         offset = leaves[0].start_offset
-        offset_subgraph = graphtools.GraphvizSubgraph(
+        offset_subgraph = abjad.graphtools.GraphvizSubgraph(
             name='cluster_offsets',
             attributes={
                 'style': 'rounded',
@@ -1100,8 +1097,8 @@ class Meter(AbjadValueObject):
 
         Returns list.
         '''
-        from abjad.tools import metertools
-        session = metertools.MeterFittingSession(
+        import abjad
+        session = abjad.metertools.MeterFittingSession(
             kernel_denominator=denominator,
             maximum_run_length=maximum_run_length,
             meters=meters,
@@ -1145,13 +1142,12 @@ class Meter(AbjadValueObject):
 
         Returns dictionary.
         '''
-        from abjad.tools import metertools
+        import abjad
         assert mathtools.is_positive_integer_power_of_two(
             denominator // self.denominator)
-
         inventory = list(self.depthwise_offset_inventory)
-        old_flag_count = durationtools.Duration(1, self.denominator).flag_count
-        new_flag_count = durationtools.Duration(1, denominator).flag_count
+        old_flag_count = abjad.Duration(1, self.denominator).flag_count
+        new_flag_count = abjad.Duration(1, denominator).flag_count
         extra_depth = new_flag_count - old_flag_count
         for _ in range(extra_depth):
             old_offsets = inventory[-1]
@@ -1161,7 +1157,6 @@ class Meter(AbjadValueObject):
                 new_offsets.append((first + second) / 2)
             new_offsets.append(old_offsets[-1])
             inventory.append(tuple(new_offsets))
-
         total = 0
         kernel = {}
         for offsets in inventory:
@@ -1170,12 +1165,10 @@ class Meter(AbjadValueObject):
                     kernel[offset] = 0
                 kernel[offset] += 1
                 total += 1
-
         if normalize:
             for offset, response in kernel.items():
-                kernel[offset] = durationtools.Multiplier(response, total)
-
-        return metertools.MetricAccentKernel(kernel)
+                kernel[offset] = abjad.Multiplier(response, total)
+        return abjad.MetricAccentKernel(kernel)
 
     ### PUBLIC PROPERTIES ###
 
@@ -1287,12 +1280,13 @@ class Meter(AbjadValueObject):
 
         Returns dictionary.
         '''
+        import abjad
         inventory = []
         all_offsets = set()
-        all_offsets.add(durationtools.Offset(self.numerator, self.denominator))
+        all_offsets.add(abjad.Offset(self.numerator, self.denominator))
         for depth, nodes in sorted(self.root_node.depthwise_inventory.items()):
             for node in nodes:
-                all_offsets.add(durationtools.Offset(node.start_offset))
+                all_offsets.add(abjad.Offset(node.start_offset))
             inventory.append(tuple(sorted(all_offsets)))
         return tuple(inventory)
 
@@ -1310,7 +1304,8 @@ class Meter(AbjadValueObject):
 
         Returns duration.
         '''
-        return durationtools.Duration(self.numerator, self.denominator)
+        import abjad
+        return abjad.Duration(self.numerator, self.denominator)
 
     @property
     def implied_time_signature(self):

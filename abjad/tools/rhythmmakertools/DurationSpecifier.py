@@ -1,4 +1,3 @@
-from abjad.tools import durationtools
 from abjad.tools.abctools import AbjadValueObject
 
 
@@ -30,11 +29,12 @@ class DurationSpecifier(AbjadValueObject):
         rewrite_meter=None,
         spell_metrically=None,
         ):
+        import abjad
         from abjad.tools import rhythmmakertools
         assert isinstance(decrease_monotonic, bool)
         self._decrease_monotonic = decrease_monotonic
         if forbidden_duration is not None:
-            forbidden_duration = durationtools.Duration(forbidden_duration)
+            forbidden_duration = abjad.Duration(forbidden_duration)
         self._forbidden_duration = forbidden_duration
         assert isinstance(rewrite_meter, (bool, type(None)))
         self._rewrite_meter = rewrite_meter

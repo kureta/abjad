@@ -1,7 +1,6 @@
 import abc
 import bisect
 import copy
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import timespantools
 from abjad.tools.topleveltools import attach
@@ -701,7 +700,7 @@ class Component(AbjadObject):
         prolated_leaf_duration = self._get_duration()
         parentage = self._get_parentage(include_self=False)
         prolations = parentage._prolations
-        current_prolation, i = durationtools.Duration(1), 0
+        current_prolation, i = abjad.Duration(1), 0
         parent = self._parent
         while parent is not None and not parent.is_simultaneous:
             current_prolation *= prolations[i]

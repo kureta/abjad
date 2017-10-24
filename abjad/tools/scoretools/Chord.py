@@ -1,5 +1,4 @@
 import copy
-from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import pitchtools
@@ -36,13 +35,11 @@ class Chord(Leaf):
     ### INITIALIZER ###
 
     def __init__(self, *arguments):
+        import abjad
         from abjad.ly import drums
-        from abjad.tools import scoretools
         from abjad.tools.topleveltools import parse
         assert len(arguments) in (0, 1, 2)
-        self._note_heads = scoretools.NoteHeadList(
-            client=self,
-            )
+        self._note_heads = abjad.NoteHeadList(client=self)
         if len(arguments) == 1 and isinstance(arguments[0], str):
             string = '{{ {} }}'.format(arguments[0])
             parsed = parse(string)
@@ -78,7 +75,7 @@ class Chord(Leaf):
                 written_pitches = written_pitches.written_pitches
         elif len(arguments) == 0:
             written_pitches = [0, 4, 7]
-            written_duration = durationtools.Duration(1, 4)
+            written_duration = abjad.Duration(1, 4)
         else:
             message = 'can not initialize chord from {!r}.'
             message = message.format(arguments)
@@ -99,14 +96,14 @@ class Chord(Leaf):
             if not is_parenthesized:
                 is_parenthesized = None
             if written_pitch not in drums:
-                note_head = scoretools.NoteHead(
+                note_head = abjad.NoteHead(
                     written_pitch=written_pitch,
                     is_cautionary=is_cautionary,
                     is_forced=is_forced,
                     is_parenthesized=is_parenthesized,
                     )
             else:
-                note_head = scoretools.DrumNoteHead(
+                note_head = abjad.DrumNoteHead(
                     written_pitch=written_pitch,
                     is_cautionary=is_cautionary,
                     is_forced=is_forced,
@@ -314,13 +311,14 @@ class Chord(Leaf):
         return ' '.join([str(x) for x in self.note_heads])
 
     def _get_tremolo_reattack_duration(self):
-        tremolos = inspect(self).get_indicators(indicatortools.Tremolo)
+        import abjad
+        tremolos = abjad.inspect(self).get_indicators(abjad.Tremolo)
         if not tremolos:
             return
         tremolo = tremolos[0]
         exponent = 2 + tremolo.beam_count
         denominator = 2 ** exponent
-        reattack_duration = durationtools.Duration(1, denominator)
+        reattack_duration = abjad.Duration(1, denominator)
         return reattack_duration
 
     ### PUBLIC PROPERTIES ###

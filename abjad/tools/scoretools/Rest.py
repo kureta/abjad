@@ -1,5 +1,4 @@
 import copy
-from abjad.tools import durationtools
 from abjad.tools.topleveltools import detach
 from .Leaf import Leaf
 
@@ -34,19 +33,19 @@ class Rest(Leaf):
     ### INITIALIZER ###
 
     def __init__(self, written_duration=None):
-        from abjad.tools.topleveltools import parse
+        import abjad
         original_input = written_duration
         if isinstance(written_duration, str):
             string = '{{ {} }}'.format(written_duration)
-            parsed = parse(string)
+            parsed = abjad.parse(string)
             assert len(parsed) == 1 and isinstance(parsed[0], Leaf)
             written_duration = parsed[0]
         if isinstance(written_duration, Leaf):
             written_duration = written_duration.written_duration
         elif written_duration is None:
-            written_duration = durationtools.Duration(1, 4)
+            written_duration = abjad.Duration(1, 4)
         else:
-            written_duration = durationtools.Duration(written_duration)
+            written_duration = abjad.Duration(written_duration)
         Leaf.__init__(self, written_duration)
         if isinstance(original_input, Leaf):
             self._copy_override_and_set_from_leaf(original_input)

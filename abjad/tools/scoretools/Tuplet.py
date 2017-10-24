@@ -1,6 +1,5 @@
 import math
 from abjad import Fraction
-from abjad.tools import durationtools
 from abjad.tools import graphtools
 from abjad.tools import mathtools
 from abjad.tools import systemtools
@@ -104,8 +103,9 @@ class Tuplet(Container):
     ### INITIALIZER ###
 
     def __init__(self, multiplier=None, music=None):
+        import abjad
         Container.__init__(self, music)
-        multiplier = multiplier or durationtools.Multiplier(2, 3)
+        multiplier = multiplier or abjad.Multiplier(2, 3)
         self.multiplier = multiplier
         self._force_fraction = False
         self._force_times_command = False
@@ -152,20 +152,20 @@ class Tuplet(Container):
         return node
 
     def _fix(self):
-        from abjad.tools import scoretools
+        import abjad
         # find tuplet multiplier
         integer_exponent = int(math.log(self.multiplier, 2))
-        leaf_multiplier = durationtools.Multiplier(2) ** integer_exponent
+        leaf_multiplier = abjad.Multiplier(2) ** integer_exponent
         # scale leaves in tuplet by power of two
         for component in self:
-            if isinstance(component, scoretools.Leaf):
+            if isinstance(component, abjad.Leaf):
                 old_written_duration = component.written_duration
                 new_written_duration = leaf_multiplier * old_written_duration
                 component._set_duration(new_written_duration)
         # adjust tuplet multiplier
         if self.__class__ is Tuplet:
             numerator, denominator = leaf_multiplier.pair
-            multiplier = durationtools.Multiplier(denominator, numerator)
+            multiplier = abjad.Multiplier(denominator, numerator)
             self.multiplier *= multiplier
 
     def _format_after_slot(self, bundle):
@@ -273,11 +273,11 @@ class Tuplet(Container):
         return self._format_component()
 
     def _get_multiplier_fraction_string(self):
+        import abjad
         if self.preferred_denominator is not None:
-            inverse_multiplier = durationtools.Multiplier(
+            inverse_multiplier = abjad.Multiplier(
                 self.multiplier.denominator, self.multiplier.numerator)
-            nonreduced_fraction = \
-                mathtools.NonreducedFraction(inverse_multiplier)
+            nonreduced_fraction = abjad.NonreducedFraction(inverse_multiplier)
             nonreduced_fraction = nonreduced_fraction.with_denominator(
                 self.preferred_denominator)
             denominator, numerator = nonreduced_fraction.pair
@@ -324,15 +324,16 @@ class Tuplet(Container):
         return string
 
     def _scale(self, multiplier):
-        from abjad.tools import scoretools
-        multiplier = durationtools.Multiplier(multiplier)
+        import abjad
+        multiplier = abjad.Multiplier(multiplier)
         for component in self[:]:
-            if isinstance(component, scoretools.Leaf):
+            if isinstance(component, abjad.Leaf):
                 new_duration = multiplier * component.written_duration
                 component._set_duration(new_duration)
         self._fix()
 
     def _simplify_redundant_tuplet(self):
+        import abjad
         if not self.is_redundant:
             return
         leaves = []
@@ -347,7 +348,7 @@ class Tuplet(Container):
             leaf.written_duration = duration
             leaves.append(leaf)
         self[:] = leaves
-        self.multiplier = durationtools.Multiplier(1)
+        self.multiplier = abjad.Multiplier(1)
 
     ### PUBLIC PROPERTIES ###
 
@@ -987,10 +988,11 @@ class Tuplet(Container):
 
     @multiplier.setter
     def multiplier(self, argument):
+        import abjad
         if isinstance(argument, (int, Fraction)):
-            rational = durationtools.Multiplier(argument)
+            rational = abjad.Multiplier(argument)
         elif isinstance(argument, tuple):
-            rational = durationtools.Multiplier(argument)
+            rational = abjad.Multiplier(argument)
         else:
             message = 'can not set tuplet multiplier: {!r}.'
             message = message.format(argument)
@@ -2325,13 +2327,14 @@ class Tuplet(Container):
 
         Returns none.
         '''
+        import abjad
         assert mathtools.is_nonnegative_integer_power_of_two(denominator)
-        Duration = durationtools.Duration
+        Duration = abjad.Duration
         self.force_fraction = True
         durations = [
             self._get_contents_duration(),
             self._get_preprolated_duration(),
-            Duration(1, denominator),
+            abjad.Duration(1, denominator),
             ]
         nonreduced_fractions = Duration.durations_to_nonreduced_fractions(
             durations)

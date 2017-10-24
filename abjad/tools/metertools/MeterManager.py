@@ -1,6 +1,5 @@
 from abjad.tools import abctools
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 
 
 class MeterManager(abctools.AbjadObject):
@@ -17,16 +16,17 @@ class MeterManager(abctools.AbjadObject):
     def get_offsets_at_depth(depth, offset_inventory):
         r'''Gets offsets at `depth` in `offset_inventory`.
         '''
+        import abjad
         if depth < len(offset_inventory):
             return offset_inventory[depth]
         while len(offset_inventory) <= depth:
             new_offsets = []
             old_offsets = offset_inventory[-1]
-            for first, second in datastructuretools.Sequence(old_offsets).nwise():
+            for first, second in abjad.sequence(old_offsets).nwise():
                 new_offsets.append(first)
                 difference = second - first
                 half = (first + second) / 2
-                if durationtools.Duration(1, 8) < difference:
+                if abjad.Duration(1, 8) < difference:
                     new_offsets.append(half)
                 else:
                     one_quarter = (first + half) / 2

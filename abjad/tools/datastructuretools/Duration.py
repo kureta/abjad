@@ -245,12 +245,12 @@ class Duration(AbjadObject, Fraction):
 
         Returns multiplier.
         '''
-        from abjad.tools import durationtools
+        import abjad
         if len(arguments) == 1 and isinstance(arguments[0], type(self)):
             fraction = Fraction.__truediv__(self, *arguments)
-            result = durationtools.Multiplier(fraction)
+            result = abjad.Multiplier(fraction)
         elif len(arguments) == 1 and isinstance(
-            arguments[0], mathtools.NonreducedFraction):
+            arguments[0], abjad.NonreducedFraction):
             result = arguments[0].__rdiv__(self)
         else:
             result = type(self)(Fraction.__truediv__(self, *arguments))
@@ -938,10 +938,10 @@ class Duration(AbjadObject, Fraction):
 
         Returns multipler.
         '''
-        from abjad.tools import durationtools
+        import abjad
         numerator = \
             mathtools.greatest_power_of_two_less_equal(self.denominator)
-        return durationtools.Multiplier(numerator, self.denominator)
+        return abjad.Multiplier(numerator, self.denominator)
 
     @property
     def is_assignable(self):

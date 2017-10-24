@@ -53,7 +53,6 @@ index_every = Pattern.index_every
 index_first = Pattern.index_first
 index_last = Pattern.index_last
 
-from abjad.tools.durationtools import *
 from abjad.tools.exceptiontools import *
 from abjad.tools.indicatortools import *
 from abjad.tools.instrumenttools import *

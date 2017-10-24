@@ -1,6 +1,5 @@
 import abc
 import copy
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import systemtools
 from abjad.tools.topleveltools import attach
@@ -31,11 +30,12 @@ class Leaf(Component):
 
     @abc.abstractmethod
     def __init__(self, written_duration, name=None):
+        import abjad
         Component.__init__(self, name=name)
         self._after_grace_container = None
         self._grace_container = None
         self._leaf_index = None
-        self.written_duration = durationtools.Duration(written_duration)
+        self.written_duration = abjad.Duration(written_duration)
 
     ### SPECIAL METHODS ###
 
@@ -547,24 +547,22 @@ class Leaf(Component):
     ### PRIVATE PROPERTIES ###
 
     def _get_duration_in_seconds(self):
-        from abjad.tools import indicatortools
-        mark = self._get_effective(indicatortools.MetronomeMark)
+        import abjad
+        mark = self._get_effective(abjad.MetronomeMark)
         if mark is not None and not mark.is_imprecise:
             result = (
                 self._get_duration() /
                 mark.reference_duration /
                 mark.units_per_minute * 60
                 )
-            return durationtools.Duration(result)
+            return abjad.Duration(result)
         raise MissingMetronomeMarkError
 
     def _get_formatted_duration(self):
+        import abjad
         duration_string = self.written_duration.lilypond_duration_string
         multiplier = None
-        multiplier_prototype = (
-            durationtools.Multiplier,
-            mathtools.NonreducedFraction,
-            )
+        multiplier_prototype = (abjad.Multiplier, abjad.NonreducedFraction)
         multipliers = self._get_indicators(multiplier_prototype)
         if not multipliers:
             pass
@@ -580,23 +578,21 @@ class Leaf(Component):
         return result
 
     def _get_multiplied_duration(self):
+        import abjad
         if self.written_duration:
-            multiplier_prototype = (
-                durationtools.Multiplier,
-                mathtools.NonreducedFraction,
-                )
+            multiplier_prototype = (abjad.Multiplier, abjad.NonreducedFraction)
             if self._get_indicators(multiplier_prototype):
                 multipliers = self._get_indicators(multiplier_prototype)
                 if 1 == len(multipliers):
                     multiplier = multipliers[0]
-                    multiplier = durationtools.Duration(multiplier)
+                    multiplier = abjad.Duration(multiplier)
                 elif 1 < len(multipliers):
                     message = 'more than one duration multiplier.'
                     raise ValueError(message)
                 multiplied_duration = multiplier * self.written_duration
                 return multiplied_duration
             else:
-                return durationtools.Duration(self.written_duration)
+                return abjad.Duration(self.written_duration)
         else:
             return None
 
@@ -617,7 +613,8 @@ class Leaf(Component):
 
     @written_duration.setter
     def written_duration(self, argument):
-        rational = durationtools.Duration(argument)
+        import abjad
+        rational = abjad.Duration(argument)
         if not rational.is_assignable:
             message = 'not assignable duration: {!r}.'
             message = message.format(rational)

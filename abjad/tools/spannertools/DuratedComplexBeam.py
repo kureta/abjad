@@ -1,6 +1,5 @@
 import collections
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools.spannertools.ComplexBeam import ComplexBeam
 
 
@@ -172,9 +171,10 @@ class DuratedComplexBeam(ComplexBeam):
 
     @staticmethod
     def _coerce_durations(durations):
+        import abjad
         durations = durations or []
         assert isinstance(durations, collections.Iterable)
-        durations = [durationtools.Duration(x) for x in durations]
+        durations = [abjad.Duration(x) for x in durations]
         durations = tuple(durations)
         return durations
 
@@ -223,9 +223,10 @@ class DuratedComplexBeam(ComplexBeam):
         return self, left, right
 
     def _get_span_beam_offsets(self):
+        import abjad
         offsets = []
         if self.durations:
-            offset = durationtools.Offset(self.durations[0])
+            offset = abjad.Offset(self.durations[0])
             offsets.append(offset)
             for duration in self.durations[1:]:
                 offset = offsets[-1] + duration

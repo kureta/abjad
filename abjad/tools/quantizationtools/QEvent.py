@@ -1,5 +1,4 @@
 import abc
-from abjad.tools import durationtools
 from abjad.tools import systemtools
 from abjad.tools.abctools import AbjadObject
 
@@ -25,7 +24,8 @@ class QEvent(AbjadObject):
 
     @abc.abstractmethod
     def __init__(self, offset=0, index=None):
-        offset = durationtools.Offset(offset)
+        import abjad
+        offset = abjad.Offset(offset)
         self._offset = offset
         self._index = index
 

@@ -1,5 +1,4 @@
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools import scoretools
 from abjad.tools.rhythmmakertools.RhythmMaker import RhythmMaker
@@ -150,6 +149,7 @@ class TupletRhythmMaker(RhythmMaker):
         tie_specifier=None,
         tuplet_specifier=None,
         ):
+        import abjad
         RhythmMaker.__init__(
             self,
             beam_specifier=beam_specifier,
@@ -162,7 +162,7 @@ class TupletRhythmMaker(RhythmMaker):
             tuplet_ratios = tuple(mathtools.Ratio(x) for x in tuplet_ratios)
         self._tuplet_ratios = tuplet_ratios
         if preferred_denominator is not None:
-            prototype = (durationtools.Duration, int)
+            prototype = (abjad.Duration, int)
             assert (preferred_denominator == 'divisions' or
                 isinstance(preferred_denominator, prototype))
         self._preferred_denominator = preferred_denominator

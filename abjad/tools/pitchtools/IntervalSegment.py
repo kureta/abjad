@@ -1,5 +1,4 @@
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import mathtools
 from abjad.tools.pitchtools.Segment import Segment
 from abjad.tools.topleveltools import new
@@ -82,8 +81,9 @@ class IntervalSegment(Segment):
 
         Returns multiplier.
         '''
-        return durationtools.Multiplier.from_float(
-            sum([x.number for x in self])) / len(self)
+        import abjad
+        result = sum([x.number for x in self]) / len(self)
+        return abjad.Multiplier.from_float(result)
 
     @property
     def spread(self):

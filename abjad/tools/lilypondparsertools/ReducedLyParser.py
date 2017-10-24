@@ -1,6 +1,5 @@
 from abjad.tools import abctools
 from abjad.tools import datastructuretools
-from abjad.tools import durationtools
 from abjad.tools import indicatortools
 from abjad.tools import mathtools
 from abjad.tools import pitchtools
@@ -182,7 +181,7 @@ class ReducedLyParser(abctools.Parser):
     ### INITIALIZER ###
 
     def __init__(self, debug=False):
-        self._default_duration = durationtools.Duration((1, 4))
+        self._default_duration = datastructuretools.Duration((1, 4))
         self._toplevel_component_count = None
         abctools.Parser.__init__(self, debug=debug)
 
@@ -404,7 +403,7 @@ class ReducedLyParser(abctools.Parser):
         '''
         duration_log = p[1]
         dots = '.' * p[2]
-        duration = durationtools.Duration.from_lilypond_duration_string(
+        duration = datastructuretools.Duration.from_lilypond_duration_string(
             '{}{}'.format(abs(duration_log), dots))
         self._default_duration = duration
         p[0] = duration
@@ -454,7 +453,7 @@ class ReducedLyParser(abctools.Parser):
         '''
         duration_log = p[1]
         dots = '.' * p[2]
-        duration = durationtools.Duration.from_lilypond_duration_string(
+        duration = datastructuretools.Duration.from_lilypond_duration_string(
             '{}{}'.format(abs(duration_log), dots))
         self._default_duration = duration
         p[0] = duration
@@ -660,7 +659,7 @@ class ReducedLyParser(abctools.Parser):
 
     def _setup(self):
         self._toplevel_component_count = 0
-        self._default_duration = durationtools.Duration((1, 4))
+        self._default_duration = datastructuretools.Duration((1, 4))
 
     ### PUBLIC PROPERTIES ###
 
