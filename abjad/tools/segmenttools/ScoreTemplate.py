@@ -8,6 +8,8 @@ class ScoreTemplate(abctools.AbjadValueObject):
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Score templates'
+
     __slots__ = (
         )
 

@@ -1,5 +1,5 @@
 import collections
-from abjad.tools.templatetools.ScoreTemplate import ScoreTemplate
+from .ScoreTemplate import ScoreTemplate
 
 
 class StringOrchestraScoreTemplate(ScoreTemplate):
@@ -9,7 +9,7 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> template = abjad.templatetools.StringOrchestraScoreTemplate()
+            >>> template = abjad.StringOrchestraScoreTemplate()
             >>> show(template) # doctest: +SKIP
 
         ::
@@ -247,7 +247,7 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> template = abjad.templatetools.StringOrchestraScoreTemplate(
+            >>> template = abjad.StringOrchestraScoreTemplate(
             ...     violin_count=2,
             ...     viola_count=1,
             ...     cello_count=1,
@@ -334,7 +334,7 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> template = abjad.templatetools.StringOrchestraScoreTemplate(
+            >>> template = abjad.StringOrchestraScoreTemplate(
             ...     violin_count=0,
             ...     viola_count=0,
             ...     cello_count=1,

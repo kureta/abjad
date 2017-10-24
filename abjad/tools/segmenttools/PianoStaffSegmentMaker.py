@@ -1,5 +1,5 @@
 import pathlib
-from abjad.tools.makertools.SegmentMaker import SegmentMaker
+from .SegmentMaker import SegmentMaker
 
 
 class PianoStaffSegmentMaker(SegmentMaker):

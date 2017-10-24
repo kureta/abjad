@@ -1,5 +1,5 @@
 import collections
-from abjad.tools.templatetools.ScoreTemplate import ScoreTemplate
+from .ScoreTemplate import ScoreTemplate
 
 
 class TwoStaffPianoScoreTemplate(ScoreTemplate):
@@ -9,7 +9,7 @@ class TwoStaffPianoScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> template = abjad.templatetools.TwoStaffPianoScoreTemplate()
+            >>> template = abjad.TwoStaffPianoScoreTemplate()
             >>> show(template) # doctest: +SKIP
 
         ::

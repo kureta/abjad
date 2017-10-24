@@ -1,5 +1,5 @@
 import collections
-from abjad.tools.templatetools.ScoreTemplate import ScoreTemplate
+from .ScoreTemplate import ScoreTemplate
 
 
 class GroupedStavesScoreTemplate(ScoreTemplate):
@@ -9,7 +9,7 @@ class GroupedStavesScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> class_ = abjad.templatetools.GroupedStavesScoreTemplate
+            >>> class_ = abjad.GroupedStavesScoreTemplate
             >>> template = class_(staff_count=4)
             >>> show(template) # doctest: +SKIP
 
@@ -122,7 +122,7 @@ class GroupedStavesScoreTemplate(ScoreTemplate):
 
             ::
 
-                >>> class_ = abjad.templatetools.GroupedStavesScoreTemplate
+                >>> class_ = abjad.GroupedStavesScoreTemplate
                 >>> template = class_(staff_count=4)
                 >>> template.context_name_abbreviations
                 OrderedDict()
@@ -138,7 +138,7 @@ class GroupedStavesScoreTemplate(ScoreTemplate):
 
             ::
 
-                >>> class_ = abjad.templatetools.GroupedStavesScoreTemplate
+                >>> class_ = abjad.GroupedStavesScoreTemplate
                 >>> template = class_(staff_count=4)
                 >>> template.staff_count
                 4

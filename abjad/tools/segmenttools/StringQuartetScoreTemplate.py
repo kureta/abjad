@@ -1,5 +1,5 @@
 import collections
-from abjad.tools.templatetools.ScoreTemplate import ScoreTemplate
+from .ScoreTemplate import ScoreTemplate
 
 
 class StringQuartetScoreTemplate(ScoreTemplate):
@@ -9,7 +9,7 @@ class StringQuartetScoreTemplate(ScoreTemplate):
 
         ::
 
-            >>> template = abjad.templatetools.StringQuartetScoreTemplate()
+            >>> template = abjad.StringQuartetScoreTemplate()
             >>> show(template) # doctest: +SKIP
 
         ::

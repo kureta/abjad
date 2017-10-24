@@ -58,14 +58,13 @@ from abjad.tools.indicatortools import *
 from abjad.tools.instrumenttools import *
 from abjad.tools.lilypondfiletools import *
 from abjad.tools.lilypondnametools import *
-from abjad.tools.makertools import *
 from abjad.tools.markuptools import *
 from abjad.tools.pitchtools import *
 from abjad.tools.schemetools import *
 from abjad.tools.scoretools import *
+from abjad.tools.segmenttools import *
 from abjad.tools.spannertools import *
 from abjad.tools.systemtools import *
-from abjad.tools.templatetools import *
 from abjad.tools.topleveltools import *
 
 # mathtools classes (but not functions)

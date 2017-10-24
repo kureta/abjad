@@ -7,6 +7,8 @@ class SegmentMaker(AbjadObject):
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Segment-makers'
+
     __slots__ = (
         '_lilypond_file',
         '_previous_metadata',
