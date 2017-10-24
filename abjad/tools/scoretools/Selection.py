@@ -442,20 +442,11 @@ class Selection(AbjadValueObject):
     def __hash__(self):
         r'''Hashes selection.
 
-        ..  note:: Hash defines explicitly in terms of storage format.
-            Most Abjad classes don't need to do this.
-            But selection classes do need to.
-
-        ..  note:: try removing this reimplementation and see if tests
-            pass (now that Selection inherits from AbjadObject like everything
-            else).
+        Reimplemented together with `__eq__()`.
 
         Returns integer.
         '''
-        import abjad
-        agent = abjad.StorageFormatManager(self)
-        hash_values = agent.get_hash_values()
-        return hash(hash_values)
+        return super(Selection, self).__hash__()
 
     def __illustrate__(self):
         r'''Attempts to illustrate selection.

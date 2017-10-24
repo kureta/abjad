@@ -95,6 +95,8 @@ class VerticalMoment(Selection):
     def __hash__(self):
         r'''Hases vertical moment.
 
+        Reimplemented here together with `__eq__()`.
+
         Returns integer.
         '''
         return super(VerticalMoment, self).__hash__()
