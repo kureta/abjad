@@ -17,8 +17,10 @@ class Selection(AbjadValueObject):
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> for leaf in abjad.select(staff).by_leaf():
-            ...     leaf
+            >>> result = abjad.select(staff).by_leaf()
+
+            >>> for item in result:
+            ...     item
             ...
             Note("c'4")
             Note("d'4")
@@ -82,8 +84,10 @@ class Selection(AbjadValueObject):
             >>> staff = abjad.Staff(string)
             >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> for run in abjad.select(staff).by_leaf().by_run(abjad.Note):
-            ...     run
+            >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+
+            >>> for item in result:
+            ...     item
             ...
             Selection([Note("c'4"), Note("d'8")])
             Selection([Note("e'8")])
@@ -1282,7 +1286,7 @@ class Selection(AbjadValueObject):
             >>> abjad.Staff("c'4 d'4 e'4 f'4")[:].items
             (Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4"))
 
-        Returns tuple of items.
+        Returns tuple.
         '''
         return self._items
 
@@ -1322,8 +1326,10 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> for note in abjad.select(staff).by_class(abjad.Note):
-                ...     note
+                >>> result = abjad.select(staff).by_class(abjad.Note)
+
+                >>> for item in result:
+                ...     item
                 ...
                 Note("c'4")
                 Note("d'8")
@@ -1409,28 +1415,31 @@ class Selection(AbjadValueObject):
         return type(self)(generator)
 
     def by_contiguity(self):
-        r'''Groups time-contiguous items.
+        r'''Groups contiguous items.
 
         ..  container:: example
 
-            Selects contiguous groups of sixteenth notes:
+            Groups contiguous sixteenths:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> inequality = abjad.DurationInequality('==', (1, 16))
-                >>> for selection in abjad.select(staff).by_leaf(
-                ...     ).filter(inequality).by_contiguity():
-                ...     selection
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.filter(abjad.duration('==', (1, 16)))
+                >>> result = result.by_contiguity()
+
+                >>> for item in result:
+                ...     item
                 ...
                 Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
                 Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().filter(inequality)
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.filter(abjad.duration('==', (1, 16)))
                 >>> expression = expression.by_contiguity()
                 >>> result = expression(staff)
 
@@ -1499,19 +1508,29 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects the first leaf in each contiguous group of short-duration
-            logical ties:
+            Groups short-duration logical ties by contiguity; then gets leaf 0
+            in each group:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 f'4 g'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = result.filter(abjad.duration('<', (1, 4)))
+                >>> result = result.by_contiguity()
+                >>> result = result.map(abjad.select().by_leaf()[0])
+
+                >>> for item in result:
+                ...     item
+                Note("d'8")
+                Note("g'8")
+
             ..  container:: example expression
 
-                >>> inequality = abjad.DurationInequality('<', (1, 4))
                 >>> expression = abjad.select().by_logical_tie()
-                >>> expression = expression.filter(inequality).by_contiguity()
+                >>> expression = expression.filter(abjad.duration('<', (1, 4)))
+                >>> expression = expression.by_contiguity()
                 >>> expression = expression.map(abjad.select().by_leaf()[0])
                 >>> result = expression(staff)
 
@@ -1550,86 +1569,8 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects contiguous groups of sixteenth notes:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> inequality = abjad.DurationInequality('==', (1, 16))
-                >>> expression = expression.filter(inequality).select()
-                >>> expression = expression.by_contiguity()
-                >>> result = expression(staff)
-
-                >>> expression.print(result)
-                Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
-                Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
-
-                >>> expression.color(result)
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    c'4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    e'4
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                }
-
-        ..  container:: example
-
-            Groups pitched leaves by pitch and then contiguity:
+            Groups pitched leaves pitch; then regroups each group by
+            contiguity:
 
             ..  container:: example
 
@@ -1639,10 +1580,22 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = result.group(abjad.select().get_pitches())
+                >>> result = result.map(abjad.select().by_contiguity())
+                >>> result = result.flatten(depth=1)
+
+                >>> for item in result:
+                ...     item
+                Selection([Note("c'8"), Note("c'16"), Note("c'16")])
+                Selection([Note("c'16"), Note("c'16")])
+                Selection([Note("d'8"), Note("d'16"), Note("d'16")])
+                Selection([Note("d'16"), Note("d'16")])
+
             ..  container:: example expression
 
                 >>> expression = abjad.select().by_leaf(pitched=True)
-                >>> expression = expression.group(abjad.select().get_pitch_set())
+                >>> expression = expression.group(abjad.select().get_pitches())
                 >>> expression = expression.map(abjad.select().by_contiguity())
                 >>> expression = expression.flatten(depth=1)
                 >>> result = expression(staff)
@@ -1727,106 +1680,120 @@ class Selection(AbjadValueObject):
                     d'16
                 }
 
+        ..  container:: example
+
+            Groups pitched logical ties by contiguity; then regroups each group
+            by pitch:
+
             ..  container:: example
 
-                Groups pitched logical ties by contiguity and then pitch:
+                >>> staff = abjad.Staff(r"""
+                ...     c'8 ~ c'16 c'16 r8 c'16 c'16
+                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
+                ...     """)
+                >>> abjad.show(staff) # doctest: +SKIP
 
-                ..  container:: example
+                >>> getter = abjad.select().get_pitches()
+                >>> getter = abjad.select().group(getter)
 
-                    >>> staff = abjad.Staff(r"""
-                    ...     c'8 ~ c'16 c'16 r8 c'16 c'16
-                    ...     d'8 ~ d'16 d'16 r8 d'16 d'16
-                    ...     """)
-                    >>> abjad.show(staff) # doctest: +SKIP
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = result.by_contiguity()
+                >>> result = result.map(getter).flatten(depth=1)
 
-                ..  container:: example expression
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
+                Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
+                Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-                    >>> expression = abjad.select().by_logical_tie(pitched=True)
-                    >>> expression = expression.by_contiguity()
-                    >>> get = abjad.select().group(abjad.select().get_pitch_set())
-                    >>> expression = expression.map(get)
-                    >>> expression = expression.flatten(depth=1)
-                    >>> result = expression(staff)
+            ..  container:: example expression
 
-                    >>> expression.print(result)
-                    Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
-                    Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
-                    Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
-                    Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
+                >>> expression = expression.by_contiguity()
+                >>> expression = expression.map(getter).flatten(depth=1)
+                >>> result = expression(staff)
 
-                    >>> expression.color(result)
-                    >>> abjad.setting(staff).auto_beaming = False
-                    >>> abjad.show(staff) # doctest: +SKIP
+                >>> expression.print(result)
+                Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
+                Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
+                Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-                ..  docs::
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
-                    >>> abjad.f(staff)
-                    \new Staff \with {
-                        autoBeaming = ##f
-                    } {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        c'8 ~
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        c'16
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        c'16
-                        r8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        c'16
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        c'16
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        d'8 ~
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        d'16
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        d'16
-                        r8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        d'16
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        d'16
-                    }
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'16
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    c'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    c'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'16
+                }
 
         Returns new selection.
         '''
@@ -1865,7 +1832,7 @@ class Selection(AbjadValueObject):
         trim=None,
         with_grace_notes=True,
         ):
-        r'''Select components by leaf.
+        r'''Selects leaves.
 
         ..  container:: example
 
@@ -1879,10 +1846,25 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Rest('r8')
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+                Rest('r8')
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -1973,11 +1955,21 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf(pitched=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf(pitched=True)
-                >>> selection = expression(staff)
+                >>> expression = abjad.select().by_leaf(pitched=True)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -2046,6 +2038,8 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
+            Trimmed leaves are the correct selection for ottava spanners.
+
             Selects trimmed leaves:
 
             ..  container:: example
@@ -2056,10 +2050,23 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf(trim=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf(trim=True)
+                >>> expression = abjad.select().by_leaf(trim=True)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -2072,69 +2079,10 @@ class Selection(AbjadValueObject):
                 Note("e'8")
                 Note("d'8")
 
+                >>> abjad.attach(abjad.OctavationSpanner(), result)
+
                 >>> expression.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \times 2/3 {
-                        r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        d'8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        e'8
-                    }
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'8
-                    \once \override Dots.color = #blue
-                    \once \override Rest.color = #blue
-                    r8
-                    \once \override Dots.color = #red
-                    \once \override Rest.color = #red
-                    r8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    \times 2/3 {
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        e'8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        d'8
-                        r8
-                    }
-                }
-
-            Use trimmed leaves with ottava spanners:
-
-                >>> abjad.attach(abjad.OctavationSpanner(), result)
                 >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -2195,8 +2143,12 @@ class Selection(AbjadValueObject):
                     }
                 }
 
+        ..  container:: example
+
             Regression: selects trimmed leaves (even when there are no rests to
             trim):
+
+            ..  container:: example
 
                 >>> staff = abjad.Staff(r"""
                 ...     \times 2/3 { c'8 d' e' } f' r
@@ -2204,8 +2156,25 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf(trim=True)
+                >>> result = abjad.select(staff).by_leaf(trim=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+                Rest('r8')
+                Rest('r8')
+                Note("f'8")
+                Note("e'8")
+                Note("d'8")
+                Note("c'8")
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf(trim=True)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -2302,10 +2271,22 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.by_leaf()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Rest('r8')
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("d'8")
+                Rest('r8')
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
                 >>> expression = expression.by_leaf()
                 >>> result = expression(staff)
 
@@ -2367,6 +2348,8 @@ class Selection(AbjadValueObject):
                     }
                 }
 
+        ..  container:: example
+
             Selects trimmed leaves in tuplets:
 
             ..  container:: example
@@ -2377,10 +2360,20 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.by_leaf(trim=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("d'8")
+                Note("e'8")
+                Note("e'8")
+                Note("d'8")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
                 >>> expression = expression.by_leaf(trim=True)
                 >>> result = expression(staff)
 
@@ -2436,11 +2429,11 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-        ..  container:: example expression
+        ..  container:: example
 
-            Selects pitched heads in tuplets.
+            Pitched heads is the correct selection for most articulations.
 
-            This is the correct selection for most articulations:
+            Selects pitched heads in tuplets:
 
             ..  container:: example
 
@@ -2450,10 +2443,20 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.by_leaf(head=True, pitched=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Note("d'8")
+                Note("d'8")
+                Note("c'8")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
                 >>> expression = expression.by_leaf(head=True, pitched=True)
                 >>> result = expression(staff)
 
@@ -2509,11 +2512,11 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-        ..  container:: example expression
+        ..  container:: example
 
-            Selects pitched tails in tuplets.
+            Pitched tails in the correct selection for laissez vibrer.
 
-            This is the correct selection for laissez vibrer:
+            Selects pitched tails in tuplets:
 
             ..  container:: example
 
@@ -2522,6 +2525,17 @@ class Selection(AbjadValueObject):
                 ...     r e' \times 2/3 { d' ~ d' c' }
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.by_leaf(tail=True, pitched=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Note("d'8")
+                Note("d'8")
+                Note("c'8")
 
             ..  container:: example expression
 
@@ -2582,11 +2596,11 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-        ..  container:: example expression
+        ..  container:: example
 
-            Selects chord heads in tuplets.
+            Chord heads are the correct selection for arpeggios.
 
-            This is the correct selection for arpeggios:
+            Selects chord heads in tuplets:
 
             ..  container:: example
 
@@ -2596,10 +2610,18 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.by_leaf(abjad.Chord, head=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Chord("<c' e' g'>8")
+                Chord("<c' d'>8")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
                 >>> expression = expression.by_leaf(abjad.Chord, head=True)
                 >>> result = expression(staff)
 
@@ -2661,11 +2683,11 @@ class Selection(AbjadValueObject):
             )
 
     def by_logical_measure(self):
-        r'''Selects by logical measure.
+        r'''Groups selection by logical measure.
 
         ..  container:: example
 
-            Selects the leaves of every logical measure:
+            Groups leaves by logical measure:
 
             ..  container:: example
 
@@ -2675,50 +2697,256 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
                 >>> abjad.show(staff) # doctest: +SKIP
 
-            ..  container:: example expression
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.by_logical_measure()
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> for selection in expression(staff):
-                ...     selection
+                >>> for item in result:
+                ...     item
                 ...
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8"), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8"), Note("b'8")])
                 Selection([Note("c''8")])
 
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.by_logical_measure()
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8"), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8"), Note("b'8")])
+                Selection([Note("c''8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 2/8
+                    c'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 3/8
+                    g'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
+
         ..  container:: example
 
-            Selects the first leaf of every logical measure:
+            Groups leaves by logical measure; then gets item 0 in each group:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
+                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
+                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.by_logical_measure()
+                >>> result = result.map(abjad.select()[0])
+
+                >>> for item in result:
+                ...     item
+                Note("c'8")
+                Note("e'8")
+                Note("g'8")
+                Note("c''8")
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> expression = expression.by_logical_measure()
                 >>> expression = expression.map(abjad.select()[0])
-                >>> expression(staff)
-                Selection([Note("c'8"), Note("e'8"), Note("g'8"), Note("c''8")])
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Note("c'8")
+                Note("e'8")
+                Note("g'8")
+                Note("c''8")
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 2/8
+                    c'8
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 3/8
+                    g'8
+                    a'8
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
 
         ..  container:: example
 
-            Selects the last leaf of every logical measure:
+            Groups leaves by logical measure; then gets item -1 in each group:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
+                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
+                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.by_logical_measure()
+                >>> result = result.map(abjad.select()[-1])
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("d'8")
+                Note("f'8")
+                Note("b'8")
+                Note("c''8")
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> expression = expression.by_logical_measure()
                 >>> expression = expression.map(abjad.select()[-1])
-                >>> expression(staff)
-                Selection([Note("d'8"), Note("f'8"), Note("b'8"), Note("c''8")])
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Note("d'8")
+                Note("f'8")
+                Note("b'8")
+                Note("c''8")
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \time 2/8
+                    c'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    e'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \time 3/8
+                    g'8
+                    a'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
 
         ..  container:: example
 
             Works with implicit time signatures:
 
-            ..  container:: example expression
+            ..  container:: example
 
                 >>> staff = abjad.Staff("c'4 d' e' f' g' a' b' c''")
                 >>> score = abjad.Score([staff])
@@ -2726,14 +2954,84 @@ class Selection(AbjadValueObject):
                 >>> abjad.setting(score).proportional_notation_duration = scheme
                 >>> abjad.show(score) # doctest: +SKIP
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> for selection in expression(score):
-                ...     selection
+                >>> result = abjad.select(score).by_leaf()
+                >>> result = result.by_logical_measure()
+
+                >>> for item in result:
+                ...     item
                 ...
                 Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
                 Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.by_logical_measure()
+                >>> result = expression(score)
+
+                >>> expression.print(result)
+                Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
+                Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    b'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    c''4
+                }
 
         Returns new selection.
         '''
@@ -2778,10 +3076,21 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie()
+
+                >>> for item in result:
+                ...     item
+                ...
+                LogicalTie([Note("c'8")])
+                LogicalTie([Note("d'8"), Note("d'8")])
+                LogicalTie([Note("e'8")])
+                LogicalTie([Rest('r8')])
+                LogicalTie([Note("f'8"), Note("f'8")])
+                LogicalTie([Rest('r8')])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie()
+                >>> expression = abjad.select().by_logical_tie()
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -2857,10 +3166,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+
+                >>> for item in result:
+                ...     item
+                ...
+                LogicalTie([Note("c'8")])
+                LogicalTie([Note("d'8"), Note("d'8")])
+                LogicalTie([Note("e'8")])
+                LogicalTie([Note("f'8"), Note("f'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie(pitched=True)
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -2930,10 +3248,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie(
+                ...     pitched=True,
+                ...     nontrivial=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                LogicalTie([Note("d'8"), Note("d'8")])
+                LogicalTie([Note("f'8"), Note("f'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie(
+                >>> expression = abjad.select().by_logical_tie(
                 ...     pitched=True,
                 ...     nontrivial=True,
                 ...     )
@@ -2998,12 +3325,21 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> getter = abjad.select().by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.map(getter)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])])
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
-                >>> get = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(get)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
+                >>> expression = expression.map(getter)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3101,13 +3437,20 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> getter = abjad.select().by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)[-2:]
+                >>> result = result.map(getter)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
+                Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(prototype=abjad.Tuplet)
-                >>> expression = expression[-2:]
-                >>> get = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(get)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)[-2:]
+                >>> expression = expression.map(getter)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3184,7 +3527,7 @@ class Selection(AbjadValueObject):
         return type(self)(generator)
 
     def by_run(self, prototype=None):
-        r'''Select runs.
+        r'''Selects runs.
 
         ..  container:: example
 
@@ -3197,12 +3540,21 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.by_run((abjad.Chord, abjad.Note))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Selection([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+
             ..  container:: example expression
 
-                >>> prototype = (abjad.Chord, abjad.Note)
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(prototype=prototype)
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.by_run((abjad.Chord, abjad.Note))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3285,115 +3637,115 @@ class Selection(AbjadValueObject):
         generator = abjad.iterate(self).by_run(prototype=prototype)
         return type(self)(generator)
 
-    def by_timeline(self, prototype=None, reverse=False):
-        r'''Select components by timeline.
+#    def by_timeline(self, prototype=None, reverse=False):
+#        r'''Selects components by timeline.
+#
+#        ..  container:: example
+#
+#            >>> score = abjad.Score()
+#            >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
+#            >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
+#            >>> abjad.show(score) # doctest: +SKIP
+#
+#            ..  docs::
+#
+#                >>> abjad.f(score)
+#                \new Score <<
+#                    \new Staff {
+#                        c'4
+#                        d'4
+#                        e'4
+#                        f'4
+#                    }
+#                    \new Staff {
+#                        g'8
+#                        a'8
+#                        b'8
+#                        c''8
+#                    }
+#                >>
+#
+#            >>> for leaf in abjad.select(score).by_timeline():
+#            ...     leaf
+#            ...
+#            Note("c'4")
+#            Note("g'8")
+#            Note("a'8")
+#            Note("d'4")
+#            Note("b'8")
+#            Note("c''8")
+#            Note("e'4")
+#            Note("f'4")
+#
+#        Returns new selection.
+#        '''
+#        import abjad
+#        generator = abjad.iterate(self).by_timeline(
+#            prototype=prototype,
+#            reverse=reverse,
+#            )
+#        return type(self)(generator)
 
-        ..  container:: example
-
-            >>> score = abjad.Score()
-            >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
-            >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-            >>> abjad.show(score) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(score)
-                \new Score <<
-                    \new Staff {
-                        c'4
-                        d'4
-                        e'4
-                        f'4
-                    }
-                    \new Staff {
-                        g'8
-                        a'8
-                        b'8
-                        c''8
-                    }
-                >>
-
-            >>> for leaf in abjad.select(score).by_timeline():
-            ...     leaf
-            ...
-            Note("c'4")
-            Note("g'8")
-            Note("a'8")
-            Note("d'4")
-            Note("b'8")
-            Note("c''8")
-            Note("e'4")
-            Note("f'4")
-
-        Returns new selection.
-        '''
-        import abjad
-        generator = abjad.iterate(self).by_timeline(
-            prototype=prototype,
-            reverse=reverse,
-            )
-        return type(self)(generator)
-
-    def by_timeline_and_logical_tie(
-        self,
-        nontrivial=False,
-        pitched=False,
-        reverse=False,
-        ):
-        r'''Select components by timeline and logical tie.
-
-        ..  container:: example
-
-            >>> score = abjad.Score()
-            >>> score.append(abjad.Staff("c''4 ~ c''8 d''8 r4 ef''4"))
-            >>> score.append(abjad.Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8"))
-            >>> abjad.show(score) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(score)
-                \new Score <<
-                    \new Staff {
-                        c''4 ~
-                        c''8
-                        d''8
-                        r4
-                        ef''4
-                    }
-                    \new Staff {
-                        r8
-                        g'4. ~
-                        g'8
-                        r16
-                        f'8. ~
-                        f'8
-                    }
-                >>
-
-            >>> selection = abjad.select(score)
-            >>> for item in selection.by_timeline_and_logical_tie():
-            ...     item
-            ...
-            LogicalTie([Note("c''4"), Note("c''8")])
-            LogicalTie([Rest('r8')])
-            LogicalTie([Note("g'4."), Note("g'8")])
-            LogicalTie([Note("d''8")])
-            LogicalTie([Rest('r4')])
-            LogicalTie([Rest('r16')])
-            LogicalTie([Note("f'8."), Note("f'8")])
-            LogicalTie([Note("ef''4")])
-
-        Returns new selection.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        generator = abjad.iterate(self).by_timeline_and_logical_tie(
-            nontrivial=nontrivial,
-            pitched=pitched,
-            reverse=reverse,
-            )
-        return type(self)(generator)
+#    def by_timeline_and_logical_tie(
+#        self,
+#        nontrivial=False,
+#        pitched=False,
+#        reverse=False,
+#        ):
+#        r'''Selects components by timeline and logical tie.
+#
+#        ..  container:: example
+#
+#            >>> score = abjad.Score()
+#            >>> score.append(abjad.Staff("c''4 ~ c''8 d''8 r4 ef''4"))
+#            >>> score.append(abjad.Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8"))
+#            >>> abjad.show(score) # doctest: +SKIP
+#
+#            ..  docs::
+#
+#                >>> abjad.f(score)
+#                \new Score <<
+#                    \new Staff {
+#                        c''4 ~
+#                        c''8
+#                        d''8
+#                        r4
+#                        ef''4
+#                    }
+#                    \new Staff {
+#                        r8
+#                        g'4. ~
+#                        g'8
+#                        r16
+#                        f'8. ~
+#                        f'8
+#                    }
+#                >>
+#
+#            >>> selection = abjad.select(score)
+#            >>> for item in selection.by_timeline_and_logical_tie():
+#            ...     item
+#            ...
+#            LogicalTie([Note("c''4"), Note("c''8")])
+#            LogicalTie([Rest('r8')])
+#            LogicalTie([Note("g'4."), Note("g'8")])
+#            LogicalTie([Note("d''8")])
+#            LogicalTie([Rest('r4')])
+#            LogicalTie([Rest('r16')])
+#            LogicalTie([Note("f'8."), Note("f'8")])
+#            LogicalTie([Note("ef''4")])
+#
+#        Returns new selection.
+#        '''
+#        import abjad
+#        if self._expression:
+#            return self._update_expression(inspect.currentframe())
+#        generator = abjad.iterate(self).by_timeline_and_logical_tie(
+#            nontrivial=nontrivial,
+#            pitched=pitched,
+#            reverse=reverse,
+#            )
+#        return type(self)(generator)
 
     def flatten(self, depth=-1):
         r'''Flattens selection to `depth`.
@@ -3417,13 +3769,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.filter(abjad.length('>', 1))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> inequality = abjad.LengthInequality('>', 1)
-                >>> expression = expression.filter(inequality)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.filter(abjad.length('>', 1))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3484,13 +3842,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.filter(abjad.length('<', 3))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Note("d'8"), Note("e'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> inequality = abjad.LengthInequality('<', 3)
-                >>> expression = expression.filter(inequality)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.filter(abjad.length('<', 3))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3541,13 +3905,18 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.filter(abjad.duration('==', (2, 8)))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("d'8"), Note("e'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> inequality = abjad.DurationInequality('==', (2, 8))
-                >>> expression = expression.filter(inequality)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.filter(abjad.duration('==', (2, 8)))
                 >>> result = expression(staff)
 
                 >>> expression.color(result)
@@ -3592,14 +3961,24 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.filter(abjad.duration('<', (3, 8)))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Note("d'8"), Note("e'8")])
+
             ..  container:: example expresison
 
-                >>> inequality = abjad.DurationInequality('<', (3, 8))
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> expression = expression.filter(inequality)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.filter(abjad.duration('<', (3, 8)))
                 >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8")])
+                Selection([Note("d'8"), Note("e'8")])
 
                 >>> expression.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -3636,10 +4015,6 @@ class Selection(AbjadValueObject):
                     a'8
                 }
 
-            >>> expression.print(result)
-            Selection([Note("c'8")])
-            Selection([Note("d'8"), Note("e'8")])
-
         ..  container:: example
 
             Selects note runs with duration greater than or equal to 1/4:
@@ -3649,11 +4024,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> inequality = abjad.DurationInequality('>=', (1, 4))
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> expression = expression.filter(inequality)
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.filter(abjad.duration('>=', (1, 4)))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.filter(abjad.duration('>=', (1, 4)))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3718,13 +4101,22 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> inequality = abjad.duration('==', (1, 8), preprolated=True)
+                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = result.filter(inequality)
+
+                >>> for item in result:
+                ...     item
+                ...
+                LogicalTie([Note("d'16"), Note("d'16")])
+                LogicalTie([Note("e'16"), Note("e'16")])
+                LogicalTie([Note("f'16"), Note("f'16")])
+                LogicalTie([Note("g'16"), Note("g'16")])
+                LogicalTie([Note("a'16"), Note("a'16")])
+
             ..  container:: example expression
 
-                >>> inequality = abjad.DurationInequality(
-                ...     '==', (1, 8), preprolated=True,
-                ...     )
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie()
+                >>> expression = abjad.select().by_logical_tie()
                 >>> expression = expression.filter(inequality)
                 >>> result = expression(staff)
 
@@ -3819,7 +4211,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects leaves with C4:
+            Selects leaves with pitches intersecting C4:
 
             ..  container:: example
 
@@ -3827,11 +4219,20 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.filter(abjad.pitches('&', 'C4'))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Chord("<c' e' g'>8")
+                Chord("<c' e' g'>4")
+
             ..  container:: example expression
 
-                >>> inequality = abjad.PitchInequality('intersects', 'C4')
                 >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.filter(inequality)
+                >>> expression = expression.filter(abjad.pitches('&', 'C4'))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3875,7 +4276,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects leaves with C4 or E4:
+            Selects leaves with pitches intersecting C4 or E4:
             
             ..  container:: example
 
@@ -3883,10 +4284,21 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.filter(abjad.pitches('&', 'C4 E4'))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Note("e'8")
+                Chord("<c' e' g'>8")
+                Chord("<c' e' g'>4")
+
             ..  container:: example expression
 
-                >>> inequality = abjad.PitchInequality('intersects', 'C4 E4')
-                >>> expression = abjad.select().by_leaf().filter(inequality)
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.filter(abjad.pitches('&', 'C4 E4'))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -3936,7 +4348,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects logical ties with C4:
+            Selects logical ties with pitches intersecting C4:
 
             ..  container:: example
 
@@ -3944,11 +4356,19 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = result.filter(abjad.pitches('&', 'C4'))
+
+                >>> for item in result:
+                ...     item
+                ...
+                LogicalTie([Note("c'8")])
+                LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+
             ..  container:: example expression
 
-                >>> inequality = abjad.PitchInequality('intersects', 'C4')
                 >>> expression = abjad.select().by_logical_tie()
-                >>> expression = expression.filter(inequality)
+                >>> expression = expression.filter(abjad.pitches('&', 'C4'))
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -4002,7 +4422,7 @@ class Selection(AbjadValueObject):
         return type(self)(items)
 
     def get_duration(self, in_seconds=False):
-        r'''Gets duration of contiguous selection.
+        r'''Gets duration.
 
         Returns duration.
         '''
@@ -4018,7 +4438,7 @@ class Selection(AbjadValueObject):
 
     # TODO: remove in favor of abjad.inspect(selection).get_spanners()
     def get_spanners(self, prototype=None):
-        r'''Gets spanners attached to any component in selection.
+        r'''Gets spanners.
 
         Returns set.
         '''
@@ -4030,7 +4450,7 @@ class Selection(AbjadValueObject):
             spanners.update(spanners_)
         return spanners
 
-    def get_pitch_set(self):
+    def get_pitches(self):
         r'''Gets selection pitch set.
 
         Returns pitch set.
@@ -4041,7 +4461,7 @@ class Selection(AbjadValueObject):
         return abjad.PitchSet.from_selection(self)
 
     def get_timespan(self, in_seconds=False):
-        r'''Gets timespan of contiguous selection.
+        r'''Gets timespan.
 
         Returns timespan.
         '''
@@ -4062,7 +4482,9 @@ class Selection(AbjadValueObject):
         return abjad.Timespan(start_offset, stop_offset)
 
     def get_vertical_moment_at(self, offset):
-        r'''Select vertical moment at `offset`.
+        r'''Gets vertical moment at `offset`.
+
+        Returns vertical moment.
         '''
         import abjad
         if self._expression:
@@ -4070,34 +4492,7 @@ class Selection(AbjadValueObject):
         return abjad.VerticalMoment(self, offset)
 
     def group(self, predicate=None):
-        r'''Groups items in selection by `predicate`.
-
-        ..  container:: example
-
-            Groups items in selection by type when `predicate` is none:
-
-            >>> staff = abjad.Staff("c'8 d' e' r r f' g'")
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    c'8
-                    d'8
-                    e'8
-                    r8
-                    r8
-                    f'8
-                    g'8
-                }
-
-            >>> for selection in staff[:].group(type):
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-            Selection([Rest('r8'), Rest('r8')])
-            Selection([Note("f'8"), Note("g'8")])
+        r'''Groups selection by `predicate`.
 
         ..  container:: example
 
@@ -4111,10 +4506,19 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = result.group(abjad.select().get_pitches())
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
+                Selection([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
+
             ..  container:: example expression
 
                 >>> expression = abjad.select().by_leaf(pitched=True)
-                >>> expression = expression.group(abjad.select().get_pitch_set())
+                >>> expression = expression.group(abjad.select().get_pitches())
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -4207,11 +4611,19 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = result.group(abjad.select().get_pitches())
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
+                Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
+
             ..  container:: example expression
 
-                >>> predicate = abjad.select().by_leaf().pitch_set()
                 >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.group(predicate)
+                >>> expression = expression.group(abjad.select().get_pitches())
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -4301,16 +4713,11 @@ class Selection(AbjadValueObject):
                 map_operand=predicate,
                 )
         items = []
-        if predicate is None:
-            pairs = itertools.groupby(self, lambda _: _)
-            for count, group in pairs:
-                item = type(self)(group)
-                items.append(item)
-        else:
-            pairs = itertools.groupby(self, predicate)
-            for count, group in pairs:
-                item = type(self)(group)
-                items.append(item)
+        predicate = predicate or type
+        pairs = itertools.groupby(self, predicate)
+        for count, group in pairs:
+            item = type(self)(group)
+            items.append(item)
         return type(self)(items)
 
     def in_contiguous_logical_voice(
@@ -4318,7 +4725,7 @@ class Selection(AbjadValueObject):
         prototype=None,
         allow_orphans=True,
         ):
-        r'''Is true when components are in contiguous logical voice.
+        r'''Is true when items in selection are in contiguous logical voice.
 
         Returns true or false.
         '''
@@ -4371,7 +4778,7 @@ class Selection(AbjadValueObject):
         return True
 
     def in_logical_voice(self, prototype=None, allow_orphans=True):
-        r'''Is true when components are in same logical voice.
+        r'''Is true when items in selection are in same logical voice.
 
         Returns true or false.
         '''
@@ -4421,7 +4828,7 @@ class Selection(AbjadValueObject):
         return True
 
     def in_same_parent(self, prototype=None, allow_orphans=True):
-        r'''Is true when components are all in same parent.
+        r'''Is true when items in selection are all in same parent.
 
         Returns true or false.
         '''
@@ -4476,79 +4883,9 @@ class Selection(AbjadValueObject):
     def map(self, expression=None):
         r'''Maps `expression` to selection.
 
-        ..  container:: example expression
-
-            Selects tuplets:
-
-                >>> staff = abjad.Staff(r"""
-                ...     \times 2/3 { r8 d' e' } f' r
-                ...     r f' \times 2/3 { e' d' r8 }
-                ...     """)
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  container:: example expression
-
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
-                >>> result = expression(staff)
-
-                >>> expression.print(result)
-                Tuplet(Multiplier(2, 3), "r8 d'8 e'8")
-                Tuplet(Multiplier(2, 3), "e'8 d'8 r8")
-
-                >>> expression.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \times 2/3 {
-                        \once \override Dots.color = #red
-                        \once \override Rest.color = #red
-                        r8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        d'8
-                        \once \override Accidental.color = #red
-                        \once \override Beam.color = #red
-                        \once \override Dots.color = #red
-                        \once \override NoteHead.color = #red
-                        \once \override Stem.color = #red
-                        e'8
-                    }
-                    f'8
-                    r8
-                    r8
-                    f'8
-                    \times 2/3 {
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        e'8
-                        \once \override Accidental.color = #blue
-                        \once \override Beam.color = #blue
-                        \once \override Dots.color = #blue
-                        \once \override NoteHead.color = #blue
-                        \once \override Stem.color = #blue
-                        d'8
-                        \once \override Dots.color = #blue
-                        \once \override Rest.color = #blue
-                        r8
-                    }
-                }
-
         ..  container:: example
 
-            Selects each tuplet:
+            Selects each tuplet as a separate selection:
 
             ..  container:: example
 
@@ -4558,10 +4895,18 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = result.map(abjad.select())
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Tuplet(Multiplier(2, 3), "r8 d'8 e'8")])
+                Selection([Tuplet(Multiplier(2, 3), "e'8 d'8 r8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
+                >>> expression = abjad.select().by_class(abjad.Tuplet)
                 >>> expression = expression.map(abjad.select())
                 >>> result = expression(staff)
 
@@ -4632,6 +4977,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = staff[:].map(abjad.select().by_leaf())
+
                 >>> for item in result:
                 ...     item
                 ...
@@ -4643,6 +4989,17 @@ class Selection(AbjadValueObject):
                 Selection([Note("e'8"), Note("d'8"), Rest('r8')])
 
             ..  container:: example expression:
+
+                >>> expression = abjad.select().map(abjad.select().by_leaf())
+                >>> result = expression(staff[:])
+
+                >>> expression.print(result)
+                Selection([Rest('r8'), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Rest('r8')])
+                Selection([Rest('r8')])
+                Selection([Note("f'8")])
+                Selection([Note("e'8"), Note("d'8"), Rest('r8')])
 
                 >>> expression.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -4710,7 +5067,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects first note in each run:
+            Gets item 0 in each note run:
 
             ..  container:: example
 
@@ -4718,11 +5075,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.map(abjad.select()[0])
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'4")
+                Note("e'8")
+                Note("f'16")
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
                 >>> expression = expression.map(abjad.select()[0])
                 >>> result = expression(staff)
 
@@ -4793,17 +5158,29 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions once by counts without overhang:
+            Partitions leaves into a single part of length 3; truncates
+            overhang:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
+                
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_counts(
+                ...     [3],
+                ...     cyclic=False,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> expression = expression.partition_by_counts(
                 ...     [3],
                 ...     cyclic=False,
@@ -4848,18 +5225,29 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions cyclically by counts without overhang:
+            Cyclically partitions leaves into parts of length 3; truncates
+            overhang:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.partition_by_counts(
+                >>> expression = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=False,
@@ -4916,18 +5304,30 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions cyclically by counts with overhang:
+            Cyclically partitions leaves into parts of length 3; returns
+            overhang at end:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.partition_by_counts(
+                >>> expression = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -4995,18 +5395,30 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions cyclically by counts with fused overhang:
+            Cyclically partitions leaves into parts of length 3; fuses overhang
+            to last part:
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                ...     [3],
+                ...     cyclic=True,
+                ...     fuse_overhang=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.partition_by_counts(
+                >>> expression = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     fuse_overhang=True,
@@ -5074,18 +5486,34 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions cyclically by counts with overhang:
+            Cyclically partitions leaves into parts of length 3; returns
+            overhang at end:
 
             ..  container:: example
 
-                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8")
+                >>> string = "c'8 r8 d'8 e'8 r8 f'8 g'8 a'8 b'8 r8 c''8"
+                >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                ...     [1, 2, 3],
+                ...     cyclic=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Rest('r8'), Note("d'8")])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8"), Note("b'8")])
+                Selection([Rest('r8'), Note("c''8")])
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.partition_by_counts(
+                >>> expression = abjad.select().by_leaf().partition_by_counts(
                 ...     [1, 2, 3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -5215,21 +5643,499 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Cyclically partitions exactly 3/8 (of a whole note) with overhang
-            returned at end:
+            Cyclically partitions leaves into parts equal to exactly 3/8;
+            returns overhang at end:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf().partition_by_durations(
+                ...     [abjad.Duration(3, 8)],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=False,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf().partition_by_durations(
+                ...     [abjad.Duration(3, 8)],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=False,
+                ...     overhang=True,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        f'8
+                    }
+                    {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        a'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        b'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c''8
+                    }
+                }
+
+        ..  container:: example
+
+            Partitions leaves into one part equal to exactly 3/8; truncates
+            overhang:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [abjad.Duration(3, 8)],
+                ...     cyclic=False,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [abjad.Duration(3, 8)],
+                ...     cyclic=False,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    {
+                        \time 2/8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                        f'8
+                    }
+                    {
+                        g'8
+                        a'8
+                    }
+                    {
+                        b'8
+                        c''8
+                    }
+                }
+
+        ..  container:: example
+
+            Cyclically partitions leaves into parts equal to (or just less
+            than) 3/16 and 1/16; returns overhang at end:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
+                ...     cyclic=True,
+                ...     fill=abjad.More,
+                ...     in_seconds=False,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8"), Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
+                ...     cyclic=True,
+                ...     fill=abjad.More,
+                ...     in_seconds=False,
+                ...     overhang=True,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8"), Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    {
+                        \time 2/8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        d'8
+                    }
+                    {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        f'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        a'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        b'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c''8
+                    }
+                }
+
+        ..  container:: example
+
+            Cyclically partitions leaves into parts equal to (or just less
+            than) 3/16; truncates overhang:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [abjad.Duration(3, 16)],
+                ...     cyclic=True,
+                ...     fill=abjad.Less,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [abjad.Duration(3, 16)],
+                ...     cyclic=True,
+                ...     fill=abjad.Less,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8")])
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    {
+                        \time 2/8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        c'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        d'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        f'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        a'8
+                    }
+                    {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
+                        b'8
+                        c''8
+                    }
+                }
+
+        ..  container:: example
+
+            Partitions leaves into a single part equal to (or just less than)
+            3/16; truncates overhang:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [abjad.Duration(3, 16)],
+                ...     cyclic=False,
+                ...     fill=abjad.Less,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [abjad.Duration(3, 16)],
+                ...     cyclic=False,
+                ...     fill=abjad.Less,
+                ...     in_seconds=False,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    {
+                        \time 2/8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
                         d'8
                     }
@@ -5247,250 +6153,105 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [abjad.Duration(3, 8)],
-            ...     cyclic=True,
-            ...     fill=abjad.Exact,
-            ...     in_seconds=False,
-            ...     overhang=True,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-            Selection([Note("b'8"), Note("c''8")])
-
         ..  container:: example
 
-            Partitions exactly 3/8 (of a whole note) one time only:
+            Cyclically partitions leaves into parts equal to exactly 1.5
+            seconds; truncates overhang:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> mark = abjad.MetronomeMark((1, 4), 60)
+                >>> leaf = abjad.inspect(staff).get_leaf(0)
+                >>> abjad.attach(mark, leaf, scope=abjad.Staff)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
-                    {
-                        \time 2/8
-                        c'8
-                        d'8
-                    }
-                    {
-                        e'8
-                        f'8
-                    }
-                    {
-                        g'8
-                        a'8
-                    }
-                    {
-                        b'8
-                        c''8
-                    }
-                }
-
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [abjad.Duration(3, 8)],
-            ...     cyclic=False,
-            ...     fill=abjad.Exact,
-            ...     in_seconds=False,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-
-        ..  container:: example
-
-            Cyclically partitions 3/16 and 1/16 (of a whole note) with part
-            durations allowed to be just more than 3/16 and 1/16 (of a whole
-            note) and with overhang returned at end:
-
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    {
-                        \time 2/8
-                        c'8
-                        d'8
-                    }
-                    {
-                        e'8
-                        f'8
-                    }
-                    {
-                        g'8
-                        a'8
-                    }
-                    {
-                        b'8
-                        c''8
-                    }
-                }
-
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
-            ...     cyclic=True,
-            ...     fill=abjad.More,
-            ...     in_seconds=False,
-            ...     overhang=True,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8")])
-            Selection([Note("e'8")])
-            Selection([Note("f'8"), Note("g'8")])
-            Selection([Note("a'8")])
-            Selection([Note("b'8"), Note("c''8")])
-
-        ..  container:: example
-
-            Cyclically partitions 3/16 (of a whole note) with part durations
-            allowed to be just less than 3/16 (of a whole note):
-
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    {
-                        \time 2/8
-                        c'8
-                        d'8
-                    }
-                    {
-                        e'8
-                        f'8
-                    }
-                    {
-                        g'8
-                        a'8
-                    }
-                    {
-                        b'8
-                        c''8
-                    }
-                }
-
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [abjad.Duration(3, 16)],
-            ...     cyclic=True,
-            ...     fill=abjad.Less,
-            ...     in_seconds=False,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8")])
-            Selection([Note("d'8")])
-            Selection([Note("e'8")])
-            Selection([Note("f'8")])
-            Selection([Note("g'8")])
-            Selection([Note("a'8")])
-            Selection([Note("b'8")])
-
-        ..  container:: example
-
-            Partitions 3/16 (of a whole note) just once with part duration
-            allowed to be just less than 3/16 (of a whole note):
-
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    {
-                        \time 2/8
-                        c'8
-                        d'8
-                    }
-                    {
-                        e'8
-                        f'8
-                    }
-                    {
-                        g'8
-                        a'8
-                    }
-                    {
-                        b'8
-                        c''8
-                    }
-                }
-
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [abjad.Duration(3, 16)],
-            ...     cyclic=False,
-            ...     fill=abjad.Less,
-            ...     in_seconds=False,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8")])
-
-        Examples in seconds appear below.
-
-        ..  container:: example
-
-            Cyclically partitions exactly 1.5 seconds at a time:
-
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> leaf = abjad.inspect(staff).get_leaf(0)
-            >>> abjad.attach(mark, leaf, scope=abjad.Staff)
-            >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
                         \tempo 4=60
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         f'8
                     }
                     {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         a'8
                     }
                     {
@@ -5499,97 +6260,201 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [1.5],
-            ...     cyclic=True,
-            ...     fill=abjad.Exact,
-            ...     in_seconds=True,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-
         ..  container:: example
 
-            Cyclically partitions exactly 1.5 seconds at a time with overhang
-            returned at end:
+            Cyclically partitions leaves into parts equal to exactly 1.5
+            seconds; returns overhang at end:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> leaf = abjad.inspect(staff).get_leaf(0)
-            >>> abjad.attach(mark, leaf, scope=abjad.Staff)
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> mark = abjad.MetronomeMark((1, 4), 60)
+                >>> leaf = abjad.inspect(staff).get_leaf(0)
+                >>> abjad.attach(mark, leaf, scope=abjad.Staff)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=True,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Selection([Note("b'8"), Note("c''8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
                         \tempo 4=60
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         f'8
                     }
                     {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         a'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         b'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c''8
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [1.5],
-            ...     cyclic=True,
-            ...     fill=abjad.Exact,
-            ...     in_seconds=True,
-            ...     overhang=True,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-            Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-            Selection([Note("b'8"), Note("c''8")])
-
         ..  container:: example
 
-            Partitions exactly 1.5 seconds one time only:
+            Partitions leaves into a single part equal to exactly 1.5 seconds;
+            truncates overhang:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> leaf = abjad.inspect(staff).get_leaf(0)
-            >>> abjad.attach(mark, leaf, scope=abjad.Staff)
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> mark = abjad.MetronomeMark((1, 4), 60)
+                >>> leaf = abjad.inspect(staff).get_leaf(0)
+                >>> abjad.attach(mark, leaf, scope=abjad.Staff)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=False,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [1.5],
+                ...     cyclic=False,
+                ...     fill=abjad.Exact,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8"), Note("d'8"), Note("e'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
                         \tempo 4=60
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         d'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
                         f'8
                     }
@@ -5603,97 +6468,191 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [1.5],
-            ...     cyclic=False,
-            ...     fill=abjad.Exact,
-            ...     in_seconds=True,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8"), Note("d'8"), Note("e'8")])
-
         ..  container:: example
 
-            Cyclically partitions 0.75 seconds with part durations allowed to
-            be just less than 0.75 seconds:
+            Cyclically partitions leaves into parts equal to (or just less
+            than) 0.75 seconds; truncates overhang:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> leaf = abjad.inspect(staff).get_leaf(0)
-            >>> abjad.attach(mark, leaf, scope=abjad.Staff)
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> mark = abjad.MetronomeMark((1, 4), 60)
+                >>> leaf = abjad.inspect(staff).get_leaf(0)
+                >>> abjad.attach(mark, leaf, scope=abjad.Staff)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [0.75],
+                ...     cyclic=True,
+                ...     fill=abjad.Less,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [0.75],
+                ...     cyclic=True,
+                ...     fill=abjad.Less,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8")])
+                Selection([Note("d'8")])
+                Selection([Note("e'8")])
+                Selection([Note("f'8")])
+                Selection([Note("g'8")])
+                Selection([Note("a'8")])
+                Selection([Note("b'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
                         \tempo 4=60
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         d'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         e'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         f'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         g'8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
                         a'8
                     }
                     {
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         b'8
                         c''8
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [0.75],
-            ...     cyclic=True,
-            ...     fill=abjad.Less,
-            ...     in_seconds=True,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8")])
-            Selection([Note("d'8")])
-            Selection([Note("e'8")])
-            Selection([Note("f'8")])
-            Selection([Note("g'8")])
-            Selection([Note("a'8")])
-            Selection([Note("b'8")])
-
         ..  container:: example
 
-            Partitions 0.75 seconds just once with part duration allowed to be
-            just less than 0.75 seconds:
+            Partitions leaves into one part equal to (or just less than) 0.75
+            seconds; truncates overhang:
 
-            >>> staff = abjad.Staff(
-            ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
-            ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
-            ...     )
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> leaf = abjad.inspect(staff).get_leaf(0)
-            >>> abjad.attach(mark, leaf, scope=abjad.Staff)
-            >>> abjad.show(staff) # doctest: +SKIP
+            ..  container:: example
+
+                >>> staff = abjad.Staff(
+                ...     "abj: | 2/8 c'8 d'8 || 2/8 e'8 f'8 |"
+                ...     "| 2/8 g'8 a'8 || 2/8 b'8 c''8 |"
+                ...     )
+                >>> mark = abjad.MetronomeMark((1, 4), 60)
+                >>> leaf = abjad.inspect(staff).get_leaf(0)
+                >>> abjad.attach(mark, leaf, scope=abjad.Staff)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_durations(
+                ...     [0.75],
+                ...     cyclic=False,
+                ...     fill=abjad.Less,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+
+            ..  container:: example
+
+                >>> expression = abjad.select().by_leaf()
+                >>> expression = expression.partition_by_durations(
+                ...     [0.75],
+                ...     cyclic=False,
+                ...     fill=abjad.Less,
+                ...     in_seconds=True,
+                ...     overhang=False,
+                ...     )
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Selection([Note("c'8")])
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
-                \new Staff {
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
                     {
                         \time 2/8
                         \tempo 4=60
+                        \once \override Accidental.color = #red
+                        \once \override Beam.color = #red
+                        \once \override Dots.color = #red
+                        \once \override NoteHead.color = #red
+                        \once \override Stem.color = #red
                         c'8
                         d'8
                     }
@@ -5710,19 +6669,6 @@ class Selection(AbjadValueObject):
                         c''8
                     }
                 }
-
-            >>> leaves = abjad.select(staff).by_leaf()
-            >>> selections = leaves.partition_by_durations(
-            ...     [0.75],
-            ...     cyclic=False,
-            ...     fill=abjad.Less,
-            ...     in_seconds=True,
-            ...     overhang=False,
-            ...     )
-            >>> for selection in selections:
-            ...     selection
-            ...
-            Selection([Note("c'8")])
 
         Interprets `fill` as `Exact` when `fill` is none.
 
@@ -5829,7 +6775,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions leaves by ratio of 1:1:
+            Partitions leaves by a ratio of 1:1:
 
             ..  container:: example
 
@@ -5837,10 +6783,18 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_ratio((1, 1))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Rest('r8'), Note("e'8"), Rest('r8')])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8"), Rest('r8')])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> expression = expression.partition_by_ratio((1, 1))
                 >>> result = expression(staff)
 
@@ -5909,7 +6863,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Partitions leaves by ratio of 1:1:1:
+            Partitions leaves by a ratio of 1:1:1:
 
             ..  container:: example
 
@@ -5917,10 +6871,19 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf()
+                >>> result = result.partition_by_ratio((1, 1, 1))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8"), Rest('r8')])
+                Selection([Note("e'8"), Rest('r8'), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8"), Rest('r8')])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
+                >>> expression = abjad.select().by_leaf()
                 >>> expression = expression.partition_by_ratio((1, 1, 1))
                 >>> result = expression(staff)
 
@@ -6004,6 +6967,103 @@ class Selection(AbjadValueObject):
 
     def top(self):
         r'''Selects top components.
+
+        ..  container:: example
+
+            Selects top components (up from leaves):
+
+            ..  container:: example
+
+                >>> string = r"c'8 d' r \times 2/3 { e' r f' } g' a' r"
+                >>> staff = abjad.Staff(string)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf().top()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("c'8")
+                Note("d'8")
+                Rest('r8')
+                Tuplet(Multiplier(2, 3), "e'8 r8 f'8")
+                Note("g'8")
+                Note("a'8")
+                Rest('r8')
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_leaf().top()
+                >>> result = expression(staff)
+
+                >>> expression.print(result)
+                Note("c'8")
+                Note("d'8")
+                Rest('r8')
+                Tuplet(Multiplier(2, 3), "e'8 r8 f'8")
+                Note("g'8")
+                Note("a'8")
+                Rest('r8')
+
+                >>> expression.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                    \times 2/3 {
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        e'8
+                        \once \override Dots.color = #blue
+                        \once \override Rest.color = #blue
+                        r8
+                        \once \override Accidental.color = #blue
+                        \once \override Beam.color = #blue
+                        \once \override Dots.color = #blue
+                        \once \override NoteHead.color = #blue
+                        \once \override Stem.color = #blue
+                        f'8
+                    }
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                    \once \override Dots.color = #red
+                    \once \override Rest.color = #red
+                    r8
+                }
+
         '''
         import abjad
         if self._expression:
@@ -6026,18 +7086,26 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects note runs (with next leaf):
+            Selects note runs (each with next leaf):
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.map(abjad.select().with_next_leaf())
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8')])
+                Selection([Note("d'8"), Note("e'8"), Rest('r8')])
+                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
                 >>> expression = expression.map(abjad.select().with_next_leaf())
                 >>> result = expression(staff)
 
@@ -6102,19 +7170,29 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects pitched tails (with next leaf):
+            Selects pitched tails (each with next leaf):
 
             ..  container:: example
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> getter = abjad.select()[-1].select().with_next_leaf()
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = result.map(getter)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8')])
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Note("e'8"), Rest('r8')])
+                Selection([Note("f'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie(pitched=True)
-                >>> get = abjad.select()[-1].select().with_next_leaf()
-                >>> expression = expression.map(get)
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
+                >>> expression = expression.map(getter)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -6174,18 +7252,30 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects pitched logical ties (with next leaf). This is the correct
-            selection for single-pitch sustain pedal application:
+            Pitched logical ties (each with next leaf) is the correct selection
+            for single-pitch sustain pedal applications.
+
+            Selects pitched logical ties (each with next leaf):
 
             ..  container:: example
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> abjad.show(staff) # doctest: +SKIP
+                
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = result.map(abjad.select().with_next_leaf())
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Rest('r8')])
+                Selection([Note("d'8"), Note("d'8"), Note("e'8")])
+                Selection([Note("e'8"), Note("e'8"), Rest('r8')])
+                Selection([Note("f'8")])
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie(pitched=True)
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
                 >>> expression = expression.map(abjad.select().with_next_leaf())
                 >>> result = expression(staff)
 
@@ -6195,8 +7285,8 @@ class Selection(AbjadValueObject):
                 Selection([Note("e'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8")])
 
-                >>> for selection in result:
-                ...     abjad.attach(abjad.PianoPedalSpanner(), selection)
+                >>> for item in result:
+                ...     abjad.attach(abjad.PianoPedalSpanner(), item)
                 ...
 
                 >>> expression.color(result)
@@ -6276,20 +7366,28 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects note runs (with previous leaf):
+            Selects note runs (each with previous leaf):
 
             ..  container:: example
 
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
+                >>> getter = abjad.select().with_previous_leaf()
+                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = result.map(getter)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Rest('r8'), Note("d'8"), Note("e'8")])
+                Selection([Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
+
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_leaf()
-                >>> expression = expression.by_run(abjad.Note)
-                >>> get = abjad.select().with_previous_leaf()
-                >>> expression = expression.map(get)
+                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> expression = expression.map(getter)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)
@@ -6353,17 +7451,29 @@ class Selection(AbjadValueObject):
 
         ..  container:: example
 
-            Selects pitched heads (with previous leaf):
+            Selects pitched heads (each with previous leaf):
 
             ..  container:: example
 
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_logical_tie(pitched=True)
-                >>> get = abjad.select()[0].select().with_previous_leaf()
-                >>> expression = expression.map(get)
+                >>> getter = abjad.select()[0].select().with_previous_leaf()
+                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = result.map(getter)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8")])
+                Selection([Rest('r8'), Note("d'8")])
+                Selection([Note("d'8"), Note("e'8")])
+                Selection([Rest('r8'), Note("f'8")])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.select().by_logical_tie(pitched=True)
+                >>> expression = expression.map(getter)
                 >>> result = expression(staff)
 
                 >>> expression.print(result)

@@ -9,10 +9,10 @@ class PitchInequality(AbjadValueObject):
 
         ::
 
-            >>> inequality = abjad.PitchInequality('intersects', 'C4 E4')
+            >>> inequality = abjad.PitchInequality('&', 'C4 E4')
             >>> f(inequality)
             abjad.PitchInequality(
-                operator_string='intersects',
+                operator_string='&',
                 pitches=abjad.PitchSet(
                     [0, 4]
                     ),
@@ -47,7 +47,9 @@ class PitchInequality(AbjadValueObject):
         )
 
     _set_theoretic_operator_strings = (
-        'intersects',
+        '&',
+        '|',
+        '^',
         )
 
     _publish_storage_format = True
@@ -56,7 +58,7 @@ class PitchInequality(AbjadValueObject):
 
     def __init__(
         self,
-        operator_string='intersects',
+        operator_string='&',
         pitches=None,
         ):
         import abjad
@@ -85,7 +87,12 @@ class PitchInequality(AbjadValueObject):
             argument,
             item_class=abjad.NumberedPitch,
             )
-        return bool(self.pitches.intersection(pitch_set))
+        if self.operator_string == '&':
+            return bool(self.pitches.intersection(pitch_set))
+        else:
+            message = 'implement {!r}.'
+            message = message.format(self.operator_string)
+            raise NotImplementedError(message)
 
     ### PUBLIC PROPERTIES ###
 
