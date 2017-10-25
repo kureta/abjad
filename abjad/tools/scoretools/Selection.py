@@ -581,13 +581,17 @@ class Selection(AbjadValueObject):
         head=None,
         tail=None,
         trim=None,
+        with_grace_notes=True,
         ):
         import abjad
         prototype = prototype or abjad.Component
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
         result = []
-        generator = abjad.iterate(argument).by_class(prototype)
+        generator = abjad.iterate(argument).by_class(
+            prototype,
+            with_grace_notes=with_grace_notes,
+            )
         components = list(generator)
         if components:
             if trim:
@@ -1047,6 +1051,18 @@ class Selection(AbjadValueObject):
             result.update(spanners)
         return result
 
+    @staticmethod
+    def _get_template(frame, selector):
+        import abjad
+        try:
+            frame_info = inspect.getframeinfo(frame)
+            function_name = frame_info.function
+            arguments = abjad.Expression._wrap_arguments(frame)
+        finally:
+            del frame
+        template = '.{}({})'.format(function_name, arguments)
+        return selector.template + template
+
     def _get_timespan(self, in_seconds=False):
         import abjad
         if len(self):
@@ -1252,6 +1268,7 @@ class Selection(AbjadValueObject):
         frame,
         evaluation_template=None,
         map_operand=None,
+        template=False,
         ):
         import abjad
         callback = abjad.Expression._frame_to_callback(
@@ -1259,7 +1276,11 @@ class Selection(AbjadValueObject):
             evaluation_template=evaluation_template,
             map_operand=map_operand,
             )
-        return self._expression.append_callback(callback)
+        expression = self._expression.append_callback(callback)
+        if template:
+            template = self._get_template(frame, self._expression)
+            expression = abjad.new(expression, template=template)
+        return expression 
 
     def _withdraw_from_crossing_spanners(self):
         r'''Not composer-safe.
@@ -2680,6 +2701,7 @@ class Selection(AbjadValueObject):
             head=head,
             tail=tail,
             trim=trim,
+            with_grace_notes=with_grace_notes,
             )
 
     def by_logical_measure(self):
@@ -4814,6 +4836,7 @@ class Selection(AbjadValueObject):
                 inspect.currentframe(),
                 evaluation_template='group',
                 map_operand=predicate,
+                template=True,
                 )
         items = []
         if predicate is None:

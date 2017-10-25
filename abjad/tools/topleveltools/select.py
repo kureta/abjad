@@ -39,16 +39,8 @@ def select(items=None):
 
         ::
 
-            >>> abjad.f(abjad.select())
-            abjad.Expression(
-                callbacks=[
-                    abjad.Expression(
-                        evaluation_template='abjad.Selection',
-                        is_initializer=True,
-                        ),
-                    ],
-                proxy_class=abjad.Selection,
-                )
+            >>> abjad.select()
+            abjad.select()
 
     '''
     import abjad
