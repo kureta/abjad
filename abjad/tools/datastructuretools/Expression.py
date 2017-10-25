@@ -597,7 +597,7 @@ class Expression(AbjadValueObject):
         if self.evaluation_template == 'map':
             return self._evaluate_map(*arguments)
         if self.evaluation_template == 'group':
-            return self._evaluate_group_by(*arguments)
+            return self._evaluate_group(*arguments)
         if self.subclass_hook:
             assert isinstance(self.subclass_hook, str)
             subclass_hook = getattr(self, self.subclass_hook)
@@ -664,14 +664,16 @@ class Expression(AbjadValueObject):
             result = __argument_0
         return result
 
-    def _evaluate_group_by(self, *arguments):
+    def _evaluate_group(self, *arguments):
         assert len(arguments) == 1, repr(arguments)
-        assert self.map_operand is not None
         globals_ = self._make_globals()
         assert '__argument_0' not in globals_
         __argument_0 = arguments[0]
         class_ = type(__argument_0)
         map_operand = self.map_operand
+        if map_operand is None:
+            def map_operand(argument):
+                return True
         globals_['__argument_0'] = __argument_0
         globals_['class_'] = class_
         globals_['map_operand'] = map_operand
@@ -813,6 +815,9 @@ class Expression(AbjadValueObject):
         if not self.callbacks:
             return False
         callback = self.callbacks[-1]
+        if (callback.evaluation_template == 'group' and
+            callback.map_operand is None):
+            return True
         if not callback.qualified_method_name.endswith('__getitem__'):
             return False
         template = callback.evaluation_template

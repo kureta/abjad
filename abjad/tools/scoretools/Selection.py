@@ -29,16 +29,16 @@ class Selection(AbjadValueObject):
 
         ..  container:: example expression
 
-            >>> expression = abjad.select().by_leaf()
-            >>> result = expression(staff)
+            >>> selector = abjad.select().by_leaf()
+            >>> result = selector(staff)
 
-            >>> expression.print(result)
+            >>> selector.print(result)
             Note("c'4")
             Note("d'4")
             Note("e'4")
             Note("f'4")
 
-            >>> expression.color(result)
+            >>> selector.color(result)
             >>> abjad.setting(staff).auto_beaming = False
             >>> abjad.show(staff) # doctest: +SKIP
 
@@ -95,15 +95,15 @@ class Selection(AbjadValueObject):
 
         ..  container:: example expression
 
-            >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-            >>> result = expression(staff)
+            >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+            >>> result = selector(staff)
 
-            >>> expression.print(result)
+            >>> selector.print(result)
             Selection([Note("c'4"), Note("d'8")])
             Selection([Note("e'8")])
             Selection([Note("f'16"), Note("g'8"), Note("a'4")])
 
-            >>> expression.color(result)
+            >>> selector.color(result)
             >>> abjad.setting(staff).auto_beaming = False
             >>> abjad.show(staff) # doctest: +SKIP
 
@@ -247,16 +247,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()[pattern]
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()[pattern]
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Note("e'8")
                 Rest('r8')
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -313,15 +313,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression[pattern]
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector[pattern]
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("e'8"), Note("e'8"), Note("e'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -384,17 +384,17 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> getter = abjad.select().by_leaf()[abjad.index([1])]
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection(items=())
                 Selection([Note("d'8")])
                 Selection([Note("e'8")])
                 Selection(items=())
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -1340,14 +1340,14 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Note)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Note)
+                >>> result = selector(staff)
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'4")
                 Note("d'8")
                 Note("d'16")
@@ -1438,16 +1438,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.filter(abjad.duration('==', (1, 16)))
-                >>> expression = expression.by_contiguity()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.filter(abjad.duration('==', (1, 16)))
+                >>> selector = selector.by_contiguity()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
                 Selection([Note("f'16"), Note("f'16"), Note("f'16"), Note("f'16")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -1528,17 +1528,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie()
-                >>> expression = expression.filter(abjad.duration('<', (1, 4)))
-                >>> expression = expression.by_contiguity()
-                >>> expression = expression.map(abjad.select().by_leaf()[0])
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = selector.filter(abjad.duration('<', (1, 4)))
+                >>> selector = selector.by_contiguity()
+                >>> selector = selector.map(abjad.select().by_leaf()[0])
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("d'8")
                 Note("g'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -1594,19 +1594,19 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf(pitched=True)
-                >>> expression = expression.group(abjad.select().get_pitches())
-                >>> expression = expression.map(abjad.select().by_contiguity())
-                >>> expression = expression.flatten(depth=1)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = selector.group(abjad.select().get_pitches())
+                >>> selector = selector.map(abjad.select().by_contiguity())
+                >>> selector = selector.flatten(depth=1)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("c'16"), Note("c'16")])
                 Selection([Note("c'16"), Note("c'16")])
                 Selection([Note("d'8"), Note("d'16"), Note("d'16")])
                 Selection([Note("d'16"), Note("d'16")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -1710,18 +1710,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.by_contiguity()
-                >>> expression = expression.map(getter).flatten(depth=1)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.by_contiguity()
+                >>> selector = selector.map(getter).flatten(depth=1)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")])])
                 Selection([LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -1864,10 +1864,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Rest('r8')
                 Note("d'8")
                 Note("e'8")
@@ -1879,7 +1879,7 @@ class Selection(AbjadValueObject):
                 Note("d'8")
                 Rest('r8')
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -1969,10 +1969,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf(pitched=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("d'8")
                 Note("e'8")
                 Note("f'8")
@@ -1980,7 +1980,7 @@ class Selection(AbjadValueObject):
                 Note("e'8")
                 Note("d'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2066,10 +2066,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf(trim=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf(trim=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("d'8")
                 Note("e'8")
                 Note("f'8")
@@ -2081,7 +2081,7 @@ class Selection(AbjadValueObject):
 
                 >>> abjad.attach(abjad.OctavationSpanner(), result)
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2174,10 +2174,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf(trim=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf(trim=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Note("e'8")
@@ -2189,7 +2189,7 @@ class Selection(AbjadValueObject):
                 Note("d'8")
                 Note("c'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2286,11 +2286,11 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.by_leaf()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.by_leaf()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Rest('r8')
                 Note("d'8")
                 Note("e'8")
@@ -2298,7 +2298,7 @@ class Selection(AbjadValueObject):
                 Note("d'8")
                 Rest('r8')
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2373,17 +2373,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.by_leaf(trim=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.by_leaf(trim=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("d'8")
                 Note("e'8")
                 Note("e'8")
                 Note("d'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2456,17 +2456,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.by_leaf(head=True, pitched=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.by_leaf(head=True, pitched=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Note("d'8")
                 Note("c'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2539,18 +2539,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select()
-                >>> expression = expression.by_class(abjad.Tuplet)
-                >>> expression = expression.by_leaf(tail=True, pitched=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select()
+                >>> selector = selector.by_class(abjad.Tuplet)
+                >>> selector = selector.by_leaf(tail=True, pitched=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Note("d'8")
                 Note("c'8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2621,15 +2621,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.by_leaf(abjad.Chord, head=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.by_leaf(abjad.Chord, head=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Chord("<c' e' g'>8")
                 Chord("<c' d'>8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2710,17 +2710,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.by_logical_measure()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8"), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8"), Note("b'8")])
                 Selection([Note("c''8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2808,18 +2808,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> expression = expression.map(abjad.select()[0])
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.map(abjad.select()[0])
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("e'8")
                 Note("g'8")
                 Note("c''8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2888,18 +2888,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> expression = expression.map(abjad.select()[-1])
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.map(abjad.select()[-1])
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("d'8")
                 Note("f'8")
                 Note("b'8")
                 Note("c''8")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -2965,15 +2965,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.by_logical_measure()
-                >>> result = expression(score)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.by_logical_measure()
+                >>> result = selector(score)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
                 Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3090,10 +3090,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
@@ -3101,7 +3101,7 @@ class Selection(AbjadValueObject):
                 LogicalTie([Note("f'8"), Note("f'8")])
                 LogicalTie([Rest('r8')])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3178,16 +3178,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("e'8")])
                 LogicalTie([Note("f'8"), Note("f'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3260,17 +3260,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(
+                >>> selector = abjad.select().by_logical_tie(
                 ...     pitched=True,
                 ...     nontrivial=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("d'8"), Note("d'8")])
                 LogicalTie([Note("f'8"), Note("f'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3338,16 +3338,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8")]), LogicalTie([Note("d'8")]), LogicalTie([Note("e'8"), Note("e'8")])])
                 Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
                 Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3449,15 +3449,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)[-2:]
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)[-2:]
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("g'8")]), LogicalTie([Note("a'8"), Note("a'8")])])
                 Selection([LogicalTie([Note("c''8")]), LogicalTie([Note("d''8")])])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3553,17 +3553,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.by_run((abjad.Chord, abjad.Note))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.by_run((abjad.Chord, abjad.Note))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
                 Selection([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3780,15 +3780,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.filter(abjad.length('>', 1))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.filter(abjad.length('>', 1))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3853,15 +3853,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.filter(abjad.length('<', 3))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.filter(abjad.length('<', 3))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8"), Note("e'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3915,11 +3915,11 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.filter(abjad.duration('==', (2, 8)))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.filter(abjad.duration('==', (2, 8)))
+                >>> result = selector(staff)
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -3949,7 +3949,7 @@ class Selection(AbjadValueObject):
                     a'8
                 }
 
-            >>> expression.print(result)
+            >>> selector.print(result)
             Selection([Note("d'8"), Note("e'8")])
 
         ..  container:: example
@@ -3972,15 +3972,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expresison
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.filter(abjad.duration('<', (3, 8)))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.filter(abjad.duration('<', (3, 8)))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8"), Note("e'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4035,15 +4035,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.filter(abjad.duration('>=', (1, 4)))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.filter(abjad.duration('>=', (1, 4)))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4116,18 +4116,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie()
-                >>> expression = expression.filter(inequality)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = selector.filter(inequality)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("d'16"), Note("d'16")])
                 LogicalTie([Note("e'16"), Note("e'16")])
                 LogicalTie([Note("f'16"), Note("f'16")])
                 LogicalTie([Note("g'16"), Note("g'16")])
                 LogicalTie([Note("a'16"), Note("a'16")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4231,16 +4231,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.filter(abjad.pitches('&', 'C4'))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.filter(abjad.pitches('&', 'C4'))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Chord("<c' e' g'>8")
                 Chord("<c' e' g'>4")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4297,17 +4297,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.filter(abjad.pitches('&', 'C4 E4'))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.filter(abjad.pitches('&', 'C4 E4'))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("e'8")
                 Chord("<c' e' g'>8")
                 Chord("<c' e' g'>4")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4367,15 +4367,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie()
-                >>> expression = expression.filter(abjad.pitches('&', 'C4'))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = selector.filter(abjad.pitches('&', 'C4'))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 LogicalTie([Note("c'8")])
                 LogicalTie([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4517,15 +4517,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf(pitched=True)
-                >>> expression = expression.group(abjad.select().get_pitches())
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = selector.group(abjad.select().get_pitches())
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16")])
                 Selection([Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4622,15 +4622,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.group(abjad.select().get_pitches())
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.group(abjad.select().get_pitches())
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([LogicalTie([Note("c'8"), Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")]), LogicalTie([Note("c'16")])])
                 Selection([LogicalTie([Note("d'8"), Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")]), LogicalTie([Note("d'16")])])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4704,6 +4704,109 @@ class Selection(AbjadValueObject):
                     d'16
                 }
 
+        ..  container:: example
+
+            Wraps selection in enclosing selection when `predicate` is none:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff(r"""
+                ...     c'8 ~ c'16 c'16 r8 c'16 c'16
+                ...     d'8 ~ d'16 d'16 r8 d'16 d'16
+                ...     """)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = result.group()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16"), Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = selector.group()
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Selection([Selection([Note("c'8"), Note("c'16"), Note("c'16"), Note("c'16"), Note("c'16"), Note("d'8"), Note("d'16"), Note("d'16"), Note("d'16"), Note("d'16")])])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    c'8 ~
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    c'16
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    c'16
+                    r8
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    c'16
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    c'16
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    d'8 ~
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    d'16
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    d'16
+                    r8
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    d'16
+                    \once \override Accidental.color = #green
+                    \once \override Beam.color = #green
+                    \once \override Dots.color = #green
+                    \once \override NoteHead.color = #green
+                    \once \override Stem.color = #green
+                    d'16
+                }
+
         Returns nested selection.
         '''
         if self._expression:
@@ -4713,7 +4816,9 @@ class Selection(AbjadValueObject):
                 map_operand=predicate,
                 )
         items = []
-        predicate = predicate or type
+        if predicate is None:
+            def predicate(argument):
+                return True
         pairs = itertools.groupby(self, predicate)
         for count, group in pairs:
             item = type(self)(group)
@@ -4880,8 +4985,8 @@ class Selection(AbjadValueObject):
             previous = current
         return True
 
-    def map(self, expression=None):
-        r'''Maps `expression` to selection.
+    def map(self, selector=None):
+        r'''Maps `selector` to selection.
 
         ..  container:: example
 
@@ -4906,15 +5011,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_class(abjad.Tuplet)
-                >>> expression = expression.map(abjad.select())
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = selector.map(abjad.select())
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Tuplet(Multiplier(2, 3), "r8 d'8 e'8")])
                 Selection([Tuplet(Multiplier(2, 3), "e'8 d'8 r8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -4990,10 +5095,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression:
 
-                >>> expression = abjad.select().map(abjad.select().by_leaf())
-                >>> result = expression(staff[:])
+                >>> selector = abjad.select().map(abjad.select().by_leaf())
+                >>> result = selector(staff[:])
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Rest('r8'), Note("d'8"), Note("e'8")])
                 Selection([Note("f'8")])
                 Selection([Rest('r8')])
@@ -5001,7 +5106,7 @@ class Selection(AbjadValueObject):
                 Selection([Note("f'8")])
                 Selection([Note("e'8"), Note("d'8"), Rest('r8')])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5087,16 +5192,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.map(abjad.select()[0])
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.map(abjad.select()[0])
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'4")
                 Note("e'8")
                 Note("f'16")
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5139,10 +5244,10 @@ class Selection(AbjadValueObject):
             return self._update_expression(
                 inspect.currentframe(),
                 evaluation_template='map',
-                map_operand=expression,
+                map_operand=selector,
                 )
-        if expression is not None:
-            return type(self)([expression(_) for _ in self])
+        if selector is not None:
+            return type(self)([selector(_) for _ in self])
         else:
             return type(self)(self)
 
@@ -5180,18 +5285,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_counts(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_counts(
                 ...     [3],
                 ...     cyclic=False,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5247,18 +5352,18 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5327,19 +5432,19 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5418,19 +5523,19 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().by_leaf().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     fuse_overhang=True,
                 ...     overhang=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5513,14 +5618,14 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().by_leaf().partition_by_counts(
                 ...     [1, 2, 3],
                 ...     cyclic=True,
                 ...     overhang=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
@@ -5528,7 +5633,7 @@ class Selection(AbjadValueObject):
                 Selection([Note("a'8"), Note("b'8")])
                 Selection([Rest('r8'), Note("c''8")])
 
-                >>> expression.color(result, ['red', 'blue', 'cyan'])
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5671,21 +5776,21 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().partition_by_durations(
+                >>> selector = abjad.select().by_leaf().partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=True,
                 ...     fill=abjad.Exact,
                 ...     in_seconds=False,
                 ...     overhang=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
                 Selection([Note("b'8"), Note("c''8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5783,20 +5888,20 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=False,
                 ...     fill=abjad.Exact,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5873,24 +5978,24 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
                 ...     cyclic=True,
                 ...     fill=abjad.More,
                 ...     in_seconds=False,
                 ...     overhang=True,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8")])
                 Selection([Note("e'8")])
                 Selection([Note("f'8"), Note("g'8")])
                 Selection([Note("a'8")])
                 Selection([Note("b'8"), Note("c''8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -5994,17 +6099,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=True,
                 ...     fill=abjad.Less,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8")])
                 Selection([Note("e'8")])
@@ -6013,7 +6118,7 @@ class Selection(AbjadValueObject):
                 Selection([Note("a'8")])
                 Selection([Note("b'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6106,20 +6211,20 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=False,
                 ...     fill=abjad.Less,
                 ...     in_seconds=False,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6186,21 +6291,21 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
                 ...     fill=abjad.Exact,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6294,8 +6399,8 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
                 ...     fill=abjad.Exact,
@@ -6303,12 +6408,12 @@ class Selection(AbjadValueObject):
                 ...     overhang=True,
                 ...     )
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
                 Selection([Note("b'8"), Note("c''8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6410,20 +6515,20 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=False,
                 ...     fill=abjad.Exact,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Note("e'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6506,17 +6611,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=True,
                 ...     fill=abjad.Less,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Note("d'8")])
                 Selection([Note("e'8")])
@@ -6525,7 +6630,7 @@ class Selection(AbjadValueObject):
                 Selection([Note("a'8")])
                 Selection([Note("b'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6622,20 +6727,20 @@ class Selection(AbjadValueObject):
 
             ..  container:: example
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_durations(
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=False,
                 ...     fill=abjad.Less,
                 ...     in_seconds=True,
                 ...     overhang=False,
                 ...     )
-                >>> result = expression(staff)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6794,15 +6899,15 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_ratio((1, 1))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_ratio((1, 1))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8'), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8"), Rest('r8')])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6883,16 +6988,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf()
-                >>> expression = expression.partition_by_ratio((1, 1, 1))
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf()
+                >>> selector = selector.partition_by_ratio((1, 1, 1))
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Note("d'8"), Rest('r8')])
                 Selection([Note("e'8"), Rest('r8'), Note("f'8")])
                 Selection([Note("g'8"), Note("a'8"), Rest('r8')])
 
-                >>> expression.color(result, ['red', 'blue', 'cyan'])
+                >>> selector.color(result, ['red', 'blue', 'cyan'])
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -6993,10 +7098,10 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().top()
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().top()
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Note("c'8")
                 Note("d'8")
                 Rest('r8')
@@ -7005,7 +7110,7 @@ class Selection(AbjadValueObject):
                 Note("a'8")
                 Rest('r8')
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -7105,16 +7210,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.map(abjad.select().with_next_leaf())
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.map(abjad.select().with_next_leaf())
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8"), Rest('r8')])
                 Selection([Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -7191,17 +7296,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Rest('r8')])
                 Selection([Note("f'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -7275,11 +7380,11 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(abjad.select().with_next_leaf())
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(abjad.select().with_next_leaf())
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8"), Rest('r8')])
                 Selection([Note("d'8"), Note("d'8"), Note("e'8")])
                 Selection([Note("e'8"), Note("e'8"), Rest('r8')])
@@ -7289,7 +7394,7 @@ class Selection(AbjadValueObject):
                 ...     abjad.attach(abjad.PianoPedalSpanner(), item)
                 ...
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> manager = abjad.override(staff).sustain_pedal_line_spanner
                 >>> manager.staff_padding = 6
                 >>> abjad.setting(staff).auto_beaming = False
@@ -7386,16 +7491,16 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_leaf().by_run(abjad.Note)
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8"), Note("e'8")])
                 Selection([Rest('r8'), Note("f'8"), Note("g'8"), Note("a'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
@@ -7472,17 +7577,17 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> expression = abjad.select().by_logical_tie(pitched=True)
-                >>> expression = expression.map(getter)
-                >>> result = expression(staff)
+                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = selector.map(getter)
+                >>> result = selector(staff)
 
-                >>> expression.print(result)
+                >>> selector.print(result)
                 Selection([Note("c'8")])
                 Selection([Rest('r8'), Note("d'8")])
                 Selection([Note("d'8"), Note("e'8")])
                 Selection([Rest('r8'), Note("f'8")])
 
-                >>> expression.color(result)
+                >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
