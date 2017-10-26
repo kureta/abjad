@@ -4458,20 +4458,6 @@ class Selection(AbjadValueObject):
             durations.append(duration)
         return sum(durations)
 
-    # TODO: remove in favor of abjad.inspect(selection).get_spanners()
-    def get_spanners(self, prototype=None):
-        r'''Gets spanners.
-
-        Returns set.
-        '''
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        spanners = set()
-        for component in self:
-            spanners_ = component._get_spanners(prototype=prototype)
-            spanners.update(spanners_)
-        return spanners
-
     def get_pitches(self):
         r'''Gets selection pitch set.
 

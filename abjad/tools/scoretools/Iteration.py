@@ -2435,7 +2435,6 @@ class Iteration(abctools.AbjadObject):
                 visited_spanners.add(spanner)
                 yield spanner
 
-    # TODO: optimize to avoid behind-the-scenes full-score traversal.
     def by_timeline(self, prototype=None, reverse=False):
         r'''Iterates by timeline.
 
@@ -2820,7 +2819,6 @@ class Iteration(abctools.AbjadObject):
             visited_logical_ties.add(logical_tie)
             yield logical_tie
 
-    # TODO: optimize to avoid behind-the-scenes full-score traversal
     def by_timeline_from_component(self, prototype=None, reverse=False):
         r'''Iterates from client by timeline.
 
