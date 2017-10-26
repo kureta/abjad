@@ -337,7 +337,7 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-        pattern = abjad.index(indices)
+        pattern = abjad.index(indices, inverted=inverted)
         return SilenceMask(pattern=pattern)
 
     @staticmethod
@@ -609,7 +609,7 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-        pattern = abjad.index_every(indices, period)
+        pattern = abjad.index_every(indices, period, inverted=inverted)
         mask = SilenceMask(
             pattern=pattern,
             use_multimeasure_rests=use_multimeasure_rests,
