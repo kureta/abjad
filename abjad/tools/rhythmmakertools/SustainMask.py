@@ -299,15 +299,6 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-#        if isinstance(indices, abjad.Pattern):
-#            pattern = indices
-#        else:
-#            indices = indices or []
-#            pattern = abjad.Pattern(
-#                indices=indices,
-#                inverted=inverted,
-#                )
-#        pattern = abjad.new(pattern, inverted=inverted)
         pattern = abjad.index(indices, inverted=inverted)
         return SustainMask(pattern=pattern)
 
@@ -428,11 +419,6 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-#        pattern = abjad.Pattern(
-#            indices=[0],
-#            inverted=inverted,
-#            period=1,
-#            )
         pattern = abjad.index_all(inverted=inverted) 
         mask = SustainMask(pattern=pattern)
         return mask
@@ -544,12 +530,6 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-#        indices = list(indices)
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            period=period,
-#            )
         pattern = abjad.index_every(indices, period, inverted=inverted)
         mask = SustainMask(pattern=pattern)
         return mask
@@ -700,11 +680,6 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-#        indices = list(range(n))
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            )
         pattern = abjad.index_first(n, inverted=inverted)
         mask = SustainMask(pattern=pattern)
         return mask
@@ -875,17 +850,6 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-#        if 0 < n:
-#            start = -1
-#            stop = -n - 1
-#            stride = -1
-#            indices = list(reversed(range(start, stop, stride)))
-#        else:
-#            indices = None
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            )
         pattern = abjad.index_last(n, inverted=inverted)
         mask = SustainMask(pattern=pattern)
         return mask

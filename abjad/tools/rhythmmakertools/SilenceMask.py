@@ -337,14 +337,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        if isinstance(indices, abjad.Pattern):
-#            pattern = indices
-#        else:
-#            pattern = abjad.Pattern(
-#                indices=indices,
-#                inverted=inverted,
-#                )
-#        pattern = abjad.new(pattern, inverted=inverted)
         pattern = abjad.index(indices)
         return SilenceMask(pattern=pattern)
 
@@ -448,11 +440,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        pattern = abjad.Pattern(
-#            indices=[0],
-#            inverted=inverted,
-#            period=1,
-#            )
         pattern = abjad.index_all(inverted=inverted)
         mask = SilenceMask(
             pattern=pattern,
@@ -622,11 +609,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            period=period,
-#            )
         pattern = abjad.index_every(indices, period)
         mask = SilenceMask(
             pattern=pattern,
@@ -746,13 +728,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        if isinstance(indices, abjad.Pattern):
-#            pattern = indices
-#        else:
-#            pattern = abjad.Pattern(
-#                indices=indices,
-#                )
-#        pattern = abjad.new(pattern, inverted=True)
         pattern = abjad.index(indices, inverted=True)
         return SilenceMask(pattern=pattern)
 
@@ -913,14 +888,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        if 0 < n:
-#            indices = list(range(n))
-#        else:
-#            indices = None
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            )
         pattern = abjad.index_first(n, inverted=inverted)
         mask = SilenceMask(
             pattern=pattern,
@@ -1085,17 +1052,6 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-#        if 0 < n:
-#            start = -1
-#            stop = -n - 1
-#            stride = -1
-#            indices = list(reversed(range(start, stop, stride)))
-#        else:
-#            indices = None
-#        pattern = abjad.Pattern(
-#            indices=indices,
-#            inverted=inverted,
-#            )
         pattern = abjad.index_last(n, inverted=inverted)
         mask = SilenceMask(
             pattern=pattern,
