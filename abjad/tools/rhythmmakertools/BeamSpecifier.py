@@ -167,7 +167,7 @@ class BeamSpecifier(AbjadValueObject):
 
     def _detach_all_beams(self, divisions, with_grace_notes=False):
         import abjad
-        for component in abjad.iterate(divisions).by_class(
+        for component in abjad.iterate(divisions).components(
             with_grace_notes=with_grace_notes,
             ):
             abjad.detach(abjad.Beam, component)

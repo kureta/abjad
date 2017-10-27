@@ -10,7 +10,7 @@ def test_scoretools_Parentage_logical_voice_01():
     staff = abjad.Staff("c'8 d'8 e'8 f'8")
 
     containment = abjad.inspect(staff).get_parentage().logical_voice
-    for component in abjad.iterate(staff).by_class():
+    for component in abjad.iterate(staff).components():
         assert abjad.inspect(component).get_parentage().logical_voice == containment
 
 
@@ -23,7 +23,7 @@ def test_scoretools_Parentage_logical_voice_02():
     staff.name = 'foo'
 
     containment = abjad.inspect(staff).get_parentage().logical_voice
-    for component in abjad.iterate(staff).by_class():
+    for component in abjad.iterate(staff).components():
         assert abjad.inspect(component).get_parentage().logical_voice == containment
 
 def test_scoretools_Parentage_logical_voice_03():

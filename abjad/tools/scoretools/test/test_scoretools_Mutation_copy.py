@@ -247,7 +247,7 @@ def test_scoretools_Mutation_copy_05():
     selection = abjad.select(voice)
     new_selection = abjad.mutate(selection).copy()
     new_voice = new_selection[0]
-    for component in abjad.iterate(new_voice).by_class():
+    for component in abjad.iterate(new_voice).components():
         abjad.detach(abjad.Spanner, component)
 
     assert format(new_voice) == abjad.String.normalize(
@@ -312,7 +312,7 @@ def test_scoretools_Mutation_copy_06():
 
     result = abjad.mutate(voice[1:]).copy()
     new_voice = abjad.Voice(result)
-    for component in abjad.iterate(new_voice).by_class():
+    for component in abjad.iterate(new_voice).components():
         abjad.detach(abjad.Spanner, component)
 
     assert format(new_voice) == abjad.String.normalize(
@@ -374,7 +374,7 @@ def test_scoretools_Mutation_copy_07():
 
     result = abjad.mutate(leaves[:6]).copy()
     new_voice = abjad.Voice(result)
-    for component in abjad.iterate(new_voice).by_class():
+    for component in abjad.iterate(new_voice).components():
         abjad.detach(abjad.Spanner, component)
 
     assert format(new_voice) == abjad.String.normalize(
@@ -429,7 +429,7 @@ def test_scoretools_Mutation_copy_08():
 
     result = abjad.mutate(voice[-2:]).copy()
     new_voice = abjad.Voice(result)
-    for component in abjad.iterate(new_voice).by_class():
+    for component in abjad.iterate(new_voice).components():
         abjad.detach(abjad.Spanner, component)
 
     assert format(new_voice) == abjad.String.normalize(
@@ -488,7 +488,7 @@ def test_scoretools_Mutation_copy_09():
 
     result = abjad.mutate(voice[-2:]).copy(n=3)
     new_voice = abjad.Voice(result)
-    for component in abjad.iterate(new_voice).by_class():
+    for component in abjad.iterate(new_voice).components():
         abjad.detach(abjad.Spanner, component)
 
     assert format(new_voice) == abjad.String.normalize(

@@ -146,7 +146,7 @@ class RhythmMaker(AbjadValueObject):
                     use_multimeasure_rests=use_multimeasure_rests,
                     )
                 new_selection = leaf_maker([None], [duration])
-            for component in iterate(selection).by_class():
+            for component in iterate(selection).components():
                 detach(spannertools.Tie, component)
             new_selections.append(new_selection)
         return new_selections
@@ -214,7 +214,7 @@ class RhythmMaker(AbjadValueObject):
         return selections
 
     def _check_wellformedness(self, selections):
-        for component in iterate(selections).by_class():
+        for component in iterate(selections).components():
             inspector = inspect(component)
             if not inspector.is_well_formed():
                 report = inspector.tabulate_wellformedness()
@@ -392,7 +392,7 @@ class RhythmMaker(AbjadValueObject):
 
     def _validate_tuplets(self, selections):
         import abjad
-        for tuplet in iterate(selections).by_class(abjad.Tuplet):
+        for tuplet in iterate(selections).components(abjad.Tuplet):
             assert tuplet.multiplier.is_proper_tuplet_multiplier, repr(
                 tuplet)
             assert len(tuplet), repr(tuplet)

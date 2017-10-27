@@ -30,7 +30,7 @@ class Iteration(abctools.AbjadObject):
 
             ::
 
-                >>> for component in abjad.iterate(staff).by_class():
+                >>> for component in abjad.iterate(staff).components():
                 ...     component
                 Staff("c'4 e'4 d'4 f'4")
                 Note("c'4")
@@ -255,7 +255,7 @@ class Iteration(abctools.AbjadObject):
 
     ### PUBLIC METHODS ###
 
-    def by_class(
+    def components(
         self,
         prototype=None,
         pitched=None,
@@ -304,7 +304,7 @@ class Iteration(abctools.AbjadObject):
                 ::
 
                     >>> agent = abjad.iterate(staff)
-                    >>> for note in agent.by_class(prototype=abjad.Note):
+                    >>> for note in agent.components(prototype=abjad.Note):
                     ...     note
                     ...
                     Note("c'8")
@@ -351,7 +351,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for note in abjad.iterate(staff).by_class(
+                    >>> for note in abjad.iterate(staff).components(
                     ...     prototype=abjad.Note,
                     ...     start=0,
                     ...     stop=3,
@@ -364,7 +364,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for note in abjad.iterate(staff).by_class(
+                    >>> for note in abjad.iterate(staff).components(
                     ...     prototype=abjad.Note,
                     ...     start=2,
                     ...     stop=4,
@@ -411,7 +411,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for note in abjad.iterate(staff).by_class(
+                    >>> for note in abjad.iterate(staff).components(
                     ...     prototype=abjad.Note,
                     ...     reverse=True,
                     ...     ):
@@ -455,7 +455,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for component in abjad.iterate(voice).by_class():
+                    >>> for component in abjad.iterate(voice).components():
                     ...     component
                     ...
                     Voice("c'8 d'8 e'8 f'8")
@@ -505,7 +505,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(voice).by_class():
+                    >>> for leaf in abjad.iterate(voice).components():
                     ...     leaf
                     ...
                     Voice("c'8 d'8 e'8 f'8")
@@ -556,7 +556,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(voice).by_class(
+                    >>> for leaf in abjad.iterate(voice).components(
                     ...     reverse=True,
                     ...     ):
                     ...     leaf
@@ -608,7 +608,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_class(pitched=True):
+                    >>> for leaf in abjad.iterate(staff).components(pitched=True):
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -653,7 +653,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_class(pitched=False):
+                    >>> for leaf in abjad.iterate(staff).components(pitched=False):
                     ...     leaf
                     ...
                     <Staff{3}>
@@ -975,7 +975,7 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         prototype = prototype or abjad.Leaf
-        return self.by_class(
+        return self.components(
             prototype=prototype,
             pitched=pitched,
             reverse=reverse,
@@ -1455,7 +1455,7 @@ class Iteration(abctools.AbjadObject):
         else:
             prototype = abjad.Leaf
         yielded_logical_ties = set()
-        for leaf in self.by_class(
+        for leaf in self.components(
             prototype=prototype,
             reverse=reverse,
             with_grace_notes=with_grace_notes,
@@ -2419,7 +2419,7 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         visited_spanners = set()
-        for component in self.by_class(reverse=reverse):
+        for component in self.components(reverse=reverse):
             spanners = abjad.inspect(component).get_spanners(
                 prototype=prototype,
                 )
@@ -3215,7 +3215,7 @@ class Iteration(abctools.AbjadObject):
                 yield x
         else:
             moments_in_governor = []
-            for component in self.by_class():
+            for component in self.components():
                 offset = abjad.inspect(component).get_timespan().start_offset
                 if offset not in moments_in_governor:
                     moments_in_governor.append(offset)

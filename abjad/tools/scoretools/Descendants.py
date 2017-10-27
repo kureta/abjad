@@ -82,7 +82,7 @@ class Descendants(Selection):
         if component is None:
             components = ()
         else:
-            components = list(abjad.select(component).by_class())
+            components = list(abjad.select(component).components())
             if not include_self:
                 components.remove(component)
         result = []

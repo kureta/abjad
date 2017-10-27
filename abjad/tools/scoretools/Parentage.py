@@ -384,7 +384,7 @@ class Parentage(Selection):
 
             ::
 
-                >>> leaves = abjad.iterate(voice).by_class()
+                >>> leaves = abjad.iterate(voice).components()
                 >>> for leaf in leaves:
                 ...     parentage = abjad.inspect(leaf).get_parentage()
                 ...     leaf, parentage.score_index

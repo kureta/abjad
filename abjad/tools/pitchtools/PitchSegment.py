@@ -531,7 +531,7 @@ class PitchSegment(Segment):
             selection = abjad.select(selection)
         named_pitches = []
         prototype = (abjad.Note, abjad.Chord)
-        for component in abjad.iterate(selection).by_class(prototype):
+        for component in abjad.iterate(selection).components(prototype):
             try:
                 named_pitches.extend(component.written_pitches)
             except AttributeError:

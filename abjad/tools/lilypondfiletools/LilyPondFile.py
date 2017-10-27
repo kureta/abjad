@@ -314,7 +314,7 @@ class LilyPondFile(AbjadObject):
                 if isinstance(score, name):
                     return score
                 prototype = abjad.scoretools.Context
-                for context in abjad.iterate(score).by_class(prototype):
+                for context in abjad.iterate(score).components(prototype):
                     if isinstance(context, name):
                         return context
             message = 'can not find item of class: {!r}.'
@@ -1337,7 +1337,7 @@ class LilyPondFile(AbjadObject):
                 >>> for selection in selections:
                 ...     abjad.attach(abjad.Beam(), selection[:])
                 ...
-                >>> for note in abjad.iterate(selections).by_class(abjad.Note):
+                >>> for note in abjad.iterate(selections).components(abjad.Note):
                 ...     note.written_pitch = abjad.NamedPitch("e'")
                 ...
                 >>> selection_1 = selections[0] + selections[1] + selections[2]
@@ -1468,7 +1468,7 @@ class LilyPondFile(AbjadObject):
                 selections_ = selections.values()
             else:
                 raise TypeError(selections)
-            for note in abjad.iterate(selections_).by_class(
+            for note in abjad.iterate(selections_).components(
                 prototype=abjad.Note,
                 with_grace_notes=True,
                 ):

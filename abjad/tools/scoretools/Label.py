@@ -2548,7 +2548,7 @@ class Label(abctools.AbjadObject):
         if prototype is None:
             items = abjad.iterate(self.client).by_logical_tie()
         else:
-            items = abjad.iterate(self.client).by_class(prototype=prototype)
+            items = abjad.iterate(self.client).components(prototype=prototype)
         items = list(items)
         for index, item in enumerate(items):
             string = str(index)

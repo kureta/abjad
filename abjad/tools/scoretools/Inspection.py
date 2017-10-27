@@ -383,7 +383,7 @@ class Inspection(abctools.AbjadObject):
 
             ::
 
-                >>> for leaf in abjad.iterate(staff).by_class(
+                >>> for leaf in abjad.iterate(staff).components(
                 ...     with_grace_notes=True,
                 ...     ):
                 ...     agent = abjad.inspect(leaf)
@@ -1183,7 +1183,7 @@ class Inspection(abctools.AbjadObject):
         import abjad
         if 0 <= n:
             stop = n + 1
-            components = abjad.iterate(self.client).by_class(
+            components = abjad.iterate(self.client).components(
                 prototype=abjad.Tuplet,
                 start=0,
                 stop=stop,
@@ -1194,7 +1194,7 @@ class Inspection(abctools.AbjadObject):
             component = components[n]
             return component
         else:
-            components = abjad.iterate(self.client).by_class(
+            components = abjad.iterate(self.client).components(
                 prototype=abjad.Tuplet,
                 start=0,
                 stop=abs(n),

@@ -865,7 +865,7 @@ class Container(Component):
         '''
         import abjad
         argument_indicators = []
-        for component in abjad.iterate(argument).by_class():
+        for component in abjad.iterate(argument).components():
             indicators = component._get_indicators(unwrap=False)
             argument_indicators.extend(indicators)
         if isinstance(i, int):
@@ -898,7 +898,7 @@ class Container(Component):
         old_components = self[start:stop]
         spanners_receipt = self._get_spanners_that_dominate_slice(start, stop)
         for component in old_components:
-            for child in abjad.iterate([component]).by_class():
+            for child in abjad.iterate([component]).components():
                 for spanner in child._get_spanners():
                     spanner._remove(child)
         del(self[start:stop])

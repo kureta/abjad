@@ -1167,7 +1167,7 @@ class Mutation(abctools.AbjadObject):
 
             ::
 
-                >>> for measure in abjad.iterate(score).by_class(abjad.Measure):
+                >>> for measure in abjad.iterate(score).components(abjad.Measure):
                 ...     abjad.mutate(measure[:]).rewrite_meter(measure)
                 ...
                 >>> show(score) # doctest: +SKIP
@@ -1244,7 +1244,7 @@ class Mutation(abctools.AbjadObject):
 
             ::
 
-                >>> for measure in abjad.iterate(score).by_class(abjad.Measure):
+                >>> for measure in abjad.iterate(score).components(abjad.Measure):
                 ...     abjad.mutate(measure[:]).rewrite_meter(
                 ...         measure,
                 ...         boundary_depth=1,
@@ -3039,7 +3039,7 @@ class Mutation(abctools.AbjadObject):
         '''
         import abjad
         named_interval = abjad.NamedInterval(argument)
-        for x in abjad.iterate(self._client).by_class(
+        for x in abjad.iterate(self._client).components(
             (abjad.Note, abjad.Chord)):
             if isinstance(x, abjad.Note):
                 old_written_pitch = x.note_head.written_pitch

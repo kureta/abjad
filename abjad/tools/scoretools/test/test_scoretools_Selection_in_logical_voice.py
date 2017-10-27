@@ -29,7 +29,7 @@ def test_scoretools_Selection_in_logical_voice_02():
     }
     '''
 
-    assert abjad.select(container).by_class().in_logical_voice()
+    assert abjad.select(container).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_03():
@@ -46,7 +46,7 @@ def test_scoretools_Selection_in_logical_voice_03():
     }
     '''
 
-    assert abjad.select(tuplet).by_class().in_logical_voice()
+    assert abjad.select(tuplet).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_04():
@@ -64,7 +64,7 @@ def test_scoretools_Selection_in_logical_voice_04():
     }
     '''
 
-    assert abjad.select(voice).by_class().in_logical_voice()
+    assert abjad.select(voice).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_05():
@@ -82,7 +82,7 @@ def test_scoretools_Selection_in_logical_voice_05():
     }
     '''
 
-    assert abjad.select(staff).by_class().in_logical_voice()
+    assert abjad.select(staff).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_06():
@@ -123,7 +123,7 @@ def test_scoretools_Selection_in_logical_voice_06():
         '''
         )
 
-    assert abjad.select(voice).by_class().in_logical_voice()
+    assert abjad.select(voice).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_07():
@@ -160,7 +160,7 @@ def test_scoretools_Selection_in_logical_voice_07():
         '''
         )
 
-    assert abjad.select(voice).by_class().in_logical_voice()
+    assert abjad.select(voice).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_08():
@@ -1365,7 +1365,7 @@ def test_scoretools_Selection_in_logical_voice_35():
         '''
         )
 
-    assert abjad.select(container).by_class().in_logical_voice()
+    assert abjad.select(container).components().in_logical_voice()
 
 
 def test_scoretools_Selection_in_logical_voice_36():

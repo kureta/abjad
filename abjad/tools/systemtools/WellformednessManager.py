@@ -150,7 +150,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators = []
-        components = abjad.iterate(argument).by_class()
+        components = abjad.iterate(argument).components()
         total_ids = [id(_) for _ in components]
         unique_ids = abjad.sequence(total_ids).remove_repeats()
         if len(unique_ids) < len(total_ids):
@@ -194,7 +194,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators, containers = [], set()
-        for container in abjad.iterate(argument).by_class(abjad.Container):
+        for container in abjad.iterate(argument).components(abjad.Container):
             containers.add(container)
             if len(container) == 0:
                 violators.append(container)
@@ -249,7 +249,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators, total = [], set()
-        for measure in abjad.iterate(argument).by_class(abjad.Measure):
+        for measure in abjad.iterate(argument).components(abjad.Measure):
             total.add(measure)
             time_signature = measure.time_signature
             if time_signature is not None:
@@ -265,7 +265,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators, total = [], set()
-        for measure in abjad.iterate(argument).by_class(abjad.Measure):
+        for measure in abjad.iterate(argument).components(abjad.Measure):
             total.add(measure)
             if measure.is_misfilled:
                 violators.append(measure)
@@ -479,7 +479,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators, total = [], set()
-        components = abjad.iterate(argument).by_class()
+        components = abjad.iterate(argument).components()
         for i, component in enumerate(components):
             total.add(component)
             if 0 < i:
@@ -494,7 +494,7 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         violators, total = [], set()
-        for measure in abjad.iterate(argument).by_class(abjad.Measure):
+        for measure in abjad.iterate(argument).components(abjad.Measure):
             total.add(measure)
             parentage = abjad.inspect(measure).get_parentage(
                 include_self=False,

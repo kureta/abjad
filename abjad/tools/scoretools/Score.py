@@ -115,7 +115,7 @@ class Score(Context):
             last_leaf = selection._get_component(abjad.Leaf, -1)
             abjad.attach(double_bar, last_leaf)
         else:
-            for voice in abjad.iterate(self).by_class(abjad.Voice):
+            for voice in abjad.iterate(self).components(abjad.Voice):
                 selection = abjad.select(voice)
                 last_leaf = selection._get_component(abjad.Leaf, -1)
                 abjad.attach(double_bar, last_leaf)

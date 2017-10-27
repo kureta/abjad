@@ -115,7 +115,7 @@ class Component(AbjadObject):
         '''
         import abjad
         result = abjad.mutate(self).copy(n=n)
-        for component in abjad.iterate(result).by_class():
+        for component in abjad.iterate(result).components():
             detach(abjad.Spanner, component)
         if isinstance(result, type(self)):
             result = [result]
@@ -506,7 +506,7 @@ class Component(AbjadObject):
                 return contents[0]
             raise MissingMeasureError
         elif isinstance(self, (list, tuple)):
-            measure_generator = abjad.iterate(self).by_class(abjad.Measure)
+            measure_generator = abjad.iterate(self).components(abjad.Measure)
             try:
                 measure = next(measure_generator)
                 return measure
@@ -563,7 +563,7 @@ class Component(AbjadObject):
                 return contents[0]
             raise MissingMeasureError
         elif isinstance(self, (list, tuple)):
-            measure_generator = abjad.iterate(self).by_class(
+            measure_generator = abjad.iterate(self).components(
                 abjad.Measure,
                 reverse=True,
                 )

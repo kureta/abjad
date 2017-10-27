@@ -574,7 +574,7 @@ class Selection(AbjadValueObject):
                 )
 
     @classmethod
-    def _by_class(
+    def _components(
         class_,
         argument,
         prototype=None,
@@ -588,7 +588,7 @@ class Selection(AbjadValueObject):
         if not isinstance(prototype, tuple):
             prototype = (prototype,)
         result = []
-        generator = abjad.iterate(argument).by_class(
+        generator = abjad.iterate(argument).components(
             prototype,
             with_grace_notes=with_grace_notes,
             )
@@ -773,7 +773,7 @@ class Selection(AbjadValueObject):
                     reversed_schema[component_index] = [new_covered_spanner]
         # iterate components and add new components to new spanners
         for component_index, new_component in enumerate(
-            abjad.iterate(new_components).by_class()):
+            abjad.iterate(new_components).components()):
             try:
                 new_covered_spanners = reversed_schema[component_index]
                 for new_covered_spanner in new_covered_spanners:
@@ -932,7 +932,7 @@ class Selection(AbjadValueObject):
             prototype = (prototype,)
         if 0 <= n:
             if recurse:
-                components = abjad.iterate(self).by_class(prototype)
+                components = abjad.iterate(self).components(prototype)
             else:
                 components = self.items
             for i, x in enumerate(components):
@@ -940,7 +940,7 @@ class Selection(AbjadValueObject):
                     return x
         else:
             if recurse:
-                components = abjad.iterate(self).by_class(
+                components = abjad.iterate(self).components(
                     prototype, reverse=True)
             else:
                 components = reversed(self.items)
@@ -960,9 +960,9 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         assert self.in_contiguous_logical_voice()
-        all_components = set(abjad.iterate(self).by_class())
+        all_components = set(abjad.iterate(self).components())
         contained_spanners = set()
-        for component in abjad.iterate(self).by_class():
+        for component in abjad.iterate(self).components():
             contained_spanners.update(component._get_spanners())
         crossing_spanners = set([])
         for spanner in contained_spanners:
@@ -1151,7 +1151,7 @@ class Selection(AbjadValueObject):
     def _iterate_components(self, recurse=True, reverse=False):
         import abjad
         if recurse:
-            return abjad.iterate(self).by_class()
+            return abjad.iterate(self).components()
         else:
             return self._iterate_top_level_components(reverse=reverse)
 
@@ -1167,11 +1167,11 @@ class Selection(AbjadValueObject):
         import abjad
         schema = {}
         spanners = set()
-        for component in abjad.iterate(self).by_class():
+        for component in abjad.iterate(self).components():
             spanners.update(component._get_spanners())
         for spanner in spanners:
             schema[spanner] = []
-        for i, component in enumerate(abjad.iterate(self).by_class()):
+        for i, component in enumerate(abjad.iterate(self).components()):
             attached_spanners = component._get_spanners()
             for attached_spanner in attached_spanners:
                 try:
@@ -1287,7 +1287,7 @@ class Selection(AbjadValueObject):
         import abjad
         assert self.in_contiguous_logical_voice()
         crossing_spanners = self._get_crossing_spanners()
-        components_including_children = abjad.select(self).by_class()
+        components_including_children = abjad.select(self).components()
         for crossing_spanner in list(crossing_spanners):
             spanner_components = crossing_spanner.leaves[:]
             for component in components_including_children:
@@ -1327,7 +1327,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return all(isinstance(_, abjad.Leaf) for _ in self)
 
-    def by_class(
+    def components(
         self,
         prototype=None,
         reverse=False,
@@ -1346,7 +1346,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 r4 g'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Note)
+                >>> result = abjad.select(staff).components(abjad.Note)
 
                 >>> for item in result:
                 ...     item
@@ -1360,7 +1360,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Note)
+                >>> selector = abjad.select().components(abjad.Note)
                 >>> result = selector(staff)
 
                 >>> selector.color(result)
@@ -1425,7 +1425,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        generator = abjad.iterate(self).by_class(
+        generator = abjad.iterate(self).components(
             prototype=prototype,
             reverse=reverse,
             start=start,
@@ -2291,7 +2291,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.by_leaf()
 
                 >>> for item in result:
@@ -2306,7 +2306,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.by_leaf()
                 >>> result = selector(staff)
 
@@ -2380,7 +2380,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.by_leaf(trim=True)
 
                 >>> for item in result:
@@ -2393,7 +2393,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.by_leaf(trim=True)
                 >>> result = selector(staff)
 
@@ -2463,7 +2463,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.by_leaf(head=True, pitched=True)
 
                 >>> for item in result:
@@ -2476,7 +2476,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.by_leaf(head=True, pitched=True)
                 >>> result = selector(staff)
 
@@ -2546,7 +2546,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.by_leaf(tail=True, pitched=True)
 
                 >>> for item in result:
@@ -2560,7 +2560,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select()
-                >>> selector = selector.by_class(abjad.Tuplet)
+                >>> selector = selector.components(abjad.Tuplet)
                 >>> selector = selector.by_leaf(tail=True, pitched=True)
                 >>> result = selector(staff)
 
@@ -2630,7 +2630,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.by_leaf(abjad.Chord, head=True)
 
                 >>> for item in result:
@@ -2641,7 +2641,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.by_leaf(abjad.Chord, head=True)
                 >>> result = selector(staff)
 
@@ -2694,7 +2694,7 @@ class Selection(AbjadValueObject):
             prototype = (abjad.Chord, abjad.Note)
         elif prototype is None:
             prototype = abjad.Leaf
-        return self._by_class(
+        return self._components(
             self,
             prototype=prototype,
             head=head,
@@ -3347,7 +3347,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select().by_logical_tie(pitched=True)
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.map(getter)
 
                 >>> for item in result:
@@ -3359,7 +3359,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 
@@ -3459,7 +3459,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select().by_logical_tie(pitched=True)
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)[-2:]
+                >>> result = abjad.select(staff).components(abjad.Tuplet)[-2:]
                 >>> result = result.map(getter)
 
                 >>> for item in result:
@@ -3470,7 +3470,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)[-2:]
+                >>> selector = abjad.select().components(abjad.Tuplet)[-2:]
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 
@@ -5007,7 +5007,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_class(abjad.Tuplet)
+                >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.map(abjad.select())
 
                 >>> for item in result:
@@ -5018,7 +5018,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_class(abjad.Tuplet)
+                >>> selector = abjad.select().components(abjad.Tuplet)
                 >>> selector = selector.map(abjad.select())
                 >>> result = selector(staff)
 
@@ -7181,7 +7181,7 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         result = []
-        for component in abjad.iterate(self).by_class(abjad.Component):
+        for component in abjad.iterate(self).components(abjad.Component):
             parentage = abjad.inspect(component).get_parentage()
             for component_ in parentage:
                 if isinstance(component_, abjad.Context):
