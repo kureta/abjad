@@ -53,35 +53,6 @@ class TestManager(AbjadObject):
         return file_1_lines == file_2_lines
 
     @staticmethod
-    def _compare_pdfs(path_1, path_2):
-        r'''Compares PDF `path_1` to PDF `path_2`.
-
-        Performs line-by-line comparison.
-
-        Discards blank lines.
-
-        Discards lines that contain any of the following strings:
-
-        * ``/ID``
-        * ``/CreationDate``
-        * ``/ModDate``
-        * ``xmp:CreateDate``
-        * ``xmp:ModifyDate``
-        * ``xapMM:DocumentID``
-        * ``rdf:about``
-
-        Discards first (binary) stream object in PDF;
-        possibly first stream contains binary-encoded creator
-        or timestamp information that can vary from one creation
-        of a PDF to another.
-
-        Returns true or false.
-        '''
-        file_1_lines = TestManager._normalize_pdf(path_1)
-        file_2_lines = TestManager._normalize_pdf(path_2)
-        return file_1_lines == file_2_lines
-
-    @staticmethod
     def _compare_text_files(path_1, path_2):
         r'''Compares text file `path_1` to text file `path_2`.
 
@@ -109,14 +80,6 @@ class TestManager(AbjadObject):
         return file_1_lines == file_2_lines
 
     @staticmethod
-    def _get_first_differing_pdf_lines(path_1, path_2):
-        file_1_lines = TestManager._normalize_pdf(path_1)
-        file_2_lines = TestManager._normalize_pdf(path_2)
-        for file_1_line, file_2_line in zip(file_1_lines, file_2_lines):
-            if not file_1_line == file_2_line:
-                return file_1_line, file_2_line
-
-    @staticmethod
     def _normalize_ly(path):
         lines = []
         with open(path, 'r') as file_pointer:
@@ -130,55 +93,6 @@ class TestManager(AbjadObject):
                     continue
                 lines.append(line)
         return lines
-
-    @staticmethod
-    def _normalize_pdf(path):
-        lines = []
-        with open(path, 'rb') as file_pointer:
-            contents = file_pointer.read()
-            for line in contents.splitlines():
-                line = line.strip()
-                if line == b'':
-                    continue
-                elif line.startswith(b'%'):
-                    continue
-                elif b'/ID' in line:
-                    continue
-                elif b'/Creator' in line:
-                    continue
-                elif b'/CreationDate' in line:
-                    continue
-                elif b'/ModDate' in line:
-                    continue
-                elif b'xmp:CreateDate' in line:
-                    continue
-                elif b'xmp:CreatorTool' in line:
-                    continue
-                elif b'xmp:ModifyDate' in line:
-                    continue
-                elif b'xapMM:DocumentID' in line:
-                    continue
-                elif b'rdf:about' in line:
-                    continue
-                lines.append(line)
-        # discard first stream in document: can contain differences;
-        # no idea why; possibly first stream includes binary-encoded
-        # creator information or binary-encoded timestamp information
-        new_lines = []
-        found_first_stream = False
-        in_first_stream = False
-        for line in lines:
-            if line == b'stream' and not found_first_stream:
-                found_first_stream = True
-                in_first_stream = True
-            elif line.endswith(b'endstream') and in_first_stream:
-                in_first_stream = False
-                continue
-            if in_first_stream:
-                continue
-            else:
-                new_lines.append(line)
-        return new_lines
 
     ### PUBLIC METHODS ###
 
@@ -264,22 +178,6 @@ class TestManager(AbjadObject):
         * Discards any LilyPond version statements
         * Discards any lines beginning with ``%``
 
-        For PDFs, additionally discards lines that contain any of the
-        following strings:
-
-        * ``/ID``
-        * ``/CreationDate``
-        * ``/ModDate``
-        * ``xmp:CreateDate``
-        * ``xmp:ModifyDate``
-        * ``xapMM:DocumentID``
-        * ``rdf:about``
-
-        Discards first (binary) stream object in PDF;
-        possibly first stream contains binary-encoded creator
-        or timestamp information that can vary from one creation
-        of a PDF to another.
-
         Returns true when files compare the same and false when files compare
         differently.
         '''
@@ -300,8 +198,6 @@ class TestManager(AbjadObject):
         assert extension_1 == extension_2
         if extension_1 == '.ly':
             return TestManager._compare_lys(path_1, path_2)
-        elif extension_1 == '.pdf':
-            return TestManager._compare_pdfs(path_1, path_2)
         else:
             return TestManager._compare_text_files(path_1, path_2)
 
@@ -311,8 +207,8 @@ class TestManager(AbjadObject):
 
         Returns true or false.
         '''
-        from abjad.tools import systemtools
-        agent_one = systemtools.StorageFormatManager(object_one)
+        import abjad
+        agent_one = abjad.StorageFormatManager(object_one)
         if agent_one.format_specification.coerce_for_equality:
             try:
                 object_two = type(object_one)(object_two)
@@ -323,7 +219,7 @@ class TestManager(AbjadObject):
                 return False
         elif not isinstance(object_two, type(object_one)):
             return False
-        agent_two = systemtools.StorageFormatManager(object_two)
+        agent_two = abjad.StorageFormatManager(object_two)
         template_1 = agent_one.get_template_dict()
         template_2 = agent_two.get_template_dict()
         return template_1 == template_2
@@ -441,46 +337,3 @@ class TestManager(AbjadObject):
         with open(segment_ly_path_name, 'r') as f:
             string = f.read()
         return string
-
-    # TODO: REMOVE
-#    @staticmethod
-#    def test_function_name_to_title_lines(test_function_name):
-#        r'''Changes `test_function_name` to title lines.
-#
-#        Returns list.
-#        '''
-#        from abjad.tools import datastructuretools
-#        title_lines = []
-#        test_function_name = test_function_name[5:]
-#        if '__' in test_function_name:
-#            left_half, right_half = test_function_name.split('__')
-#            left_half = left_half.replace('_', ' ')
-#            title_lines.append(left_half)
-#            parts = right_half.split('_')
-#        else:
-#            parts = test_function_name.split('_')
-#        test_number = int(parts[-1])
-#        parts.pop(-1)
-#        if parts[0][0].isupper() and 1 < len(parts[0]):
-#            title_lines.append(parts.pop(0))
-#        lengths = [len(part) for part in parts]
-#        if 35 < sum(lengths):
-#            halves = baca.sequence(halves)
-#            halves = halves.partition_by_ratio_of_weights(ratio=[1, 1])
-#            left_count = len(halves[0])
-#            right_count = len(halves[-1])
-#            assert left_count + right_count == len(lengths)
-#            left_parts = parts[:left_count]
-#            title_lines.append(' '.join(left_parts))
-#            right_parts = parts[-right_count:]
-#            right_parts.append(str(test_number))
-#            title_lines.append(' '.join(right_parts))
-#        else:
-#            title_words = ' '.join(parts)
-#            if 'schematic example' in title_words:
-#                space = ''
-#            else:
-#                space = ' '
-#            title = '{}{}{}'.format(title_words, space, test_number)
-#            title_lines.append(title)
-#        return title_lines
