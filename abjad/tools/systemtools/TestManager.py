@@ -1,5 +1,4 @@
 import difflib
-import inspect
 import os
 import pathlib
 from abjad.tools.abctools import AbjadObject
@@ -95,47 +94,6 @@ class TestManager(AbjadObject):
         return lines
 
     ### PUBLIC METHODS ###
-
-    @staticmethod
-    def apply_additional_layout(lilypond_file):
-        r'''Configures multiple-voice rhythmic staves in `lilypond_file`.
-
-        Operates in place.
-
-        Returns none.
-        '''
-        import abjad
-        # configure multiple-voice rhythmic staves
-        score = lilypond_file[abjad.Score]
-        for staff in abjad.iterate(score).by_class(abjad.Staff):
-            if staff.is_simultaneous:
-                assert len(staff) == 2
-                voice_1 = staff[0]
-                abjad.override(voice_1).note_head.Y_offset = 0.5
-                abjad.override(voice_1).stem.direction = abjad.Up
-                voice_2 = staff[1]
-                abjad.override(voice_2).note_head.Y_offset = -0.5
-                abjad.override(voice_2).stem.direction = abjad.Down
-                vector = abjad.SpacingVector(0, 0, 6, 0)
-                manager = abjad.override(staff)
-                manager.vertical_axis_group.staff_staff_spacing = vector
-        # provide more space between staves with pitched notes
-        score = lilypond_file[abjad.Score]
-        for staff in abjad.iterate(score).by_class(abjad.Staff):
-            if not (isinstance(staff, abjad.Staff) and
-                staff.context_name == 'RhythmicStaff'):
-                for item in lilypond_file.layout_block.items:
-                    if isinstance(item, abjad.ContextBlock):
-                        if item.source_context_name == 'StaffGroup':
-                            break
-                else:
-                    message = 'no staff group context block found.'
-                    raise Exception(message)
-                spacing_vector = abjad.SpacingVector(0, 0, 6, 0)
-                manager = abjad.override(item)
-                manager.vertical_axis_group.staff_staff_spacing = \
-                    spacing_vector
-            break
 
     @staticmethod
     def compare(string_1, string_2):
@@ -290,50 +248,3 @@ class TestManager(AbjadObject):
         if title is not None:
             diff = title + '\n' + diff
         return diff
-
-    @staticmethod
-    def get_current_function_name():
-        r'''Gets current function name.
-
-        ::
-
-            >>> def foo():
-            ...     function_name = abjad.TestManager.get_current_function_name()
-            ...     print('Function name is {!r}.'.format(function_name))
-
-        ::
-
-            >>> foo()
-            Function name is 'foo'.
-
-        Call this function within the implementation of any ofther function.
-
-        Returns enclosing function name as a string or else none.
-        '''
-        stack = inspect.stack()
-        # per the inspect module doc page ...
-        try:
-            parent_frame_record = stack[1]
-            parent_frame = parent_frame_record[0]
-            parent_frame_info = inspect.getframeinfo(parent_frame)
-            parent_frame_function_name = parent_frame_info.function
-            return parent_frame_function_name
-        # ... destroy frame to avoid reference cycle
-        finally:
-            del stack
-
-    @staticmethod
-    def read_test_output(full_file_name, current_function_name):
-        r'''Reads test output.
-
-        Returns list.
-        '''
-        segment_ly_file_name = '{}.ly'.format(current_function_name)
-        directory_name = os.path.dirname(full_file_name)
-        segment_ly_path_name = os.path.join(
-            directory_name,
-            segment_ly_file_name,
-            )
-        with open(segment_ly_path_name, 'r') as f:
-            string = f.read()
-        return string
