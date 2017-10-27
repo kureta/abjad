@@ -1267,8 +1267,8 @@ class Selection(AbjadValueObject):
         self,
         frame,
         evaluation_template=None,
+        lone=None,
         map_operand=None,
-        template=False,
         ):
         import abjad
         callback = abjad.Expression._frame_to_callback(
@@ -1276,11 +1276,10 @@ class Selection(AbjadValueObject):
             evaluation_template=evaluation_template,
             map_operand=map_operand,
             )
+        callback = abjad.new(callback, lone=lone)
         expression = self._expression.append_callback(callback)
-        if template:
-            template = self._get_template(frame, self._expression)
-            expression = abjad.new(expression, template=template)
-        return expression 
+        template = self._get_template(frame, self._expression)
+        return abjad.new(expression, template=template)
 
     def _withdraw_from_crossing_spanners(self):
         r'''Not composer-safe.
@@ -4822,7 +4821,6 @@ class Selection(AbjadValueObject):
                 inspect.currentframe(),
                 evaluation_template='group',
                 map_operand=predicate,
-                template=True,
                 )
         items = []
         if predicate is None:

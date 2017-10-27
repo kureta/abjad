@@ -108,6 +108,7 @@ class Expression(AbjadValueObject):
         '_is_initializer',
         '_is_postfix',
         '_keywords',
+        '_lone',
         '_map_operand',
         '_markup_maker_callback',
         '_module_names',
@@ -140,6 +141,7 @@ class Expression(AbjadValueObject):
         is_initializer=None,
         is_postfix=None,
         keywords=None,
+        lone=None,
         map_operand=None,
         markup_maker_callback=None,
         module_names=None,
@@ -188,6 +190,7 @@ class Expression(AbjadValueObject):
             message = 'must be expression, expression list or none: {!r}.'
             message = message.format(map_operand)
             raise TypeError(message)
+        self._lone = lone
         self._map_operand = map_operand
         if markup_maker_callback is not None:
             assert isinstance(markup_maker_callback, str)
@@ -831,6 +834,8 @@ class Expression(AbjadValueObject):
         if not self.callbacks:
             return False
         callback = self.callbacks[-1]
+        if getattr(callback, '_lone', None):
+            return True
         if (callback.evaluation_template == 'group' and
             callback.map_operand is None):
             return True
@@ -1466,6 +1471,18 @@ class Expression(AbjadValueObject):
         Returns dictionary or none.
         '''
         return self._keywords
+
+    @property
+    def lone(self):
+        r'''Is true when expression return a singular get-item.
+
+        Defaults to none.
+
+        Set to true, false or none.
+
+        Returns true, false or none.
+        '''
+        return self._lone
 
     @property
     def map_operand(self):
