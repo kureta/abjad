@@ -2235,8 +2235,8 @@ class Iteration(abctools.AbjadObject):
                     ...     ):
                     ...     run
                     ...
-                    Selection([Note("g'8"), Note("a'8")])
-                    Selection([Chord("<b' d''>8"), Chord("<c'' e''>8")])
+                    Run([Note("g'8"), Note("a'8")])
+                    Run([Chord("<b' d''>8"), Chord("<c'' e''>8")])
 
         ..  container:: example
 
@@ -2284,9 +2284,9 @@ class Iteration(abctools.AbjadObject):
                     ...     ):
                     ...     run
                     ...
-                    Selection([Note("c'8"), Note("d'8")])
-                    Selection([Chord("<e' g'>8"), Chord("<f' a'>8"), Note("g'8"), Note("a'8")])
-                    Selection([Chord("<b' d''>8"), Chord("<c'' e''>8")])
+                    Run([Note("c'8"), Note("d'8")])
+                    Run([Chord("<e' g'>8"), Chord("<f' a'>8"), Note("g'8"), Note("a'8")])
+                    Run([Chord("<b' d''>8"), Chord("<c'' e''>8")])
 
         ..  container:: example
 
@@ -2313,9 +2313,9 @@ class Iteration(abctools.AbjadObject):
                     >>> for run in abjad.iterate(components).by_run():
                     ...     run
                     ...
-                    Selection([Note("c'4"), Note("d'4")])
-                    Selection([Note("e'4"), Note("f'4")])
-                    Selection([Rest('r4')])
+                    Run([Note("c'4"), Note("d'4")])
+                    Run([Note("e'4"), Note("f'4")])
+                    Run([Rest('r4')])
 
         Returns generator.
         '''
@@ -2327,10 +2327,10 @@ class Iteration(abctools.AbjadObject):
             if isinstance(run[0], prototype):
                 current_run = current_run + run
             elif current_run:
-                yield abjad.select(current_run)
+                yield abjad.Run(current_run)
                 current_run = ()
         if current_run:
-            yield abjad.select(current_run)
+            yield abjad.Run(current_run)
 
     def by_spanner(self, prototype=None, reverse=False):
         r'''Iterates by spanner.

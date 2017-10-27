@@ -89,9 +89,9 @@ class Selection(AbjadValueObject):
             >>> for item in result:
             ...     item
             ...
-            Selection([Note("c'4"), Note("d'8")])
-            Selection([Note("e'8")])
-            Selection([Note("f'16"), Note("g'8"), Note("a'4")])
+            Run([Note("c'4"), Note("d'8")])
+            Run([Note("e'8")])
+            Run([Note("f'16"), Note("g'8"), Note("a'4")])
 
         ..  container:: example expression
 
@@ -99,9 +99,9 @@ class Selection(AbjadValueObject):
             >>> result = selector(staff)
 
             >>> selector.print(result)
-            Selection([Note("c'4"), Note("d'8")])
-            Selection([Note("e'8")])
-            Selection([Note("f'16"), Note("g'8"), Note("a'4")])
+            Run([Note("c'4"), Note("d'8")])
+            Run([Note("e'8")])
+            Run([Note("f'16"), Note("g'8"), Note("a'4")])
 
             >>> selector.color(result)
             >>> abjad.setting(staff).auto_beaming = False
@@ -3567,10 +3567,10 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-                Selection([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+                Run([Note("c'8"), Note("d'8")])
+                Run([Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
             ..  container:: example expression
 
@@ -3579,10 +3579,10 @@ class Selection(AbjadValueObject):
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
-                Selection([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
+                Run([Note("c'8"), Note("d'8")])
+                Run([Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Chord("<c' e' g'>8"), Chord("<c' e' g'>4")])
 
                 >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -3796,8 +3796,8 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("d'8"), Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
 
             ..  container:: example expression
 
@@ -3806,8 +3806,8 @@ class Selection(AbjadValueObject):
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
-                Selection([Note("d'8"), Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
 
                 >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -3869,8 +3869,8 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("c'8")])
-                Selection([Note("d'8"), Note("e'8")])
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
 
             ..  container:: example expression
 
@@ -3879,8 +3879,8 @@ class Selection(AbjadValueObject):
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
-                Selection([Note("c'8")])
-                Selection([Note("d'8"), Note("e'8")])
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
 
                 >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -3932,7 +3932,7 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("d'8"), Note("e'8")])
+                Run([Note("d'8"), Note("e'8")])
 
             ..  container:: example expression
 
@@ -3971,7 +3971,7 @@ class Selection(AbjadValueObject):
                 }
 
             >>> selector.print(result)
-            Selection([Note("d'8"), Note("e'8")])
+            Run([Note("d'8"), Note("e'8")])
 
         ..  container:: example
 
@@ -3988,8 +3988,8 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("c'8")])
-                Selection([Note("d'8"), Note("e'8")])
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
 
             ..  container:: example expresison
 
@@ -3998,8 +3998,8 @@ class Selection(AbjadValueObject):
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
-                Selection([Note("c'8")])
-                Selection([Note("d'8"), Note("e'8")])
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
 
                 >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
@@ -4051,8 +4051,8 @@ class Selection(AbjadValueObject):
                 >>> for item in result:
                 ...     item
                 ...
-                Selection([Note("d'8"), Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
 
             ..  container:: example expression
 
@@ -4061,8 +4061,8 @@ class Selection(AbjadValueObject):
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
-                Selection([Note("d'8"), Note("e'8")])
-                Selection([Note("f'8"), Note("g'8"), Note("a'8")])
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
 
                 >>> selector.color(result)
                 >>> abjad.setting(staff).auto_beaming = False
