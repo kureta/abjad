@@ -1,3 +1,4 @@
+import inspect
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
 
@@ -154,6 +155,7 @@ class SilenceMask(AbjadValueObject):
 
     __slots__ = (
         '_pattern',
+        '_template',
         '_use_multimeasure_rests',
         )
 
@@ -164,6 +166,7 @@ class SilenceMask(AbjadValueObject):
     def __init__(
         self,
         pattern=None,
+        template=None,
         use_multimeasure_rests=None,
         ):
         import abjad
@@ -171,9 +174,40 @@ class SilenceMask(AbjadValueObject):
             pattern = abjad.index_all()
         assert isinstance(pattern, abjad.Pattern), repr(pattern)
         self._pattern = pattern
+        self._template = template
         if use_multimeasure_rests is not None:
             assert isinstance(use_multimeasure_rests, type(True))
         self._use_multimeasure_rests = use_multimeasure_rests
+
+    ### PRIVATE METHODS ###
+
+    def _get_format_specification(self):
+        import abjad
+        if self.template is None:
+            return super(SilenceMask, self)._get_format_specification()
+        return abjad.FormatSpecification(
+            client=self,
+            repr_is_indented=False,
+            storage_format_is_indented=False,
+            storage_format_args_values=[self.template],
+            storage_format_forced_override=self.template,
+            storage_format_kwargs_names=(),
+            )
+
+    @staticmethod
+    def _get_template(frame):
+        import abjad
+        try:
+            frame_info = inspect.getframeinfo(frame)
+            function_name = frame_info.function
+            arguments = abjad.Expression._wrap_arguments(
+                frame,
+                static_class=SilenceMask,
+                )
+            template = 'abjad.{}({})'.format(function_name, arguments)
+        finally:
+            del frame
+        return template
 
     ### PUBLIC PROPERTIES ###
 
@@ -184,6 +218,14 @@ class SilenceMask(AbjadValueObject):
         Returns pattern.
         '''
         return self._pattern
+
+    @property
+    def template(self):
+        r'''Gets template.
+
+        Returns string or none.
+        '''
+        return self._template
 
     @property
     def use_multimeasure_rests(self):
@@ -241,10 +283,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index([1, 2]),
-                    )
+                >>> mask
+                abjad.silence([1, 2])
 
             ::
 
@@ -291,10 +331,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index([-1, -2]),
-                    )
+                >>> mask
+                abjad.silence([-1, -2])
 
             ::
 
@@ -338,7 +376,8 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index(indices, inverted=inverted)
-        return SilenceMask(pattern=pattern)
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(pattern=pattern, template=template)
 
     @staticmethod
     def silence_all(inverted=None, use_multimeasure_rests=None):
@@ -354,10 +393,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_all(),
-                    )
+                >>> mask
+                abjad.silence_all()
 
             ::
 
@@ -441,11 +478,12 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_all(inverted=inverted)
-        mask = SilenceMask(
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(
             pattern=pattern,
+            template=template,
             use_multimeasure_rests=use_multimeasure_rests,
             )
-        return mask
 
     @staticmethod
     def silence_every(
@@ -466,10 +504,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_every([1], 2),
-                    )
+                >>> mask
+                abjad.silence_every([1], 2)
 
             ::
 
@@ -516,10 +552,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_every([1, 2], 3),
-                    )
+                >>> mask
+                abjad.silence_every([1, 2], 3)
 
             ::
 
@@ -566,10 +600,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index([-1], inverted=True),
-                    )
+                >>> mask
+                abjad.silence_except([-1])
 
             ::
 
@@ -610,11 +642,12 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_every(indices, period, inverted=inverted)
-        mask = SilenceMask(
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(
             pattern=pattern,
+            template=template,
             use_multimeasure_rests=use_multimeasure_rests,
             )
-        return mask
 
     @staticmethod
     def silence_except(indices):
@@ -630,10 +663,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index([1, 2], inverted=True),
-                    )
+                >>> mask
+                abjad.silence_except([1, 2])
 
             ::
 
@@ -681,10 +712,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index([-1, -2], inverted=True),
-                    )
+                >>> mask
+                abjad.silence_except([-1, -2])
 
             ::
 
@@ -729,10 +758,11 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index(indices, inverted=True)
-        return SilenceMask(pattern=pattern)
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(pattern=pattern, template=template)
 
     @staticmethod
-    def silence_first(n=1, inverted=None, use_multimeasure_rests=None):
+    def silence_first(n, inverted=None, use_multimeasure_rests=None):
         r'''Makes silence mask that matches the first `n` indices.
 
         ..  container:: example
@@ -745,10 +775,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_first(1),
-                    )
+                >>> mask
+                abjad.silence_first(1)
 
             ::
 
@@ -795,10 +823,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_first(2),
-                    )
+                >>> mask
+                abjad.silence_first(2)
 
             ::
 
@@ -845,10 +871,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_first(0),
-                    )
+                >>> mask
+                abjad.silence_first(0)
 
             ::
 
@@ -889,14 +913,15 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_first(n, inverted=inverted)
-        mask = SilenceMask(
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(
             pattern=pattern,
+            template=template,
             use_multimeasure_rests=use_multimeasure_rests,
             )
-        return mask
 
     @staticmethod
-    def silence_last(n=1, inverted=None, use_multimeasure_rests=None):
+    def silence_last(n, inverted=None, use_multimeasure_rests=None):
         r'''Makes silence mask that matches the last `n` indices.
 
         ..  container:: example
@@ -909,10 +934,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_last(1),
-                    )
+                >>> mask
+                abjad.silence_last(1)
 
             ::
 
@@ -959,10 +982,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_last(2),
-                    )
+                >>> mask
+                abjad.silence_last(2)
 
             ::
 
@@ -1009,10 +1030,8 @@ class SilenceMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SilenceMask(
-                    pattern=abjad.index_last(0),
-                    )
+                >>> mask
+                abjad.silence_last(0)
 
             ::
 
@@ -1053,8 +1072,9 @@ class SilenceMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_last(n, inverted=inverted)
-        mask = SilenceMask(
+        template = SilenceMask._get_template(inspect.currentframe())
+        return SilenceMask(
             pattern=pattern,
+            template=template,
             use_multimeasure_rests=use_multimeasure_rests,
             )
-        return mask

@@ -1,3 +1,4 @@
+import inspect
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
 
@@ -157,6 +158,7 @@ class SustainMask(AbjadValueObject):
 
     __slots__ = (
         '_pattern',
+        '_template',
         )
 
     _publish_storage_format = True
@@ -166,12 +168,44 @@ class SustainMask(AbjadValueObject):
     def __init__(
         self,
         pattern=None,
+        template=None,
         ):
         import abjad
         if pattern is None:
             pattern = abjad.index_all()
         assert isinstance(pattern, abjad.Pattern), repr(pattern)
         self._pattern = pattern
+        self._template = template
+
+    ### PRIVATE METHODS ###
+
+    def _get_format_specification(self):
+        import abjad
+        if self.template is None:
+            return super(SustainMask, self)._get_format_specification()
+        return abjad.FormatSpecification(
+            client=self,
+            repr_is_indented=False,
+            storage_format_is_indented=False,
+            storage_format_args_values=[self.template],
+            storage_format_forced_override=self.template,
+            storage_format_kwargs_names=(),
+            )
+
+    @staticmethod
+    def _get_template(frame):
+        import abjad
+        try:
+            frame_info = inspect.getframeinfo(frame)
+            function_name = frame_info.function
+            arguments = abjad.Expression._wrap_arguments(
+                frame,
+                static_class=SustainMask,
+                )
+            template = 'abjad.{}({})'.format(function_name, arguments)
+        finally:
+            del frame
+        return template
 
     ### PUBLIC PROPERTIES ###
 
@@ -183,10 +217,18 @@ class SustainMask(AbjadValueObject):
         '''
         return self._pattern
 
+    @property
+    def template(self):
+        r'''Gets template.
+
+        Returns template.
+        '''
+        return self._template
+
     ### PUBLIC METHODS ###
 
     @staticmethod
-    def sustain(indices=None, inverted=None):
+    def sustain(indices, inverted=None):
         r'''Makes sustain mask that matches `indices`.
 
         ..  container:: example
@@ -199,10 +241,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index([1, 2]),
-                    )
+                >>> mask
+                abjad.sustain([1, 2])
 
             ::
 
@@ -252,10 +292,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index([-1, -2]),
-                    )
+                >>> mask
+                abjad.sustain([-1, -2])
 
             ::
 
@@ -300,7 +338,8 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index(indices, inverted=inverted)
-        return SustainMask(pattern=pattern)
+        template = SustainMask._get_template(inspect.currentframe())
+        return SustainMask(pattern=pattern, template=template)
 
     @staticmethod
     def sustain_all(inverted=None):
@@ -372,10 +411,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_all(),
-                    )
+                >>> mask
+                abjad.sustain_all()
 
             ::
 
@@ -420,8 +457,8 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_all(inverted=inverted) 
-        mask = SustainMask(pattern=pattern)
-        return mask
+        template = SustainMask._get_template(inspect.currentframe())
+        return SustainMask(pattern=pattern, template=template)
 
     @staticmethod
     def sustain_every(indices, period, inverted=None):
@@ -437,10 +474,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_every([1], 2),
-                    )
+                >>> mask
+                abjad.sustain_every([1], 2)
 
             ::
 
@@ -487,10 +522,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_every([1, 2], 3),
-                    )
+                >>> mask
+                abjad.sustain_every([1, 2], 3)
 
             ::
 
@@ -531,11 +564,11 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_every(indices, period, inverted=inverted)
-        mask = SustainMask(pattern=pattern)
-        return mask
+        template = SustainMask._get_template(inspect.currentframe())
+        return SustainMask(pattern=pattern, template=template)
 
     @staticmethod
-    def sustain_first(n=1, inverted=None):
+    def sustain_first(n, inverted=None):
         r'''Makes sustain mask that matches the first `n` indices.
 
         ..  container:: example
@@ -544,14 +577,12 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> mask = abjad.sustain_first()
+                >>> mask = abjad.sustain_first(1)
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_first(1),
-                    )
+                >>> mask
+                abjad.sustain_first(1)
 
             ::
 
@@ -617,14 +648,12 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> mask = abjad.sustain_first(n=2)
+                >>> mask = abjad.sustain_first(2)
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_first(2),
-                    )
+                >>> mask
+                abjad.sustain_first(2)
 
             ::
 
@@ -681,11 +710,11 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_first(n, inverted=inverted)
-        mask = SustainMask(pattern=pattern)
-        return mask
+        template = SustainMask._get_template(inspect.currentframe())
+        return SustainMask(pattern=pattern, template=template)
 
     @staticmethod
-    def sustain_last(n=1, inverted=None):
+    def sustain_last(n, inverted=None):
         r'''Makes sustain mask that matches the last `n` indices.
 
         ..  container:: example
@@ -694,14 +723,12 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> mask = abjad.sustain_last()
+                >>> mask = abjad.sustain_last(1)
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_last(1),
-                    )
+                >>> mask
+                abjad.sustain_last(1)
 
             ::
 
@@ -751,10 +778,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_last(2),
-                    )
+                >>> mask
+                abjad.sustain_last(2)
 
             ::
 
@@ -804,10 +829,8 @@ class SustainMask(AbjadValueObject):
 
             ::
 
-                >>> f(mask)
-                abjad.SustainMask(
-                    pattern=abjad.index_last(0),
-                    )
+                >>> mask
+                abjad.sustain_last(0)
 
             ::
 
@@ -851,5 +874,5 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index_last(n, inverted=inverted)
-        mask = SustainMask(pattern=pattern)
-        return mask
+        template = SustainMask._get_template(inspect.currentframe())
+        return SustainMask(pattern=pattern, template=template)

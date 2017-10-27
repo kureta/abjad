@@ -2359,8 +2359,8 @@ class TaleaRhythmMaker(RhythmMaker):
 
                 >>> rhythm_maker = abjad.rhythmmakertools.TaleaRhythmMaker(
                 ...     logical_tie_masks=[
-                ...         abjad.silence_first(),
-                ...         abjad.silence_last(),
+                ...         abjad.silence_first(1),
+                ...         abjad.silence_last(1),
                 ...         ],
                 ...     talea=abjad.rhythmmakertools.Talea(
                 ...         counts=[1, 2, 3, 4],
