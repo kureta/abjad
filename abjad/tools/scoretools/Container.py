@@ -1,3 +1,4 @@
+import collections
 from .Component import Component
 
 
@@ -489,17 +490,6 @@ class Container(Component):
         self._components[:] = []
         return contents
 
-    @staticmethod
-    def _flatten_selections(items):
-        import abjad
-        components = []
-        for item in items:
-            if isinstance(item, abjad.Selection):
-                components.extend(item)
-            else:
-                components.append(item)
-        return components
-
     def _format_after_slot(self, bundle):
         result = []
         result.append(('commands', bundle.after.commands))
@@ -750,9 +740,19 @@ class Container(Component):
 
     def _initialize_components(self, components):
         import abjad
-        components = components or []
-        if isinstance(components, list):
-            components = self._flatten_selections(components)
+        if (isinstance(components, collections.Iterable) and
+            not isinstance(components, str)):
+            components_ = []
+            for item in components:
+                if isinstance(item, abjad.Selection):
+                    components_.extend(item)
+                elif isinstance(item, str):
+                    parsed = self._parse_string(item)
+                    components_.append(parsed)
+                else:
+                    components_.append(item)
+            assert all(isinstance(_, abjad.Component) for _ in components_)
+            components = components_
         if self._all_are_orphan_components(components):
             self._components = list(components)
             self[:]._set_parents(self)
@@ -770,7 +770,6 @@ class Container(Component):
                 self[:] = parsed[:]
         else:
             message = 'can not initialize container from {!r}.'
-            message += ' Try using mutate().wrap()?'
             message = message.format(components)
             raise TypeError(message)
 
@@ -1467,6 +1466,13 @@ class Container(Component):
         '''
         if isinstance(argument, str):
             argument = self._parse_string(argument)
+        elif isinstance(argument, collections.Iterable):
+            argument_ = []
+            for item in argument:
+                if isinstance(item, str):
+                    item = self._parse_string(item)
+                argument_.append(item)
+            argument = argument_
         self.__setitem__(
             slice(len(self), len(self)),
             argument.__getitem__(slice(0, len(argument)))
