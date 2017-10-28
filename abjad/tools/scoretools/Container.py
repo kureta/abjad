@@ -367,7 +367,7 @@ class Container(Component):
                 table.attributes['border'] = 4
                 table.attributes['bgcolor'] = 'grey80'
                 if isinstance(component, Container):
-                    for child in abjad.iterate(component).depth_first():
+                    for child in abjad.iterate(component)._depth_first():
                         if child is component:
                             continue
                         node = node_mapping[child]

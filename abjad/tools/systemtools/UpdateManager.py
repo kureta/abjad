@@ -39,7 +39,7 @@ class UpdateManager(AbjadObject):
     @staticmethod
     def _iterate_entire_score(score_root):
         import abjad
-        components = abjad.iterate(score_root).depth_first(
+        components = abjad.iterate(score_root)._depth_first(
             capped=True,
             unique=True,
             forbid=None,
