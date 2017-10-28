@@ -7236,7 +7236,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        return self.leaves(pitched=True).contiguous().map(abjad.Run)
+        return Selection.leaves(self, pitched=True).contiguous().map(abjad.Run)
 
     def top(self):
         r'''Selects top components.
