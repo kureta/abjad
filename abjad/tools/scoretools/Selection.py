@@ -2703,7 +2703,7 @@ class Selection(AbjadValueObject):
             with_grace_notes=with_grace_notes,
             )
 
-    def by_logical_measure(self):
+    def logical_measures(self):
         r'''Groups selection by logical measure.
 
         ..  container:: example
@@ -2719,7 +2719,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
-                >>> result = result.by_logical_measure()
+                >>> result = result.logical_measures()
 
                 >>> for item in result:
                 ...     item
@@ -2732,7 +2732,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves()
-                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.logical_measures()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2817,7 +2817,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
-                >>> result = result.by_logical_measure()
+                >>> result = result.logical_measures()
                 >>> result = result.map(abjad.select()[0])
 
                 >>> for item in result:
@@ -2830,7 +2830,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves()
-                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.logical_measures()
                 >>> selector = selector.map(abjad.select()[0])
                 >>> result = selector(staff)
 
@@ -2896,7 +2896,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
-                >>> result = result.by_logical_measure()
+                >>> result = result.logical_measures()
                 >>> result = result.map(abjad.select()[-1])
 
                 >>> for item in result:
@@ -2910,7 +2910,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves()
-                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.logical_measures()
                 >>> selector = selector.map(abjad.select()[-1])
                 >>> result = selector(staff)
 
@@ -2976,7 +2976,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(score) # doctest: +SKIP
 
                 >>> result = abjad.select(score).leaves()
-                >>> result = result.by_logical_measure()
+                >>> result = result.logical_measures()
 
                 >>> for item in result:
                 ...     item
@@ -2987,7 +2987,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves()
-                >>> selector = selector.by_logical_measure()
+                >>> selector = selector.logical_measures()
                 >>> result = selector(score)
 
                 >>> selector.print(result)
