@@ -896,7 +896,7 @@ class Tuplet(Container):
         Returns true or false.
         '''
         import abjad
-        leaves = list(iterate(self).by_leaf())
+        leaves = list(iterate(self).leaves())
         for logical_tie in abjad.iterate(leaves).by_logical_tie():
             if not logical_tie.get_duration().is_assignable:
                 return False
@@ -2423,10 +2423,10 @@ class Tuplet(Container):
         if self.is_diminution:
             while self.is_diminution:
                 self.multiplier *= 2
-                for leaf in iterate(self).by_leaf():
+                for leaf in iterate(self).leaves():
                     leaf.written_duration /= 2
         elif not self.is_diminution:
             while not self.is_diminution:
                 self.multiplier /= 2
-                for leaf in iterate(self).by_leaf():
+                for leaf in iterate(self).leaves():
                     leaf.written_duration *= 2

@@ -118,7 +118,7 @@ class BeamSpecifier(AbjadValueObject):
             if self.stemlet_length is not None:
                 grob_proxy = abjad.override(beam).staff.stem
                 grob_proxy.stemlet_length = self.stemlet_length
-            leaves = abjad.select(components).by_leaf(with_grace_notes=False)
+            leaves = abjad.select(components).leaves(with_grace_notes=False)
             abjad.attach(beam, leaves)
         elif self.beam_each_division:
             for selection in selections:
@@ -126,7 +126,7 @@ class BeamSpecifier(AbjadValueObject):
                 if self.stemlet_length is not None:
                     grob_proxy = abjad.override(beam).staff.stem
                     grob_proxy.stemlet_length = self.stemlet_length
-                leaves = abjad.select(selection).by_leaf(with_grace_notes=False)
+                leaves = abjad.select(selection).leaves(with_grace_notes=False)
                 abjad.attach(beam, leaves)
 
     def __format__(self, format_specification=''):

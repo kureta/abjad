@@ -202,7 +202,7 @@ class Mutation(abctools.AbjadObject):
                 >>> staff.append(abjad.Tuplet((3, 2), "c'4 e'4"))
                 >>> staff.append(abjad.Tuplet((3, 2), "d'4 f'4"))
                 >>> hairpin = abjad.Hairpin('p < f')
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> time_signature = abjad.TimeSignature((3, 4))
                 >>> abjad.attach(time_signature, leaves[0])
                 >>> abjad.attach(hairpin, leaves)
@@ -251,7 +251,7 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Tuplet((3, 2), "c'4 e'4"))
                 >>> staff.append(abjad.Tuplet((3, 2), "d'4 f'4"))
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> hairpin = abjad.Hairpin('p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> time_signature = abjad.TimeSignature((3, 4))
@@ -398,7 +398,7 @@ class Mutation(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((1, 4), "c'8 d'8"))
                 >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
                 >>> slur = abjad.Slur()
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> abjad.attach(slur, leaves)
                 >>> show(staff) # doctest: +SKIP
 
@@ -464,7 +464,7 @@ class Mutation(abctools.AbjadObject):
                 >>> tuplet_2 = abjad.Tuplet((2, 3), "d'4 e'4 f'4")
                 >>> staff = abjad.Staff([tuplet_1, tuplet_2])
                 >>> hairpin = abjad.Hairpin('p < f')
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> abjad.attach(hairpin, leaves)
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
@@ -2036,7 +2036,7 @@ class Mutation(abctools.AbjadObject):
                 >>> tuplet.extend("c'8 d'8 e'8 f'8 g'8")
                 >>> staff.append(tuplet)
                 >>> time_signature = abjad.TimeSignature((4, 8))
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> abjad.attach(time_signature, leaves[0])
                 >>> show(staff) # doctest: +SKIP
 
@@ -2403,7 +2403,7 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Tuplet((2, 3), "c'4 d' e'"))
                 >>> staff.append(abjad.Tuplet((2, 3), "c'4 d' e'"))
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
                 >>> show(staff) # doctest: +SKIP
@@ -2915,7 +2915,7 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Measure((3, 4), "c'4 d'4 e'4"))
                 >>> staff.append(abjad.Measure((3, 4), "d'4 e'4 f'4"))
-                >>> leaves = abjad.select(staff).by_leaf()
+                >>> leaves = abjad.select(staff).leaves()
                 >>> hairpin = abjad.Hairpin('p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> measures = staff[:]

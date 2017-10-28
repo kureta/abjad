@@ -814,7 +814,7 @@ class Component(AbjadObject):
                     else:
                         insert_index = len(spanner)
                     for component in reversed(components):
-                        leaves = abjad.select(component).by_leaf()
+                        leaves = abjad.select(component).leaves()
                         for leaf in reversed(leaves):
                             spanner._insert(insert_index, leaf)
                             leaf._spanners.add(spanner)
@@ -843,7 +843,7 @@ class Component(AbjadObject):
                         message = 'no component in spanner at offset.'
                         raise ValueError(message)
                     for component in reversed(components):
-                        leaves = abjad.select(component).by_leaf()
+                        leaves = abjad.select(component).leaves()
                         for leaf in reversed(leaves):
                             spanner._insert(index, leaf)
                             component._spanners.add(spanner)

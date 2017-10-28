@@ -7,5 +7,5 @@ def analyze(argument):
     Returns tonal analysis agent.
     '''
     import abjad
-    leaves = abjad.select(argument).by_leaf()
+    leaves = abjad.select(argument).leaves()
     return abjad.tonalanalysistools.TonalAnalysis(leaves)

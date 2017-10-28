@@ -398,7 +398,7 @@ Preparing for deployment
 
 ..  abjad::
 
-    selector = abjad.Selector().by_leaf().by_run(abjad.Note)[:-1].flatten()
+    selector = abjad.Selector().leaves().by_run(abjad.Note)[:-1].flatten()
 
 ..  abjad::
 
@@ -408,7 +408,7 @@ Preparing for deployment
 
 ..  abjad::
 
-    selector = selector.by_leaf()
+    selector = selector.leaves()
     for x in selector(staff):
         x
 
@@ -447,7 +447,7 @@ Preparing for deployment
 
 ..  abjad::
 
-    leaves = abjad.select(staff).by_leaf()
+    leaves = abjad.select(staff).leaves()
     abjad.attach(OscillationSpanner(), leaves)
     for i, leaf in enumerate(selector(staff)):
         abjad.attach(annotations[i], leaf)
@@ -499,7 +499,7 @@ Now we apply the ``OscillationSpanner`` and the cyclic sequence of
 
 ..  abjad::
 
-    leaves = abjad.select(staff).by_leaf()
+    leaves = abjad.select(staff).leaves()
     abjad.attach(OscillationSpanner(), leaves)
     for i, leaf in enumerate(selector(staff)):
         abjad.attach(annotations[i], leaf)
@@ -535,10 +535,10 @@ via rotation:
         for i, logical_tie in enumerate(iterate(staff).by_logical_tie(pitched=True)):
             for note in logical_tie:
                 note.written_pitch = pitches[i]
-        selector = abjad.Selector().by_leaf().by_run(abjad.Note)[:-1].flatten()
+        selector = abjad.Selector().leaves().by_run(abjad.Note)[:-1].flatten()
         for i, leaf in enumerate(selector(staff)):
             abjad.attach(annotations[i], leaf)
-        leaves = abjad.select(staff).by_leaf()
+        leaves = abjad.select(staff).leaves()
         abjad.attach(OscillationSpanner(), leaves)
         return staff
 

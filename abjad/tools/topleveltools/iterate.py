@@ -24,7 +24,7 @@ def iterate(client=None):
 
         Iterates staff by leaf pair:
 
-            >>> for pair in abjad.iterate(staff).by_leaf_pair():
+            >>> for pair in abjad.iterate(staff).leaves_pair():
             ...     pair
             ...
             Selection([Note("c'4"), Note("e'4")])

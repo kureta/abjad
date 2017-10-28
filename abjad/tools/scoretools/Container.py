@@ -182,7 +182,7 @@ class Container(Component):
                 >>> voice = abjad.Voice()
                 >>> voice.append(abjad.Tuplet((2, 3), "c'4 d'4 e'4"))
                 >>> voice.append(abjad.Tuplet((2, 3), "e'4 d'4 c'4"))
-                >>> leaves = abjad.select(voice).by_leaf()
+                >>> leaves = abjad.select(voice).leaves()
                 >>> abjad.attach(abjad.Slur(), leaves)
                 >>> show(voice) # doctest: +SKIP
 
@@ -632,7 +632,7 @@ class Container(Component):
                 )
         else:
             duration = abjad.Duration(0)
-            for leaf in abjad.iterate(self).by_leaf():
+            for leaf in abjad.iterate(self).leaves():
                 duration += leaf._get_duration(in_seconds=True)
             return duration
 
@@ -914,7 +914,7 @@ class Container(Component):
         for spanner, index in spanners_receipt:
             for component in reversed(argument):
                 # attach spanners only to leaves
-                leaves = abjad.select(component).by_leaf()
+                leaves = abjad.select(component).leaves()
                 for leaf in reversed(leaves):
                     spanner._insert(index, leaf)
                     leaf._spanners.add(spanner)
@@ -1090,7 +1090,7 @@ class Container(Component):
         # in order to start upward crawl through duration-crossing containers
         else:
             duration_crossing_containers = duration_crossing_descendants[:]
-            for leaf in abjad.iterate(bottom).by_leaf():
+            for leaf in abjad.iterate(bottom).leaves():
                 timespan = abjad.inspect(leaf).get_timespan()
                 if timespan.start_offset == global_split_point:
                     leaf_right_of_split = leaf

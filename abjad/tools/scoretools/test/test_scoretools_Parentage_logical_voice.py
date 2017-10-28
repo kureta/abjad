@@ -36,7 +36,7 @@ def test_scoretools_Parentage_logical_voice_03():
     staff[1].name = 'foo'
 
     containment = abjad.inspect(staff[0][0]).get_parentage().logical_voice
-    for leaf in abjad.iterate(staff).by_leaf():
+    for leaf in abjad.iterate(staff).leaves():
         assert abjad.inspect(leaf).get_parentage().logical_voice == containment
 
 
@@ -90,7 +90,7 @@ def test_scoretools_Parentage_logical_voice_04():
         )
 
     signatures = [abjad.inspect(leaf).get_parentage().logical_voice
-        for leaf in abjad.iterate(voice).by_leaf()]
+        for leaf in abjad.iterate(voice).leaves()]
 
     assert signatures[0] == signatures[1]
     assert signatures[0] != signatures[2]
@@ -153,7 +153,7 @@ def test_scoretools_Parentage_logical_voice_05():
 
     signatures = [
         abjad.inspect(leaf).get_parentage().logical_voice
-        for leaf in abjad.iterate(voice).by_leaf()
+        for leaf in abjad.iterate(voice).leaves()
         ]
 
     signatures[0] == signatures[1]
@@ -186,7 +186,7 @@ def test_scoretools_Parentage_logical_voice_06():
     container[0][0].name = 'voicefoo'
     container[1][0].name = 'voicefoo'
     beam = abjad.Beam()
-    leaves = abjad.select(container).by_leaf()
+    leaves = abjad.select(container).leaves()
     statement = 'attach(beam, leaves)'
     assert pytest.raises(Exception, statement)
     beam = abjad.Beam()
@@ -285,7 +285,7 @@ def test_scoretools_Parentage_logical_voice_07():
 
     signatures = [
         abjad.inspect(leaf).get_parentage().logical_voice
-        for leaf in abjad.iterate(container).by_leaf()
+        for leaf in abjad.iterate(container).leaves()
         ]
 
     signatures[0] != signatures[1]
@@ -397,7 +397,7 @@ def test_scoretools_Parentage_logical_voice_11():
         '''
         )
 
-    leaves = abjad.select(container).by_leaf()
+    leaves = abjad.select(container).leaves()
     assert abjad.inspect(leaves[0]).get_parentage().logical_voice == \
         abjad.inspect(leaves[1]).get_parentage().logical_voice
     assert abjad.inspect(leaves[0]).get_parentage().logical_voice != \

@@ -429,7 +429,7 @@ class Label(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        for leaf in abjad.iterate(self.client).by_leaf():
+        for leaf in abjad.iterate(self.client).leaves():
             self._color_leaf(leaf, color)
 
     def color_note_heads(self, color_map=None):
@@ -637,7 +637,7 @@ class Label(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         color_map = color_map or self._pc_number_to_color
-        for leaf in abjad.iterate(self.client).by_leaf():
+        for leaf in abjad.iterate(self.client).leaves():
             if isinstance(leaf, abjad.Chord):
                 for note_head in leaf.note_heads:
                     number = note_head.written_pitch.number
@@ -765,7 +765,7 @@ class Label(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        for leaf in  abjad.iterate(self.client).by_leaf():
+        for leaf in  abjad.iterate(self.client).leaves():
             abjad.detach(abjad.Markup, leaf)
 
     def vertical_moments(self, direction=Up, prototype=None):
@@ -2554,7 +2554,7 @@ class Label(abctools.AbjadObject):
             string = str(index)
             label = abjad.Markup(string, direction=direction)
             label = label.small()
-            leaves = abjad.select(item).by_leaf()
+            leaves = abjad.select(item).leaves()
             first_leaf = leaves[0]
             abjad.attach(label, first_leaf)
 
@@ -2882,7 +2882,7 @@ class Label(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.NamedInterval
-        for note in  abjad.iterate(self.client).by_leaf(abjad.Note):
+        for note in  abjad.iterate(self.client).leaves(abjad.Note):
             label = None
             next_leaf = abjad.inspect(note).get_leaf(1)
             if isinstance(next_leaf, abjad.Note):

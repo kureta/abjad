@@ -65,7 +65,7 @@ def test_scoretools_Selection_in_same_parent_02():
     assert voice[0][:].in_same_parent()
     assert voice[1][:].in_same_parent()
 
-    leaves = abjad.select(voice).by_leaf()
+    leaves = abjad.select(voice).leaves()
     assert not leaves.in_same_parent()
 
 

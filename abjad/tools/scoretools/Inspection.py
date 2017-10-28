@@ -659,14 +659,14 @@ class Inspection(abctools.AbjadObject):
             return self.client._get_leaf(n=n)
         if 0 <= n:
             stop = n + 1
-            leaves = abjad.iterate(self.client).by_leaf(start=0, stop=stop)
+            leaves = abjad.iterate(self.client).leaves(start=0, stop=stop)
             leaves = list(leaves)
             if len(leaves) < n + 1:
                 return
             leaf = leaves[n]
             return leaf
         else:
-            leaves = abjad.iterate(self.client).by_leaf(
+            leaves = abjad.iterate(self.client).leaves(
                 start=0,
                 stop=abs(n),
                 reverse=True,
@@ -1008,7 +1008,7 @@ class Inspection(abctools.AbjadObject):
 
             ::
 
-                >>> for leaf in abjad.iterate(voice).by_leaf(
+                >>> for leaf in abjad.iterate(voice).leaves(
                 ...     with_grace_notes=True,
                 ...     ):
                 ...     timespan = abjad.inspect(leaf).get_timespan()

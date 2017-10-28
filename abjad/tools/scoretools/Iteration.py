@@ -63,7 +63,7 @@ class Iteration(abctools.AbjadObject):
 
             ::
 
-                >>> for leaf in abjad.iterate(staff).by_leaf():
+                >>> for leaf in abjad.iterate(staff).leaves():
                 ...     leaf
                 Note("c'4")
                 Note("e'4")
@@ -676,7 +676,7 @@ class Iteration(abctools.AbjadObject):
             )
         return self._iterate_subrange(iterator, start, stop)
 
-    def by_leaf(
+    def leaves(
         self,
         prototype=None,
         pitched=None,
@@ -724,7 +724,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf():
+                    >>> for leaf in abjad.iterate(staff).leaves():
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -771,7 +771,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf(start=0, stop=3):
+                    >>> for leaf in abjad.iterate(staff).leaves(start=0, stop=3):
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -780,7 +780,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf(start=2, stop=4):
+                    >>> for leaf in abjad.iterate(staff).leaves(start=2, stop=4):
                     ...     leaf
                     ...
                     Note("af'8")
@@ -823,7 +823,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf(reverse=True):
+                    >>> for leaf in abjad.iterate(staff).leaves(reverse=True):
                     ...     leaf
                     ...
                     Note("gf'8")
@@ -871,7 +871,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(voice).by_leaf():
+                    >>> for leaf in abjad.iterate(voice).leaves():
                     ...     leaf
                     ...
                     Note("c'8")
@@ -920,7 +920,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf(pitched=True):
+                    >>> for leaf in abjad.iterate(staff).leaves(pitched=True):
                     ...     leaf
                     ...
                     Chord("<c' bf'>8")
@@ -965,7 +965,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf in abjad.iterate(staff).by_leaf(pitched=False):
+                    >>> for leaf in abjad.iterate(staff).leaves(pitched=False):
                     ...     leaf
                     ...
                     Rest('r8')
@@ -984,7 +984,7 @@ class Iteration(abctools.AbjadObject):
             with_grace_notes=with_grace_notes,
             )
 
-    def by_leaf_pair(self):
+    def leaves_pair(self):
         r'''Iterates by leaf pair.
 
         ..  container:: example
@@ -1024,7 +1024,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf_pair in abjad.iterate(score).by_leaf_pair():
+                    >>> for leaf_pair in abjad.iterate(score).leaves_pair():
                     ...     leaf_pair
                     ...
                     Selection([Note("c'8"), Note('c4')])
@@ -1546,7 +1546,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf()
+                    >>> selector = abjad.select().leaves()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> agent = abjad.inspect(leaf)
@@ -1645,7 +1645,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> selector = abjad.select().by_leaf()
+                    >>> selector = abjad.select().leaves()
                     >>> leaves = selector(staff)
                     >>> leaf = leaves[0]
                     >>> for note in abjad.iterate(leaf).by_logical_voice_from_component(
@@ -2060,7 +2060,7 @@ class Iteration(abctools.AbjadObject):
                 for pitch_ in abjad.iterate(item).by_pitch():
                     result.append(pitch_)
         else:
-            for leaf in abjad.iterate(self.client).by_leaf():
+            for leaf in abjad.iterate(self.client).leaves():
                 try:
                     result.append(leaf.written_pitch)
                 except AttributeError:
@@ -2172,7 +2172,7 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        for leaf_pair in self.by_leaf_pair():
+        for leaf_pair in self.leaves_pair():
             leaf_pair_list = list(leaf_pair)
             for pair in self._list_unordered_pitch_pairs(
                 leaf_pair_list[0]):
@@ -2277,7 +2277,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> leaves = abjad.iterate(staff).by_leaf()
+                    >>> leaves = abjad.iterate(staff).leaves()
                     >>> prototype = (abjad.Note, abjad.Chord)
                     >>> for run in abjad.iterate(leaves).by_run(
                     ...     prototype=prototype,
@@ -3545,7 +3545,7 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        for leaf in abjad.iterate(self.client).by_leaf(pitched=True):
+        for leaf in abjad.iterate(self.client).leaves(pitched=True):
             instrument = abjad.inspect(leaf).get_effective(abjad.Instrument)
             if instrument is None:
                 message = 'no instrument found.'

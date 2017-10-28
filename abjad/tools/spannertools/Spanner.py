@@ -158,7 +158,7 @@ class Spanner(AbjadObject):
 
     def _at_least_two_leaves(self, argument):
         import abjad
-        leaves = abjad.select(argument).by_leaf()
+        leaves = abjad.select(argument).leaves()
         return 1 < len(leaves)
 
     def _attach(self, argument):

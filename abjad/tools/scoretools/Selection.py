@@ -17,7 +17,7 @@ class Selection(AbjadValueObject):
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> result = abjad.select(staff).by_leaf()
+            >>> result = abjad.select(staff).leaves()
 
             >>> for item in result:
             ...     item
@@ -29,7 +29,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example expression
 
-            >>> selector = abjad.select().by_leaf()
+            >>> selector = abjad.select().leaves()
             >>> result = selector(staff)
 
             >>> selector.print(result)
@@ -84,7 +84,7 @@ class Selection(AbjadValueObject):
             >>> staff = abjad.Staff(string)
             >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+            >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
 
             >>> for item in result:
             ...     item
@@ -95,7 +95,7 @@ class Selection(AbjadValueObject):
 
         ..  container:: example expression
 
-            >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+            >>> selector = abjad.select().leaves().by_run(abjad.Note)
             >>> result = selector(staff)
 
             >>> selector.print(result)
@@ -237,7 +237,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> pattern = abjad.index_every([0], 2)
-                >>> for leaf in abjad.select(staff).by_leaf()[pattern]:
+                >>> for leaf in abjad.select(staff).leaves()[pattern]:
                 ...     leaf
                 ...
                 Note("c'8")
@@ -247,7 +247,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()[pattern]
+                >>> selector = abjad.select().leaves()[pattern]
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -370,7 +370,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(r"c'8 d'8 ~ d'8 e'8 ~ e'8 ~ e'8 r8 f'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> getter = abjad.select().by_leaf()[abjad.index([1])]
+                >>> getter = abjad.select().leaves()[abjad.index([1])]
                 >>> for selection in abjad.select(staff).by_logical_tie(
                 ...     pitched=True,
                 ...     ).map(getter):
@@ -383,7 +383,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> getter = abjad.select().by_leaf()[abjad.index([1])]
+                >>> getter = abjad.select().leaves()[abjad.index([1])]
                 >>> selector = abjad.select().by_logical_tie(pitched=True)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
@@ -718,7 +718,7 @@ class Selection(AbjadValueObject):
                     }
                 }
 
-            >>> leaves = abjad.select(staff).by_leaf()[1:5]
+            >>> leaves = abjad.select(staff).leaves()[1:5]
             >>> new_staff = leaves._copy(include_enclosing_containers=True)
             >>> abjad.show(new_staff) # doctest: +SKIP
 
@@ -793,7 +793,7 @@ class Selection(AbjadValueObject):
         parentage = self[0]._get_parentage(include_self=True)
         governor = parentage._get_governor()
         # find start and stop indices in governor
-        governor_leaves = abjad.select(governor).by_leaf()
+        governor_leaves = abjad.select(governor).leaves()
         for i, x in enumerate(governor_leaves):
             if x is self[0]:
                 start_index_in_governor = i
@@ -802,14 +802,14 @@ class Selection(AbjadValueObject):
                 stop_index_in_governor = i
         # copy governor
         governor_copy = abjad.mutate(governor).copy()
-        copied_leaves = abjad.select(governor_copy).by_leaf()
+        copied_leaves = abjad.select(governor_copy).leaves()
         # find start and stop leaves in copy of governor
         start_leaf = copied_leaves[start_index_in_governor]
         stop_leaf = copied_leaves[stop_index_in_governor]
         # trim governor copy forwards from first leaf
         found_start_leaf = False
         while not found_start_leaf:
-            leaf = next(abjad.iterate(governor_copy).by_leaf())
+            leaf = next(abjad.iterate(governor_copy).leaves())
             if leaf is start_leaf:
                 found_start_leaf = True
             else:
@@ -818,7 +818,7 @@ class Selection(AbjadValueObject):
         found_stop_leaf = False
         while not found_stop_leaf:
             reverse_iterator = abjad.iterate(
-                governor_copy).by_leaf(reverse=True)
+                governor_copy).leaves(reverse=True)
             leaf = next(reverse_iterator)
             if leaf is stop_leaf:
                 found_stop_leaf = True
@@ -1446,7 +1446,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'4 d'16 d' d' d' e'4 f'16 f' f' f'")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.filter(abjad.duration('==', (1, 16)))
                 >>> result = result.by_contiguity()
 
@@ -1458,7 +1458,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.filter(abjad.duration('==', (1, 16)))
                 >>> selector = selector.by_contiguity()
                 >>> result = selector(staff)
@@ -1539,7 +1539,7 @@ class Selection(AbjadValueObject):
                 >>> result = abjad.select(staff).by_logical_tie()
                 >>> result = result.filter(abjad.duration('<', (1, 4)))
                 >>> result = result.by_contiguity()
-                >>> result = result.map(abjad.select().by_leaf()[0])
+                >>> result = result.map(abjad.select().leaves()[0])
 
                 >>> for item in result:
                 ...     item
@@ -1551,7 +1551,7 @@ class Selection(AbjadValueObject):
                 >>> selector = abjad.select().by_logical_tie()
                 >>> selector = selector.filter(abjad.duration('<', (1, 4)))
                 >>> selector = selector.by_contiguity()
-                >>> selector = selector.map(abjad.select().by_leaf()[0])
+                >>> selector = selector.map(abjad.select().leaves()[0])
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -1600,7 +1600,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = abjad.select(staff).leaves(pitched=True)
                 >>> result = result.group(abjad.select().get_pitches())
                 >>> result = result.map(abjad.select().by_contiguity())
                 >>> result = result.flatten(depth=1)
@@ -1614,7 +1614,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = abjad.select().leaves(pitched=True)
                 >>> selector = selector.group(abjad.select().get_pitches())
                 >>> selector = selector.map(abjad.select().by_contiguity())
                 >>> selector = selector.flatten(depth=1)
@@ -1840,7 +1840,7 @@ class Selection(AbjadValueObject):
             selections.append(type(self)(selection))
         return type(self)(selections)
 
-    def by_leaf(
+    def leaves(
         self,
         prototype=None,
         head=None,
@@ -1866,7 +1866,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
 
                 >>> for item in result:
                 ...     item
@@ -1884,7 +1884,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -1975,7 +1975,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = abjad.select(staff).leaves(pitched=True)
 
                 >>> for item in result:
                 ...     item
@@ -1989,7 +1989,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = abjad.select().leaves(pitched=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2070,7 +2070,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(trim=True)
+                >>> result = abjad.select(staff).leaves(trim=True)
 
                 >>> for item in result:
                 ...     item
@@ -2086,7 +2086,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(trim=True)
+                >>> selector = abjad.select().leaves(trim=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2176,7 +2176,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(trim=True)
+                >>> result = abjad.select(staff).leaves(trim=True)
 
                 >>> for item in result:
                 ...     item
@@ -2194,7 +2194,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(trim=True)
+                >>> selector = abjad.select().leaves(trim=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2292,7 +2292,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
-                >>> result = result.by_leaf()
+                >>> result = result.leaves()
 
                 >>> for item in result:
                 ...     item
@@ -2307,7 +2307,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().components(abjad.Tuplet)
-                >>> selector = selector.by_leaf()
+                >>> selector = selector.leaves()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2381,7 +2381,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
-                >>> result = result.by_leaf(trim=True)
+                >>> result = result.leaves(trim=True)
 
                 >>> for item in result:
                 ...     item
@@ -2394,7 +2394,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().components(abjad.Tuplet)
-                >>> selector = selector.by_leaf(trim=True)
+                >>> selector = selector.leaves(trim=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2464,7 +2464,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
-                >>> result = result.by_leaf(head=True, pitched=True)
+                >>> result = result.leaves(head=True, pitched=True)
 
                 >>> for item in result:
                 ...     item
@@ -2477,7 +2477,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().components(abjad.Tuplet)
-                >>> selector = selector.by_leaf(head=True, pitched=True)
+                >>> selector = selector.leaves(head=True, pitched=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2547,7 +2547,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
-                >>> result = result.by_leaf(tail=True, pitched=True)
+                >>> result = result.leaves(tail=True, pitched=True)
 
                 >>> for item in result:
                 ...     item
@@ -2561,7 +2561,7 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select()
                 >>> selector = selector.components(abjad.Tuplet)
-                >>> selector = selector.by_leaf(tail=True, pitched=True)
+                >>> selector = selector.leaves(tail=True, pitched=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2631,7 +2631,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
-                >>> result = result.by_leaf(abjad.Chord, head=True)
+                >>> result = result.leaves(abjad.Chord, head=True)
 
                 >>> for item in result:
                 ...     item
@@ -2642,7 +2642,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().components(abjad.Tuplet)
-                >>> selector = selector.by_leaf(abjad.Chord, head=True)
+                >>> selector = selector.leaves(abjad.Chord, head=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2718,7 +2718,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.by_logical_measure()
 
                 >>> for item in result:
@@ -2731,7 +2731,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.by_logical_measure()
                 >>> result = selector(staff)
 
@@ -2816,7 +2816,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.by_logical_measure()
                 >>> result = result.map(abjad.select()[0])
 
@@ -2829,7 +2829,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.by_logical_measure()
                 >>> selector = selector.map(abjad.select()[0])
                 >>> result = selector(staff)
@@ -2895,7 +2895,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.by_logical_measure()
                 >>> result = result.map(abjad.select()[-1])
 
@@ -2909,7 +2909,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.by_logical_measure()
                 >>> selector = selector.map(abjad.select()[-1])
                 >>> result = selector(staff)
@@ -2975,7 +2975,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.setting(score).proportional_notation_duration = scheme
                 >>> abjad.show(score) # doctest: +SKIP
 
-                >>> result = abjad.select(score).by_leaf()
+                >>> result = abjad.select(score).leaves()
                 >>> result = result.by_logical_measure()
 
                 >>> for item in result:
@@ -2986,7 +2986,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.by_logical_measure()
                 >>> result = selector(score)
 
@@ -3561,7 +3561,7 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.by_run((abjad.Chord, abjad.Note))
 
                 >>> for item in result:
@@ -3574,7 +3574,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.by_run((abjad.Chord, abjad.Note))
                 >>> result = selector(staff)
 
@@ -3658,116 +3658,6 @@ class Selection(AbjadValueObject):
         generator = abjad.iterate(self).by_run(prototype=prototype)
         return type(self)(generator)
 
-#    def by_timeline(self, prototype=None, reverse=False):
-#        r'''Selects components by timeline.
-#
-#        ..  container:: example
-#
-#            >>> score = abjad.Score()
-#            >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
-#            >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-#            >>> abjad.show(score) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(score)
-#                \new Score <<
-#                    \new Staff {
-#                        c'4
-#                        d'4
-#                        e'4
-#                        f'4
-#                    }
-#                    \new Staff {
-#                        g'8
-#                        a'8
-#                        b'8
-#                        c''8
-#                    }
-#                >>
-#
-#            >>> for leaf in abjad.select(score).by_timeline():
-#            ...     leaf
-#            ...
-#            Note("c'4")
-#            Note("g'8")
-#            Note("a'8")
-#            Note("d'4")
-#            Note("b'8")
-#            Note("c''8")
-#            Note("e'4")
-#            Note("f'4")
-#
-#        Returns new selection.
-#        '''
-#        import abjad
-#        generator = abjad.iterate(self).by_timeline(
-#            prototype=prototype,
-#            reverse=reverse,
-#            )
-#        return type(self)(generator)
-
-#    def by_timeline_and_logical_tie(
-#        self,
-#        nontrivial=False,
-#        pitched=False,
-#        reverse=False,
-#        ):
-#        r'''Selects components by timeline and logical tie.
-#
-#        ..  container:: example
-#
-#            >>> score = abjad.Score()
-#            >>> score.append(abjad.Staff("c''4 ~ c''8 d''8 r4 ef''4"))
-#            >>> score.append(abjad.Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8"))
-#            >>> abjad.show(score) # doctest: +SKIP
-#
-#            ..  docs::
-#
-#                >>> abjad.f(score)
-#                \new Score <<
-#                    \new Staff {
-#                        c''4 ~
-#                        c''8
-#                        d''8
-#                        r4
-#                        ef''4
-#                    }
-#                    \new Staff {
-#                        r8
-#                        g'4. ~
-#                        g'8
-#                        r16
-#                        f'8. ~
-#                        f'8
-#                    }
-#                >>
-#
-#            >>> selection = abjad.select(score)
-#            >>> for item in selection.by_timeline_and_logical_tie():
-#            ...     item
-#            ...
-#            LogicalTie([Note("c''4"), Note("c''8")])
-#            LogicalTie([Rest('r8')])
-#            LogicalTie([Note("g'4."), Note("g'8")])
-#            LogicalTie([Note("d''8")])
-#            LogicalTie([Rest('r4')])
-#            LogicalTie([Rest('r16')])
-#            LogicalTie([Note("f'8."), Note("f'8")])
-#            LogicalTie([Note("ef''4")])
-#
-#        Returns new selection.
-#        '''
-#        import abjad
-#        if self._expression:
-#            return self._update_expression(inspect.currentframe())
-#        generator = abjad.iterate(self).by_timeline_and_logical_tie(
-#            nontrivial=nontrivial,
-#            pitched=pitched,
-#            reverse=reverse,
-#            )
-#        return type(self)(generator)
-
     def flatten(self, depth=-1):
         r'''Flattens selection to `depth`.
 
@@ -3790,7 +3680,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.filter(abjad.length('>', 1))
 
                 >>> for item in result:
@@ -3801,7 +3691,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.filter(abjad.length('>', 1))
                 >>> result = selector(staff)
 
@@ -3863,7 +3753,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.filter(abjad.length('<', 3))
 
                 >>> for item in result:
@@ -3874,7 +3764,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.filter(abjad.length('<', 3))
                 >>> result = selector(staff)
 
@@ -3926,7 +3816,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.filter(abjad.duration('==', (2, 8)))
 
                 >>> for item in result:
@@ -3936,7 +3826,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.filter(abjad.duration('==', (2, 8)))
                 >>> result = selector(staff)
 
@@ -3982,7 +3872,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.filter(abjad.duration('<', (3, 8)))
 
                 >>> for item in result:
@@ -3993,7 +3883,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expresison
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.filter(abjad.duration('<', (3, 8)))
                 >>> result = selector(staff)
 
@@ -4045,7 +3935,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.filter(abjad.duration('>=', (1, 4)))
 
                 >>> for item in result:
@@ -4056,7 +3946,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.filter(abjad.duration('>=', (1, 4)))
                 >>> result = selector(staff)
 
@@ -4240,7 +4130,7 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.filter(abjad.pitches('&', 'C4'))
 
                 >>> for item in result:
@@ -4252,7 +4142,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.filter(abjad.pitches('&', 'C4'))
                 >>> result = selector(staff)
 
@@ -4305,7 +4195,7 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.filter(abjad.pitches('&', 'C4 E4'))
 
                 >>> for item in result:
@@ -4318,7 +4208,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.filter(abjad.pitches('&', 'C4 E4'))
                 >>> result = selector(staff)
 
@@ -4442,6 +4332,88 @@ class Selection(AbjadValueObject):
                 items.append(item)
         return type(self)(items)
 
+    def filter_length(self, operator, length):
+        r'''Filters selection by `operator` and `length`.
+
+        ..  container:: example
+
+            Selects notes runs with length greater than 1:
+            
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
+                >>> result = result.filter_length('>', 1)
+
+                >>> for item in result:
+                ...     item
+                ...
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
+                >>> selector = selector.filter_length('>', 1)
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                }
+
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return self.filter(abjad.length(operator, length))
+
     def get_duration(self, in_seconds=False):
         r'''Gets duration.
 
@@ -4513,7 +4485,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = abjad.select(staff).leaves(pitched=True)
                 >>> result = result.group(abjad.select().get_pitches())
 
                 >>> for item in result:
@@ -4524,7 +4496,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = abjad.select().leaves(pitched=True)
                 >>> selector = selector.group(abjad.select().get_pitches())
                 >>> result = selector(staff)
 
@@ -4723,7 +4695,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf(pitched=True)
+                >>> result = abjad.select(staff).leaves(pitched=True)
                 >>> result = result.group()
 
                 >>> for item in result:
@@ -4733,7 +4705,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf(pitched=True)
+                >>> selector = abjad.select().leaves(pitched=True)
                 >>> selector = selector.group()
                 >>> result = selector(staff)
 
@@ -5088,7 +5060,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = staff[:].map(abjad.select().by_leaf())
+                >>> result = staff[:].map(abjad.select().leaves())
 
                 >>> for item in result:
                 ...     item
@@ -5102,7 +5074,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression:
 
-                >>> selector = abjad.select().map(abjad.select().by_leaf())
+                >>> selector = abjad.select().map(abjad.select().leaves())
                 >>> result = selector(staff[:])
 
                 >>> selector.print(result)
@@ -5187,7 +5159,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.map(abjad.select()[0])
 
                 >>> for item in result:
@@ -5199,7 +5171,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.map(abjad.select()[0])
                 >>> result = selector(staff)
 
@@ -5278,7 +5250,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
                 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_counts(
                 ...     [3],
                 ...     cyclic=False,
@@ -5292,7 +5264,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_counts(
                 ...     [3],
                 ...     cyclic=False,
@@ -5345,7 +5317,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                >>> result = abjad.select(staff).leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=False,
@@ -5359,7 +5331,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=False,
@@ -5424,7 +5396,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                >>> result = abjad.select(staff).leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -5439,7 +5411,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -5515,7 +5487,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                >>> result = abjad.select(staff).leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     fuse_overhang=True,
@@ -5530,7 +5502,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().leaves().partition_by_counts(
                 ...     [3],
                 ...     cyclic=True,
                 ...     fuse_overhang=True,
@@ -5607,7 +5579,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().partition_by_counts(
+                >>> result = abjad.select(staff).leaves().partition_by_counts(
                 ...     [1, 2, 3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -5625,7 +5597,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().partition_by_counts(
+                >>> selector = abjad.select().leaves().partition_by_counts(
                 ...     [1, 2, 3],
                 ...     cyclic=True,
                 ...     overhang=True,
@@ -5766,7 +5738,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().partition_by_durations(
+                >>> result = abjad.select(staff).leaves().partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=True,
                 ...     fill=abjad.Exact,
@@ -5783,7 +5755,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().partition_by_durations(
+                >>> selector = abjad.select().leaves().partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=True,
                 ...     fill=abjad.Exact,
@@ -5879,7 +5851,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=False,
@@ -5895,7 +5867,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 8)],
                 ...     cyclic=False,
@@ -5965,7 +5937,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
                 ...     cyclic=True,
@@ -5985,7 +5957,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16), abjad.Duration(1, 16)],
                 ...     cyclic=True,
@@ -6084,7 +6056,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=True,
@@ -6106,7 +6078,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=True,
@@ -6202,7 +6174,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=False,
@@ -6218,7 +6190,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [abjad.Duration(3, 16)],
                 ...     cyclic=False,
@@ -6281,7 +6253,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(mark, leaf, scope=abjad.Staff)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
@@ -6298,7 +6270,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
@@ -6388,7 +6360,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(mark, leaf, scope=abjad.Staff)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
@@ -6406,7 +6378,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=True,
@@ -6506,7 +6478,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(mark, leaf, scope=abjad.Staff)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=False,
@@ -6522,7 +6494,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [1.5],
                 ...     cyclic=False,
@@ -6596,7 +6568,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(mark, leaf, scope=abjad.Staff)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=True,
@@ -6618,7 +6590,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=True,
@@ -6718,7 +6690,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.attach(mark, leaf, scope=abjad.Staff)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=False,
@@ -6734,7 +6706,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_durations(
                 ...     [0.75],
                 ...     cyclic=False,
@@ -6895,7 +6867,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_ratio((1, 1))
 
                 >>> for item in result:
@@ -6906,7 +6878,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_ratio((1, 1))
                 >>> result = selector(staff)
 
@@ -6983,7 +6955,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf()
+                >>> result = abjad.select(staff).leaves()
                 >>> result = result.partition_by_ratio((1, 1, 1))
 
                 >>> for item in result:
@@ -6995,7 +6967,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf()
+                >>> selector = abjad.select().leaves()
                 >>> selector = selector.partition_by_ratio((1, 1, 1))
                 >>> result = selector(staff)
 
@@ -7090,7 +7062,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().top()
+                >>> result = abjad.select(staff).leaves().top()
 
                 >>> for item in result:
                 ...     item
@@ -7105,7 +7077,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().top()
+                >>> selector = abjad.select().leaves().top()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -7205,7 +7177,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.map(abjad.select().with_next_leaf())
 
                 >>> for item in result:
@@ -7217,7 +7189,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.map(abjad.select().with_next_leaf())
                 >>> result = selector(staff)
 
@@ -7467,7 +7439,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        leaves = list(self.by_leaf())
+        leaves = list(self.leaves())
         next_leaf = leaves[-1]._get_leaf(1)
         if next_leaf is not None:
             leaves.append(next_leaf)
@@ -7486,7 +7458,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select().with_previous_leaf()
-                >>> result = abjad.select(staff).by_leaf().by_run(abjad.Note)
+                >>> result = abjad.select(staff).leaves().by_run(abjad.Note)
                 >>> result = result.map(getter)
 
                 >>> for item in result:
@@ -7498,7 +7470,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_leaf().by_run(abjad.Note)
+                >>> selector = abjad.select().leaves().by_run(abjad.Note)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 
@@ -7648,7 +7620,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        leaves = list(self.by_leaf())
+        leaves = list(self.leaves())
         previous_leaf = leaves[0]._get_leaf(-1)
         if previous_leaf is not None:
             leaves.insert(0, previous_leaf)

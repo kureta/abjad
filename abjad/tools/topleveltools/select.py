@@ -8,7 +8,7 @@ def select(items=None):
         ::
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> selection = abjad.select(staff[:2]).by_leaf(pitched=True)
+            >>> selection = abjad.select(staff[:2]).leaves(pitched=True)
             >>> for note in selection:
             ...     abjad.override(note).note_head.color = 'red'
 

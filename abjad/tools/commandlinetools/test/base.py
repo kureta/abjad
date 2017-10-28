@@ -85,7 +85,7 @@ class ScorePackageScriptTestCase(systemtools.TestCase):
                 if 1 < segment_number:
                     rehearsal_mark = abjad.RehearsalMark()
                     for voice in abjad.iterate(score).components(abjad.Voice):
-                        for leaf in abjad.iterate(voice).by_leaf():
+                        for leaf in abjad.iterate(voice).leaves():
                             abjad.attach(rehearsal_mark, leaf)
                             break
                 if segment_count <= segment_number:

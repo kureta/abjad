@@ -2196,7 +2196,7 @@ class Expression(AbjadValueObject):
 
                     >>> expression = abjad.Expression()
                     >>> expression = expression.select()
-                    >>> expression = expression.by_leaf()
+                    >>> expression = expression.leaves()
 
                 ::
 

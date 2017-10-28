@@ -181,7 +181,7 @@ class Parentage(Selection):
 
             ::
 
-                >>> for leaf in abjad.iterate(voice).by_leaf():
+                >>> for leaf in abjad.iterate(voice).leaves():
                 ...     parentage = abjad.inspect(leaf).get_parentage()
                 ...     print(leaf, parentage.is_grace_note)
                 ...
@@ -347,7 +347,7 @@ class Parentage(Selection):
 
             ::
 
-                >>> for leaf in abjad.select(score).by_leaf():
+                >>> for leaf in abjad.select(score).leaves():
                 ...     parentage = abjad.inspect(leaf).get_parentage()
                 ...     leaf, parentage.score_index
                 ...

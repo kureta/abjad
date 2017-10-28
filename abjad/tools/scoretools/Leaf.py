@@ -426,7 +426,7 @@ class Leaf(Component):
             result_selections.append(selection)
         result_components = abjad.sequence(result_selections).flatten()
         result_components = abjad.select(result_components)
-        result_leaves = abjad.select(result_components).by_leaf()
+        result_leaves = abjad.select(result_components).leaves()
         assert all(isinstance(_, abjad.Selection) for _ in result_selections)
         assert all(isinstance(_, abjad.Component) for _ in result_components)
         assert result_leaves.are_leaves()
