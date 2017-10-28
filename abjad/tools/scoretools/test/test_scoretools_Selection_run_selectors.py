@@ -12,7 +12,7 @@ def test_scoretools_Selection_run_selectors_01():
     logical_tie_selector = selector.logical_ties()
     pitched_selector = logical_tie_selector.by_pitch('C4')
     duration_selector = logical_tie_selector.by_duration('==', (1, 8))
-    contiguity_selector = duration_selector.by_contiguity()
+    contiguity_selector = duration_selector.contiguous()
 
     selectors = [
         selector,

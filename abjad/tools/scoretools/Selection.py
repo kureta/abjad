@@ -1434,7 +1434,7 @@ class Selection(AbjadValueObject):
             )
         return type(self)(generator)
 
-    def by_contiguity(self):
+    def contiguous(self):
         r'''Groups contiguous items.
 
         ..  container:: example
@@ -1448,7 +1448,7 @@ class Selection(AbjadValueObject):
 
                 >>> result = abjad.select(staff).leaves()
                 >>> result = result.filter(abjad.duration('==', (1, 16)))
-                >>> result = result.by_contiguity()
+                >>> result = result.contiguous()
 
                 >>> for item in result:
                 ...     item
@@ -1460,7 +1460,7 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select().leaves()
                 >>> selector = selector.filter(abjad.duration('==', (1, 16)))
-                >>> selector = selector.by_contiguity()
+                >>> selector = selector.contiguous()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -1538,7 +1538,7 @@ class Selection(AbjadValueObject):
 
                 >>> result = abjad.select(staff).logical_ties()
                 >>> result = result.filter(abjad.duration('<', (1, 4)))
-                >>> result = result.by_contiguity()
+                >>> result = result.contiguous()
                 >>> result = result.map(abjad.select().leaves()[0])
 
                 >>> for item in result:
@@ -1550,7 +1550,7 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select().logical_ties()
                 >>> selector = selector.filter(abjad.duration('<', (1, 4)))
-                >>> selector = selector.by_contiguity()
+                >>> selector = selector.contiguous()
                 >>> selector = selector.map(abjad.select().leaves()[0])
                 >>> result = selector(staff)
 
@@ -1602,7 +1602,7 @@ class Selection(AbjadValueObject):
 
                 >>> result = abjad.select(staff).leaves(pitched=True)
                 >>> result = result.group(abjad.select().get_pitches())
-                >>> result = result.map(abjad.select().by_contiguity())
+                >>> result = result.map(abjad.select().contiguous())
                 >>> result = result.flatten(depth=1)
 
                 >>> for item in result:
@@ -1616,7 +1616,7 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select().leaves(pitched=True)
                 >>> selector = selector.group(abjad.select().get_pitches())
-                >>> selector = selector.map(abjad.select().by_contiguity())
+                >>> selector = selector.map(abjad.select().contiguous())
                 >>> selector = selector.flatten(depth=1)
                 >>> result = selector(staff)
 
@@ -1717,7 +1717,7 @@ class Selection(AbjadValueObject):
                 >>> getter = abjad.select().group(getter)
 
                 >>> result = abjad.select(staff).logical_ties(pitched=True)
-                >>> result = result.by_contiguity()
+                >>> result = result.contiguous()
                 >>> result = result.map(getter).flatten(depth=1)
 
                 >>> for item in result:
@@ -1731,7 +1731,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().logical_ties(pitched=True)
-                >>> selector = selector.by_contiguity()
+                >>> selector = selector.contiguous()
                 >>> selector = selector.map(getter).flatten(depth=1)
                 >>> result = selector(staff)
 
