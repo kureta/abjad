@@ -224,7 +224,7 @@ class Selection(AbjadValueObject):
         return str(self)
 
     def __getitem__(self, argument):
-        r'''Gets item, slice or pattern `argument`.
+        r'''Gets item, slice or pattern `argument` in selection.
 
         ..  container:: example
 
@@ -1335,7 +1335,7 @@ class Selection(AbjadValueObject):
         stop=None,
         with_grace_notes=True,
         ):
-        r'''Selects items by class.
+        r'''Selects components.
 
         ..  container:: example
 
@@ -1435,7 +1435,7 @@ class Selection(AbjadValueObject):
         return type(self)(generator)
 
     def contiguous(self):
-        r'''Groups contiguous items.
+        r'''Groups contiguous items in selection.
 
         ..  container:: example
 
@@ -2704,7 +2704,7 @@ class Selection(AbjadValueObject):
             )
 
     def logical_measures(self):
-        r'''Groups selection by logical measure.
+        r'''Selects logical measures.
 
         ..  container:: example
 
@@ -4430,7 +4430,7 @@ class Selection(AbjadValueObject):
         return sum(durations)
 
     def get_pitches(self):
-        r'''Gets selection pitch set.
+        r'''Gets pitches.
 
         Returns pitch set.
         '''
@@ -4460,18 +4460,8 @@ class Selection(AbjadValueObject):
                 stop_offset = timespan.stop_offset
         return abjad.Timespan(start_offset, stop_offset)
 
-    def get_vertical_moment_at(self, offset):
-        r'''Gets vertical moment at `offset`.
-
-        Returns vertical moment.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        return abjad.VerticalMoment(self, offset)
-
     def group(self, predicate=None):
-        r'''Groups selection by `predicate`.
+        r'''Groups items in selection by `predicate`.
 
         ..  container:: example
 
@@ -4965,7 +4955,7 @@ class Selection(AbjadValueObject):
         return True
 
     def map(self, selector=None):
-        r'''Maps `selector` to selection.
+        r'''Maps `selector` to items in selection.
 
         ..  container:: example
 
@@ -6855,7 +6845,7 @@ class Selection(AbjadValueObject):
         return type(self)(result)
 
     def partition_by_ratio(self, ratio):
-        r'''Partitions by ratio.
+        r'''Partitions selection by `ratio`.
 
         ..  container:: example
 
@@ -7166,7 +7156,7 @@ class Selection(AbjadValueObject):
         return type(self)(result)
 
     def with_next_leaf(self):
-        r'''Selects with next leaf.
+        r'''Extends selection with next leaf.
 
         ..  container:: example
 
@@ -7446,7 +7436,7 @@ class Selection(AbjadValueObject):
         return type(self)(leaves)
 
     def with_previous_leaf(self):
-        r'''Selects with previous leaf.
+        r'''Extends selection with previous leaf.
 
         ..  container:: example
 
