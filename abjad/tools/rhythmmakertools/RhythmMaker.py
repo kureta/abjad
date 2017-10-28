@@ -163,7 +163,7 @@ class RhythmMaker(AbjadValueObject):
             container = abjad.Container(selection)
             abjad.attach('temporary container', container)
             containers.append(container)
-        logical_ties = abjad.iterate(selections).by_logical_tie()
+        logical_ties = abjad.iterate(selections).logical_ties()
         logical_ties = list(logical_ties)
         total_logical_ties = len(logical_ties)
         for index, logical_tie in enumerate(logical_ties[:]):

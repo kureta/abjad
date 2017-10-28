@@ -1062,7 +1062,7 @@ class Iteration(abctools.AbjadObject):
             for pair in enumerator.yield_pairs():
                 yield abjad.select(pair)
 
-    def by_logical_tie(
+    def logical_ties(
         self,
         nontrivial=False,
         pitched=False,
@@ -1102,7 +1102,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff).by_logical_tie():
+                    >>> for logical_tie in abjad.iterate(staff).logical_ties():
                     ...     logical_tie
                     ...
                     LogicalTie([Note("c'4"), Note("c'16")])
@@ -1140,7 +1140,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
+                    >>> for logical_tie in abjad.iterate(staff).logical_ties(
                     ...     reverse=True,
                     ...     with_grace_notes=False,
                     ...     ):
@@ -1181,7 +1181,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
+                    >>> for logical_tie in abjad.iterate(staff).logical_ties(
                     ...     pitched=True,
                     ...     ):
                     ...     logical_tie
@@ -1221,7 +1221,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
+                    >>> for logical_tie in abjad.iterate(staff).logical_ties(
                     ...     nontrivial=True,
                     ...     ):
                     ...     logical_tie
@@ -1268,14 +1268,14 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff[1]).by_logical_tie():
+                    >>> for logical_tie in abjad.iterate(staff[1]).logical_ties():
                     ...     logical_tie
                     ...
                     LogicalTie([Note("d'2"), Note("d'1")])
 
                 ::
 
-                    >>> for logical_tie in abjad.iterate(staff[1]).by_logical_tie(
+                    >>> for logical_tie in abjad.iterate(staff[1]).logical_ties(
                     ...     parentage_mask=staff[1]):
                     ...     logical_tie
                     ...
@@ -1312,7 +1312,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    >>> for item in abjad.iterate(voice).logical_ties():
                     ...     item
                     ...
                     LogicalTie([Note("c'8")])
@@ -1354,7 +1354,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    >>> for item in abjad.iterate(voice).logical_ties():
                     ...     item
                     ...
                     LogicalTie([Note("c'8")])
@@ -1403,7 +1403,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for item in abjad.iterate(voice).by_logical_tie():
+                    >>> for item in abjad.iterate(voice).logical_ties():
                     ...     item
                     ...
                     LogicalTie([Note("c'8")])
@@ -1442,7 +1442,7 @@ class Iteration(abctools.AbjadObject):
                 ::
 
                     >>> selection = voice[:2]
-                    >>> for lt in abjad.iterate(selection).by_logical_tie():
+                    >>> for lt in abjad.iterate(selection).logical_ties():
                     ...     lt
                     ...
                     LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])

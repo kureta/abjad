@@ -337,7 +337,7 @@ class Tuplet(Container):
         if not self.is_redundant:
             return
         leaves = []
-        logical_ties = select(self).by_logical_tie()
+        logical_ties = select(self).logical_ties()
         durations = [_.get_duration() for _ in logical_ties]
         for i, logical_tie in enumerate(logical_ties):
             duration = durations[i]
@@ -897,7 +897,7 @@ class Tuplet(Container):
         '''
         import abjad
         leaves = list(iterate(self).leaves())
-        for logical_tie in abjad.iterate(leaves).by_logical_tie():
+        for logical_tie in abjad.iterate(leaves).logical_ties():
             if not logical_tie.get_duration().is_assignable:
                 return False
         return True

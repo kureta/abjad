@@ -398,11 +398,11 @@ Preparing for deployment
 
 ..  abjad::
 
-    selector = abjad.Selector().leaves().by_run(abjad.Note)[:-1].flatten()
+    selector = abjad.select().leaves().by_run(abjad.Note)[:-1]
 
 ..  abjad::
 
-    selector = abjad.Selector()
+    selector = abjad.select()
     for x in selector(staff):
         x
 
@@ -414,7 +414,7 @@ Preparing for deployment
 
 ..  abjad::
 
-    selector = selector.by_run(Note)
+    selector = selector.by_run(abjad.Note)
     for x in selector(staff):
         x
 
@@ -423,8 +423,6 @@ Preparing for deployment
     selector = selector[:-1]
     for x in selector(staff):
         x
-
-..  abjad::
 
     selector = selector.flatten()
     for x in selector(staff):
@@ -490,7 +488,7 @@ to each logical tie:
     pitches = abjad.CyclicTuple(
         ["b'", "d''", "g'", "f''", "b'", "g'", "c'", "e'", "g'"],
         )
-    for i, logical_tie in enumerate(iterate(staff).by_logical_tie(pitched=True)):
+    for i, logical_tie in enumerate(iterate(staff).logical_ties(pitched=True)):
         for note in logical_tie:
             note.written_pitch = pitches[i]
 
@@ -532,10 +530,10 @@ via rotation:
         selections = talea_rhythm_maker(divisions, rotation=rotation)
         measures = abjad.Measure.from_selections(selections, time_signatures=divisions)
         staff = abjad.Staff(measures)
-        for i, logical_tie in enumerate(iterate(staff).by_logical_tie(pitched=True)):
+        for i, logical_tie in enumerate(abjad.iterate(staff).logical_ties(pitched=True)):
             for note in logical_tie:
                 note.written_pitch = pitches[i]
-        selector = abjad.Selector().leaves().by_run(abjad.Note)[:-1].flatten()
+        selector = abjad.select().leaves().by_run(abjad.Note)[:-1].flatten()
         for i, leaf in enumerate(selector(staff)):
             abjad.attach(annotations[i], leaf)
         leaves = abjad.select(staff).leaves()

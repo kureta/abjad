@@ -2075,7 +2075,7 @@ class Label(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        for logical_tie in  abjad.iterate(self.client).by_logical_tie():
+        for logical_tie in  abjad.iterate(self.client).logical_ties():
             duration = logical_tie.get_duration()
             if preferred_denominator is not None:
                 duration = abjad.NonreducedFraction(duration)
@@ -2546,7 +2546,7 @@ class Label(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if prototype is None:
-            items = abjad.iterate(self.client).by_logical_tie()
+            items = abjad.iterate(self.client).logical_ties()
         else:
             items = abjad.iterate(self.client).components(prototype=prototype)
         items = list(items)
@@ -3562,7 +3562,7 @@ class Label(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         prototype = prototype or abjad.NamedPitch
-        logical_ties = abjad.iterate(self.client).by_logical_tie()
+        logical_ties = abjad.iterate(self.client).logical_ties()
         for logical_tie in logical_ties:
             leaf = logical_tie.head
             label = None
@@ -4206,7 +4206,7 @@ class Label(abctools.AbjadObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        for logical_tie in abjad.iterate(self.client).by_logical_tie():
+        for logical_tie in abjad.iterate(self.client).logical_ties():
             if clock_time:
                 inspector = abjad.inspect(logical_tie.head)
                 timespan = inspector.get_timespan(in_seconds=True)

@@ -304,7 +304,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> pattern = abjad.index_every([0], 2)
-                >>> selection = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> selection = abjad.select(staff).logical_ties(pitched=True)
                 >>> for logical_tie in selection[pattern]:
                 ...     logical_tie
                 ...
@@ -313,7 +313,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector[pattern]
                 >>> result = selector(staff)
 
@@ -371,7 +371,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select().leaves()[abjad.index([1])]
-                >>> for selection in abjad.select(staff).by_logical_tie(
+                >>> for selection in abjad.select(staff).logical_ties(
                 ...     pitched=True,
                 ...     ).map(getter):
                 ...     selection
@@ -384,7 +384,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> getter = abjad.select().leaves()[abjad.index([1])]
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 
@@ -1536,7 +1536,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'4 d'8 ~ d'16 e'16 ~ e'8 f'4 g'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = abjad.select(staff).logical_ties()
                 >>> result = result.filter(abjad.duration('<', (1, 4)))
                 >>> result = result.by_contiguity()
                 >>> result = result.map(abjad.select().leaves()[0])
@@ -1548,7 +1548,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = abjad.select().logical_ties()
                 >>> selector = selector.filter(abjad.duration('<', (1, 4)))
                 >>> selector = selector.by_contiguity()
                 >>> selector = selector.map(abjad.select().leaves()[0])
@@ -1716,7 +1716,7 @@ class Selection(AbjadValueObject):
                 >>> getter = abjad.select().get_pitches()
                 >>> getter = abjad.select().group(getter)
 
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.by_contiguity()
                 >>> result = result.map(getter).flatten(depth=1)
 
@@ -1730,7 +1730,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.by_contiguity()
                 >>> selector = selector.map(getter).flatten(depth=1)
                 >>> result = selector(staff)
@@ -3079,7 +3079,7 @@ class Selection(AbjadValueObject):
             selections.append(selection)
         return type(self)(selections)
 
-    def by_logical_tie(
+    def logical_ties(
         self,
         nontrivial=False,
         pitched=False,
@@ -3097,7 +3097,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = abjad.select(staff).logical_ties()
 
                 >>> for item in result:
                 ...     item
@@ -3111,7 +3111,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = abjad.select().logical_ties()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -3187,7 +3187,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
 
                 >>> for item in result:
                 ...     item
@@ -3199,7 +3199,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -3269,7 +3269,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 d' ~ { d' e' r f'~ } f' r")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie(
+                >>> result = abjad.select(staff).logical_ties(
                 ...     pitched=True,
                 ...     nontrivial=True,
                 ...     )
@@ -3281,7 +3281,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(
+                >>> selector = abjad.select().logical_ties(
                 ...     pitched=True,
                 ...     nontrivial=True,
                 ...     )
@@ -3346,7 +3346,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> getter = abjad.select().by_logical_tie(pitched=True)
+                >>> getter = abjad.select().logical_ties(pitched=True)
                 >>> result = abjad.select(staff).components(abjad.Tuplet)
                 >>> result = result.map(getter)
 
@@ -3458,7 +3458,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> getter = abjad.select().by_logical_tie(pitched=True)
+                >>> getter = abjad.select().logical_ties(pitched=True)
                 >>> result = abjad.select(staff).components(abjad.Tuplet)[-2:]
                 >>> result = result.map(getter)
 
@@ -3539,7 +3539,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        generator = abjad.iterate(self).by_logical_tie(
+        generator = abjad.iterate(self).logical_ties(
             nontrivial=nontrivial,
             pitched=pitched,
             reverse=reverse,
@@ -4013,7 +4013,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> inequality = abjad.duration('==', (1, 8), preprolated=True)
-                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = abjad.select(staff).logical_ties()
                 >>> result = result.filter(inequality)
 
                 >>> for item in result:
@@ -4027,7 +4027,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = abjad.select().logical_ties()
                 >>> selector = selector.filter(inequality)
                 >>> result = selector(staff)
 
@@ -4267,7 +4267,7 @@ class Selection(AbjadValueObject):
                 >>> staff.extend("r8 <c' e' g'>8 ~ <c' e' g'>4")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie()
+                >>> result = abjad.select(staff).logical_ties()
                 >>> result = result.filter(abjad.pitches('&', 'C4'))
 
                 >>> for item in result:
@@ -4278,7 +4278,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie()
+                >>> selector = abjad.select().logical_ties()
                 >>> selector = selector.filter(abjad.pitches('&', 'C4'))
                 >>> result = selector(staff)
 
@@ -4590,7 +4590,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.group(abjad.select().get_pitches())
 
                 >>> for item in result:
@@ -4601,7 +4601,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.group(abjad.select().get_pitches())
                 >>> result = selector(staff)
 
@@ -7262,7 +7262,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select()[-1].select().with_next_leaf()
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.map(getter)
 
                 >>> for item in result:
@@ -7275,7 +7275,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 
@@ -7346,7 +7346,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(r"c'8 r d' ~ d' e' ~ e' r8 f'8")
                 >>> abjad.show(staff) # doctest: +SKIP
                 
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.map(abjad.select().with_next_leaf())
 
                 >>> for item in result:
@@ -7359,7 +7359,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.map(abjad.select().with_next_leaf())
                 >>> result = selector(staff)
 
@@ -7543,7 +7543,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> getter = abjad.select()[0].select().with_previous_leaf()
-                >>> result = abjad.select(staff).by_logical_tie(pitched=True)
+                >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.map(getter)
 
                 >>> for item in result:
@@ -7556,7 +7556,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().by_logical_tie(pitched=True)
+                >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.map(getter)
                 >>> result = selector(staff)
 

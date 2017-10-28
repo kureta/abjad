@@ -472,7 +472,7 @@ class TaleaRhythmMaker(RhythmMaker):
             container = scoretools.Container(selection)
             attach('temporary container', container)
             containers.append(container)
-        for logical_tie in iterate(selections).by_logical_tie():
+        for logical_tie in iterate(selections).logical_ties():
             if not logical_tie.is_trivial:
                 for note in logical_tie[1:]:
                     rest = scoretools.Rest(note)

@@ -26,7 +26,7 @@ class NaiveAttackPointOptimizer(AttackPointOptimizer):
         Returns none.
         '''
         import abjad
-        for logical_tie in iterate(argument).by_logical_tie(
+        for logical_tie in iterate(argument).logical_ties(
             reverse=True,
             with_grace_notes=False,
             ):

@@ -716,7 +716,7 @@ class PitchSegment(Segment):
         written_duration = written_duration or abjad.Duration(1, 8)
         maker = abjad.NoteMaker()
         result = maker([0] * n, [written_duration])
-        logical_ties = abjad.iterate(result).by_logical_tie()
+        logical_ties = abjad.iterate(result).logical_ties()
         for i, logical_tie in enumerate(logical_ties):
             pitch = self[i % len(self)]
             for note in logical_tie:
