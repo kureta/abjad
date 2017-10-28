@@ -413,7 +413,7 @@ class Component(AbjadObject):
 
     def _get_in_my_logical_voice(self, n, prototype=None):
         if 0 <= n:
-            generator = iterate(self).by_logical_voice_from_component(
+            generator = iterate(self)._logical_voice(
                 prototype=prototype,
                 reverse=False,
                 )
@@ -422,7 +422,7 @@ class Component(AbjadObject):
                     return component
         else:
             n = abs(n)
-            generator = iterate(self).by_logical_voice_from_component(
+            generator = iterate(self)._logical_voice(
                 prototype=prototype,
                 reverse=True,
                 )
