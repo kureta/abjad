@@ -379,7 +379,7 @@ class PitchRange(AbjadValueObject):
         elif isinstance(argument, abjad.Container):
             return all(x in self for x in abjad.iterate(argument).leaves())
         else:
-            pitches = list(abjad.iterate(argument).by_pitch())
+            pitches = list(abjad.iterate(argument).pitches())
             if pitches:
                 return all(self._contains_pitch(x) for x in pitches)
             else:

@@ -487,7 +487,7 @@ class Selection(AbjadValueObject):
         components = abjad.mutate(self).copy()
         staff = abjad.Staff(components)
         found_different_pitch = False
-        for pitch in abjad.iterate(staff).by_pitch():
+        for pitch in abjad.iterate(staff).pitches():
             if pitch != abjad.NamedPitch("c'"):
                 found_different_pitch = True
                 break

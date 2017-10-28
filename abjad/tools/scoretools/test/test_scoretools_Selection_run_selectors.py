@@ -10,8 +10,8 @@ def test_scoretools_Selection_run_selectors_01():
 
     selector = abjad.select()
     logical_tie_selector = selector.logical_ties()
-    pitched_selector = logical_tie_selector.by_pitch('C4')
-    duration_selector = logical_tie_selector.by_duration('==', (1, 8))
+    pitched_selector = logical_tie_selector.filter_pitches('&', 'C4')
+    duration_selector = logical_tie_selector.filter_duration('==', (1, 8))
     contiguity_selector = duration_selector.contiguous()
 
     selectors = [

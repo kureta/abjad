@@ -187,8 +187,8 @@ class Iteration(abctools.AbjadObject):
     @staticmethod
     def _list_ordered_pitch_pairs(expr_1, expr_2):
         import abjad
-        pitches_1 = sorted(abjad.iterate(expr_1).by_pitch())
-        pitches_2 = sorted(abjad.iterate(expr_2).by_pitch())
+        pitches_1 = sorted(abjad.iterate(expr_1).pitches())
+        pitches_2 = sorted(abjad.iterate(expr_2).pitches())
         sequences = [pitches_1, pitches_2]
         enumerator = abjad.Enumerator(sequences)
         for pair in enumerator.yield_outer_product():
@@ -197,7 +197,7 @@ class Iteration(abctools.AbjadObject):
     @staticmethod
     def _list_unordered_pitch_pairs(argument):
         import abjad
-        pitches = sorted(abjad.iterate(argument).by_pitch())
+        pitches = sorted(abjad.iterate(argument).pitches())
         enumerator = abjad.Enumerator(pitches)
         for pair in enumerator.yield_pairs():
             yield pair
@@ -264,7 +264,7 @@ class Iteration(abctools.AbjadObject):
         stop=None,
         with_grace_notes=True,
         ):
-        r'''Iterates by class.
+        r'''Iterates components.
 
         ..  container:: example
 
@@ -685,7 +685,7 @@ class Iteration(abctools.AbjadObject):
         stop=None,
         with_grace_notes=True,
         ):
-        r'''Iterates by leaf.
+        r'''Iterates leaves.
 
         ..  container:: example
 
@@ -985,7 +985,7 @@ class Iteration(abctools.AbjadObject):
             )
 
     def leaf_pairs(self):
-        r'''Iterates by leaf pair.
+        r'''Iterates leaf pairs.
 
         ..  container:: example
 
@@ -1070,7 +1070,7 @@ class Iteration(abctools.AbjadObject):
         parentage_mask=None,
         with_grace_notes=True,
         ):
-        r'''Iterates by logical tie.
+        r'''Iterates logical ties.
 
         ..  container:: example
 
@@ -1908,8 +1908,8 @@ class Iteration(abctools.AbjadObject):
             if parentage.logical_voice == logical_voice:
                 yield component
 
-    def by_pitch(self):
-        r'''Iterates by pitch.
+    def pitches(self):
+        r'''Iterates pitches.
 
         ..  container:: example
 
@@ -1938,7 +1938,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pitch in abjad.iterate(staff).by_pitch():
+                    >>> for pitch in abjad.iterate(staff).pitches():
                     ...     pitch
                     ...
                     NamedPitch("c'")
@@ -1973,7 +1973,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pitch in abjad.iterate(beam).by_pitch():
+                    >>> for pitch in abjad.iterate(beam).pitches():
                     ...     pitch
                     ...
                     NamedPitch("c'")
@@ -1995,7 +1995,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pitch in abjad.iterate(pitch_set).by_pitch():
+                    >>> for pitch in abjad.iterate(pitch_set).pitches():
                     ...     pitch
                     ...
                     NumberedPitch(0)
@@ -2021,7 +2021,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pitch in abjad.iterate(pitches).by_pitch():
+                    >>> for pitch in abjad.iterate(pitches).pitches():
                     ...     pitch
                     ...
                     NamedPitch("c'")
@@ -2057,7 +2057,7 @@ class Iteration(abctools.AbjadObject):
             result.extend(sorted(list(self.client)))
         elif isinstance(self.client, (list, tuple, set)):
             for item in self.client:
-                for pitch_ in abjad.iterate(item).by_pitch():
+                for pitch_ in abjad.iterate(item).pitches():
                     result.append(pitch_)
         else:
             for leaf in abjad.iterate(self.client).leaves():
@@ -2072,12 +2072,12 @@ class Iteration(abctools.AbjadObject):
         for pitch in result:
             yield pitch
 
-    def by_pitch_pair(self):
-        r'''Iterates by pitch pair.
+    def pitch_pairs(self):
+        r'''Iterates pitch pairs.
 
         ..  container:: example
 
-            Iterates notes by pitch pair:
+            Iterates note pitch pairs:
 
             ..  container:: example
 
@@ -2112,7 +2112,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pair in abjad.iterate(score).by_pitch_pair():
+                    >>> for pair in abjad.iterate(score).pitch_pairs():
                     ...     pair
                     ...
                     PitchSegment("c' c")
@@ -2155,7 +2155,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for pair in abjad.iterate(staff).by_pitch_pair():
+                    >>> for pair in abjad.iterate(staff).pitch_pairs():
                     ...     pair
                     ...
                     PitchSegment("c' d'")
@@ -2187,8 +2187,8 @@ class Iteration(abctools.AbjadObject):
                 leaf_pair_list[1]):
                 yield abjad.PitchSegment(items=pair)
 
-    def by_spanner(self, prototype=None, reverse=False):
-        r'''Iterates by spanner.
+    def spanners(self, prototype=None, reverse=False):
+        r'''Iterates spanners.
 
         ..  container:: example
 
@@ -2223,7 +2223,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for spanner in abjad.iterate(staff).by_spanner():
+                    >>> for spanner in abjad.iterate(staff).spanners():
                     ...     spanner
                     ...
                     Beam("c'8, d'8, ... [5] ..., b'8, c''8")
@@ -2263,7 +2263,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for spanner in abjad.iterate(staff).by_spanner(reverse=True):
+                    >>> for spanner in abjad.iterate(staff).spanners(reverse=True):
                     ...     spanner
                     ...
                     Beam("c'8, d'8, ... [5] ..., b'8, c''8")
@@ -2851,7 +2851,7 @@ class Iteration(abctools.AbjadObject):
                     yield item
 
     def vertical_moments(self, reverse=False):
-        r'''Iterates by vertical moment.
+        r'''Iterates vertical moments.
 
         ..  container:: example
 
