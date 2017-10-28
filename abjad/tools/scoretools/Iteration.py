@@ -984,7 +984,7 @@ class Iteration(abctools.AbjadObject):
             with_grace_notes=with_grace_notes,
             )
 
-    def leaves_pair(self):
+    def leaf_pairs(self):
         r'''Iterates by leaf pair.
 
         ..  container:: example
@@ -1024,7 +1024,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for leaf_pair in abjad.iterate(score).leaves_pair():
+                    >>> for leaf_pair in abjad.iterate(score).leaf_pairs():
                     ...     leaf_pair
                     ...
                     Selection([Note("c'8"), Note('c4')])
@@ -1048,7 +1048,7 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        vertical_moments = self.by_vertical_moment()
+        vertical_moments = self.vertical_moments()
         for moment_1, moment_2 in abjad.sequence(vertical_moments).nwise():
             enumerator = abjad.Enumerator(moment_1.start_leaves)
             for pair in enumerator.yield_pairs():
@@ -2172,7 +2172,7 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        for leaf_pair in self.leaves_pair():
+        for leaf_pair in self.leaf_pairs():
             leaf_pair_list = list(leaf_pair)
             for pair in self._list_unordered_pitch_pairs(
                 leaf_pair_list[0]):
@@ -2850,7 +2850,7 @@ class Iteration(abctools.AbjadObject):
                 elif isinstance(item, abjad.Container):
                     yield item
 
-    def by_vertical_moment(self, reverse=False):
+    def vertical_moments(self, reverse=False):
         r'''Iterates by vertical moment.
 
         ..  container:: example
@@ -2902,7 +2902,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for vertical_moment in abjad.iterate(score).by_vertical_moment():
+                    >>> for vertical_moment in abjad.iterate(score).vertical_moments():
                     ...     vertical_moment.leaves
                     ...
                     Selection([Note("d''8"), Note("a'4"), Note("f'8")])
@@ -2914,7 +2914,7 @@ class Iteration(abctools.AbjadObject):
 
                 ::
 
-                    >>> for vertical_moment in abjad.iterate(staff_group).by_vertical_moment():
+                    >>> for vertical_moment in abjad.iterate(staff_group).vertical_moments():
                     ...     vertical_moment.leaves
                     ...
                     Selection([Note("a'4"), Note("f'8")])
@@ -2972,7 +2972,7 @@ class Iteration(abctools.AbjadObject):
                 ::
 
                     >>> agent = abjad.iterate(score)
-                    >>> for vertical_moment in agent.by_vertical_moment(
+                    >>> for vertical_moment in agent.vertical_moments(
                     ...     reverse=True,
                     ...     ):
                     ...     vertical_moment.leaves
@@ -2987,7 +2987,7 @@ class Iteration(abctools.AbjadObject):
                 ::
 
                     >>> agent = abjad.iterate(staff_group)
-                    >>> for vertical_moment in agent.by_vertical_moment(
+                    >>> for vertical_moment in agent.vertical_moments(
                     ...     reverse=True,
                     ...     ):
                     ...     vertical_moment.leaves

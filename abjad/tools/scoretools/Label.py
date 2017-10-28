@@ -1813,7 +1813,7 @@ class Label(abctools.AbjadObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         prototype = prototype or int
-        vertical_moments = abjad.iterate(self.client).by_vertical_moment()
+        vertical_moments = abjad.iterate(self.client).vertical_moments()
         for index, vertical_moment in enumerate(vertical_moments):
             label = None
             if prototype is int:

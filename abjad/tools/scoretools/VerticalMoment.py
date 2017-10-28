@@ -38,7 +38,7 @@ class VerticalMoment(Selection):
 
         ::
 
-            >>> for moment in abjad.iterate(score).by_vertical_moment():
+            >>> for moment in abjad.iterate(score).vertical_moments():
             ...     moment
             ...
             VerticalMoment(0, <<2>>)

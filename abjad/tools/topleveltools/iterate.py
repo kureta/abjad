@@ -22,18 +22,7 @@ def iterate(client=None):
 
     ..  container:: example
 
-        Iterates staff by leaf pair:
-
-            >>> for pair in abjad.iterate(staff).leaves_pair():
-            ...     pair
-            ...
-            Selection([Note("c'4"), Note("e'4")])
-            Selection([Note("e'4"), Note("d'4")])
-            Selection([Note("d'4"), Note("f'4")])
-
-    ..  container:: example
-
-        Iterates staff by pitch:
+        Iterates pitches:
 
             >>> for pitch in abjad.iterate(staff).by_pitch():
             ...     pitch
@@ -45,7 +34,7 @@ def iterate(client=None):
 
     ..  container:: example
 
-        Returns iteration agent:
+        Returns iteration:
 
         ::
 
