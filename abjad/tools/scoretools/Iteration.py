@@ -331,7 +331,6 @@ class Iteration(abctools.AbjadObject):
     def _iterate_components(
         argument,
         prototype,
-        pitched=None,
         reverse=False,
         with_grace_notes=True,
         ):
@@ -347,19 +346,17 @@ class Iteration(abctools.AbjadObject):
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
                         yield component_
-            if Iteration._matches(argument, prototype, pitched=pitched):
+            if isinstance(argument, prototype):
                 yield argument
             if with_grace_notes and after_grace_container:
                 for component in after_grace_container:
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
@@ -369,7 +366,6 @@ class Iteration(abctools.AbjadObject):
                     for component in Iteration._iterate_components(
                         item,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
@@ -380,19 +376,17 @@ class Iteration(abctools.AbjadObject):
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
                         yield component_
-            if Iteration._matches(argument, prototype, pitched=pitched):
+            if isinstance(argument, prototype):
                 yield argument
             if with_grace_notes and grace_container:
                 for component in reversed(grace_container):
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
@@ -402,7 +396,6 @@ class Iteration(abctools.AbjadObject):
                     for component in Iteration._iterate_components(
                         item,
                         prototype,
-                        pitched=pitched,
                         reverse=reverse,
                         with_grace_notes=with_grace_notes,
                         ):
@@ -750,43 +743,16 @@ class Iteration(abctools.AbjadObject):
             if parentage.logical_voice == logical_voice:
                 yield component
 
-    @staticmethod
-    def _matches(component, prototype, pitched=None):
-        import abjad
-        if not isinstance(component, prototype):
-            return False
-        prototype = (abjad.Chord, abjad.Note)
-        if (pitched is None or
-            (pitched is True and isinstance(component, prototype)) or
-            (pitched is not True and not isinstance(component, prototype))):
-            return True
-        else:
-            return False
-
     ### PUBLIC PROPERTIES ###
 
     @property
     def client(self):
-        r'''Gets client of iteration.
+        r'''Gets client.
 
         ..  container:: example
 
-            Gets component client:
-
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> agent = abjad.iterate(staff)
-
-            >>> agent.client
-            Staff("c'4 d'4 e'4 f'4")
-
-        ..  container:: example
-
-            Gets selection client:
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> agent = abjad.iterate(staff[:2])
-
-            >>> agent.client
+            >>> abjad.iterate(staff[:2]).client
             Selection([Note("c'4"), Note("d'4")])
 
         Returns component or selection.
@@ -798,7 +764,6 @@ class Iteration(abctools.AbjadObject):
     def components(
         self,
         prototype=None,
-        pitched=None,
         reverse=False,
         start=0,
         stop=None,
@@ -1085,90 +1050,6 @@ class Iteration(abctools.AbjadObject):
                 Note("cf''16")
                 Note("c'8")
 
-        ..  container:: example
-
-            Iterates pitched components:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
-                >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
-                >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            <c' bf'>8
-                            <g' a'>8
-                        }
-                        {
-                            af'8
-                            r8
-                        }
-                        {
-                            r8
-                            gf'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(staff).components(pitched=True):
-                ...     leaf
-                ...
-                Chord("<c' bf'>8")
-                Chord("<g' a'>8")
-                Note("af'8")
-                Note("gf'8")
-
-        ..  container:: example
-
-            Iterates nonpitched components:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
-                >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
-                >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            <c' bf'>8
-                            <g' a'>8
-                        }
-                        {
-                            af'8
-                            r8
-                        }
-                        {
-                            r8
-                            gf'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(staff).components(pitched=False):
-                ...     leaf
-                ...
-                <Staff{3}>
-                Measure((2, 8), "<c' bf'>8 <g' a'>8")
-                Measure((2, 8), "af'8 r8")
-                Rest('r8')
-                Measure((2, 8), "r8 gf'8")
-                Rest('r8')
-
         Returns generator.
         '''
         import abjad
@@ -1176,7 +1057,6 @@ class Iteration(abctools.AbjadObject):
         iterator = self._iterate_components(
             self.client,
             prototype,
-            pitched=pitched,
             reverse=reverse,
             with_grace_notes=with_grace_notes,
             )
@@ -1529,9 +1409,12 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         prototype = prototype or abjad.Leaf
+        if pitched is True:
+            prototype = (abjad.Chord, abjad.Note)
+        elif pitched is False:
+            prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
         return self.components(
             prototype=prototype,
-            pitched=pitched,
             reverse=reverse,
             start=start,
             stop=stop,
@@ -1859,7 +1742,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Regression: returns at least one logical tie even when note all
+            Regression: returns at least one logical tie even when not all
             leaves in logical tie are passed as input:
 
             ..  container:: example
@@ -1916,7 +1799,7 @@ class Iteration(abctools.AbjadObject):
                     yield logical_tie
 
     def out_of_range(self):
-        r'''Iterates notes and chords outside traditional instrument ranges.
+        r'''Iterates out-of-range notes and chords.
 
         ..  container:: example
 
@@ -2014,13 +1897,11 @@ class Iteration(abctools.AbjadObject):
 
             ..  container:: example
 
-                >>> chord_1 = abjad.Chord([0, 2, 4], (1, 4))
-                >>> chord_2 = abjad.Chord([17, 19], (1, 4))
-                >>> staff = abjad.Staff([chord_1, chord_2])
+                >>> staff = abjad.Staff("<c' d' e'>4 <f'' g''>4")
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         <c' d' e'>4
                         <f'' g''>4
