@@ -167,10 +167,8 @@ class BeamSpecifier(AbjadValueObject):
 
     def _detach_all_beams(self, divisions, grace_notes=False):
         import abjad
-        for component in abjad.iterate(divisions).components(
-            grace_notes=grace_notes,
-            ):
-            abjad.detach(abjad.Beam, component)
+        for leaf in abjad.iterate(divisions).leaves(grace_notes=grace_notes):
+            abjad.detach(abjad.Beam, leaf)
 
     ### PUBLIC PROPERTIES ###
 

@@ -524,7 +524,7 @@ class Selection(AbjadValueObject):
         head=None,
         tail=None,
         trim=None,
-        grace_notes=True,
+        grace_notes=None,
         ):
         import abjad
         prototype = prototype or abjad.Component
@@ -1261,7 +1261,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return all(isinstance(_, abjad.Leaf) for _ in self)
 
-    def components(self, prototype=None, grace_notes=True, reverse=False):
+    def components(self, prototype=None, grace_notes=None, reverse=False):
         r'''Selects components.
 
         ..  container:: example
@@ -3094,14 +3094,14 @@ class Selection(AbjadValueObject):
     def leaves(
         self,
         prototype=None,
-        grace_notes=True,
+        grace_notes=False,
         head=None,
         pitched=None,
         reverse=False,
         tail=None,
         trim=None,
         ):
-        r'''Selects leaves.
+        r'''Selects leaves (without grace notes).
 
         ..  container:: example
 
@@ -4330,12 +4330,12 @@ class Selection(AbjadValueObject):
 
     def logical_ties(
         self,
-        grace_notes=True,
+        grace_notes=False,
         nontrivial=None,
         pitched=None,
         reverse=False,
         ):
-        r'''Selects logical ties.
+        r'''Selects logical ties (without grace notes).
 
         ..  container:: example
 

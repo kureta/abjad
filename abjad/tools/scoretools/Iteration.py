@@ -649,7 +649,7 @@ class Iteration(abctools.AbjadObject):
 
     ### PUBLIC METHODS ###
 
-    def components(self, prototype=None, grace_notes=True, reverse=False):
+    def components(self, prototype=None, grace_notes=None, reverse=False):
         r'''Iterates components.
 
         ..  container:: example
@@ -698,58 +698,14 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates notes in reverse:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
-                >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
-                >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            c'8
-                            d'8
-                        }
-                        {
-                            e'8
-                            f'8
-                        }
-                        {
-                            g'8
-                            a'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for note in abjad.iterate(staff).components(
-                ...     prototype=abjad.Note,
-                ...     reverse=True,
-                ...     ):
-                ...     note
-                ...
-                Note("a'8")
-                Note("g'8")
-                Note("f'8")
-                Note("e'8")
-                Note("d'8")
-                Note("c'8")
-
-        ..  container:: example
-
-            Iterates notes together with grace notes:
+            Iterates grace notes and nongrace notes:
 
             ..  container:: example
 
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.GraceContainer("cf''16 bf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
                 >>> abjad.show(voice) # doctest: +SKIP
 
@@ -762,7 +718,12 @@ class Iteration(abctools.AbjadObject):
                             cf''16
                             bf'16
                         }
+                        \afterGrace
                         d'8
+                        {
+                            af'16
+                            gf'16
+                        }
                         e'8
                         f'8 ]
                     }
@@ -777,52 +738,6 @@ class Iteration(abctools.AbjadObject):
                 Note("cf''16")
                 Note("bf'16")
                 Note("d'8")
-                Note("e'8")
-                Note("f'8")
-
-        ..  container:: example
-
-            Iterates notes together with both grace notes and after grace
-            notes:
-
-            ..  container:: example
-
-                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
-                >>> container = abjad.GraceContainer("cf''16 bf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> container = abjad.AfterGraceContainer("af'16 gf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> abjad.show(voice) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(voice)
-                    \new Voice {
-                        c'8 [
-                        \grace {
-                            cf''16
-                            bf'16
-                        }
-                        \afterGrace
-                        d'8
-                        {
-                            af'16
-                            gf'16
-                        }
-                        e'8
-                        f'8 ]
-                    }
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(voice).components():
-                ...     leaf
-                ...
-                Voice("c'8 d'8 e'8 f'8")
-                Note("c'8")
-                Note("cf''16")
-                Note("bf'16")
-                Note("d'8")
                 Note("af'16")
                 Note("gf'16")
                 Note("e'8")
@@ -830,7 +745,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates grace notes and after grace notes in reverse:
+            Iterates components in reverse:
 
             ..  container:: example
 
@@ -862,10 +777,10 @@ class Iteration(abctools.AbjadObject):
 
             ..  container:: example
 
-                >>> for leaf in abjad.iterate(voice).components(
+                >>> for component in abjad.iterate(voice).components(
                 ...     reverse=True,
                 ...     ):
-                ...     leaf
+                ...     component
                 ...
                 Voice("c'8 d'8 e'8 f'8")
                 Note("f'8")
@@ -880,65 +795,75 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
+        argument = self.client
         prototype = prototype or abjad.Component
         grace_container, after_grace_container = None, None
-        argument = self.client
-        if grace_notes and isinstance(argument, abjad.Leaf):
+        if grace_notes is not False and isinstance(argument, abjad.Leaf):
             inspection = abjad.inspect(argument)
             grace_container = inspection.get_grace_container()
             after_grace_container = inspection.get_after_grace_container()
         if not reverse:
-            if grace_notes and grace_container:
+            if grace_notes is not False and grace_container:
                 for component in grace_container:
                     for component_ in abjad.iterate(component).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component_
             if isinstance(argument, prototype):
-                yield argument
-            if grace_notes and after_grace_container:
+                if (grace_notes is None or
+                    (grace_notes is True and
+                    abjad.inspect(argument).is_grace_note()) or
+                    (grace_notes is False and
+                    not abjad.inspect(argument).is_grace_note())):
+                    yield argument
+            if grace_notes is not False and after_grace_container:
                 for component in after_grace_container:
                     for component_ in abjad.iterate(component).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component_
             if isinstance(argument, collections.Iterable):
                 for item in argument:
                     for component in abjad.iterate(item).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component
         else:
-            if grace_notes and after_grace_container:
+            if grace_notes is not False and after_grace_container:
                 for component in reversed(after_grace_container):
                     for component_ in abjad.iterate(component).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component_
             if isinstance(argument, prototype):
-                yield argument
-            if grace_notes and grace_container:
+                if (grace_notes is None or
+                    (grace_notes is True and
+                    abjad.inspect(argument).is_grace_note()) or
+                    (grace_notes is False and
+                    not abjad.inspect(argument).is_grace_note())):
+                    yield argument
+            if grace_notes is not False and grace_container:
                 for component in reversed(grace_container):
                     for component_ in abjad.iterate(component).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component_
             if isinstance(argument, collections.Iterable):
                 for item in reversed(argument):
                     for component in abjad.iterate(item).components(
                         prototype,
-                        reverse=reverse,
                         grace_notes=grace_notes,
+                        reverse=reverse,
                         ):
                         yield component
 
@@ -1019,7 +944,7 @@ class Iteration(abctools.AbjadObject):
     def leaves(
         self,
         prototype=None,
-        grace_notes=True,
+        grace_notes=None,
         pitched=None,
         reverse=False,
         ):
@@ -1070,50 +995,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates leaves in reverse:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
-                >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
-                >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            <c' bf'>8
-                            <g' a'>8
-                        }
-                        {
-                            af'8
-                            r8
-                        }
-                        {
-                            r8
-                            gf'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(staff).leaves(reverse=True):
-                ...     leaf
-                ...
-                Note("gf'8")
-                Rest('r8')
-                Rest('r8')
-                Note("af'8")
-                Chord("<g' a'>8")
-                Chord("<c' bf'>8")
-
-        ..  container:: example
-
-            Iterates leaves together with grace notes:
+            Iterates grace notes and nongrace notes:
 
             ..  container:: example
 
@@ -1159,7 +1041,91 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates pitched leaves:
+            Iterates grace notes only:
+
+            ..  container:: example
+
+                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
+                >>> container = abjad.GraceContainer("cf''16 bf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> container = abjad.AfterGraceContainer("af'16 gf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> abjad.show(voice) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(voice)
+                    \new Voice {
+                        c'8 [
+                        \grace {
+                            cf''16
+                            bf'16
+                        }
+                        \afterGrace
+                        d'8
+                        {
+                            af'16
+                            gf'16
+                        }
+                        e'8
+                        f'8 ]
+                    }
+
+            ..  container:: example
+
+                >>> for leaf in abjad.iterate(voice).leaves(grace_notes=True):
+                ...     leaf
+                ...
+                Note("cf''16")
+                Note("bf'16")
+                Note("af'16")
+                Note("gf'16")
+
+        ..  container:: example
+
+            Iterates nongrace notes only:
+
+            ..  container:: example
+
+                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
+                >>> container = abjad.GraceContainer("cf''16 bf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> container = abjad.AfterGraceContainer("af'16 gf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> abjad.show(voice) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(voice)
+                    \new Voice {
+                        c'8 [
+                        \grace {
+                            cf''16
+                            bf'16
+                        }
+                        \afterGrace
+                        d'8
+                        {
+                            af'16
+                            gf'16
+                        }
+                        e'8
+                        f'8 ]
+                    }
+
+            ..  container:: example
+
+                >>> for leaf in abjad.iterate(voice).leaves(grace_notes=False):
+                ...     leaf
+                ...
+                Note("c'8")
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+
+        ..  container:: example
+
+            Iterates pitched leaves only:
 
             ..  container:: example
 
@@ -1200,7 +1166,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates nonpitched leaves:
+            Iterates nonpitched leaves only:
 
             ..  container:: example
 
@@ -1237,6 +1203,49 @@ class Iteration(abctools.AbjadObject):
                 Rest('r8')
                 Rest('r8')
 
+        ..  container:: example
+
+            Iterates leaves in reverse:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff()
+                >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
+                >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
+                >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(staff)
+                    \new Staff {
+                        {
+                            \time 2/8
+                            <c' bf'>8
+                            <g' a'>8
+                        }
+                        {
+                            af'8
+                            r8
+                        }
+                        {
+                            r8
+                            gf'8
+                        }
+                    }
+
+            ..  container:: example
+
+                >>> for leaf in abjad.iterate(staff).leaves(reverse=True):
+                ...     leaf
+                ...
+                Note("gf'8")
+                Rest('r8')
+                Rest('r8')
+                Note("af'8")
+                Chord("<g' a'>8")
+                Chord("<c' bf'>8")
+
         Returns generator.
         '''
         import abjad
@@ -1247,13 +1256,13 @@ class Iteration(abctools.AbjadObject):
             prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
         return self.components(
             prototype=prototype,
-            reverse=reverse,
             grace_notes=grace_notes,
+            reverse=reverse,
             )
 
     def logical_ties(
         self,
-        grace_notes=True,
+        grace_notes=None,
         nontrivial=None,
         pitched=None,
         reverse=False,

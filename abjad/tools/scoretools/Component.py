@@ -329,10 +329,7 @@ class Component(AbjadObject):
         self._update_now(indicators=True)
         # gather candidate wrappers
         candidate_wrappers = {}
-        for parent in self._get_parentage(
-            include_self=True,
-            grace_notes=True,
-            ):
+        for parent in self._get_parentage(include_self=True, grace_notes=True):
             for wrapper in parent._dependent_wrappers:
                 if isinstance(wrapper.indicator, prototype):
                     offset = wrapper.start_offset

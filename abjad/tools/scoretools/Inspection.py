@@ -383,12 +383,10 @@ class Inspection(abctools.AbjadObject):
 
             ::
 
-                >>> for leaf in abjad.iterate(staff).components(
-                ...     grace_notes=True,
-                ...     ):
-                ...     agent = abjad.inspect(leaf)
+                >>> for component in abjad.iterate(staff).components():
+                ...     agent = abjad.inspect(component)
                 ...     clef = agent.get_effective(abjad.Clef)
-                ...     print(leaf, clef)
+                ...     print(component, clef)
                 ...
                 Staff("c'4 d'4 e'4 f'4") Clef('alto')
                 c'4 Clef('alto')
@@ -997,9 +995,7 @@ class Inspection(abctools.AbjadObject):
 
             ::
 
-                >>> for leaf in abjad.iterate(voice).leaves(
-                ...     grace_notes=True,
-                ...     ):
+                >>> for leaf in abjad.iterate(voice).leaves():
                 ...     timespan = abjad.inspect(leaf).get_timespan()
                 ...     print(str(leaf) + ':')
                 ...     abjad.f(timespan)
@@ -1340,6 +1336,20 @@ class Inspection(abctools.AbjadObject):
         stop_offset = self.client._get_duration() + shifted_start
         if time_signature_duration < stop_offset:
             return True
+        return False
+
+    def is_grace_note(self):
+        r'''Is true when client is grace note.
+
+        Returns true or false.
+        '''
+        import abjad
+        if not isinstance(self.client, abjad.Leaf):
+            return False
+        prototype = (abjad.AfterGraceContainer, abjad.GraceContainer)
+        for component in abjad.inspect(self.client).get_parentage():
+            if isinstance(component, prototype):
+                return True
         return False
 
     def is_well_formed(

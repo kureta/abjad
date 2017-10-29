@@ -1468,10 +1468,7 @@ class LilyPondFile(AbjadObject):
                 selections_ = selections.values()
             else:
                 raise TypeError(selections)
-            for note in abjad.iterate(selections_).components(
-                prototype=abjad.Note,
-                grace_notes=True,
-                ):
+            for note in abjad.iterate(selections_).leaves(abjad.Note):
                 if note.written_pitch != abjad.NamedPitch("c'"):
                     pitched_staff = True
                     break
