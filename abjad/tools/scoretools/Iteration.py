@@ -327,98 +327,6 @@ class Iteration(abctools.AbjadObject):
                     node, rank, direction)
         queue.clear()
 
-    @staticmethod
-    def _iterate_components(
-        argument,
-        prototype,
-        reverse=False,
-        grace_notes=True,
-        ):
-        import abjad
-        grace_container, after_grace_container = None, None
-        if grace_notes and isinstance(argument, abjad.Leaf):
-            inspection = abjad.inspect(argument)
-            grace_container = inspection.get_grace_container()
-            after_grace_container = inspection.get_after_grace_container()
-        if not reverse:
-            if grace_notes and grace_container:
-                for component in grace_container:
-                    for component_ in Iteration._iterate_components(
-                        component,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component_
-            if isinstance(argument, prototype):
-                yield argument
-            if grace_notes and after_grace_container:
-                for component in after_grace_container:
-                    for component_ in Iteration._iterate_components(
-                        component,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component_
-            if isinstance(argument, collections.Iterable):
-                for item in argument:
-                    for component in Iteration._iterate_components(
-                        item,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component
-        else:
-            if grace_notes and after_grace_container:
-                for component in reversed(after_grace_container):
-                    for component_ in Iteration._iterate_components(
-                        component,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component_
-            if isinstance(argument, prototype):
-                yield argument
-            if grace_notes and grace_container:
-                for component in reversed(grace_container):
-                    for component_ in Iteration._iterate_components(
-                        component,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component_
-            if isinstance(argument, collections.Iterable):
-                for item in reversed(argument):
-                    for component in Iteration._iterate_components(
-                        item,
-                        prototype,
-                        reverse=reverse,
-                        grace_notes=grace_notes,
-                        ):
-                        yield component
-
-    @staticmethod
-    def _list_ordered_pitch_pairs(expr_1, expr_2):
-        import abjad
-        pitches_1 = sorted(abjad.iterate(expr_1).pitches())
-        pitches_2 = sorted(abjad.iterate(expr_2).pitches())
-        sequences = [pitches_1, pitches_2]
-        enumerator = abjad.Enumerator(sequences)
-        for pair in enumerator.yield_outer_product():
-            yield pair
-
-    @staticmethod
-    def _list_unordered_pitch_pairs(argument):
-        import abjad
-        pitches = sorted(abjad.iterate(argument).pitches())
-        enumerator = abjad.Enumerator(pitches)
-        for pair in enumerator.yield_pairs():
-            yield pair
-
     def _logical_voice(self, prototype=None, reverse=False):
         r'''Iterates logical voice from client.
 
@@ -746,12 +654,7 @@ class Iteration(abctools.AbjadObject):
 
     ### PUBLIC METHODS ###
 
-    def components(
-        self,
-        prototype=None,
-        reverse=False,
-        grace_notes=True,
-        ):
+    def components(self, prototype=None, grace_notes=True, reverse=False):
         r'''Iterates components.
 
         ..  container:: example
@@ -983,12 +886,66 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         prototype = prototype or abjad.Component
-        return self._iterate_components(
-            self.client,
-            prototype,
-            reverse=reverse,
-            grace_notes=grace_notes,
-            )
+        grace_container, after_grace_container = None, None
+        argument = self.client
+        if grace_notes and isinstance(argument, abjad.Leaf):
+            inspection = abjad.inspect(argument)
+            grace_container = inspection.get_grace_container()
+            after_grace_container = inspection.get_after_grace_container()
+        if not reverse:
+            if grace_notes and grace_container:
+                for component in grace_container:
+                    for component_ in abjad.iterate(component).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component_
+            if isinstance(argument, prototype):
+                yield argument
+            if grace_notes and after_grace_container:
+                for component in after_grace_container:
+                    for component_ in abjad.iterate(component).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component_
+            if isinstance(argument, collections.Iterable):
+                for item in argument:
+                    for component in abjad.iterate(item).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component
+        else:
+            if grace_notes and after_grace_container:
+                for component in reversed(after_grace_container):
+                    for component_ in abjad.iterate(component).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component_
+            if isinstance(argument, prototype):
+                yield argument
+            if grace_notes and grace_container:
+                for component in reversed(grace_container):
+                    for component_ in abjad.iterate(component).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component_
+            if isinstance(argument, collections.Iterable):
+                for item in reversed(argument):
+                    for component in abjad.iterate(item).components(
+                        prototype,
+                        reverse=reverse,
+                        grace_notes=grace_notes,
+                        ):
+                        yield component
 
     def leaf_pairs(self):
         r'''Iterates leaf pairs.
@@ -1067,9 +1024,9 @@ class Iteration(abctools.AbjadObject):
     def leaves(
         self,
         prototype=None,
+        grace_notes=True,
         pitched=None,
         reverse=False,
-        grace_notes=True,
         ):
         r'''Iterates leaves.
 
@@ -1301,11 +1258,11 @@ class Iteration(abctools.AbjadObject):
 
     def logical_ties(
         self,
+        grace_notes=True,
         nontrivial=False,
         pitched=False,
         reverse=False,
         parentage_mask=None,
-        grace_notes=True,
         ):
         r'''Iterates logical ties.
 
@@ -1805,19 +1762,26 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         for leaf_pair in self.leaf_pairs():
-            leaf_pair_list = list(leaf_pair)
-            for pair in self._list_unordered_pitch_pairs(
-                leaf_pair_list[0]):
-                yield abjad.PitchSegment(items=pair)
+            pitches = sorted(abjad.iterate(leaf_pair[0]).pitches())
+            enumerator = abjad.Enumerator(pitches)
+            for pair in enumerator.yield_pairs():
+                yield abjad.PitchSegment(pair)
             if isinstance(leaf_pair, set):
-                for pair in self._list_unordered_pitch_pairs(leaf_pair):
-                    yield abjad.PitchSegment(items=pair)
+                pitches = sorted(abjad.iterate(leaf_pair).pitches())
+                enumerator = abjad.Enumerator(pitches)
+                for pair in enumerator.yield_pairs():
+                    yield abjad.PitchSegment(pair)
             else:
-                for pair in self._list_ordered_pitch_pairs(*leaf_pair):
-                    yield abjad.PitchSegment(items=pair)
-            for pair in self._list_unordered_pitch_pairs(
-                leaf_pair_list[1]):
-                yield abjad.PitchSegment(items=pair)
+                pitches_1 = sorted(abjad.iterate(leaf_pair[0]).pitches())
+                pitches_2 = sorted(abjad.iterate(leaf_pair[1]).pitches())
+                sequences = [pitches_1, pitches_2]
+                enumerator = abjad.Enumerator(sequences)
+                for pair in enumerator.yield_outer_product():
+                    yield abjad.PitchSegment(pair)
+            pitches = sorted(abjad.iterate(leaf_pair[1]).pitches())
+            enumerator = abjad.Enumerator(pitches)
+            for pair in enumerator.yield_pairs():
+                yield abjad.PitchSegment(pair)
 
     def pitches(self):
         r'''Iterates pitches.
