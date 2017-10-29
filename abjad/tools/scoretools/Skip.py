@@ -14,7 +14,7 @@ class Skip(Leaf):
 
         ..  docs::
 
-            >>> f(skip)
+            >>> abjad.f(skip)
             s8.
 
     '''

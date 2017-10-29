@@ -9,11 +9,11 @@ class Cluster(Container):
         ::
 
             >>> cluster = abjad.Cluster("c'8 <d' g'>8 b'8")
-            >>> show(cluster) # doctest: +SKIP
+            >>> abjad.show(cluster) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(cluster)
+            >>> abjad.f(cluster)
             \makeClusters {
                 c'8
                 <d' g'>8

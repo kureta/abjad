@@ -15,11 +15,11 @@ class VerticalMoment(Selection):
             >>> staff_group.append(abjad.Staff("c'4 e'4 d'4 f'4"))
             >>> staff_group.append(abjad.Staff(r"""\clef "bass" g2 f2"""))
             >>> score.append(staff_group)
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new PianoStaff <<
                     \new Staff {

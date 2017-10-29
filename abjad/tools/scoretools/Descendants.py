@@ -22,7 +22,7 @@ class Descendants(Selection):
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \context Staff = "Treble Staff" {
                     \context Voice = "Treble Voice" {

@@ -20,11 +20,11 @@ class Label(abctools.AbjadObject):
 
             ::
 
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                         ^ \markup {
@@ -54,7 +54,7 @@ class Label(abctools.AbjadObject):
 
                 >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
                 >>> expression = abjad.label().with_pitches(locale='us')
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(
@@ -72,11 +72,11 @@ class Label(abctools.AbjadObject):
             ::
 
                 >>> expression(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                         ^ \markup {
@@ -113,11 +113,11 @@ class Label(abctools.AbjadObject):
 
             ::
 
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                         ^ \markup {
@@ -147,7 +147,7 @@ class Label(abctools.AbjadObject):
 
                 >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
                 >>> expression = abjad.label().with_durations()
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(
@@ -165,11 +165,11 @@ class Label(abctools.AbjadObject):
             ::
 
                 >>> expression(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                         ^ \markup {
@@ -281,11 +281,11 @@ class Label(abctools.AbjadObject):
 
                     >>> measure = abjad.Measure((2, 8), "c'8 d'8")
                     >>> abjad.label(measure).color_container('red')
-                    >>> show(measure) # doctest: +SKIP
+                    >>> abjad.show(measure) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(measure)
+                    >>> abjad.f(measure)
                     {
                         \override Accidental.color = #red
                         \override Beam.color = #red
@@ -315,11 +315,11 @@ class Label(abctools.AbjadObject):
                     >>> measure = abjad.Measure((2, 8), "c'8 d'8")
                     >>> expression = abjad.label().color_container('red')
                     >>> expression(measure)
-                    >>> show(measure) # doctest: +SKIP
+                    >>> abjad.show(measure) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(measure)
+                    >>> abjad.f(measure)
                     {
                         \override Accidental.color = #red
                         \override Beam.color = #red
@@ -369,11 +369,11 @@ class Label(abctools.AbjadObject):
 
                     >>> staff = abjad.Staff("cs'8. [ r8. s8. <c' cs' a'>8. ]")
                     >>> abjad.label(staff).color_leaves('red')
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -400,11 +400,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("cs'8. [ r8. s8. <c' cs' a'>8. ]")
                     >>> expression = abjad.label().color_leaves('red')
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -448,11 +448,11 @@ class Label(abctools.AbjadObject):
                     >>> colors = ['red', 'blue', 'green']
                     >>> color_map = abjad.ColorMap(colors, pitches)
                     >>> abjad.label(chord).color_note_heads(color_map)
-                    >>> show(chord) # doctest: +SKIP
+                    >>> abjad.show(chord) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(chord)
+                    >>> abjad.f(chord)
                     <
                         \tweak color #red
                         c''
@@ -476,11 +476,11 @@ class Label(abctools.AbjadObject):
                     >>> color_map = abjad.ColorMap(colors, pitches)
                     >>> expression = abjad.label().color_note_heads(color_map)
                     >>> expression(chord)
-                    >>> show(chord) # doctest: +SKIP
+                    >>> abjad.show(chord) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(chord)
+                    >>> abjad.f(chord)
                     <
                         \tweak color #red
                         c''
@@ -504,11 +504,11 @@ class Label(abctools.AbjadObject):
 
                     >>> note = abjad.Note("c'4")
                     >>> abjad.label(note).color_note_heads(color_map)
-                    >>> show(note) # doctest: +SKIP
+                    >>> abjad.show(note) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(note)
+                    >>> abjad.f(note)
                     \once \override NoteHead.color = #red
                     c'4
 
@@ -519,11 +519,11 @@ class Label(abctools.AbjadObject):
                     >>> note = abjad.Note("c'4")
                     >>> expression = abjad.label().color_note_heads(color_map)
                     >>> expression(note)
-                    >>> show(note) # doctest: +SKIP
+                    >>> abjad.show(note) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(note)
+                    >>> abjad.f(note)
                     \once \override NoteHead.color = #red
                     c'4
 
@@ -556,11 +556,11 @@ class Label(abctools.AbjadObject):
 
                     >>> staff = abjad.Staff("c'8 cs'8 d'8 ds'8 e'8 f'8 fs'8 g'8 gs'8 a'8 as'8 b'8 c''8")
                     >>> abjad.label(staff).color_note_heads()
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         \once \override NoteHead.color = #(x11-color 'red)
                         c'8
@@ -597,11 +597,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("c'8 cs'8 d'8 ds'8 e'8 f'8 fs'8 g'8 gs'8 a'8 as'8 b'8 c''8")
                     >>> expression = abjad.label().color_note_heads()
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         \once \override NoteHead.color = #(x11-color 'red)
                         c'8
@@ -666,11 +666,11 @@ class Label(abctools.AbjadObject):
 
                     >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                     >>> abjad.label(staff).with_pitches()
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8
                             ^ \markup {
@@ -697,11 +697,11 @@ class Label(abctools.AbjadObject):
                 ::
 
                     >>> abjad.label(staff).remove_markup()
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8
                         d'8
@@ -716,11 +716,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                     >>> expression = abjad.label().with_pitches()
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8
                             ^ \markup {
@@ -748,11 +748,11 @@ class Label(abctools.AbjadObject):
 
                     >>> expression = abjad.label().remove_markup()
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8
                         d'8
@@ -787,11 +787,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff(r"""\clef "bass" c,2""")
                     >>> staff_group.append(staff)
                     >>> abjad.label(staff_group).vertical_moments()
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -843,11 +843,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> expression = abjad.label().vertical_moments()
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -904,11 +904,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(staff_group).vertical_moments(
                     ...     prototype=abjad.NumberedPitch,
                     ...     )
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -986,11 +986,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedPitch
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1071,11 +1071,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> prototype = abjad.NumberedPitchClass
                     >>> abjad.label(staff_group).vertical_moments(prototype=prototype)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1151,11 +1151,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedPitchClass
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1234,11 +1234,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> prototype = abjad.NumberedInterval
                     >>> abjad.label(staff_group).vertical_moments(prototype=prototype)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1311,11 +1311,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedInterval
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1391,11 +1391,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> prototype = abjad.NumberedIntervalClass
                     >>> abjad.label(staff_group).vertical_moments(prototype=prototype)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1468,11 +1468,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedIntervalClass
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1548,11 +1548,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> prototype = abjad.IntervalClassVector
                     >>> abjad.label(staff_group).vertical_moments(prototype=prototype)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1610,11 +1610,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.IntervalClassVector
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1675,11 +1675,11 @@ class Label(abctools.AbjadObject):
                     >>> staff_group.append(staff)
                     >>> prototype = abjad.SetClass()
                     >>> abjad.label(staff_group).vertical_moments(prototype=prototype)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1747,11 +1747,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.SetClass()
                     >>> expression = abjad.label().vertical_moments(prototype=prototype)
                     >>> expression(staff_group)
-                    >>> show(staff_group) # doctest: +SKIP
+                    >>> abjad.show(staff_group) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff_group)
+                    >>> abjad.f(staff_group)
                     \new StaffGroup <<
                         \new Staff {
                             c'8
@@ -1930,11 +1930,11 @@ class Label(abctools.AbjadObject):
 
                     >>> staff = abjad.Staff(r"c'4. d'8 ~ d'4. e'16 [ ef'16 ]")
                     >>> abjad.label(staff).with_durations()
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4.
                             ^ \markup {
@@ -1966,11 +1966,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff(r"c'4. d'8 ~ d'4. e'16 [ ef'16 ]")
                     >>> expression = abjad.label().with_durations()
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4.
                             ^ \markup {
@@ -2005,11 +2005,11 @@ class Label(abctools.AbjadObject):
 
                     >>> staff = abjad.Staff(r"c'4. d'8 ~ d'4. e'16 [ ef'16 ]")
                     >>> abjad.label(staff).with_durations(preferred_denominator=16)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4.
                             ^ \markup {
@@ -2041,11 +2041,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff(r"c'4. d'8 ~ d'4. e'16 [ ef'16 ]")
                     >>> expression = abjad.label().with_durations(preferred_denominator=16)
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4.
                             ^ \markup {
@@ -2098,11 +2098,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<c' bf'>8 <g' a'>4 af'8 ~ af'8 gf'8 ~ gf'4")
                     >>> abjad.label(staff).with_indices()
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2138,11 +2138,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_indices()
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2181,11 +2181,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<c' bf'>8 <g' a'>4 af'8 ~ af'8 gf'8 ~ gf'4")
                     >>> abjad.label(staff).with_indices(prototype=abjad.Note)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2223,11 +2223,11 @@ class Label(abctools.AbjadObject):
                     ...     )
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2266,11 +2266,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<c' bf'>8 <g' a'>4 af'8 ~ af'8 gf'8 ~ gf'4")
                     >>> abjad.label(staff).with_indices(prototype=abjad.Chord)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2300,11 +2300,11 @@ class Label(abctools.AbjadObject):
                     ...     )
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2335,11 +2335,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<c' bf'>8 <g' a'>4 af'8 ~ af'8 gf'8 ~ gf'4")
                     >>> abjad.label(staff).with_indices(prototype=abjad.Leaf)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2385,11 +2385,11 @@ class Label(abctools.AbjadObject):
                     ...     )
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2437,11 +2437,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff(4 * tuplet)
                     >>> abjad.label(staff).with_indices(prototype=abjad.Tuplet)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2494,11 +2494,11 @@ class Label(abctools.AbjadObject):
                     ...     )
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #2
                     } {
@@ -2575,11 +2575,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff(notes)
                     >>> abjad.label(staff).with_intervals(prototype=None)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2604,11 +2604,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_intervals(prototype=None)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2637,11 +2637,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NamedIntervalClass
                     >>> abjad.label(staff).with_intervals(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2667,11 +2667,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_intervals(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2700,11 +2700,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedInterval
                     >>> abjad.label(staff).with_intervals(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2730,11 +2730,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_intervals(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2764,11 +2764,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedIntervalClass
                     >>> abjad.label(staff).with_intervals(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2794,11 +2794,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_intervals(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2828,11 +2828,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedInversionEquivalentIntervalClass
                     >>> abjad.label(staff).with_intervals(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2858,11 +2858,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_intervals(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2922,11 +2922,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<a d' fs'>4 g'4 ~ g'8 r8 fs''4")
                     >>> abjad.label(staff).with_pitches(prototype=None)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -2962,11 +2962,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_pitches(prototype=None)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3005,11 +3005,11 @@ class Label(abctools.AbjadObject):
                     >>> staff = abjad.Staff("<a d' fs'>4 g'4 ~ g'8 r8 fs''4")
                     >>> abjad.label(staff).with_pitches(locale='us', prototype=None)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3045,11 +3045,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_pitches(locale='us', prototype=None)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3089,11 +3089,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedPitch
                     >>> abjad.label(staff).with_pitches(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3130,11 +3130,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_pitches(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3174,11 +3174,11 @@ class Label(abctools.AbjadObject):
                     >>> prototype = abjad.NumberedPitchClass
                     >>> abjad.label(staff).with_pitches(prototype=prototype)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3215,11 +3215,11 @@ class Label(abctools.AbjadObject):
                     >>> expression = abjad.label().with_pitches(prototype=prototype)
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                     } {
@@ -3266,11 +3266,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_pitches()
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3315,11 +3315,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3368,11 +3368,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_pitches(prototype=prototype)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3418,11 +3418,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3472,11 +3472,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_pitches(prototype=prototype)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3522,11 +3522,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3636,11 +3636,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_set_classes()
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3687,11 +3687,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3743,11 +3743,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_set_classes(prototype=prototype)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3795,11 +3795,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3850,11 +3850,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(selections).with_set_classes(prototype=prototype)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3902,11 +3902,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(selections)
                     >>> abjad.override(voice).horizontal_bracket.staff_padding = 3
                     >>> abjad.override(voice).text_script.staff_padding = 2
-                    >>> show(voice) # doctest: +SKIP
+                    >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice \with {
                         \consists Horizontal_bracket_engraver
                         \override HorizontalBracket.staff-padding = #3
@@ -3983,11 +3983,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(staff).with_start_offsets(direction=abjad.Up)
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                         \override TupletBracket.staff-padding = #0
@@ -4010,11 +4010,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #4
                         \override TupletBracket.staff-padding = #0
@@ -4043,11 +4043,11 @@ class Label(abctools.AbjadObject):
                     >>> abjad.label(staff).with_start_offsets(clock_time=True)
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(score) # doctest: +SKIP
+                    >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff \with {
                             \override TextScript.staff-padding = #4
@@ -4073,11 +4073,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(score) # doctest: +SKIP
+                    >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff \with {
                             \override TextScript.staff-padding = #4
@@ -4110,11 +4110,11 @@ class Label(abctools.AbjadObject):
                     ...     )
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(score) # doctest: +SKIP
+                    >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff \with {
                             \override TextScript.staff-padding = #4
@@ -4163,11 +4163,11 @@ class Label(abctools.AbjadObject):
                     >>> expression(staff)
                     >>> abjad.override(staff).text_script.staff_padding = 4
                     >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-                    >>> show(score) # doctest: +SKIP
+                    >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff \with {
                             \override TextScript.staff-padding = #4

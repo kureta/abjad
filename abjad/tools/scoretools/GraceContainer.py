@@ -18,11 +18,11 @@ class GraceContainer(Container):
             >>> grace_notes = [abjad.Note("c'16"), abjad.Note("d'16")]
             >>> grace_container = abjad.GraceContainer(grace_notes)
             >>> abjad.attach(grace_container, voice[1])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 c'4
                 \grace {
@@ -51,11 +51,11 @@ class GraceContainer(Container):
             >>> note = abjad.Note("ds'16")
             >>> after_grace_container = abjad.AfterGraceContainer([note])
             >>> abjad.attach(after_grace_container, voice[1])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 c'4
                 \grace {
@@ -74,11 +74,11 @@ class GraceContainer(Container):
 
             >>> abjad.detach(abjad.GraceContainer, voice[1])
             (GraceContainer("cs'16"),)
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 c'4
                 \afterGrace
@@ -99,11 +99,11 @@ class GraceContainer(Container):
             >>> staff = abjad.Staff("c'4 d'")
             >>> container = abjad.GraceContainer("fs'32")
             >>> abjad.attach(container, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \grace {
                     fs'32
@@ -115,11 +115,11 @@ class GraceContainer(Container):
         ::
 
             >>> result = abjad.detach(abjad.GraceContainer, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4
@@ -128,11 +128,11 @@ class GraceContainer(Container):
         ::
 
             >>> abjad.attach(result[0], staff[1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 \grace {

@@ -18,11 +18,11 @@ class Tuplet(Container):
         A tuplet:
 
             >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-            >>> show(tuplet) # doctest: +SKIP
+            >>> abjad.show(tuplet) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(tuplet)
+            >>> abjad.f(tuplet)
             \times 2/3 {
                 c'8
                 d'8
@@ -35,11 +35,11 @@ class Tuplet(Container):
 
             >>> second_tuplet = abjad.Tuplet((4, 7), "g'4. ( a'16 )")
             >>> tuplet.insert(1, second_tuplet)
-            >>> show(tuplet) # doctest: +SKIP
+            >>> abjad.show(tuplet) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(tuplet)
+            >>> abjad.f(tuplet)
             \tweak edge-height #'(0.7 . 0)
             \times 2/3 {
                 c'8
@@ -59,11 +59,11 @@ class Tuplet(Container):
             >>> third_tuplet = abjad.Tuplet((4, 5), [])
             >>> third_tuplet.extend("e''32 [ ef''32 d''32 cs''32 cqs''32 ]")
             >>> second_tuplet.insert(1, third_tuplet)
-            >>> show(tuplet) # doctest: +SKIP
+            >>> abjad.show(tuplet) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(tuplet)
+            >>> abjad.f(tuplet)
             \tweak edge-height #'(0.7 . 0)
             \times 2/3 {
                 c'8
@@ -363,11 +363,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -387,11 +387,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.force_fraction = True
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 2/3 {
                     c'8
@@ -410,11 +410,11 @@ class Tuplet(Container):
                 >>> markup = duration.to_score_markup()
                 >>> abjad.override(tuplet).tuplet_number.text = markup
                 >>> staff = abjad.Staff([tuplet])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \override TupletNumber.text = \markup {
                         \score
@@ -483,7 +483,7 @@ class Tuplet(Container):
 
             ::
 
-                >>> f(trivial_tuplet)
+                >>> abjad.f(trivial_tuplet)
                 {
                     c'4
                     d'4
@@ -492,7 +492,7 @@ class Tuplet(Container):
 
             ::
 
-                >>> show(trivial_tuplet) # doctest: +SKIP
+                >>> abjad.show(trivial_tuplet) # doctest: +SKIP
 
         ..  container:: example
 
@@ -506,7 +506,7 @@ class Tuplet(Container):
 
             ::
 
-                >>> f(trivial_tuplet)
+                >>> abjad.f(trivial_tuplet)
                 \times 1/1 {
                     c'4
                     d'4
@@ -514,7 +514,7 @@ class Tuplet(Container):
                 }
 
 
-                >>> show(trivial_tuplet) # doctest: +SKIP
+                >>> abjad.show(trivial_tuplet) # doctest: +SKIP
 
         ..  container:: example
 
@@ -532,11 +532,11 @@ class Tuplet(Container):
 
             ::
 
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \override TupletNumber.text = \markup {
                         \scale
@@ -602,7 +602,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -627,7 +627,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((4, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -641,7 +641,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 d'4 e'4")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -655,7 +655,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((1, 1), "c'8. d'8. e'8.")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -681,7 +681,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((4, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -695,7 +695,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 d'4 e'4")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -709,7 +709,7 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((1, 1), "c'8. d'8. e'8.")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -734,11 +734,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -759,11 +759,11 @@ class Tuplet(Container):
                 >>> tuplet_1 = abjad.Tuplet((2, 3), "c'4 d'4 e'4")
                 >>> tuplet_2 = abjad.Tuplet((2, 3), "d'4 e'4 f'4")
                 >>> staff = abjad.Staff([tuplet_1, tuplet_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'4
@@ -780,11 +780,11 @@ class Tuplet(Container):
             ::
 
                 >>> staff[0].is_invisible = True
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \scaleDurations #'(2 . 3) {
                         c'4
@@ -828,11 +828,11 @@ class Tuplet(Container):
 
                 >>> tuplet = abjad.Tuplet((3, 4), "c'4 c'4")
                 >>> measure = abjad.Measure((3, 8), [tuplet])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/8
                     \tweak text #tuplet-number::calc-fraction-text
@@ -850,11 +850,11 @@ class Tuplet(Container):
             Can be rewritten without a tuplet bracket:
 
                 >>> measure = abjad.Measure((3, 8), "c'8. c'8.")
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/8
                     c'8.
@@ -869,11 +869,11 @@ class Tuplet(Container):
 
                 >>> tuplet = abjad.Tuplet((3, 5), "c'4 c'4 c'4 c'4 c'4")
                 >>> measure = abjad.Measure((3, 4), [tuplet])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     \tweak text #tuplet-number::calc-fraction-text
@@ -915,7 +915,7 @@ class Tuplet(Container):
 
             ::
 
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -938,7 +938,7 @@ class Tuplet(Container):
 
             ::
 
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -958,7 +958,7 @@ class Tuplet(Container):
             Gets tuplet multiplier:
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ::
 
@@ -970,11 +970,11 @@ class Tuplet(Container):
             Sets tuplet multiplier:
 
                 >>> tuplet.multiplier = abjad.Multiplier(4, 3)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 4/3 {
                     c'8
@@ -1017,11 +1017,11 @@ class Tuplet(Container):
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
                 >>> tuplet.preferred_denominator is None
                 True
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -1035,11 +1035,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -1049,11 +1049,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.preferred_denominator = 4
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 4/6 {
                     c'8
                     d'8
@@ -1085,11 +1085,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 ( d'4 f'4 )")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4 (
                     d'4
@@ -1099,11 +1099,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.append(abjad.Note("e'4"))
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak edge-height #'(0.7 . 0)
                 \times 2/3 {
                     c'4 (
@@ -1119,11 +1119,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 ( d'4 f'4 )")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4 (
                     d'4
@@ -1133,11 +1133,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.append(abjad.Note("e'4"), preserve_duration=True)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 1/2 {
                     c'4 (
                     d'4
@@ -1168,11 +1168,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 ( d'4 f'4 )")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4 (
                     d'4
@@ -1183,11 +1183,11 @@ class Tuplet(Container):
 
                 >>> notes = [abjad.Note("e'32"), abjad.Note("d'32"), abjad.Note("e'16")]
                 >>> tuplet.extend(notes)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak edge-height #'(0.7 . 0)
                 \times 2/3 {
                     c'4 (
@@ -1205,11 +1205,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 ( d'4 f'4 )")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4 (
                     d'4
@@ -1220,11 +1220,11 @@ class Tuplet(Container):
 
                 >>> notes = [abjad.Note("e'32"), abjad.Note("d'32"), abjad.Note("e'16")]
                 >>> tuplet.extend(notes, preserve_duration=True)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 4/7 {
                     c'4 (
                     d'4
@@ -1258,11 +1258,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet.from_duration((2, 8), "c'8 d' e'")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -1312,11 +1312,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1344,11 +1344,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1376,11 +1376,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1410,11 +1410,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1442,11 +1442,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1477,11 +1477,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1509,11 +1509,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1541,11 +1541,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -1575,11 +1575,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name = 'RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \times 4/5 {
@@ -1606,11 +1606,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 3/16
                     \times 8/11 {
@@ -1702,11 +1702,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 {
                     c'8.
                 }
@@ -1726,11 +1726,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 {
                     c'16
                     c'8
@@ -1751,11 +1751,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 8/5 {
                     c'64.
@@ -1778,11 +1778,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 3/2 {
                     c'64
@@ -1806,11 +1806,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 12/11 {
                     c'64
@@ -1835,11 +1835,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 8/5 {
                     c'128
@@ -1865,11 +1865,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 {
                     c'8.
                 }
@@ -1889,11 +1889,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 {
                     c'16
                     c'8
@@ -1914,11 +1914,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 4/5 {
                     c'32.
                     c'16.
@@ -1940,11 +1940,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 3/4 {
                     c'32
@@ -1968,11 +1968,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 6/11 {
                     c'32
@@ -1997,11 +1997,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((3, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 4/5 {
                     c'64
                     c'32
@@ -2041,11 +2041,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     {
@@ -2069,11 +2069,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     {
@@ -2095,11 +2095,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -2119,11 +2119,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     {
@@ -2143,11 +2143,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -2169,11 +2169,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     \tweak text #tuplet-number::calc-fraction-text
@@ -2196,11 +2196,11 @@ class Tuplet(Container):
                 ...     [abjad.Measure((7, 16), [tuplet])],
                 ...     context_name='RhythmicStaff',
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff[0])
+                >>> abjad.f(staff[0])
                 {
                     \time 7/16
                     \times 1/2 {
@@ -2294,11 +2294,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((3, 5), "c'4 d'8 e'8 f'4 g'2")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 3/5 {
                     c'4
@@ -2311,11 +2311,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.set_minimum_denominator(8)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 6/10 {
                     c'4
@@ -2351,11 +2351,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((4, 3), "c'8 d'8 e'8")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 4/3 {
                     c'8
@@ -2366,11 +2366,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.toggle_prolation()
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4
                     d'4
@@ -2387,11 +2387,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet = abjad.Tuplet((2, 3), "c'4 d'4 e'4")
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'4
                     d'4
@@ -2401,11 +2401,11 @@ class Tuplet(Container):
             ::
 
                 >>> tuplet.toggle_prolation()
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \tweak text #tuplet-number::calc-fraction-text
                 \times 4/3 {
                     c'8

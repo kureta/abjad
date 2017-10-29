@@ -24,11 +24,11 @@ class AcciaccaturaContainer(GraceContainer):
             >>> notes = [abjad.Note("c'16"), abjad.Note("d'16")]
             >>> acciaccatura_container = abjad.AcciaccaturaContainer(notes)
             >>> abjad.attach(acciaccatura_container, voice[1])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 c'4
                 \acciaccatura {

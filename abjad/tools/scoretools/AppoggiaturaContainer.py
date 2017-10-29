@@ -21,11 +21,11 @@ class AppoggiaturaContainer(GraceContainer):
             >>> notes = [abjad.Note("c'16"), abjad.Note("d'16")]
             >>> appoggiatura_container = abjad.AppoggiaturaContainer(notes)
             >>> abjad.attach(appoggiatura_container, voice[1])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 c'4
                 \appoggiatura {

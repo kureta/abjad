@@ -9,7 +9,7 @@ class Inspection(abctools.AbjadObject):
         ::
 
             >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -55,11 +55,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Voice("c'8 d'8 e'8 f'8"))
                 >>> staff.append(abjad.Voice("g'8 a'8 b'8 c''8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \new Voice {
                         c'8
@@ -99,11 +99,11 @@ class Inspection(abctools.AbjadObject):
                 >>> note = abjad.Note("ds'16")
                 >>> container = abjad.AfterGraceContainer([note])
                 >>> abjad.attach(container, staff[1])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     \afterGrace
@@ -172,7 +172,7 @@ class Inspection(abctools.AbjadObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [
                     d'4
@@ -203,11 +203,11 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff(r"\times 2/3 { c'8 d'8 e'8 } f'4")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8
@@ -249,11 +249,11 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff(r"\times 2/3 { c'8 d'8 e'8 } f'4")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8
@@ -325,11 +325,11 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'4 d' e' f'")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     d'4
@@ -365,11 +365,11 @@ class Inspection(abctools.AbjadObject):
                 >>> note = abjad.Note("fs'16")
                 >>> container = abjad.AcciaccaturaContainer([note])
                 >>> abjad.attach(container, staff[-1])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \clef "alto"
                     c'4
@@ -427,11 +427,11 @@ class Inspection(abctools.AbjadObject):
                 >>> note = abjad.Note("cs'16")
                 >>> container = abjad.AcciaccaturaContainer([note])
                 >>> abjad.attach(container, staff[1])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     \acciaccatura {
@@ -492,11 +492,11 @@ class Inspection(abctools.AbjadObject):
                 >>> abjad.attach(abjad.Articulation('^'), staff[1])
                 >>> abjad.attach(abjad.Articulation('^'), staff[2])
                 >>> abjad.attach(abjad.Articulation('^'), staff[3])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 -\marcato
                     d'4 -\marcato
@@ -532,11 +532,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Voice("c'8 d'8 e'8 f'8"))
                 >>> staff.append(abjad.Voice("g'8 a'8 b'8 c''8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \new Voice {
                         c'8
@@ -716,11 +716,11 @@ class Inspection(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
                 >>> container = abjad.GraceContainer("c'16 d'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     c'4
                     \grace {
@@ -746,11 +746,11 @@ class Inspection(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
                 >>> container = abjad.GraceContainer("c'16 d'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     c'4
                     \grace {
@@ -790,11 +790,11 @@ class Inspection(abctools.AbjadObject):
                 >>> spanner.attach(abjad.ArrowLineSegment(), staff[0])
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -855,11 +855,11 @@ class Inspection(abctools.AbjadObject):
                 >>> piccolo = abjad.instrumenttools.Piccolo()
                 >>> abjad.attach(piccolo, staff[0])
                 >>> abjad.Instrument.transpose_from_sounding_pitch(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Piccolo }
                     \set Staff.shortInstrumentName = \markup { Picc. }
@@ -886,11 +886,11 @@ class Inspection(abctools.AbjadObject):
                 >>> glockenspiel = abjad.instrumenttools.Glockenspiel()
                 >>> abjad.attach(glockenspiel, staff[0])
                 >>> abjad.Instrument.transpose_from_sounding_pitch(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Glockenspiel }
                     \set Staff.shortInstrumentName = \markup { Gkspl. }
@@ -936,11 +936,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff = abjad.Staff("c'8 d' e' f'")
                 >>> abjad.attach(abjad.Beam(), staff[:2])
                 >>> abjad.attach(abjad.Beam(), staff[2:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [
                     d'8 ]
@@ -985,11 +985,11 @@ class Inspection(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("e'16 f'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     c'8 [
                     \grace {
@@ -1013,7 +1013,7 @@ class Inspection(abctools.AbjadObject):
                 ...     ):
                 ...     timespan = abjad.inspect(leaf).get_timespan()
                 ...     print(str(leaf) + ':')
-                ...     f(timespan)
+                ...     abjad.f(timespan)
                 ...
                 c'8:
                 abjad.Timespan(
@@ -1081,11 +1081,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff = abjad.Staff("c'8 d' e' f'")
                 >>> abjad.attach(abjad.Beam(), staff[:2])
                 >>> abjad.attach(abjad.Beam(), staff[2:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [
                     d'8 ]
@@ -1126,11 +1126,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff.append(abjad.Tuplet((2, 3), "d'8 e' f'"))
                 >>> staff.append(abjad.Tuplet((2, 3), "e'8 f' g'"))
                 >>> staff.append(abjad.Tuplet((2, 3), "f'8 g' a'"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8
@@ -1223,11 +1223,11 @@ class Inspection(abctools.AbjadObject):
                 >>> clef = abjad.Clef('bass')
                 >>> abjad.attach(clef, staff_group[1][0])
                 >>> score.append(staff_group)
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         \tweak text #tuplet-number::calc-fraction-text
@@ -1326,11 +1326,11 @@ class Inspection(abctools.AbjadObject):
                 >>> staff = abjad.Staff("c'4 d'4 e'4")
                 >>> time_signature = abjad.TimeSignature((3, 8))
                 >>> abjad.attach(time_signature, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 3/8
                     c'4
@@ -1464,11 +1464,11 @@ class Inspection(abctools.AbjadObject):
                 >>> container = abjad.Container("c'8 d'8 e'8 f'8")
                 >>> abjad.override(container).note_head.color = 'red'
                 >>> abjad.override(container).note_head.style = 'harmonic'
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     \override NoteHead.color = #red
                     \override NoteHead.style = #'harmonic
@@ -1554,7 +1554,7 @@ class Inspection(abctools.AbjadObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [
                     d'4

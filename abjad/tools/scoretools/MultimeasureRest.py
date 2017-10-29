@@ -9,7 +9,7 @@ class MultimeasureRest(Leaf):
         ::
 
             >>> rest = abjad.MultimeasureRest((1, 4))
-            >>> show(rest) # doctest: +SKIP
+            >>> abjad.show(rest) # doctest: +SKIP
 
     '''
 

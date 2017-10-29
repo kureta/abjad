@@ -10,7 +10,7 @@ class LogicalTie(Selection):
         ::
 
             >>> staff = abjad.Staff("c' d' e' ~ e'")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -216,11 +216,11 @@ class LogicalTie(Selection):
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
                 >>> time_signature = abjad.TimeSignature((7, 16))
                 >>> abjad.attach(time_signature, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -244,7 +244,7 @@ class LogicalTie(Selection):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -261,7 +261,7 @@ class LogicalTie(Selection):
 
             ::
 
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
         ..  container:: example
 
@@ -275,11 +275,11 @@ class LogicalTie(Selection):
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
                 >>> time_signature = abjad.TimeSignature((7, 16))
                 >>> abjad.attach(time_signature, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -299,11 +299,11 @@ class LogicalTie(Selection):
                 >>> time_signature = abjad.TimeSignature((7, 16))
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
                 >>> abjad.attach(time_signature, leaf)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {

@@ -17,11 +17,11 @@ class AfterGraceContainer(Container):
             >>> notes = [abjad.Note("c'16"), abjad.Note("d'16")]
             >>> after_grace_container = abjad.AfterGraceContainer(notes)
             >>> abjad.attach(after_grace_container, voice[1])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice {
                 #(define afterGraceFraction (cons 15 16))
                 c'4

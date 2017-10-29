@@ -19,11 +19,11 @@ class Parentage(Selection):
             >>> clef = abjad.Clef('bass')
             >>> abjad.attach(clef, bass_staff[0][0])
             >>> score.append(bass_staff)
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \context Staff = "Treble Staff" {
                     \context Voice = "Treble Voice" {
@@ -163,11 +163,11 @@ class Parentage(Selection):
                 >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
                 >>> container = abjad.GraceContainer("c'16 d'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     c'4
                     \grace {
@@ -222,11 +222,11 @@ class Parentage(Selection):
                 >>> voice = abjad.Voice("c'4 d'4 e'4 f'4", name='CustomVoice')
                 >>> staff = abjad.Staff([voice], name='CustomStaff')
                 >>> score = abjad.Score([staff], name='CustomScore')
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \context Score = "CustomScore" <<
                     \context Staff = "CustomStaff" {
                         \context Voice = "CustomVoice" {
@@ -326,11 +326,11 @@ class Parentage(Selection):
                 >>> staff_1 = abjad.Staff(r"\times 2/3 { c''2 b'2 a'2 }")
                 >>> staff_2 = abjad.Staff("c'2 d'2")
                 >>> score = abjad.Score([staff_1, staff_2])
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         \times 2/3 {
@@ -366,11 +366,11 @@ class Parentage(Selection):
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.GraceContainer("cf''16 bf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     c'8 [
                     \grace {
@@ -423,11 +423,11 @@ class Parentage(Selection):
                 >>> tuplet = abjad.Tuplet((2, 3), "c'2 d'2 e'2")
                 >>> staff = abjad.Staff([tuplet])
                 >>> note = tuplet[0]
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'2

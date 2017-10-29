@@ -12,11 +12,11 @@ class Rest(Leaf):
 
             >>> rest = abjad.Rest('r8.')
             >>> measure = abjad.Measure((3, 16), [rest])
-            >>> show(measure) # doctest: +SKIP
+            >>> abjad.show(measure) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(measure)
+            >>> abjad.f(measure)
             {
                 \time 3/16
                 r8.

@@ -13,11 +13,11 @@ class Note(Leaf):
 
             >>> note = abjad.Note("cs''8.")
             >>> measure = abjad.Measure((3, 16), [note])
-            >>> show(measure) # doctest: +SKIP
+            >>> abjad.show(measure) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(measure)
+            >>> abjad.f(measure)
             {
                 \time 3/16
                 cs''8.

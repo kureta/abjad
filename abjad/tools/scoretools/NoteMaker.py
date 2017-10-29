@@ -18,11 +18,11 @@ class NoteMaker(AbjadValueObject):
             >>> maker = abjad.NoteMaker()
             >>> notes = maker([0], [(1, 16), (1, 8), (1, 8)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'16
                 c'8
@@ -42,11 +42,11 @@ class NoteMaker(AbjadValueObject):
             ...     [(1, 16), (1, 8), (1, 8)],
             ...     )
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'16
                 d'8
@@ -64,11 +64,11 @@ class NoteMaker(AbjadValueObject):
             >>> maker = abjad.NoteMaker()
             >>> notes = maker([0], [(1, 16), (1, 12), (1, 8)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'16
                 \tweak edge-height #'(0.7 . 0)
@@ -88,11 +88,11 @@ class NoteMaker(AbjadValueObject):
             >>> maker = abjad.NoteMaker(decrease_monotonic=True)
             >>> notes = maker([0], [(13, 16)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'2. ~
                 c'16
@@ -108,11 +108,11 @@ class NoteMaker(AbjadValueObject):
             >>> maker = abjad.NoteMaker(decrease_monotonic=False)
             >>> notes = maker([0], [(13, 16)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'16 ~
                 c'2.
@@ -127,11 +127,11 @@ class NoteMaker(AbjadValueObject):
             >>> maker = abjad.NoteMaker(use_messiaen_style_ties=True)
             >>> notes = maker([0], [(13, 16)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'2.
                 c'16 \repeatTie
@@ -147,11 +147,11 @@ class NoteMaker(AbjadValueObject):
             >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
             >>> notes = maker(segment, [(1, 8)])
             >>> staff = abjad.Staff(notes)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 bf8
                 bqf8

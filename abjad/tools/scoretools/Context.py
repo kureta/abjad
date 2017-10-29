@@ -22,7 +22,7 @@ class Context(Container):
 
         ..  docs::
 
-            >>> f(context)
+            >>> abjad.f(context)
             \context GlobalContext = "MeterVoice" {
             }
 
@@ -197,7 +197,7 @@ class Context(Container):
 
             >>> staff = abjad.Staff([])
             >>> staff.consists_commands.append('Horizontal_bracket_engraver')
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \consists Horizontal_bracket_engraver
             } {
@@ -249,7 +249,7 @@ class Context(Container):
 
             >>> staff = abjad.Staff([])
             >>> staff.remove_commands.append('Time_signature_engraver')
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \remove Time_signature_engraver
             } {

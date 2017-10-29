@@ -12,11 +12,11 @@ class Iteration(abctools.AbjadObject):
         ..  container:: example
 
             >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     e'4
@@ -69,11 +69,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score = abjad.Score([])
                 >>> score.append(abjad.Staff("c''4 ~ c''8 d''8 r4 ef''4"))
                 >>> score.append(abjad.Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8"))
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c''4 ~
@@ -121,11 +121,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score = abjad.Score([])
                 >>> score.append(abjad.Staff("c''4 ~ c''8 d''8 r4 ef''4"))
                 >>> score.append(abjad.Staff("r8 g'4. ~ g'8 r16 f'8. ~ f'8"))
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c''4 ~
@@ -176,11 +176,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -460,11 +460,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                 >>> container_2[1].name = 'Voice 2'
                 >>> staff = abjad.Staff([container_1, container_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         <<
                             \context Voice = "Voice 1" \with {
@@ -528,11 +528,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                 >>> container_2[1].name = 'Voice 2'
                 >>> staff = abjad.Staff([container_1, container_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         <<
                             \context Voice = "Voice 1" \with {
@@ -596,11 +596,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                 >>> container_2[1].name = 'Voice 2'
                 >>> staff = abjad.Staff([container_1, container_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         <<
                             \context Voice = "Voice 1" \with {
@@ -664,11 +664,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.override(container_2[0]).stem.direction = abjad.Down
                 >>> container_2[1].name = 'Voice 2'
                 >>> staff = abjad.Staff([container_1, container_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         <<
                             \context Voice = "Voice 1" \with {
@@ -781,11 +781,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
                 >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
                 >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -825,11 +825,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
                 >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
                 >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -879,11 +879,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
                 >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
                 >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -924,11 +924,11 @@ class Iteration(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.GraceContainer("cf''16 bf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -965,11 +965,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -1012,11 +1012,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -1075,11 +1075,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score.append(abjad.Staff("c'8 d'8 e'8 f'8 g'4"))
                 >>> score.append(abjad.Staff("c4 a,4 g,4"))
                 >>> abjad.attach(abjad.Clef('bass'), score[1][0])
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c'8
@@ -1157,11 +1157,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                 >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                 >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -1200,11 +1200,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                 >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                 >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -1246,11 +1246,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                 >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                 >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -1290,11 +1290,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -1335,11 +1335,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                 >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                 >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -1376,11 +1376,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                 >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                 >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -1439,11 +1439,11 @@ class Iteration(abctools.AbjadObject):
 
                 >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4 ~
                         \times 2/3 {
@@ -1473,11 +1473,11 @@ class Iteration(abctools.AbjadObject):
 
                 >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4 ~
                         \times 2/3 {
@@ -1510,11 +1510,11 @@ class Iteration(abctools.AbjadObject):
 
                 >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4 ~
                         \times 2/3 {
@@ -1546,11 +1546,11 @@ class Iteration(abctools.AbjadObject):
 
                 >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4 ~
                         \times 2/3 {
@@ -1587,11 +1587,11 @@ class Iteration(abctools.AbjadObject):
             ..  container:: example
 
                 >>> staff = abjad.Staff("{ c'1 ~ } { c'2 d'2 ~ } { d'1 }")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             c'1 ~
@@ -1627,11 +1627,11 @@ class Iteration(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.GraceContainer("cf''16 bf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -1664,11 +1664,11 @@ class Iteration(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \afterGrace
@@ -1705,11 +1705,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(container, voice[1])
                 >>> container = abjad.AfterGraceContainer("af'16 gf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -1748,11 +1748,11 @@ class Iteration(abctools.AbjadObject):
             ..  container:: example
 
                 >>> voice = abjad.Voice("c'8 [ ~ c' ~ c' d' ]")
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 ~ [
                         c'8 ~
@@ -1806,11 +1806,11 @@ class Iteration(abctools.AbjadObject):
             >>> staff = abjad.Staff("c'8 r8 <d fs>8 r8")
             >>> violin = abjad.instrumenttools.Violin()
             >>> abjad.attach(violin, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Violin }
                     \set Staff.shortInstrumentName = \markup { Vn. }
@@ -1849,11 +1849,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score.append(abjad.Staff("c'8 d' e' f' g'4"))
                 >>> score.append(abjad.Staff("c4 a, g,"))
                 >>> abjad.attach(abjad.Clef('bass'), score[1][0])
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c'8
@@ -1953,11 +1953,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> beam = abjad.Beam()
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8 [
                         d'8
@@ -1984,11 +1984,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> beam = abjad.Beam()
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8 [
                         d'8
@@ -2102,11 +2102,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(abjad.Slur(), staff[:4])
                 >>> abjad.attach(abjad.Slur(), staff[4:])
                 >>> abjad.attach(abjad.Beam(), staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8 [ (
                         d'8
@@ -2138,11 +2138,11 @@ class Iteration(abctools.AbjadObject):
                 >>> abjad.attach(abjad.Slur(), staff[:4])
                 >>> abjad.attach(abjad.Slur(), staff[4:])
                 >>> abjad.attach(abjad.Beam(), staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'8 [ (
                         d'8
@@ -2196,11 +2196,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score = abjad.Score()
                 >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
                 >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c'4
@@ -2239,11 +2239,11 @@ class Iteration(abctools.AbjadObject):
                 >>> score = abjad.Score()
                 >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
                 >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             c'4
@@ -2282,11 +2282,11 @@ class Iteration(abctools.AbjadObject):
                 >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
                 >>> container = abjad.GraceContainer("cf''16 bf'16")
                 >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(voice)
+                    >>> abjad.f(voice)
                     \new Voice {
                         c'8 [
                         \grace {
@@ -2407,11 +2407,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff_group.append(abjad.Staff("a'4 g'4"))
                 >>> staff_group.append(abjad.Staff(r"""\clef "bass" f'8 e'8 d'8 c'8"""))
                 >>> score.append(staff_group)
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             \tweak text #tuplet-number::calc-fraction-text
@@ -2470,11 +2470,11 @@ class Iteration(abctools.AbjadObject):
                 >>> staff_group.append(abjad.Staff("a'4 g'4"))
                 >>> staff_group.append(abjad.Staff(r"""\clef "bass" f'8 e'8 d'8 c'8"""))
                 >>> score.append(staff_group)
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(score)
+                    >>> abjad.f(score)
                     \new Score <<
                         \new Staff {
                             \tweak text #tuplet-number::calc-fraction-text

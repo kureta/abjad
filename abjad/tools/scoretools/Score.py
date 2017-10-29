@@ -12,11 +12,11 @@ class Score(Context):
             >>> staff_1 = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> staff_2 = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> score = abjad.Score([staff_1, staff_2])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'8
@@ -71,11 +71,11 @@ class Score(Context):
 
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> score = abjad.Score([staff])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'4
@@ -89,11 +89,11 @@ class Score(Context):
         ::
 
             >>> bar_line = score.add_final_bar_line()
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'4
@@ -140,11 +140,11 @@ class Score(Context):
                 ...     markup,
                 ...     extra_offset=(0.5, -2),
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         c'4
@@ -185,11 +185,11 @@ class Score(Context):
                 ...     markup,
                 ...     extra_offset=(14.5, -2),
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         c'4
@@ -238,7 +238,7 @@ class Score(Context):
 
             ::
 
-                >>> f(result[0])
+                >>> abjad.f(result[0])
                 \new Score <<
                     \new PianoStaff <<
                         \context Staff = "Treble Staff" {
@@ -256,11 +256,11 @@ class Score(Context):
 
                 >>> notes = [abjad.Note(x, (1, 4)) for x in [-12, 37, -10, 2, 4, 17]]
                 >>> result = abjad.Score.make_piano_score(leaves=notes)
-                >>> show(result[0]) # doctest: +SKIP
+                >>> abjad.show(result[0]) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(result[0])
+                >>> abjad.f(result[0])
                 \new Score <<
                     \new PianoStaff <<
                         \context Staff = "Treble Staff" {
@@ -299,11 +299,11 @@ class Score(Context):
                 ...     leaves=notes,
                 ...     sketch=True,
                 ...     )
-                >>> show(result[0]) # doctest: +SKIP
+                >>> abjad.show(result[0]) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(result[0])
+                >>> abjad.f(result[0])
                 \new Score \with {
                     \override BarLine.stencil = ##f
                     \override BarNumber.transparent = ##t

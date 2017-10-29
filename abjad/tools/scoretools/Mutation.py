@@ -11,7 +11,7 @@ class Mutation(abctools.AbjadObject):
         ::
 
             >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -53,11 +53,11 @@ class Mutation(abctools.AbjadObject):
                 >>> abjad.attach(clef, staff[4])
                 >>> copied_notes = abjad.mutate(staff[:2]).copy()
                 >>> staff.extend(copied_notes)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \clef "treble"
                     c'8
@@ -90,7 +90,7 @@ class Mutation(abctools.AbjadObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \clef "treble"
                     c'8
@@ -132,11 +132,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> container = abjad.Container("c'4 ~ c'4 d'4 ~ d'4")
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'4 ~
                     c'4
@@ -157,11 +157,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff(contents, context_name='RhythmicStaff')
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new RhythmicStaff {
                     c'4 ~
                     c'4
@@ -206,11 +206,11 @@ class Mutation(abctools.AbjadObject):
                 >>> time_signature = abjad.TimeSignature((3, 4))
                 >>> abjad.attach(time_signature, leaves[0])
                 >>> abjad.attach(hairpin, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \tweak text #tuplet-number::calc-fraction-text
                     \times 3/2 {
@@ -229,11 +229,11 @@ class Mutation(abctools.AbjadObject):
 
                 >>> empty_tuplet = abjad.mutate(staff[-1]).extract()
                 >>> empty_tuplet = abjad.mutate(staff[0]).extract()
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 3/4
                     c'4 \< \p
@@ -256,11 +256,11 @@ class Mutation(abctools.AbjadObject):
                 >>> abjad.attach(hairpin, leaves)
                 >>> time_signature = abjad.TimeSignature((3, 4))
                 >>> abjad.attach(time_signature, leaves[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \tweak text #tuplet-number::calc-fraction-text
                     \times 3/2 {
@@ -281,11 +281,11 @@ class Mutation(abctools.AbjadObject):
                 ...     scale_contents=True)
                 >>> empty_tuplet = abjad.mutate(staff[0]).extract(
                 ...     scale_contents=True)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 3/4
                     c'4. \< \p
@@ -308,17 +308,17 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
                 >>> abjad.mutate(staff[1:]).fuse()
                 Selection([Note("d'4.")])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     d'4.
@@ -337,11 +337,11 @@ class Mutation(abctools.AbjadObject):
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, tuplet_2[:])
                 >>> staff = abjad.Staff([tuplet_1, tuplet_2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8 [
@@ -360,11 +360,11 @@ class Mutation(abctools.AbjadObject):
                 >>> tuplets = staff[:]
                 >>> abjad.mutate(tuplets).fuse()
                 Tuplet(Multiplier(2, 3), "c'8 d'8 e'8 c'16 d'16 e'16")
-                >>> show(staff) #doctest: +SKIP
+                >>> abjad.show(staff) #doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'8 [
@@ -400,11 +400,11 @@ class Mutation(abctools.AbjadObject):
                 >>> slur = abjad.Slur()
                 >>> leaves = abjad.select(staff).leaves()
                 >>> abjad.attach(slur, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 1/4
@@ -423,11 +423,11 @@ class Mutation(abctools.AbjadObject):
                 >>> measures = staff[:]
                 >>> abjad.mutate(measures).fuse()
                 Measure((2, 4), "c'8 d'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/4
@@ -468,11 +468,11 @@ class Mutation(abctools.AbjadObject):
                 >>> abjad.attach(hairpin, leaves)
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'4 \< \p (
@@ -491,11 +491,11 @@ class Mutation(abctools.AbjadObject):
                 >>> maker = abjad.NoteMaker()
                 >>> notes = maker("c' d' e' f' c' d' e' f'", (1, 16))
                 >>> abjad.mutate([tuplet_1]).replace(notes)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'16 \< \p (
                     d'16
@@ -520,11 +520,11 @@ class Mutation(abctools.AbjadObject):
 
                 >>> staff = abjad.Staff("c'4")
                 >>> abjad.attach(abjad.Clef('treble'), staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \clef "treble"
                     c'4
@@ -535,11 +535,11 @@ class Mutation(abctools.AbjadObject):
                 >>> chord = abjad.Chord("<d' e'>4")
                 >>> abjad.mutate(staff[0]).replace(chord)
                 >>> abjad.attach(abjad.Clef('bass'), staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \clef "bass"
                     <d' e'>4
@@ -574,11 +574,11 @@ class Mutation(abctools.AbjadObject):
                 >>> maker = abjad.MeasureMaker()
                 >>> measures = maker([(1, 8), (3, 16)])
                 >>> staff = abjad.Staff(measures)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 1/8
@@ -600,11 +600,11 @@ class Mutation(abctools.AbjadObject):
                 ...     ]
                 >>> abjad.mutate(staff).replace_measure_contents(notes)
                 [Measure((1, 8), "c'16 d'16"), Measure((3, 16), "e'16 f'16 s1 * 1/16")]
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 1/8
@@ -702,11 +702,11 @@ class Mutation(abctools.AbjadObject):
                 >>> string += "| 4/4 c'32 d'2.. ~ d'16 e'32 ~ |"
                 >>> string += "| 2/4 e'2 |"
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/4
@@ -738,11 +738,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(staff[1][:]).rewrite_meter(meter)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/4
@@ -769,11 +769,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/4
@@ -808,11 +808,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(staff[1][:]).rewrite_meter(meter)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 2/4
@@ -840,11 +840,11 @@ class Mutation(abctools.AbjadObject):
 
                 >>> string = "abj: | 3/4 c'32 d'8 e'8 fs'4... |"
                 >>> measure = abjad.parse(string)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     c'32
@@ -858,11 +858,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(measure[:]).rewrite_meter(measure)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     c'32
@@ -882,11 +882,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     maximum_dot_count=2,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     c'32
@@ -907,11 +907,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     maximum_dot_count=1,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     c'32
@@ -933,11 +933,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     maximum_dot_count=0,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 3/4
                     c'32
@@ -986,11 +986,11 @@ class Mutation(abctools.AbjadObject):
 
                 >>> string = "abj: | 9/8 c'2 d'2 e'8 |"
                 >>> measure = abjad.parse(string)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 9/8
                     c'2
@@ -1001,11 +1001,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(measure[:]).rewrite_meter(measure)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 9/8
                     c'2
@@ -1026,11 +1026,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     boundary_depth=1,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 9/8
                     c'4. ~
@@ -1051,11 +1051,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     boundary_depth=2,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 9/8
                     c'2
@@ -1093,11 +1093,11 @@ class Mutation(abctools.AbjadObject):
                 >>> score.remove_commands.extend(engravers)
                 >>> score[0].consists_commands.extend(engravers)
                 >>> score[1].consists_commands.extend(engravers)
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \remove Timing_translator
                     \remove Time_signature_engraver
@@ -1170,11 +1170,11 @@ class Mutation(abctools.AbjadObject):
                 >>> for measure in abjad.iterate(score).components(abjad.Measure):
                 ...     abjad.mutate(measure[:]).rewrite_meter(measure)
                 ...
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \remove Timing_translator
                     \remove Time_signature_engraver
@@ -1250,11 +1250,11 @@ class Mutation(abctools.AbjadObject):
                 ...         boundary_depth=1,
                 ...         )
                 ...
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \remove Timing_translator
                     \remove Time_signature_engraver
@@ -1337,11 +1337,11 @@ class Mutation(abctools.AbjadObject):
                 >>> string += "2/3 { d'8. ~ 3/5 { d'16 e'8. f'16 ~ } } "
                 >>> string += "f'4 |"
                 >>> measure = abjad.parse(string)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 4/4
                     c'16 ~
@@ -1372,11 +1372,11 @@ class Mutation(abctools.AbjadObject):
                 ...     measure,
                 ...     boundary_depth=1,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 4/4
                     c'4 ~
@@ -1407,11 +1407,11 @@ class Mutation(abctools.AbjadObject):
                 >>> measure = abjad.Measure((6, 8), "c'4.. c'16 ~ c'4")
                 >>> meter = abjad.Meter((6, 8))
                 >>> abjad.mutate(measure[:]).rewrite_meter(meter)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/8
                     c'4..
@@ -1427,11 +1427,11 @@ class Mutation(abctools.AbjadObject):
                 >>> measure = abjad.Measure((6, 8), "c'4.. c'16 ~ c'4")
                 >>> meter = abjad.Meter((6, 8))
                 >>> abjad.mutate(measure[:]).rewrite_meter(meter, boundary_depth=1)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/8
                     c'4. ~
@@ -1451,11 +1451,11 @@ class Mutation(abctools.AbjadObject):
                 ...     preferred_boundary_depth=1,
                 ...     )
                 >>> abjad.mutate(measure[:]).rewrite_meter(meter)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/8
                     c'4. ~
@@ -1474,11 +1474,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> measure = abjad.Measure((4, 4), "c'4. c'4. c'4")
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 4/4
                     c'4.
@@ -1494,11 +1494,11 @@ class Mutation(abctools.AbjadObject):
                 ...     boundary_depth=1,
                 ...     use_messiaen_style_ties=True,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 4/4
                     c'4
@@ -1523,11 +1523,11 @@ class Mutation(abctools.AbjadObject):
                 >>> string = r"c'8 ~ c'8 ~ c'8 \times 6/7 { c'4. r16 }"
                 >>> string += r" \times 6/7 { r16 c'4. } c'8 ~ c'8 ~ c'8"
                 >>> measure = abjad.Measure((6, 4), string)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/4
                     c'8 ~
@@ -1555,11 +1555,11 @@ class Mutation(abctools.AbjadObject):
                 ...     meter,
                 ...     boundary_depth=1,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/4
                     c'4.
@@ -1595,11 +1595,11 @@ class Mutation(abctools.AbjadObject):
                 >>> string = r"c'8 ~ c'8 ~ c'8 \times 6/7 { c'4. r16 }"
                 >>> string += r" \times 6/7 { r16 c'4. } c'8 ~ c'8 ~ c'8"
                 >>> measure = abjad.Measure((6, 4), string)
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/4
                     c'8 ~
@@ -1628,11 +1628,11 @@ class Mutation(abctools.AbjadObject):
                 ...     boundary_depth=1,
                 ...     rewrite_tuplets=False,
                 ...     )
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 6/4
                     c'4.
@@ -1677,16 +1677,16 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 ( d'8 e'8 f'8 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
                 >>> abjad.mutate(staff[1]).scale(abjad.Multiplier(3, 2))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 (
                     d'8.
@@ -1703,11 +1703,11 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff(r"c'8 \accent ~ c'8 d'8")
                 >>> time_signature = abjad.TimeSignature((3, 8))
                 >>> abjad.attach(time_signature, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 3/8
                     c'8 -\accent ~
@@ -1720,11 +1720,11 @@ class Mutation(abctools.AbjadObject):
                 >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
                 >>> agent = abjad.mutate(logical_tie)
                 >>> logical_tie = agent.scale(abjad.Multiplier(3, 2))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 3/8
                     c'4. -\accent
@@ -1738,11 +1738,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> container = abjad.Container(r"c'8 ( d'8 e'8 f'8 )")
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'8 (
                     d'8
@@ -1753,11 +1753,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(container).scale(abjad.Multiplier(3, 2))
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'8. (
                     d'8.
@@ -1772,16 +1772,16 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 ( d'8 e'8 f'8 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
                 >>> abjad.mutate(staff[1]).scale(abjad.Multiplier(5, 4))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 (
                     d'8 ~
@@ -1799,11 +1799,11 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff(r"c'8 \accent ~ c'8 d'16")
                 >>> time_signature = abjad.TimeSignature((5, 16))
                 >>> abjad.attach(time_signature, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 5/16
                     c'8 -\accent ~
@@ -1816,11 +1816,11 @@ class Mutation(abctools.AbjadObject):
                 >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
                 >>> agent = abjad.mutate(logical_tie)
                 >>> logical_tie = agent.scale(abjad.Multiplier(5, 4))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \time 5/16
                     c'4 -\accent ~
@@ -1835,11 +1835,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> container = abjad.Container(r"c'8 ( d'8 e'8 f'8 )")
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'8 (
                     d'8
@@ -1850,11 +1850,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(container).scale(abjad.Multiplier(5, 4))
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'8 ~ (
                     c'32
@@ -1873,16 +1873,16 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 ( d'8 e'8 f'8 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
                 >>> abjad.mutate(staff[1]).scale(abjad.Multiplier(2, 3))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 (
                     \tweak edge-height #'(0.7 . 0)
@@ -1900,11 +1900,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff(r"c'8 \accent")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 -\accent
                 }
@@ -1914,11 +1914,11 @@ class Mutation(abctools.AbjadObject):
                 >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
                 >>> agent = abjad.mutate(logical_tie)
                 >>> logical_tie = agent.scale(abjad.Multiplier(4, 3))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \tweak edge-height #'(0.7 . 0)
                     \times 2/3 {
@@ -1933,11 +1933,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> container = abjad.Container(r"c'8 ( d'8 e'8 f'8 )")
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     c'8 (
                     d'8
@@ -1948,11 +1948,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(container).scale(abjad.Multiplier(4, 3))
-                >>> show(container) # doctest: +SKIP
+                >>> abjad.show(container) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(container)
+                >>> abjad.f(container)
                 {
                     \tweak edge-height #'(0.7 . 0)
                     \times 2/3 {
@@ -1979,16 +1979,16 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 ( d'8 e'8 f'8 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
                 >>> abjad.mutate(staff[1]).scale(abjad.Multiplier(5, 6))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 (
                     \tweak edge-height #'(0.7 . 0)
@@ -2008,21 +2008,21 @@ class Mutation(abctools.AbjadObject):
 
                 >>> note = abjad.Note("c'8")
                 >>> abjad.attach(abjad.Multiplier(1, 2), note)
-                >>> show(note) # doctest: +SKIP
+                >>> abjad.show(note) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(note)
+                >>> abjad.f(note)
                 c'8 * 1/2
 
             ::
 
                 >>> abjad.mutate(note).scale(abjad.Multiplier(5, 3))
-                >>> show(note) # doctest: +SKIP
+                >>> abjad.show(note) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(note)
+                >>> abjad.f(note)
                 c'8 * 5/6
 
         ..  container:: example
@@ -2038,11 +2038,11 @@ class Mutation(abctools.AbjadObject):
                 >>> time_signature = abjad.TimeSignature((4, 8))
                 >>> leaves = abjad.select(staff).leaves()
                 >>> abjad.attach(time_signature, leaves[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/5 {
                         \time 4/8
@@ -2057,11 +2057,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(tuplet).scale(abjad.Multiplier(2))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/5 {
                         \time 4/8
@@ -2085,11 +2085,11 @@ class Mutation(abctools.AbjadObject):
                 >>> time_signature = abjad.TimeSignature((4, 8))
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
                 >>> abjad.attach(time_signature, leaf)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/5 {
                         \time 4/8
@@ -2104,11 +2104,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(tuplet).scale(abjad.Multiplier(2))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/5 {
                         \time 4/8
@@ -2173,11 +2173,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2198,11 +2198,11 @@ class Mutation(abctools.AbjadObject):
                 ...     durations,
                 ...     tie_split_notes=False,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2228,11 +2228,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2255,11 +2255,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=True,
                 ...     tie_split_notes=False,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2286,11 +2286,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2312,11 +2312,11 @@ class Mutation(abctools.AbjadObject):
                 ...     cyclic=True,
                 ...     tie_split_notes=False,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2345,11 +2345,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, leaves)
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2372,11 +2372,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=True,
                 ...     tie_split_notes=False,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2406,11 +2406,11 @@ class Mutation(abctools.AbjadObject):
                 >>> leaves = abjad.select(staff).leaves()
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'4 (
@@ -2432,11 +2432,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=True,
                 ...     tie_split_notes=False,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 2/3 {
                         c'4 (
@@ -2461,11 +2461,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2482,11 +2482,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=False,
                 ...     tie_split_notes=True,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2515,11 +2515,11 @@ class Mutation(abctools.AbjadObject):
                 ...     tie_split_notes=True,
                 ...     use_messiaen_style_ties=True,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2544,11 +2544,11 @@ class Mutation(abctools.AbjadObject):
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, voice[:])
                 >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2569,11 +2569,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=False,
                 ...     tie_split_notes=True,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override DynamicLineSpanner.staff-padding = #3
                 } {
@@ -2639,11 +2639,11 @@ class Mutation(abctools.AbjadObject):
                 ...     )
                 >>> abjad.override(voice_2).stem.direction = abjad.Down
                 >>> staff = abjad.Staff([container])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <<
                         \context Voice = "Voice 1" \with {
@@ -2675,11 +2675,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=False,
                 ...     tie_split_notes=True,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <<
                         \context Voice = "Voice 1" \with {
@@ -2726,11 +2726,11 @@ class Mutation(abctools.AbjadObject):
                 >>> abjad.attach(abjad.LaissezVibrer(), staff[1])
                 >>> abjad.attach(abjad.Articulation('^'), staff[2])
                 >>> abjad.attach(abjad.LaissezVibrer(), staff[3])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 -\marcato
                     d'4 \laissezVibrer
@@ -2747,11 +2747,11 @@ class Mutation(abctools.AbjadObject):
                 ...     fracture_spanners=False,
                 ...     tie_split_notes=True,
                 ...     )
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 -\marcato ~
                     c'8
@@ -2921,11 +2921,11 @@ class Mutation(abctools.AbjadObject):
                 >>> measures = staff[:]
                 >>> slur = abjad.Slur()
                 >>> abjad.attach(slur, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 3/4
@@ -2946,11 +2946,11 @@ class Mutation(abctools.AbjadObject):
                 >>> tuplet = abjad.Tuplet((2, 3), [])
                 >>> tuplet.preferred_denominator = 4
                 >>> abjad.mutate(measures).swap(tuplet)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/6 {
                         c'4 \< \p (
@@ -2990,11 +2990,11 @@ class Mutation(abctools.AbjadObject):
                 >>> staff = abjad.Staff()
                 >>> staff.append(abjad.Measure((4, 4), "c'4 d'4 e'4 r4"))
                 >>> staff.append(abjad.Measure((3, 4), "d'4 e'4 <f' a' c''>4"))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 4/4
@@ -3014,11 +3014,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> abjad.mutate(staff).transpose("+m3")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 4/4
@@ -3062,11 +3062,11 @@ class Mutation(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 [ ( d' e' ] ) c' [ ( d' e' ] )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [ (
                     d'8
@@ -3080,11 +3080,11 @@ class Mutation(abctools.AbjadObject):
 
                 >>> tuplet = abjad.Tuplet((2, 3), [])
                 >>> abjad.mutate(staff[-3:]).wrap(tuplet)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [ (
                     d'8
@@ -3106,11 +3106,11 @@ class Mutation(abctools.AbjadObject):
                 >>> notes = maker([0, 2, 4], [(1, 8)])
                 >>> tuplet = abjad.Tuplet((2, 3), [])
                 >>> abjad.mutate(notes).wrap(tuplet)
-                >>> show(tuplet) # doctest: +SKIP
+                >>> abjad.show(tuplet) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(tuplet)
+                >>> abjad.f(tuplet)
                 \times 2/3 {
                     c'8
                     d'8
@@ -3129,11 +3129,11 @@ class Mutation(abctools.AbjadObject):
                 >>> voice = abjad.Voice(notes)
                 >>> measure = abjad.Measure((4, 8), [])
                 >>> abjad.mutate(voice[:4]).wrap(measure)
-                >>> show(voice) # doctest: +SKIP
+                >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(voice)
+                >>> abjad.f(voice)
                 \new Voice {
                     {
                         \time 4/8
@@ -3163,7 +3163,7 @@ class Mutation(abctools.AbjadObject):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     {
                         \time 1/1
