@@ -125,7 +125,7 @@ class RhythmMaker(AbjadValueObject):
             if not matching_division_mask:
                 new_selections.append(selection)
                 continue
-            duration = selection.get_duration()
+            duration = abjad.inspect(selection).get_duration()
             if isinstance(
                 matching_division_mask,
                 rhythmmakertools.SustainMask,

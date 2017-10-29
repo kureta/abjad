@@ -2783,7 +2783,7 @@ class Mutation(abctools.AbjadObject):
             else:
                 return [], components
         # calculate total component duration
-        total_component_duration = components.get_duration()
+        total_component_duration = abjad.inspect(components).get_duration()
         total_split_duration = sum(durations)
         # calculate durations
         if cyclic:

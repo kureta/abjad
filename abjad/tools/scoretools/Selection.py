@@ -2415,20 +2415,18 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return type(self)(abjad.sequence(self).flatten(depth=depth))
 
-    def get_duration(self, in_seconds=False):
-        r'''Gets duration.
-
-        Returns duration.
-        '''
-        import abjad
-        durations = []
-        for item in self:
-            if hasattr(item, '_get_duration'):
-                duration = item._get_duration(in_seconds=in_seconds)
-            else:
-                duration = abjad.Duration(item)
-            durations.append(duration)
-        return sum(durations)
+#    def get_duration(self, in_seconds=False):
+#        r'''DEPRECATED.
+#        '''
+#        import abjad
+#        durations = []
+#        for item in self:
+#            if hasattr(item, '_get_duration'):
+#                duration = item._get_duration(in_seconds=in_seconds)
+#            else:
+#                duration = abjad.Duration(item)
+#            durations.append(duration)
+#        return sum(durations)
 
     def get_pitches(self):
         r'''Gets pitches.

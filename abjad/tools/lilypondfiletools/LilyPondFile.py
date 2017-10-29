@@ -1474,7 +1474,7 @@ class LilyPondFile(AbjadObject):
                     break
         if isinstance(selections, list):
             if divisions is None:
-                duration = sum([_.get_duration() for _ in selections])
+                duration = abjad.inspect(selections).get_duration()
                 divisions = [duration]
             time_signatures = time_signatures or divisions
             maker = abjad.MeasureMaker(implicit_scaling=implicit_scaling)

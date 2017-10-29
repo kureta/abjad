@@ -338,7 +338,7 @@ class Tuplet(Container):
             return
         leaves = []
         logical_ties = select(self).logical_ties()
-        durations = [_.get_duration() for _ in logical_ties]
+        durations = [abjad.inspect(_).get_duration() for _ in logical_ties]
         for i, logical_tie in enumerate(logical_ties):
             duration = durations[i]
             if i == len(logical_ties) - 1:
@@ -900,7 +900,7 @@ class Tuplet(Container):
         leaves = list(iterate(self).leaves())
         for logical_tie in abjad.iterate(leaves).logical_ties():
             leaves = [_ for _ in logical_tie if _ in descendants]
-            if not abjad.select(leaves).get_duration().is_assignable:
+            if not abjad.inspect(leaves).get_duration().is_assignable:
                 return False
         return True
 

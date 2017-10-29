@@ -527,8 +527,7 @@ class Leaf(Component):
                 ]
             notes = maker(0, note_durations)
         # make tuplet
-        notes = abjad.select(notes)
-        contents_duration = notes.get_duration()
+        contents_duration = abjad.inspect(notes).get_duration()
         multiplier = target_duration / contents_duration
         tuplet = abjad.Tuplet(multiplier, notes)
         # fix tuplet contents if necessary

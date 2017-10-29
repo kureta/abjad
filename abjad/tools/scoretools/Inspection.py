@@ -1,3 +1,4 @@
+import collections
 from abjad.tools import abctools
 
 
@@ -30,14 +31,10 @@ class Inspection(abctools.AbjadObject):
 
     def __init__(self, client=None):
         import abjad
-        prototype = (
-            abjad.Component,
-            abjad.Selection,
-            abjad.Spanner,
-            type(None),
-            )
+        assert not isinstance(client, str), repr(client)
+        prototype = (abjad.Component, collections.Iterable, type(None))
         if not isinstance(client, prototype):
-            message = 'must be component, selection, spanner or none: {!r}.'
+            message = 'must be component, nonstring iterable or none: {!r}.'
             message = message.format(client)
             raise TypeError(message)
         self._client = client
@@ -345,10 +342,16 @@ class Inspection(abctools.AbjadObject):
 
         Returns duration.
         '''
+        import abjad
         if hasattr(self.client, 'get_duration'):
             return self.client.get_duration(in_seconds=in_seconds)
-        elif hasattr(self.client, '_get_duration'):
+        if hasattr(self.client, '_get_duration'):
             return self.client._get_duration(in_seconds=in_seconds)
+        assert isinstance(self.client, collections.Iterable), repr(self.client)
+        return sum([
+            abjad.inspect(_).get_duration(in_seconds=in_seconds)
+            for _ in self.client
+            ])
 
     def get_effective(self, prototype=None, unwrap=True, n=0):
         r'''Gets effective indicator.
