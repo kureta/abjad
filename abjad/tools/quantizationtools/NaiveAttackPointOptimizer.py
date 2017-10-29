@@ -28,7 +28,7 @@ class NaiveAttackPointOptimizer(AttackPointOptimizer):
         import abjad
         for logical_tie in iterate(argument).logical_ties(
             reverse=True,
-            with_grace_notes=False,
+            grace_notes=False,
             ):
             sub_logical_ties = []
             current_sub_logical_tie = []

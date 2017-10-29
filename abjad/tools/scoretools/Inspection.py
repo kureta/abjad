@@ -384,7 +384,7 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> for leaf in abjad.iterate(staff).components(
-                ...     with_grace_notes=True,
+                ...     grace_notes=True,
                 ...     ):
                 ...     agent = abjad.inspect(leaf)
                 ...     clef = agent.get_effective(abjad.Clef)
@@ -704,7 +704,7 @@ class Inspection(abctools.AbjadObject):
                 direction=direction,
                 )
 
-    def get_parentage(self, include_self=True, with_grace_notes=False):
+    def get_parentage(self, include_self=True, grace_notes=False):
         r'''Gets parentage.
 
         .. container:: example
@@ -765,14 +765,14 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(container[0])
-                >>> agent.get_parentage(with_grace_notes=True)
+                >>> agent.get_parentage(grace_notes=True)
                 Parentage([Note("c'16"), GraceContainer("c'16 d'16"), Note("d'4"), Voice("c'4 d'4 e'4 f'4")])
 
         Returns parentage.
         '''
         return self.client._get_parentage(
             include_self=include_self,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
 
     def get_piecewise(self, prototype=None, default=None):
@@ -1009,7 +1009,7 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> for leaf in abjad.iterate(voice).leaves(
-                ...     with_grace_notes=True,
+                ...     grace_notes=True,
                 ...     ):
                 ...     timespan = abjad.inspect(leaf).get_timespan()
                 ...     print(str(leaf) + ':')

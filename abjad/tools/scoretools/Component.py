@@ -331,7 +331,7 @@ class Component(AbjadObject):
         candidate_wrappers = {}
         for parent in self._get_parentage(
             include_self=True,
-            with_grace_notes=True,
+            grace_notes=True,
             ):
             for wrapper in parent._dependent_wrappers:
                 if isinstance(wrapper.indicator, prototype):
@@ -539,12 +539,12 @@ class Component(AbjadObject):
                 result = previous(result)
         return result
 
-    def _get_parentage(self, include_self=True, with_grace_notes=False):
+    def _get_parentage(self, include_self=True, grace_notes=False):
         import abjad
         return abjad.Parentage(
             self,
             include_self=include_self,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
 
     def _get_previous_measure(self):

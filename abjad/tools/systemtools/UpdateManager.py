@@ -152,7 +152,7 @@ class UpdateManager(AbjadObject):
             return
         parentage = component._get_parentage(
             include_self=True,
-            with_grace_notes=True,
+            grace_notes=True,
             )
         for parent in parentage:
             if parent._is_forbidden_to_update:

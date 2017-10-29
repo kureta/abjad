@@ -332,33 +332,33 @@ class Iteration(abctools.AbjadObject):
         argument,
         prototype,
         reverse=False,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         import abjad
         grace_container, after_grace_container = None, None
-        if with_grace_notes and isinstance(argument, abjad.Leaf):
+        if grace_notes and isinstance(argument, abjad.Leaf):
             inspection = abjad.inspect(argument)
             grace_container = inspection.get_grace_container()
             after_grace_container = inspection.get_after_grace_container()
         if not reverse:
-            if with_grace_notes and grace_container:
+            if grace_notes and grace_container:
                 for component in grace_container:
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component_
             if isinstance(argument, prototype):
                 yield argument
-            if with_grace_notes and after_grace_container:
+            if grace_notes and after_grace_container:
                 for component in after_grace_container:
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component_
             if isinstance(argument, collections.Iterable):
@@ -367,28 +367,28 @@ class Iteration(abctools.AbjadObject):
                         item,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component
         else:
-            if with_grace_notes and after_grace_container:
+            if grace_notes and after_grace_container:
                 for component in reversed(after_grace_container):
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component_
             if isinstance(argument, prototype):
                 yield argument
-            if with_grace_notes and grace_container:
+            if grace_notes and grace_container:
                 for component in reversed(grace_container):
                     for component_ in Iteration._iterate_components(
                         component,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component_
             if isinstance(argument, collections.Iterable):
@@ -397,7 +397,7 @@ class Iteration(abctools.AbjadObject):
                         item,
                         prototype,
                         reverse=reverse,
-                        with_grace_notes=with_grace_notes,
+                        grace_notes=grace_notes,
                         ):
                         yield component
 
@@ -767,7 +767,7 @@ class Iteration(abctools.AbjadObject):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Iterates components.
 
@@ -1058,7 +1058,7 @@ class Iteration(abctools.AbjadObject):
             self.client,
             prototype,
             reverse=reverse,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
         return self._iterate_subrange(iterator, start, stop)
 
@@ -1143,7 +1143,7 @@ class Iteration(abctools.AbjadObject):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Iterates leaves.
 
@@ -1418,7 +1418,7 @@ class Iteration(abctools.AbjadObject):
             reverse=reverse,
             start=start,
             stop=stop,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
 
     def logical_ties(
@@ -1427,7 +1427,7 @@ class Iteration(abctools.AbjadObject):
         pitched=False,
         reverse=False,
         parentage_mask=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Iterates logical ties.
 
@@ -1493,7 +1493,7 @@ class Iteration(abctools.AbjadObject):
 
                 >>> for logical_tie in abjad.iterate(staff).logical_ties(
                 ...     reverse=True,
-                ...     with_grace_notes=False,
+                ...     grace_notes=False,
                 ...     ):
                 ...     logical_tie
                 ...
@@ -1779,7 +1779,7 @@ class Iteration(abctools.AbjadObject):
         for leaf in self.components(
             prototype=prototype,
             reverse=reverse,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             ):
             logical_tie = abjad.inspect(leaf).get_logical_tie()
             if leaf is not logical_tie.head:
@@ -2326,7 +2326,7 @@ class Iteration(abctools.AbjadObject):
                     )
                 components.sort(
                     key=lambda x: x._get_parentage(
-                        with_grace_notes=True).score_index,
+                        grace_notes=True).score_index,
                     reverse=True,
                     )
                 components_to_process = components[:]
@@ -2364,7 +2364,7 @@ class Iteration(abctools.AbjadObject):
                     )
                 components.sort(
                     key=lambda x: x._get_parentage(
-                        with_grace_notes=True).score_index,
+                        grace_notes=True).score_index,
                     reverse=True,
                     )
                 components_to_process = components[:]

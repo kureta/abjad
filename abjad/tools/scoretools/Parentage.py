@@ -65,7 +65,7 @@ class Parentage(Selection):
         self,
         component=None,
         include_self=True,
-        with_grace_notes=False,
+        grace_notes=False,
         ):
         import abjad
         assert isinstance(component, (abjad.Component, type(None)))
@@ -80,7 +80,7 @@ class Parentage(Selection):
             prototype = (abjad.AfterGraceContainer, abjad.GraceContainer)
             while parent is not None:
                 components.append(parent)
-                if with_grace_notes and isinstance(parent, prototype):
+                if grace_notes and isinstance(parent, prototype):
                     parent = parent._carrier
                 else:
                     parent = parent._parent

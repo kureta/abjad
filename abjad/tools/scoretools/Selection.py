@@ -524,7 +524,7 @@ class Selection(AbjadValueObject):
         head=None,
         tail=None,
         trim=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         import abjad
         prototype = prototype or abjad.Component
@@ -533,7 +533,7 @@ class Selection(AbjadValueObject):
         result = []
         generator = abjad.iterate(argument).components(
             prototype,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
         components = list(generator)
         if components:
@@ -1267,7 +1267,7 @@ class Selection(AbjadValueObject):
         reverse=False,
         start=0,
         stop=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Selects components.
 
@@ -1364,7 +1364,7 @@ class Selection(AbjadValueObject):
             reverse=reverse,
             start=start,
             stop=stop,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
         return type(self)(generator)
 
@@ -3114,7 +3114,7 @@ class Selection(AbjadValueObject):
         stop=None,
         tail=None,
         trim=None,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Selects leaves.
 
@@ -3964,7 +3964,7 @@ class Selection(AbjadValueObject):
             head=head,
             tail=tail,
             trim=trim,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
 
     def logical_measures(self):
@@ -4348,7 +4348,7 @@ class Selection(AbjadValueObject):
         nontrivial=False,
         pitched=False,
         reverse=False,
-        with_grace_notes=True,
+        grace_notes=True,
         ):
         r'''Selects logical ties.
 
@@ -4807,7 +4807,7 @@ class Selection(AbjadValueObject):
             nontrivial=nontrivial,
             pitched=pitched,
             reverse=reverse,
-            with_grace_notes=with_grace_notes,
+            grace_notes=grace_notes,
             )
         return type(self)(generator)
 
