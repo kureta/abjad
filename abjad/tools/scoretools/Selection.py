@@ -1481,7 +1481,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
-                >>> result = result.filter(abjad.duration('==', (1, 16)))
+                >>> result = result.filter_duration('==', (1, 16))
                 >>> result = result.contiguous()
 
                 >>> for item in result:
@@ -1493,7 +1493,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves()
-                >>> selector = selector.filter(abjad.duration('==', (1, 16)))
+                >>> selector = selector.filter_duration('==', (1, 16))
                 >>> selector = selector.contiguous()
                 >>> result = selector(staff)
 
@@ -1571,7 +1571,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).logical_ties()
-                >>> result = result.filter(abjad.duration('<', (1, 4)))
+                >>> result = result.filter_duration('<', (1, 4))
                 >>> result = result.contiguous()
                 >>> result = result.map(abjad.select().leaves()[0])
 
@@ -1583,7 +1583,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().logical_ties()
-                >>> selector = selector.filter(abjad.duration('<', (1, 4)))
+                >>> selector = selector.filter_duration('<', (1, 4))
                 >>> selector = selector.contiguous()
                 >>> selector = selector.map(abjad.select().leaves()[0])
                 >>> result = selector(staff)
@@ -1880,8 +1880,8 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).runs()
-                >>> result = result.filter(abjad.duration('==', (2, 8)))
+                >>> inequality = abjad.DurationInequality('==', (2, 8))
+                >>> result = abjad.select(staff).runs().filter(inequality)
 
                 >>> for item in result:
                 ...     item
@@ -1890,8 +1890,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().runs()
-                >>> selector = selector.filter(abjad.duration('==', (2, 8)))
+                >>> selector = abjad.select().runs().filter(inequality)
                 >>> result = selector(staff)
 
                 >>> selector.color(result)
@@ -1933,11 +1932,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         if predicate is None:
             return self[:]
-        items = []
-        for item in self:
-            if predicate(item):
-                items.append(item)
-        return type(self)(items)
+        return type(self)([_ for _ in self if predicate(_)])
 
     def filter_duration(self, operator, duration):
         r'''Filters selection by `operator` and `duration`.
@@ -2019,7 +2014,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expresison
 
                 >>> selector = abjad.select().runs()
-                >>> selector = selector.filter(abjad.duration('<', (3, 8)))
+                >>> selector = selector.filter_duration('<', (3, 8))
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2066,7 +2061,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        return self.filter(abjad.duration(operator, duration))
+        return self.filter(abjad.DurationInequality(operator, duration))
 
     def filter_length(self, operator, length):
         r'''Filters selection by `operator` and `length`.
@@ -2207,7 +2202,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        return self.filter(abjad.length(operator, length))
+        return self.filter(abjad.LengthInequality(operator, length))
 
     def filter_pitches(self, operator, pitches):
         r'''Filters selection by `operator` and `pitches`.
@@ -2417,7 +2412,7 @@ class Selection(AbjadValueObject):
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
-        return self.filter(abjad.pitches(operator, pitches))
+        return self.filter(abjad.PitchInequality(operator, pitches))
 
     def flatten(self, depth=-1):
         r'''Flattens selection to `depth`.
