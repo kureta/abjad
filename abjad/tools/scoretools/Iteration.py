@@ -225,19 +225,16 @@ class Iteration(abctools.AbjadObject):
             If client has no univisited components, return client's parent.
             '''
             # if component is a container with not-yet-returned children
-            if (hasattr(component, 'components') and
-                0 < len(component) and
-                total < len(component)):
+            if (isinstance(component, abjad.Container) and
+                0 < len(component) and total < len(component)):
                 # return next not-yet-returned child
                 return component[total], 0
             # if component is a leaf with grace container attached
             elif getattr(component, '_grace_container', None) is not None:
-                # return grace container
                 return component._grace_container, 0
             # if component is a leaf with after grace container attached
             elif (getattr(component, '_after_grace_container', None)
                 is not None):
-                # return after grace container
                 return component._after_grace_container, 0
             # if component is grace container with all children returned
             elif hasattr(component, '_carrier'):
@@ -250,7 +247,6 @@ class Iteration(abctools.AbjadObject):
                     carrier._after_grace_container is not None):
                     return carrier._after_grace_container, 0
                 carrier_parent = carrier._parent
-                # if carrier has no parent
                 if carrier_parent is None:
                     return None, None
                 # advance to next node in carrier parent
@@ -266,9 +262,8 @@ class Iteration(abctools.AbjadObject):
 
             If client has no univisited components, return client's parent.
             '''
-            if (hasattr(component, 'components') and
-                0 < len(component) and
-                total < len(component)):
+            if (isinstance(component, abjad.Container) and
+                0 < len(component) and total < len(component)):
                 return component[len(component) - 1 - total], 0
             else:
                 parent = component._parent
@@ -328,11 +323,11 @@ class Iteration(abctools.AbjadObject):
         queue.clear()
 
     def _logical_voice(self, prototype=None, reverse=False):
-        r'''Iterates logical voice from client.
+        r'''Iterates logical voice.
 
         ..  container:: example
 
-            Iterates from first leaf in score:
+            Iterates logical voice from first leaf in score:
 
             ..  container:: example
 
@@ -402,7 +397,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates from second leaf in score:
+            Iterates logical voice from second leaf in score:
 
                 >>> container_1 = abjad.Container([
                 ...     abjad.Voice("c'8 d'8"),
@@ -1301,43 +1296,6 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates logical ties in reverse:
-
-            ..  container:: example
-
-                >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
-                >>> staff = abjad.Staff(string)
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        c'4 ~
-                        \times 2/3 {
-                            c'16
-                            d'8
-                        }
-                        e'8
-                        f'4 ~
-                        f'16
-                    }
-
-            ..  container:: example
-
-                >>> for logical_tie in abjad.iterate(staff).logical_ties(
-                ...     reverse=True,
-                ...     grace_notes=False,
-                ...     ):
-                ...     logical_tie
-                ...
-                LogicalTie([Note("f'4"), Note("f'16")])
-                LogicalTie([Note("e'8")])
-                LogicalTie([Note("d'8")])
-                LogicalTie([Note("c'4"), Note("c'16")])
-
-        ..  container:: example
-
             Iterates pitched logical ties:
 
             ..  container:: example
@@ -1408,83 +1366,42 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates logical ties together with grace notes:
+            Iterates trivial logical ties:
 
             ..  container:: example
 
-                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
-                >>> container = abjad.GraceContainer("cf''16 bf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> abjad.show(voice) # doctest: +SKIP
+                >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
+                >>> staff = abjad.Staff(string)
+                >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> abjad.f(voice)
-                    \new Voice {
-                        c'8 [
-                        \grace {
-                            cf''16
-                            bf'16
+                    >>> abjad.f(staff)
+                    \new Staff {
+                        c'4 ~
+                        \times 2/3 {
+                            c'16
+                            d'8
                         }
-                        d'8
                         e'8
-                        f'8 ]
+                        f'4 ~
+                        f'16
                     }
 
             ..  container:: example
 
-                >>> for item in abjad.iterate(voice).logical_ties():
-                ...     item
+                >>> for logical_tie in abjad.iterate(staff).logical_ties(
+                ...     nontrivial=False,
+                ...     ):
+                ...     logical_tie
                 ...
-                LogicalTie([Note("c'8")])
-                LogicalTie([Note("cf''16")])
-                LogicalTie([Note("bf'16")])
                 LogicalTie([Note("d'8")])
                 LogicalTie([Note("e'8")])
-                LogicalTie([Note("f'8")])
 
         ..  container:: example
 
-            Iterates logical ties together with after grace notes:
-
-            ..  container:: example
-
-                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
-                >>> container = abjad.AfterGraceContainer("af'16 gf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> abjad.show(voice) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(voice)
-                    \new Voice {
-                        c'8 [
-                        \afterGrace
-                        d'8
-                        {
-                            af'16
-                            gf'16
-                        }
-                        e'8
-                        f'8 ]
-                    }
-
-            ..  container:: example
-
-                >>> for item in abjad.iterate(voice).logical_ties():
-                ...     item
-                ...
-                LogicalTie([Note("c'8")])
-                LogicalTie([Note("d'8")])
-                LogicalTie([Note("af'16")])
-                LogicalTie([Note("gf'16")])
-                LogicalTie([Note("e'8")])
-                LogicalTie([Note("f'8")])
-
-        ..  container:: example
-
-            Iterates logical ties together with both grace notes and after
-            grace notes:
+            Iterates logical ties together with grace notes and after grace
+            notes:
 
             ..  container:: example
 
@@ -1530,8 +1447,44 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Regression: returns at least one logical tie even when not all
-            leaves in logical tie are passed as input:
+            Iterates logical ties in reverse:
+
+            ..  container:: example
+
+                >>> string = r"c'4 ~ \times 2/3 { c'16 d'8 } e'8 f'4 ~ f'16"
+                >>> staff = abjad.Staff(string)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(staff)
+                    \new Staff {
+                        c'4 ~
+                        \times 2/3 {
+                            c'16
+                            d'8
+                        }
+                        e'8
+                        f'4 ~
+                        f'16
+                    }
+
+            ..  container:: example
+
+                >>> for logical_tie in abjad.iterate(staff).logical_ties(
+                ...     reverse=True,
+                ...     ):
+                ...     logical_tie
+                ...
+                LogicalTie([Note("f'4"), Note("f'16")])
+                LogicalTie([Note("e'8")])
+                LogicalTie([Note("d'8")])
+                LogicalTie([Note("c'4"), Note("c'16")])
+
+        ..  container:: example
+
+            Regression: yields logical tie even when leaves are missing in
+            input:
 
             ..  container:: example
 
@@ -1551,8 +1504,8 @@ class Iteration(abctools.AbjadObject):
             ..  container:: example
 
                 >>> selection = voice[:2]
-                >>> for lt in abjad.iterate(selection).logical_ties():
-                ...     lt
+                >>> for logical_tie in abjad.iterate(selection).logical_ties():
+                ...     logical_tie
                 ...
                 LogicalTie([Note("c'8"), Note("c'8"), Note("c'8")])
 
@@ -1568,7 +1521,9 @@ class Iteration(abctools.AbjadObject):
             logical_tie = abjad.inspect(leaf).get_logical_tie()
             if leaf is not logical_tie.head:
                 continue
-            if not bool(nontrivial) or not logical_tie.is_trivial:
+            if (nontrivial is None or
+                (nontrivial is True and not logical_tie.is_trivial) or
+                (nontrivial is False and logical_tie.is_trivial)):
                 if logical_tie not in yielded_logical_ties:
                     yielded_logical_ties.add(logical_tie)
                     yield logical_tie
