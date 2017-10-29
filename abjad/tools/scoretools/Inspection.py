@@ -834,6 +834,16 @@ class Inspection(abctools.AbjadObject):
             message = 'multiple indicators attached to client.'
             raise Exception(message)
 
+    def get_pitches(self):
+        r'''Gets pitches.
+
+        Returns pitch set.
+        '''
+        import abjad
+        if not self.client:
+            return
+        return abjad.PitchSet.from_selection(abjad.select(self.client))
+
     def get_sounding_pitch(self):
         r'''Gets sounding pitch.
 

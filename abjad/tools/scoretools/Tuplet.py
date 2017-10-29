@@ -2240,7 +2240,7 @@ class Tuplet(Container):
                     maker = abjad.NoteMaker()
                     notes = maker(0, duration)
                     if allow_trivial:
-                        duration = notes.get_duration()
+                        duration = abjad.inspect(notes).get_duration()
                         return abjad.Tuplet.from_duration(duration, notes)
                     else:
                         return abjad.Container(notes)

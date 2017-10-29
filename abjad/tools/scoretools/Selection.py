@@ -1626,7 +1626,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves(pitched=True)
-                >>> result = result.group(abjad.select().get_pitches())
+                >>> result = result.group_pitches()
                 >>> result = result.map(abjad.select().contiguous())
                 >>> result = result.flatten(depth=1)
 
@@ -1640,7 +1640,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves(pitched=True)
-                >>> selector = selector.group(abjad.select().get_pitches())
+                >>> selector = selector.group_pitches()
                 >>> selector = selector.map(abjad.select().contiguous())
                 >>> selector = selector.flatten(depth=1)
                 >>> result = selector(staff)
@@ -1738,8 +1738,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> getter = abjad.select().get_pitches()
-                >>> getter = abjad.select().group(getter)
+                >>> getter = abjad.select().group_pitches()
 
                 >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.contiguous()
@@ -2419,24 +2418,13 @@ class Selection(AbjadValueObject):
 #        r'''DEPRECATED.
 #        '''
 #        import abjad
-#        durations = []
-#        for item in self:
-#            if hasattr(item, '_get_duration'):
-#                duration = item._get_duration(in_seconds=in_seconds)
-#            else:
-#                duration = abjad.Duration(item)
-#            durations.append(duration)
-#        return sum(durations)
+#       return abjad.inspect(self).get_duration(in_seconds=in_seconds)
 
-    def get_pitches(self):
-        r'''Gets pitches.
-
-        Returns pitch set.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        return abjad.PitchSet.from_selection(self)
+#    def get_pitches(self):
+#        r'''DEPRECATED.
+#        '''
+#        import abjad
+#       return abjad.inspect(self).get_pitches()
 
     def get_timespan(self, in_seconds=False):
         r'''Gets timespan.
