@@ -402,21 +402,6 @@ class Iteration(abctools.AbjadObject):
                         yield component
 
     @staticmethod
-    def _iterate_subrange(iterator, start=0, stop=None):
-        assert 0 <= start
-        try:
-            for i in range(start):
-                next(iterator)
-            if stop is None:
-                for item in iterator:
-                    yield item
-            else:
-                for i in range(stop - start):
-                    yield next(iterator)
-        except StopIteration:
-            pass
-
-    @staticmethod
     def _list_ordered_pitch_pairs(expr_1, expr_2):
         import abjad
         pitches_1 = sorted(abjad.iterate(expr_1).pitches())
@@ -765,8 +750,6 @@ class Iteration(abctools.AbjadObject):
         self,
         prototype=None,
         reverse=False,
-        start=0,
-        stop=None,
         grace_notes=True,
         ):
         r'''Iterates components.
@@ -814,60 +797,6 @@ class Iteration(abctools.AbjadObject):
                 Note("f'8")
                 Note("g'8")
                 Note("a'8")
-
-        ..  container:: example
-
-            Iterates notes constrained by index:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "c'8 d'8"))
-                >>> staff.append(abjad.Measure((2, 8), "e'8 f'8"))
-                >>> staff.append(abjad.Measure((2, 8), "g'8 a'8"))
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            c'8
-                            d'8
-                        }
-                        {
-                            e'8
-                            f'8
-                        }
-                        {
-                            g'8
-                            a'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for note in abjad.iterate(staff).components(
-                ...     prototype=abjad.Note,
-                ...     start=0,
-                ...     stop=3,
-                ...     ):
-                ...     note
-                ...
-                Note("c'8")
-                Note("d'8")
-                Note("e'8")
-
-                >>> for note in abjad.iterate(staff).components(
-                ...     prototype=abjad.Note,
-                ...     start=2,
-                ...     stop=4,
-                ...     ):
-                ...     note
-                ...
-                Note("e'8")
-                Note("f'8")
 
         ..  container:: example
 
@@ -1054,13 +983,12 @@ class Iteration(abctools.AbjadObject):
         '''
         import abjad
         prototype = prototype or abjad.Component
-        iterator = self._iterate_components(
+        return self._iterate_components(
             self.client,
             prototype,
             reverse=reverse,
             grace_notes=grace_notes,
             )
-        return self._iterate_subrange(iterator, start, stop)
 
     def leaf_pairs(self):
         r'''Iterates leaf pairs.

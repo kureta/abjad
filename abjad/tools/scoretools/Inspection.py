@@ -1171,30 +1171,17 @@ class Inspection(abctools.AbjadObject):
         '''
         import abjad
         if 0 <= n:
-            stop = n + 1
-            components = abjad.iterate(self.client).components(
-                prototype=abjad.Tuplet,
-                start=0,
-                stop=stop,
-                )
-            components = list(components)
-            if len(components) < n + 1:
-                return
-            component = components[n]
-            return component
+            reverse = False
         else:
-            components = abjad.iterate(self.client).components(
-                prototype=abjad.Tuplet,
-                start=0,
-                stop=abs(n),
-                reverse=True,
-                )
-            components = list(components)
-            if len(components) < abs(n):
-                return
-            index = abs(n) - 1
-            component = components[index]
-            return component
+            reverse = True
+            n = abs(n) - 1
+        tuplets = abjad.iterate(self.client).components(
+            abjad.Tuplet,
+            reverse=reverse,
+            )
+        for i, tuplet in enumerate(tuplets):
+            if i == n:
+                return tuplet
 
     def get_vertical_moment(self, governor=None):
         r'''Gets vertical moment.

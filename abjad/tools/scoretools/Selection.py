@@ -1265,8 +1265,6 @@ class Selection(AbjadValueObject):
         self,
         prototype=None,
         reverse=False,
-        start=0,
-        stop=None,
         grace_notes=True,
         ):
         r'''Selects components.
@@ -1362,8 +1360,6 @@ class Selection(AbjadValueObject):
         generator = abjad.iterate(self).components(
             prototype=prototype,
             reverse=reverse,
-            start=start,
-            stop=stop,
             grace_notes=grace_notes,
             )
         return type(self)(generator)
@@ -3110,8 +3106,6 @@ class Selection(AbjadValueObject):
         head=None,
         pitched=None,
         reverse=False,
-        start=0,
-        stop=None,
         tail=None,
         trim=None,
         grace_notes=True,
