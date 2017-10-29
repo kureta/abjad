@@ -442,7 +442,7 @@ class Iteration(abctools.AbjadObject):
             yield pair
 
     def _logical_voice(self, prototype=None, reverse=False):
-        r'''Iterates by logical voice from client.
+        r'''Iterates logical voice from client.
 
         ..  container:: example
 
@@ -794,212 +794,6 @@ class Iteration(abctools.AbjadObject):
         return self._client
 
     ### PUBLIC METHODS ###
-
-    def by_timeline(self, prototype=None, reverse=False):
-        r'''Iterates by timeline.
-
-        ..  container:: example
-
-            Timeline-iterates leaves:
-
-            ..  container:: example
-
-                >>> score = abjad.Score()
-                >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
-                >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-                >>> show(score) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(score)
-                    \new Score <<
-                        \new Staff {
-                            c'4
-                            d'4
-                            e'4
-                            f'4
-                        }
-                        \new Staff {
-                            g'8
-                            a'8
-                            b'8
-                            c''8
-                        }
-                    >>
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(score).by_timeline():
-                ...     leaf
-                ...
-                Note("c'4")
-                Note("g'8")
-                Note("a'8")
-                Note("d'4")
-                Note("b'8")
-                Note("c''8")
-                Note("e'4")
-                Note("f'4")
-
-        ..  container:: example
-
-            Timeline-iterates leaves in reverse:
-
-            ..  container:: example
-
-                >>> score = abjad.Score()
-                >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
-                >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
-                >>> show(score) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(score)
-                    \new Score <<
-                        \new Staff {
-                            c'4
-                            d'4
-                            e'4
-                            f'4
-                        }
-                        \new Staff {
-                            g'8
-                            a'8
-                            b'8
-                            c''8
-                        }
-                    >>
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(score).by_timeline(reverse=True):
-                ...     leaf
-                ...
-                Note("f'4")
-                Note("e'4")
-                Note("d'4")
-                Note("c''8")
-                Note("b'8")
-                Note("c'4")
-                Note("a'8")
-                Note("g'8")
-
-        ..  container:: example
-
-            Timeline-iterates leaves together grace notes:
-
-            ..  container:: example
-
-                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
-                >>> container = abjad.GraceContainer("cf''16 bf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> show(voice) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(voice)
-                    \new Voice {
-                        c'8 [
-                        \grace {
-                            cf''16
-                            bf'16
-                        }
-                        d'8
-                        e'8
-                        f'8 ]
-                    }
-
-            ..  container:: example
-
-                >>> for component in abjad.iterate(voice).by_timeline():
-                ...     component
-                ...
-                Note("c'8")
-                Note("d'8")
-                Note("e'8")
-                Note("f'8")
-
-                ..  todo:: Incorrect because grace notes are not included.
-
-        Iterates leaves when `prototype` is none.
-        '''
-        import abjad
-        prototype = prototype or abjad.Leaf
-        if isinstance(self.client, abjad.Component):
-            components = [self.client]
-        else:
-            components = list(self.client)
-        if not reverse:
-            while components:
-                current_start_offset = min(
-                    _._get_timespan().start_offset
-                    for _ in components
-                    )
-                components.sort(
-                    key=lambda x: x._get_parentage(
-                        with_grace_notes=True).score_index,
-                    reverse=True,
-                    )
-                components_to_process = components[:]
-                components = []
-                while components_to_process:
-                    component = components_to_process.pop()
-                    start_offset = component._get_timespan().start_offset
-                    #print('    COMPONENT:', component)
-                    if current_start_offset < start_offset:
-                        components.append(component)
-                        #print('        TOO EARLY')
-                        continue
-                    if isinstance(component, prototype):
-                        #print('        YIELDING', component)
-                        yield component
-                    sibling = component._get_sibling(1)
-                    if sibling is not None:
-                        #print('        SIBLING:', sibling)
-                        components.append(sibling)
-                    if not isinstance(component, abjad.Container):
-                        continue
-                    if not len(component):
-                        continue
-                    if not component.is_simultaneous:
-                        components_to_process.append(component[0])
-                    else:
-                        components_to_process.extend(reversed(component))
-        else:
-            while components:
-                #print('STEP')
-                #print()
-                current_stop_offset = max(
-                    _._get_timespan().stop_offset
-                    for _ in components
-                    )
-                components.sort(
-                    key=lambda x: x._get_parentage(
-                        with_grace_notes=True).score_index,
-                    reverse=True,
-                    )
-                components_to_process = components[:]
-                components = []
-                while components_to_process:
-                    component = components_to_process.pop()
-                    stop_offset = component._get_timespan().stop_offset
-                    #print('\tCOMPONENT:', component)
-                    if stop_offset < current_stop_offset:
-                        components.insert(0, component)
-                        continue
-                    if isinstance(component, prototype):
-                        yield component
-                    sibling = component._get_sibling(-1)
-                    if sibling is not None:
-                        components.insert(0, sibling)
-                    if not isinstance(component, abjad.Container):
-                        continue
-                    if not len(component):
-                        continue
-                    if not component.is_simultaneous:
-                        components_to_process.append(component[-1])
-                    else:
-                        components_to_process.extend(reversed(component))
 
     def components(
         self,
@@ -2216,7 +2010,7 @@ class Iteration(abctools.AbjadObject):
 
         ..  container:: example
 
-            Iterates chords by pitch pair:
+            Iterates chord pitch pairs:
 
             ..  container:: example
 
@@ -2508,6 +2302,212 @@ class Iteration(abctools.AbjadObject):
                     continue
                 visited_spanners.add(spanner)
                 yield spanner
+
+    def timeline(self, prototype=None, reverse=False):
+        r'''Iterates timeline.
+
+        ..  container:: example
+
+            Timeline-iterates leaves:
+
+            ..  container:: example
+
+                >>> score = abjad.Score()
+                >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
+                >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
+                >>> show(score) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(score)
+                    \new Score <<
+                        \new Staff {
+                            c'4
+                            d'4
+                            e'4
+                            f'4
+                        }
+                        \new Staff {
+                            g'8
+                            a'8
+                            b'8
+                            c''8
+                        }
+                    >>
+
+            ..  container:: example
+
+                >>> for leaf in abjad.iterate(score).timeline():
+                ...     leaf
+                ...
+                Note("c'4")
+                Note("g'8")
+                Note("a'8")
+                Note("d'4")
+                Note("b'8")
+                Note("c''8")
+                Note("e'4")
+                Note("f'4")
+
+        ..  container:: example
+
+            Timeline-iterates leaves in reverse:
+
+            ..  container:: example
+
+                >>> score = abjad.Score()
+                >>> score.append(abjad.Staff("c'4 d'4 e'4 f'4"))
+                >>> score.append(abjad.Staff("g'8 a'8 b'8 c''8"))
+                >>> show(score) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(score)
+                    \new Score <<
+                        \new Staff {
+                            c'4
+                            d'4
+                            e'4
+                            f'4
+                        }
+                        \new Staff {
+                            g'8
+                            a'8
+                            b'8
+                            c''8
+                        }
+                    >>
+
+            ..  container:: example
+
+                >>> for leaf in abjad.iterate(score).timeline(reverse=True):
+                ...     leaf
+                ...
+                Note("f'4")
+                Note("e'4")
+                Note("d'4")
+                Note("c''8")
+                Note("b'8")
+                Note("c'4")
+                Note("a'8")
+                Note("g'8")
+
+        ..  container:: example
+
+            Timeline-iterates leaves together grace notes:
+
+            ..  container:: example
+
+                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
+                >>> container = abjad.GraceContainer("cf''16 bf'16")
+                >>> abjad.attach(container, voice[1])
+                >>> show(voice) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> f(voice)
+                    \new Voice {
+                        c'8 [
+                        \grace {
+                            cf''16
+                            bf'16
+                        }
+                        d'8
+                        e'8
+                        f'8 ]
+                    }
+
+            ..  container:: example
+
+                >>> for component in abjad.iterate(voice).timeline():
+                ...     component
+                ...
+                Note("c'8")
+                Note("d'8")
+                Note("e'8")
+                Note("f'8")
+
+                ..  todo:: Incorrect because grace notes are not included.
+
+        Iterates leaves when `prototype` is none.
+        '''
+        import abjad
+        prototype = prototype or abjad.Leaf
+        if isinstance(self.client, abjad.Component):
+            components = [self.client]
+        else:
+            components = list(self.client)
+        if not reverse:
+            while components:
+                current_start_offset = min(
+                    _._get_timespan().start_offset
+                    for _ in components
+                    )
+                components.sort(
+                    key=lambda x: x._get_parentage(
+                        with_grace_notes=True).score_index,
+                    reverse=True,
+                    )
+                components_to_process = components[:]
+                components = []
+                while components_to_process:
+                    component = components_to_process.pop()
+                    start_offset = component._get_timespan().start_offset
+                    #print('    COMPONENT:', component)
+                    if current_start_offset < start_offset:
+                        components.append(component)
+                        #print('        TOO EARLY')
+                        continue
+                    if isinstance(component, prototype):
+                        #print('        YIELDING', component)
+                        yield component
+                    sibling = component._get_sibling(1)
+                    if sibling is not None:
+                        #print('        SIBLING:', sibling)
+                        components.append(sibling)
+                    if not isinstance(component, abjad.Container):
+                        continue
+                    if not len(component):
+                        continue
+                    if not component.is_simultaneous:
+                        components_to_process.append(component[0])
+                    else:
+                        components_to_process.extend(reversed(component))
+        else:
+            while components:
+                #print('STEP')
+                #print()
+                current_stop_offset = max(
+                    _._get_timespan().stop_offset
+                    for _ in components
+                    )
+                components.sort(
+                    key=lambda x: x._get_parentage(
+                        with_grace_notes=True).score_index,
+                    reverse=True,
+                    )
+                components_to_process = components[:]
+                components = []
+                while components_to_process:
+                    component = components_to_process.pop()
+                    stop_offset = component._get_timespan().stop_offset
+                    #print('\tCOMPONENT:', component)
+                    if stop_offset < current_stop_offset:
+                        components.insert(0, component)
+                        continue
+                    if isinstance(component, prototype):
+                        yield component
+                    sibling = component._get_sibling(-1)
+                    if sibling is not None:
+                        components.insert(0, sibling)
+                    if not isinstance(component, abjad.Container):
+                        continue
+                    if not len(component):
+                        continue
+                    if not component.is_simultaneous:
+                        components_to_process.append(component[-1])
+                    else:
+                        components_to_process.extend(reversed(component))
 
     def vertical_moments(self, reverse=False):
         r'''Iterates vertical moments.
