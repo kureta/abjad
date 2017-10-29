@@ -1261,12 +1261,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return all(isinstance(_, abjad.Leaf) for _ in self)
 
-    def components(
-        self,
-        prototype=None,
-        reverse=False,
-        grace_notes=True,
-        ):
+    def components(self, prototype=None, grace_notes=True, reverse=False):
         r'''Selects components.
 
         ..  container:: example
@@ -1927,7 +1922,7 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if predicate is None:
-            return self[:]
+            return type(self)(self)
         return type(self)([_ for _ in self if predicate(_)])
 
     def filter_duration(self, operator, duration):
@@ -2940,11 +2935,7 @@ class Selection(AbjadValueObject):
             return abjad.PitchSet.from_selection(argument)
         return self.group(predicate)
 
-    def in_contiguous_logical_voice(
-        self,
-        prototype=None,
-        allow_orphans=True,
-        ):
+    def in_contiguous_logical_voice(self, prototype=None, allow_orphans=True):
         r'''Is true when items in selection are in contiguous logical voice.
 
         Returns true or false.
@@ -3103,12 +3094,12 @@ class Selection(AbjadValueObject):
     def leaves(
         self,
         prototype=None,
+        grace_notes=True,
         head=None,
         pitched=None,
         reverse=False,
         tail=None,
         trim=None,
-        grace_notes=True,
         ):
         r'''Selects leaves.
 
@@ -4339,10 +4330,10 @@ class Selection(AbjadValueObject):
 
     def logical_ties(
         self,
-        nontrivial=False,
-        pitched=False,
-        reverse=False,
         grace_notes=True,
+        nontrivial=None,
+        pitched=None,
+        reverse=False,
         ):
         r'''Selects logical ties.
 
@@ -4805,8 +4796,8 @@ class Selection(AbjadValueObject):
             )
         return type(self)(generator)
 
-    def map(self, selector=None):
-        r'''Maps `selector` to items in selection.
+    def map(self, expression=None):
+        r'''Maps `expression` to items in selection.
 
         ..  container:: example
 
@@ -5064,12 +5055,11 @@ class Selection(AbjadValueObject):
             return self._update_expression(
                 inspect.currentframe(),
                 evaluation_template='map',
-                map_operand=selector,
+                map_operand=expression,
                 )
-        if selector is not None:
-            return type(self)([selector(_) for _ in self])
-        else:
+        if expression is None:
             return type(self)(self)
+        return type(self)([expression(_) for _ in self])
 
     def partition_by_counts(
         self,

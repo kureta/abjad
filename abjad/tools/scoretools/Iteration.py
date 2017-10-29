@@ -1260,7 +1260,7 @@ class Iteration(abctools.AbjadObject):
         self,
         grace_notes=True,
         nontrivial=False,
-        pitched=False,
+        pitched=None,
         reverse=False,
         parentage_mask=None,
         ):
@@ -1606,10 +1606,14 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        if pitched:
+        if pitched is True:
             prototype = (abjad.Chord, abjad.Note)
-        else:
+        elif pitched is False:
+            prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
+        elif pitched is None:
             prototype = abjad.Leaf
+        else:
+            raise ValueError(pitched)
         yielded_logical_ties = set()
         for leaf in self.components(
             prototype=prototype,
