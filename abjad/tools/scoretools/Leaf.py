@@ -231,7 +231,7 @@ class Leaf(Component):
             storage_format_kwargs_names=[],
             )
 
-    def _get_leaf(self, n=0):
+    def _get_leaf(self, n):
         import abjad
 
         def next(component):

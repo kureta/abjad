@@ -1141,8 +1141,6 @@ class Iteration(abctools.AbjadObject):
         prototype=None,
         pitched=None,
         reverse=False,
-        start=0,
-        stop=None,
         grace_notes=True,
         ):
         r'''Iterates leaves.
@@ -1189,52 +1187,6 @@ class Iteration(abctools.AbjadObject):
                 Rest('r8')
                 Rest('r8')
                 Note("gf'8")
-
-        ..  container:: example
-
-            Iterates leaves constrained by index:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff()
-                >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
-                >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
-                >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        {
-                            \time 2/8
-                            <c' bf'>8
-                            <g' a'>8
-                        }
-                        {
-                            af'8
-                            r8
-                        }
-                        {
-                            r8
-                            gf'8
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for leaf in abjad.iterate(staff).leaves(start=0, stop=3):
-                ...     leaf
-                ...
-                Chord("<c' bf'>8")
-                Chord("<g' a'>8")
-                Note("af'8")
-
-                >>> for leaf in abjad.iterate(staff).leaves(start=2, stop=4):
-                ...     leaf
-                ...
-                Note("af'8")
-                Rest('r8')
 
         ..  container:: example
 
@@ -1416,8 +1368,6 @@ class Iteration(abctools.AbjadObject):
         return self.components(
             prototype=prototype,
             reverse=reverse,
-            start=start,
-            stop=stop,
             grace_notes=grace_notes,
             )
 

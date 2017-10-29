@@ -656,27 +656,16 @@ class Inspection(abctools.AbjadObject):
         '''
         import abjad
         if isinstance(self.client, abjad.Leaf):
-            return self.client._get_leaf(n=n)
+            return self.client._get_leaf(n)
         if 0 <= n:
-            stop = n + 1
-            leaves = abjad.iterate(self.client).leaves(start=0, stop=stop)
-            leaves = list(leaves)
-            if len(leaves) < n + 1:
-                return
-            leaf = leaves[n]
-            return leaf
+            reverse = False
         else:
-            leaves = abjad.iterate(self.client).leaves(
-                start=0,
-                stop=abs(n),
-                reverse=True,
-                )
-            leaves = list(leaves)
-            if len(leaves) < abs(n):
-                return
-            index = abs(n) - 1
-            leaf = leaves[index]
-            return leaf
+            reverse = True
+            n = abs(n) - 1
+        leaves = abjad.iterate(self.client).leaves(reverse=reverse)
+        for i, leaf in enumerate(leaves):
+            if i == n:
+                return leaf
 
     def get_lineage(self):
         r'''Gets lineage.
