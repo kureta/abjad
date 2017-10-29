@@ -1259,10 +1259,9 @@ class Iteration(abctools.AbjadObject):
     def logical_ties(
         self,
         grace_notes=True,
-        nontrivial=False,
+        nontrivial=None,
         pitched=None,
         reverse=False,
-        parentage_mask=None,
         ):
         r'''Iterates logical ties.
 
@@ -1406,52 +1405,6 @@ class Iteration(abctools.AbjadObject):
                 ...
                 LogicalTie([Note("c'4"), Note("c'16")])
                 LogicalTie([Note("f'4"), Note("f'16")])
-
-        ..  container:: example
-
-            Iterates logical ties masked by parentage:
-
-            ..  note::
-
-                When iterating logical ties in a container, the yielded logical
-                ties may contain leaves outside that container's parentage. By
-                specifying a parentage mask, composers can constrain the
-                contents of the yielded logical ties to only those leaves
-                actually within the parentage of the container under iteration.
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("{ c'1 ~ } { c'2 d'2 ~ } { d'1 }")
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(staff)
-                    \new Staff {
-                        {
-                            c'1 ~
-                        }
-                        {
-                            c'2
-                            d'2 ~
-                        }
-                        {
-                            d'1
-                        }
-                    }
-
-            ..  container:: example
-
-                >>> for logical_tie in abjad.iterate(staff[1]).logical_ties():
-                ...     logical_tie
-                ...
-                LogicalTie([Note("d'2"), Note("d'1")])
-
-                >>> for logical_tie in abjad.iterate(staff[1]).logical_ties(
-                ...     parentage_mask=staff[1]):
-                ...     logical_tie
-                ...
-                LogicalTie([Note("d'2")])
 
         ..  container:: example
 
@@ -1606,32 +1559,15 @@ class Iteration(abctools.AbjadObject):
         Returns generator.
         '''
         import abjad
-        if pitched is True:
-            prototype = (abjad.Chord, abjad.Note)
-        elif pitched is False:
-            prototype = (abjad.MultimeasureRest, abjad.Rest, abjad.Skip)
-        elif pitched is None:
-            prototype = abjad.Leaf
-        else:
-            raise ValueError(pitched)
         yielded_logical_ties = set()
-        for leaf in self.components(
-            prototype=prototype,
-            reverse=reverse,
+        for leaf in self.leaves(
+            pitched=pitched,
             grace_notes=grace_notes,
+            reverse=reverse,
             ):
             logical_tie = abjad.inspect(leaf).get_logical_tie()
             if leaf is not logical_tie.head:
                 continue
-            if parentage_mask:
-                leaves = []
-                for leaf in logical_tie:
-                    parentage = abjad.inspect(leaf).get_parentage()
-                    if parentage_mask in parentage:
-                        leaves.append(leaf)
-                logical_tie = abjad.LogicalTie(leaves)
-                if not logical_tie:
-                    continue
             if not bool(nontrivial) or not logical_tie.is_trivial:
                 if logical_tie not in yielded_logical_ties:
                     yielded_logical_ties.add(logical_tie)

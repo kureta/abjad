@@ -896,9 +896,11 @@ class Tuplet(Container):
         Returns true or false.
         '''
         import abjad
+        descendants = abjad.inspect(self).get_descendants()
         leaves = list(iterate(self).leaves())
         for logical_tie in abjad.iterate(leaves).logical_ties():
-            if not logical_tie.get_duration().is_assignable:
+            leaves = [_ for _ in logical_tie if _ in descendants]
+            if not abjad.select(leaves).get_duration().is_assignable:
                 return False
         return True
 
