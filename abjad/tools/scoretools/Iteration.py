@@ -1258,67 +1258,6 @@ class Iteration(abctools.AbjadObject):
                 yield component
                 yielded_expr = True
 
-    def by_topmost_logical_ties_and_components(self):
-        r'''Iterates by topmost logical ties and components.
-
-        ..  container:: example
-
-            Iterates topmost logical ties and components:
-
-            ..  container:: example
-
-                >>> string = r"c'8 ~ c'32 d'8 ~ d'32 \times 2/3 { e'8 f'8 g'8 } "
-                >>> string += "a'8 ~ a'32 b'8 ~ b'32"
-                >>> staff = abjad.Staff(string)
-                >>> show(staff) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> f(staff)
-                    \new Staff {
-                        c'8 ~
-                        c'32
-                        d'8 ~
-                        d'32
-                        \times 2/3 {
-                            e'8
-                            f'8
-                            g'8
-                        }
-                        a'8 ~
-                        a'32
-                        b'8 ~
-                        b'32
-                    }
-
-            ..  container:: example
-
-                >>> agent = abjad.iterate(staff)
-                >>> for item in agent.by_topmost_logical_ties_and_components():
-                ...     item
-                ...
-                LogicalTie([Note("c'8"), Note("c'32")])
-                LogicalTie([Note("d'8"), Note("d'32")])
-                Tuplet(Multiplier(2, 3), "e'8 f'8 g'8")
-                LogicalTie([Note("a'8"), Note("a'32")])
-                LogicalTie([Note("b'8"), Note("b'32")])
-
-        Returns generator.
-        '''
-        import abjad
-        if isinstance(self.client, abjad.Leaf):
-            logical_tie = abjad.inspect(self.client).get_logical_tie()
-            assert len(logical_tie) == 1, repr(logical_tie)
-            yield logical_tie
-        elif isinstance(self.client, collections.Iterable):
-            for item in self.client:
-                if isinstance(item, abjad.Leaf):
-                    ties = abjad.inspect(item).get_spanners(abjad.Tie)
-                    if not ties or tuple(ties)[0].leaves[-1] is item:
-                        yield abjad.inspect(item).get_logical_tie()
-                elif isinstance(item, abjad.Container):
-                    yield item
-
     def components(
         self,
         prototype=None,

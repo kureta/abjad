@@ -797,6 +797,17 @@ class Container(Component):
                         yield y
         return recurse(self)
 
+    def _iterate_topmost(self):
+        import abjad
+        for component in self:
+            if isinstance(component, abjad.Leaf):
+                ties = abjad.inspect(component).get_spanners(abjad.Tie)
+                if not ties or tuple(ties)[0].leaves[-1] is component:
+                    yield abjad.inspect(component).get_logical_tie()
+            else:
+                assert isinstance(component, abjad.Container)
+                yield component
+
     def _move_spanners_to_children(self):
         for spanner in self._get_spanners():
             i = spanner._index(self)
@@ -844,10 +855,8 @@ class Container(Component):
         self._scale_contents(multiplier)
 
     def _scale_contents(self, multiplier):
-        import abjad
-        for argument in abjad.iterate(
-            self[:]).by_topmost_logical_ties_and_components():
-            argument._scale(multiplier)
+        for item in  list(self._iterate_topmost()):
+            item._scale(multiplier)
 
     def _set_item(
         self,
