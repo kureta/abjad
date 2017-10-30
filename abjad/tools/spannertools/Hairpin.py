@@ -1,6 +1,4 @@
-from abjad.tools import indicatortools
-from abjad.tools import scoretools
-from abjad.tools.spannertools.Spanner import Spanner
+from .Spanner import Spanner
 
 
 class Hairpin(Spanner):
@@ -125,10 +123,7 @@ class Hairpin(Spanner):
         overrides=None,
         ):
         import abjad
-        Spanner.__init__(
-            self,
-            overrides=overrides,
-            )
+        Spanner.__init__(self, overrides=overrides)
         direction = abjad.String.to_tridirectional_lilypond_symbol(direction)
         self._direction = direction
         self._include_rests = include_rests
@@ -203,14 +198,15 @@ class Hairpin(Spanner):
         bundle.right.spanner_starts.append(string)
 
     def _attachment_test_all(self, component_expression):
-        if isinstance(component_expression, scoretools.Leaf):
+        import abjad
+        if isinstance(component_expression, abjad.Leaf):
             return False
         if not self._at_least_two_leaves(component_expression):
             return False
         formattable_components = []
         for component in component_expression:
             if (self.include_rests or
-                isinstance(component, (scoretools.Note, scoretools.Chord))):
+                isinstance(component, (abjad.Note, abjad.Chord))):
                 formattable_components.append(component)
         return 1 < len(formattable_components)
 
@@ -377,20 +373,21 @@ class Hairpin(Spanner):
             return False
 
     def _is_valid_descriptor(self, descriptor):
+        import abjad
         start, shape, stop = self._parse_descriptor(descriptor)
         if shape not in self._hairpin_shape_strings:
             return False
         if (start is not None and
-            start not in indicatortools.Dynamic._dynamic_names):
+            start not in abjad.Dynamic._dynamic_names):
             return False
         if (stop is not None and
-            stop not in indicatortools.Dynamic._dynamic_names):
+            stop not in abjad.Dynamic._dynamic_names):
             return False
         if start is not None and stop is not None:
             start_ordinal = \
-                indicatortools.Dynamic.dynamic_name_to_dynamic_ordinal(start)
+                abjad.Dynamic.dynamic_name_to_dynamic_ordinal(start)
             stop_ordinal = \
-                indicatortools.Dynamic.dynamic_name_to_dynamic_ordinal(stop)
+                abjad.Dynamic.dynamic_name_to_dynamic_ordinal(stop)
             if shape == '<' and not start_ordinal < stop_ordinal:
                 return False
             if shape == '>' and not start_ordinal > stop_ordinal:

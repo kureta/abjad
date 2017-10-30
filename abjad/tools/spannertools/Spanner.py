@@ -239,10 +239,9 @@ class Spanner(AbjadObject):
         leaf_input = abjad.select(leaf_input)
         if self._contiguity_constraint == 'logical voice':
             if not leaf_input.are_contiguous_logical_voice():
-                message = 'must be contiguous leaves'
-                message += ' in same logical voice: {!r}.'
+                message = 'must be contiguous: {!r}.'
                 message = message.format(leaf_input)
-                raise Exception(message)
+                raise Exception(self, message)
         for leaf in leaves:
             self._append(leaf)
 
