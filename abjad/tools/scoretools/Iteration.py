@@ -2305,7 +2305,7 @@ class Iteration(abctools.AbjadObject):
                     )
                 vertical_moment._offset = offset
                 vertical_moment._governors = governors
-                vertical_moment._items = components
+                vertical_moment._components = components
                 yield vertical_moment
                 current_offset, stop_offsets = min(stop_offsets), []
                 _update_buffer(current_offset, buffer, stop_offsets)

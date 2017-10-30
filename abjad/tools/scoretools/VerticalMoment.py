@@ -1,21 +1,19 @@
 import collections
-from .Selection import Selection
+from abjad.tools import abctools
 
 
-class VerticalMoment(Selection):
+class VerticalMoment(abctools.AbjadObject):
     r'''Vertical moment.
 
     ..  container:: example
 
-        ::
-
-            >>> score = abjad.Score()
-            >>> staff_group = abjad.StaffGroup()
-            >>> staff_group.context_name = 'PianoStaff'
-            >>> staff_group.append(abjad.Staff("c'4 e'4 d'4 f'4"))
-            >>> staff_group.append(abjad.Staff(r"""\clef "bass" g2 f2"""))
-            >>> score.append(staff_group)
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> score = abjad.Score()
+        >>> staff_group = abjad.StaffGroup()
+        >>> staff_group.context_name = 'PianoStaff'
+        >>> staff_group.append(abjad.Staff("c'4 e'4 d'4 f'4"))
+        >>> staff_group.append(abjad.Staff(r"""\clef "bass" g2 f2"""))
+        >>> score.append(staff_group)
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -36,21 +34,22 @@ class VerticalMoment(Selection):
                 >>
             >>
 
-        ::
-
-            >>> for moment in abjad.iterate(score).vertical_moments():
-            ...     moment
-            ...
-            VerticalMoment(0, <<2>>)
-            VerticalMoment(1/4, <<2>>)
-            VerticalMoment(1/2, <<2>>)
-            VerticalMoment(3/4, <<2>>)
+        >>> for moment in abjad.iterate(score).vertical_moments():
+        ...     moment
+        ...
+        VerticalMoment(0, <<2>>)
+        VerticalMoment(1/4, <<2>>)
+        VerticalMoment(1/2, <<2>>)
+        VerticalMoment(3/4, <<2>>)
 
     '''
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Selections'
+
     __slots__ = (
+        '_components',
         '_governors',
         '_offset',
         )
@@ -61,7 +60,7 @@ class VerticalMoment(Selection):
         import abjad
         if components is None:
             self._offset = offset
-            self._items = ()
+            self._components = ()
             self._governors = ()
         else:
             governors, components = self._from_offset(components, offset)
@@ -74,7 +73,7 @@ class VerticalMoment(Selection):
             components = list(components)
             components.sort(
                 key=lambda _: abjad.inspect(_).get_parentage().score_index)
-        Selection.__init__(self, items=components)
+        self._components = components
 
     ### SPECIAL METHODS ###
 
@@ -99,7 +98,9 @@ class VerticalMoment(Selection):
 
         Returns integer.
         '''
-        return super(VerticalMoment, self).__hash__()
+        if self.components:
+            return hash(tuple([id(_) for _ in self.components]))
+        return 0
 
     def __len__(self):
         r'''Length of vertical moment.
@@ -218,10 +219,8 @@ class VerticalMoment(Selection):
 
         It is always the case that ``self.components =
         self.overlap_components + self.start_components``.
-
-        Aliases items.
         '''
-        return self.items
+        return self._components
 
     @property
     def governors(self):
@@ -391,7 +390,8 @@ class VerticalMoment(Selection):
         import abjad
         result = []
         for component in self.components:
-            if abjad.inspect(component).get_timespan().start_offset == self.offset:
+            if abjad.inspect(
+                component).get_timespan().start_offset == self.offset:
                 result.append(component)
         result = tuple(result)
         return result
@@ -417,3 +417,6 @@ class VerticalMoment(Selection):
             if isinstance(x, abjad.Note)]
         result = tuple(result)
         return result
+
+
+collections.Sequence.register(VerticalMoment)
