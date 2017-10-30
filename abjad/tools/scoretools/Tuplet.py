@@ -2256,7 +2256,7 @@ class Tuplet(Container):
                     maker = abjad.LeafMaker()
                     rests = maker([None], duration)
                     if allow_trivial:
-                        duration = rests.get_duration()
+                        duration = abjad.inspect(rests).get_duration()
                         return abjad.Tuplet.from_duration(duration, rests)
                     else:
                         return abjad.Container(rests)
