@@ -725,7 +725,7 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> abjad.inspect(container[0]).get_parentage()
-                Parentage([Note("c'16"), GraceContainer("c'16 d'16")])
+                Parentage(component=Note("c'16"))
 
         .. container:: example
 
@@ -755,8 +755,14 @@ class Inspection(abctools.AbjadObject):
             ::
 
                 >>> agent = abjad.inspect(container[0])
-                >>> agent.get_parentage(grace_notes=True)
-                Parentage([Note("c'16"), GraceContainer("c'16 d'16"), Note("d'4"), Voice("c'4 d'4 e'4 f'4")])
+                >>> parentage = agent.get_parentage(grace_notes=True)
+                >>> for component in parentage:
+                ...     component
+                ...
+                Note("c'16")
+                GraceContainer("c'16 d'16")
+                Note("d'4")
+                Voice("c'4 d'4 e'4 f'4")
 
         Returns parentage.
         '''
@@ -968,7 +974,17 @@ class Inspection(abctools.AbjadObject):
 
         Returns set.
         '''
-        return self.client._get_spanners(prototype=prototype)
+        import abjad
+        if hasattr(self.client, 'get_spanners'):
+            return self.client.get_spanners(prototype=prototype)
+        if hasattr(self.client, '_get_spanners'):
+            return self.client._get_spanners(prototype=prototype)
+        assert isinstance(self.client, collections.Iterable), repr(self.client)
+        result = set()
+        for item in self.client:
+            spanners_ = abjad.inspect(item).get_spanners(prototype=prototype)
+            result.update(spanners_)
+        return result
 
     def get_timespan(self, in_seconds=False):
         r'''Gets timespan.

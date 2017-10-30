@@ -991,7 +991,8 @@ class Meter(AbjadValueObject):
         # Build offset inventory, adjusted for initial offset and prolation.
         first_offset = abjad.inspect(components[0]).get_timespan().start_offset
         first_offset -= initial_offset
-        prolation = components[0]._get_parentage(include_self=False).prolation
+        prolation = abjad.inspect(components[0]).get_parentage(
+            include_self=False).prolation
         offset_inventory = []
         for offsets in meter.depthwise_offset_inventory:
             offsets = [(x * prolation) + first_offset for x in offsets]

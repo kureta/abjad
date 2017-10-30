@@ -72,7 +72,8 @@ class VerticalMoment(Selection):
             self._governors = governors
             assert isinstance(components, collections.Iterable)
             components = list(components)
-            components.sort(key=lambda _: _._get_parentage().score_index)
+            components.sort(
+                key=lambda _: abjad.inspect(_).get_parentage().score_index)
         Selection.__init__(self, items=components)
 
     ### SPECIAL METHODS ###
@@ -165,12 +166,14 @@ class VerticalMoment(Selection):
                     raise TypeError(message)
         else:
             raise TypeError(message)
-        governors.sort(key=lambda x: x._get_parentage().score_index)
+        governors.sort(
+            key=lambda x: abjad.inspect(x).get_parentage().score_index)
         governors = tuple(governors)
         components = []
         for governor in governors:
             components.extend(VerticalMoment._recurse(governor, offset))
-        components.sort(key=lambda x: x._get_parentage().score_index)
+        components.sort(
+            key=lambda x: abjad.inspect(x).get_parentage().score_index)
         components = tuple(components)
         return governors, components
 

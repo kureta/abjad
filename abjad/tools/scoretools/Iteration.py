@@ -2071,7 +2071,7 @@ class Iteration(abctools.AbjadObject):
                     for _ in components
                     )
                 components.sort(
-                    key=lambda x: x._get_parentage(
+                    key=lambda x: abjad.inspect(x).get_parentage(
                         grace_notes=True).score_index,
                     reverse=True,
                     )
@@ -2109,7 +2109,7 @@ class Iteration(abctools.AbjadObject):
                     for _ in components
                     )
                 components.sort(
-                    key=lambda x: x._get_parentage(
+                    key=lambda x: abjad.inspect(x).get_parentage(
                         grace_notes=True).score_index,
                     reverse=True,
                     )

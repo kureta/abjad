@@ -1,7 +1,8 @@
-from .Selection import Selection
+import collections
+from abjad.tools import abctools
 
 
-class Lineage(Selection):
+class Lineage(abctools.AbjadObject):
     r'''Lineage of a component.
 
     ..  container:: example
@@ -64,8 +65,11 @@ class Lineage(Selection):
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Selections'
+
     __slots__ = (
         '_component',
+        '_components',
         )
 
     ### INITIALIZER ###
@@ -73,31 +77,41 @@ class Lineage(Selection):
     def __init__(self, component=None):
         import abjad
         assert isinstance(component, (abjad.Component, type(None)))
+        self._component = component
         components = []
         if component is not None:
             components.extend(
-                reversed(component._get_parentage(include_self=False)))
+                reversed(
+                abjad.inspect(component).get_parentage(include_self=False)))
             components.append(component)
-            components.extend(component._get_descendants(include_self=False))
-        Selection.__init__(self, components)
-        self._component = component
+            components.extend(
+                abjad.inspect(component).get_descendants(include_self=False))
+        self._components = components
 
     ### SPECIAL METHODS ###
 
     def __getitem__(self, argument):
         r'''Gets `argument`.
 
-        Returns component or vanilla selection (not descendants).
+        Returns component or tuple.
         '''
-        result = self.items.__getitem__(argument)
-        if isinstance(result, tuple):
-            result = Selection(result)
-        return result
+        return self.components.__getitem__(argument)
 
     ### PUBLIC PROPERTIES ###
 
     @property
     def component(self):
-        r'''The component from which the selection was derived.
+        r'''The component from which the lineage was derived.
         '''
         return self._component
+
+    @property
+    def components(self):
+        r'''Gets components.
+
+        Returns tuple.
+        '''
+        return self._components
+
+
+collections.Sequence.register(Lineage)

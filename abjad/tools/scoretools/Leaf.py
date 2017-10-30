@@ -360,8 +360,8 @@ class Leaf(Component):
             for leaf, component in zip(all_leaves, components):
                 leaf.written_duration = component.written_duration
             self._splice(tied_leaves, grow_spanners=True)
-            parentage = self._get_parentage()
-            if not parentage._get_spanners(abjad.Tie):
+            parentage = abjad.inspect(self).get_parentage()
+            if not abjad.inspect(parentage).get_spanners(abjad.Tie):
                 tie = abjad.Tie()
                 if tie._attachment_test(self):
                     tie = abjad.Tie(

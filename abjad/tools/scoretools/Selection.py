@@ -454,7 +454,6 @@ class Selection(AbjadValueObject):
         Returns string.
         '''
         import abjad
-        #return abjad.StorageFormatManager(self).get_repr_format()
         return super(Selection, self).__repr__()
 
     def __setstate__(self, state):
@@ -724,7 +723,7 @@ class Selection(AbjadValueObject):
         import abjad
         assert self.in_contiguous_logical_voice()
         # get governor
-        parentage = self[0]._get_parentage(include_self=True)
+        parentage = abjad.inspect(self[0]).get_parentage(include_self=True)
         governor = parentage._get_governor()
         # find start and stop indices in governor
         governor_leaves = abjad.select(governor).leaves()
@@ -850,8 +849,8 @@ class Selection(AbjadValueObject):
         assert isinstance(first, abjad.Tuplet)
         new_tuplet = abjad.Tuplet(first_multiplier, [])
         wrapped = False
-        if (self[0]._get_parentage().root is not
-            self[-1]._get_parentage().root):
+        if (abjad.inspect(self[0]).get_parentage().root is not
+            abjad.inspect(self[-1]).get_parentage().root):
             dummy_container = abjad.Container(self)
             wrapped = True
         abjad.mutate(self).swap(new_tuplet)
@@ -977,8 +976,8 @@ class Selection(AbjadValueObject):
             raise ExtraSpannerError(message)
 
     def _get_spanners(self, prototype=None):
-        from abjad.tools import spannertools
-        prototype = prototype or (spannertools.Spanner,)
+        import abjad
+        prototype = prototype or (abjad.Spanner,)
         if not isinstance(prototype, tuple):
             prototype = (prototype, )
         assert isinstance(prototype, tuple)
@@ -999,21 +998,6 @@ class Selection(AbjadValueObject):
             del frame
         template = '.{}({})'.format(function_name, arguments)
         return selector.template + template
-
-#    def _get_timespan(self, in_seconds=False):
-#        import abjad
-#        if len(self):
-#            timespan_ = self[0]._get_timespan(in_seconds=in_seconds)
-#            start_offset = timespan_.start_offset
-#            timespan_ = self[-1]._get_timespan(in_seconds=in_seconds)
-#            stop_offset = timespan_.stop_offset
-#        else:
-#            start_offset = abjad.Duration(0)
-#            stop_offset = abjad.Duration(0)
-#        return abjad.Timespan(
-#            start_offset=start_offset,
-#            stop_offset=stop_offset,
-#            )
 
     def _give_components_to_empty_container(self, container):
         r'''Not composer-safe.
@@ -3164,23 +3148,23 @@ class Selection(AbjadValueObject):
                 if not isinstance(component, prototype):
                     all_are_orphans_of_correct_type = False
                     break
-                if not component._get_parentage().is_orphan:
+                if not abjad.inspect(component).get_parentage().is_orphan:
                     all_are_orphans_of_correct_type = False
                     break
             if all_are_orphans_of_correct_type:
                 return True
         if not allow_orphans:
-            if any(x._get_parentage().is_orphan for x in self):
+            if any(abjad.inspect(x).get_parentage().is_orphan for x in self):
                 return False
         first = self[0]
         if not isinstance(first, prototype):
             return False
-        first_parentage = first._get_parentage()
+        first_parentage = abjad.inspect(first).get_parentage()
         first_logical_voice = first_parentage.logical_voice
         first_root = first_parentage.root
         previous = first
         for current in self[1:]:
-            current_parentage = current._get_parentage()
+            current_parentage = abjad.inspect(current).get_parentage()
             current_logical_voice = current_parentage.logical_voice
             # false if wrong type of component found
             if not isinstance(current, prototype):
@@ -3215,7 +3199,7 @@ class Selection(AbjadValueObject):
                 if not isinstance(component, prototype):
                     all_are_orphans_of_correct_type = False
                     break
-                if not component._get_parentage().is_orphan:
+                if not abjad.inspect(component).get_parentage().is_orphan:
                     all_are_orphans_of_correct_type = False
                     break
             if all_are_orphans_of_correct_type:
@@ -3224,12 +3208,12 @@ class Selection(AbjadValueObject):
         if not isinstance(first, prototype):
             return False
         orphan_components = True
-        if not first._get_parentage().is_orphan:
+        if not abjad.inspect(first).get_parentage().is_orphan:
             orphan_components = False
         same_logical_voice = True
-        first_signature = first._get_parentage().logical_voice
+        first_signature = abjad.inspect(first).get_parentage().logical_voice
         for component in self[1:]:
-            parentage = component._get_parentage()
+            parentage = abjad.inspect(component).get_parentage()
             if not parentage.is_orphan:
                 orphan_components = False
             if not allow_orphans and orphan_components:
@@ -3265,7 +3249,7 @@ class Selection(AbjadValueObject):
                 if not isinstance(component, prototype):
                     all_are_orphans_of_correct_type = False
                     break
-                if not component._get_parentage().is_orphan:
+                if not abjad.inspect(component).get_parentage().is_orphan:
                     all_are_orphans_of_correct_type = False
                     break
             if all_are_orphans_of_correct_type:
@@ -3285,7 +3269,7 @@ class Selection(AbjadValueObject):
         for current in self[1:]:
             if not isinstance(current, prototype):
                 return False
-            if not current._get_parentage().is_orphan:
+            if not abjad.inspect(current).get_parentage().is_orphan:
                 orphan_components = False
             if current._parent is not first_parent:
                 same_parent = False

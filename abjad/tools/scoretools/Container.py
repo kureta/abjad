@@ -438,7 +438,7 @@ class Container(Component):
         for component in argument:
             if not isinstance(component, abjad.Component):
                 return False
-            if not component._get_parentage().is_orphan:
+            if not abjad.inspect(component).get_parentage().is_orphan:
                 return False
         return True
 
@@ -682,12 +682,14 @@ class Container(Component):
         import abjad
         if left is None or right is None:
             return set([])
-        left_contained = left._get_descendants()._get_spanners()
-        right_contained = right._get_descendants()._get_spanners()
+        left_descendants = abjad.inspect(left).get_descendants()
+        left_contained = abjad.inspect(left_descendants).get_spanners()
+        right_descendants = abjad.inspect(right).get_descendants()
+        right_contained = abjad.inspect(right_descendants).get_spanners()
         dominant_spanners = left_contained & right_contained
         right_start_offset = abjad.inspect(right).get_timespan().start_offset
         components_after_gap = []
-        for component in right._get_lineage():
+        for component in abjad.inspect(right).get_lineage():
             if abjad.inspect(component).get_timespan().start_offset == right_start_offset:
                 components_after_gap.append(component)
         receipt = set([])
@@ -810,7 +812,8 @@ class Container(Component):
                 yield component
 
     def _move_spanners_to_children(self):
-        for spanner in self._get_spanners():
+        import abjad
+        for spanner in abjad.inspect(self).get_spanners():
             i = spanner._index(self)
             spanner._components.__setitem__(slice(i, i + 1), self[:])
             for component in self:
@@ -909,7 +912,7 @@ class Container(Component):
         spanners_receipt = self._get_spanners_that_dominate_slice(start, stop)
         for component in old_components:
             for child in abjad.iterate([component]).components():
-                for spanner in child._get_spanners():
+                for spanner in abjad.inspect(child).get_spanners():
                     spanner._remove(child)
         del(self[start:stop])
         # must withdraw before setting in self!
@@ -993,7 +996,7 @@ class Container(Component):
             right._set_parent(None)
         # fracture spanners if requested
         if fracture_spanners:
-            for spanner in left._get_spanners():
+            for spanner in abjad.inspect(left).get_spanners():
                 index = spanner._index(left)
                 spanner._fracture(index, direction=abjad.Right)
         # return new left and right containers
@@ -1026,7 +1029,6 @@ class Container(Component):
         # get any duration-crossing descendents
         cross_offset = timespan.start_offset + duration
         duration_crossing_descendants = []
-        #for descendant in self._get_descendants():
         for descendant in abjad.inspect(self).get_descendants():
             timespan = abjad.inspect(descendant).get_timespan()
             start_offset = timespan.start_offset
@@ -1662,12 +1664,12 @@ class Container(Component):
         self._components.insert(i, component)
         previous_leaf = component._get_leaf(-1)
         if previous_leaf:
-            for spanner in previous_leaf._get_spanners():
+            for spanner in abjad.inspect(previous_leaf).get_spanners():
                 index = spanner._index(previous_leaf)
                 spanner._fracture(index, direction=abjad.Right)
         next_leaf = component._get_leaf(1)
         if next_leaf:
-            for spanner in next_leaf._get_spanners():
+            for spanner in abjad.inspect(next_leaf).get_spanners():
                 index = spanner._index(next_leaf)
                 spanner._fracture(index, direction=abjad.Left)
 
@@ -1804,7 +1806,8 @@ class Container(Component):
         import abjad
         self._components.reverse()
         self._update_later(offsets=True)
-        spanners = self._get_descendants()._get_spanners()
+        descendants = abjad.inspect(self).get_descendants()
+        spanners = abjad.inspect(descendants).get_spanners()
         for spanner in spanners:
             spanner._leaves.sort(
                 key=lambda x: abjad.inspect(x).get_timespan().start_offset)

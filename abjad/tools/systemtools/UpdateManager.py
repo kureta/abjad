@@ -147,10 +147,11 @@ class UpdateManager(AbjadObject):
         offsets_in_seconds=False,
         indicators=False,
         ):
+        import abjad
         assert offsets or offsets_in_seconds or indicators
         if component._is_forbidden_to_update:
             return
-        parentage = component._get_parentage(
+        parentage = abjad.inspect(component).get_parentage(
             include_self=True,
             grace_notes=True,
             )
@@ -223,7 +224,8 @@ class UpdateManager(AbjadObject):
         import abjad
         wrappers = []
         prototype = abjad.TimeSignature
-        score_root = component._get_parentage(include_self=True).root
+        score_root = abjad.inspect(component).get_parentage(
+            include_self=True).root
         for component in self._iterate_entire_score(score_root):
             wrappers_ = component._get_indicators(prototype, unwrap=False)
             wrappers.extend(wrappers_)
@@ -242,7 +244,7 @@ class UpdateManager(AbjadObject):
         elif not pairs:
             pairs = [default_pair]
         pairs.sort(key=lambda x: x[0])
-        parentage = component._get_parentage()
+        parentage = abjad.inspect(component).get_parentage()
         score_root = parentage.root
         inspector = abjad.inspect(score_root)
         score_stop_offset = inspector.get_timespan().stop_offset
@@ -284,11 +286,13 @@ class UpdateManager(AbjadObject):
         raise ValueError(message)
 
     def _update_logical_measure_numbers(self, component):
+        import abjad
         logical_measure_start_offsets = \
             self._get_logical_measure_start_offsets(component)
         assert logical_measure_start_offsets, repr(
             logical_measure_start_offsets)
-        score_root = component._get_parentage(include_self=True).root
+        score_root = abjad.inspect(component).get_parentage(
+            include_self=True).root
         for component in self._iterate_entire_score(score_root):
             logical_measure_number = self._to_logical_measure_number(
                 component,

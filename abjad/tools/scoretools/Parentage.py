@@ -1,25 +1,23 @@
 import collections
+from abjad.tools import abctools
 from abjad.tools import mathtools
-from .Selection import Selection
 
 
-class Parentage(Selection):
+class Parentage(abctools.AbjadObject):
     r'''Parentage of a component.
 
     ..  container:: example
 
-        ::
-
-            >>> score = abjad.Score()
-            >>> string = r"""\new Voice = "Treble Voice" { e'4 }"""
-            >>> treble_staff = abjad.Staff(string, name='Treble Staff')
-            >>> score.append(treble_staff)
-            >>> string = r"""\new Voice = "Bass Voice" { c4 }"""
-            >>> bass_staff = abjad.Staff(string, name='Bass Staff')
-            >>> clef = abjad.Clef('bass')
-            >>> abjad.attach(clef, bass_staff[0][0])
-            >>> score.append(bass_staff)
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> score = abjad.Score()
+        >>> string = r"""\new Voice = "Treble Voice" { e'4 }"""
+        >>> treble_staff = abjad.Staff(string, name='Treble Staff')
+        >>> score.append(treble_staff)
+        >>> string = r"""\new Voice = "Bass Voice" { c4 }"""
+        >>> bass_staff = abjad.Staff(string, name='Bass Staff')
+        >>> clef = abjad.Clef('bass')
+        >>> abjad.attach(clef, bass_staff[0][0])
+        >>> score.append(bass_staff)
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -38,24 +36,25 @@ class Parentage(Selection):
                 }
             >>
 
-        ::
-
-            >>> bass_voice = score['Bass Voice']
-            >>> note = bass_voice[0]
-            >>> for component in abjad.inspect(note).get_parentage():
-            ...     component
-            ...
-            Note('c4')
-            Voice('c4', name='Bass Voice')
-            <Staff-"Bass Staff"{1}>
-            <Score<<2>>>
+        >>> bass_voice = score['Bass Voice']
+        >>> note = bass_voice[0]
+        >>> for component in abjad.inspect(note).get_parentage():
+        ...     component
+        ...
+        Note('c4')
+        Voice('c4', name='Bass Voice')
+        <Staff-"Bass Staff"{1}>
+        <Score<<2>>>
 
     '''
 
     ### CLASS VARIABLES ###
 
+    __documentation_section__ = 'Selections'
+
     __slots__ = (
         '_component',
+        '_components',
         '_root',
         )
 
@@ -69,6 +68,7 @@ class Parentage(Selection):
         ):
         import abjad
         assert isinstance(component, (abjad.Component, type(None)))
+        self._component = component
         if component is None:
             components = ()
         else:
@@ -85,20 +85,23 @@ class Parentage(Selection):
                 else:
                     parent = parent._parent
             components = tuple(components)
-        Selection.__init__(self, components)
-        self._component = component
+        self._components = components
 
     ### SPECIAL METHODS ###
 
     def __getitem__(self, argument):
         r'''Gets `argument`.
 
-        Returns component or vanilla selection (not parentage).
+        Returns component or tuple of components.
         '''
-        result = self.items.__getitem__(argument)
-        if isinstance(result, tuple):
-            result = Selection(result)
-        return result
+        return self.components.__getitem__(argument)
+
+    def __len__(self):
+        r'''Gets number of components in parentage.
+
+        Returns nonnegative integer.
+        '''
+        return len(self.components)
 
     ### PRIVATE PROPERTIES ###
 
@@ -140,6 +143,14 @@ class Parentage(Selection):
         Returns component.
         '''
         return self._component
+
+    @property
+    def components(self):
+        r'''Gets components.
+
+        Returns tuple.
+        '''
+        return self._components
 
     @property
     def depth(self):
@@ -479,3 +490,6 @@ class Parentage(Selection):
         for component in self:
             if isinstance(component, prototype):
                 return component
+
+
+collections.Sequence.register(Parentage)

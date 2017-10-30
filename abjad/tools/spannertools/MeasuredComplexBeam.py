@@ -82,15 +82,16 @@ class MeasuredComplexBeam(ComplexBeam):
     ### PRIVATE METHODS ###
 
     def _add_beam_counts(self, leaf, bundle):
+        import abjad
         left, right = None, None
         #if leaf.beam.beamable:
         if self._is_beamable(leaf):
             if self._is_exterior_leaf(leaf):
                 left, right = self._get_left_right_for_exterior_leaf(leaf)
-            elif leaf._get_parentage(include_self=False).get_first(
-                scoretools.Measure) is not None:
-                measure = leaf._get_parentage(include_self=False).get_first(
-                    scoretools.Measure)
+            elif abjad.inspect(leaf).get_parentage(
+                include_self=False).get_first(abjad.Measure) is not None:
+                measure = abjad.inspect(leaf).get_parentage(
+                    include_self=False).get_first(abjad.Measure)
                 # leaf at beginning of measure
                 if measure._is_one_of_my_first_leaves(leaf):
                     assert isinstance(self.span_beam_count, int)
