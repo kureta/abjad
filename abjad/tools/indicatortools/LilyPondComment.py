@@ -8,12 +8,10 @@ class LilyPondComment(AbjadValueObject):
 
         Two-word comment:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> comment = abjad.LilyPondComment('a comment')
-            >>> abjad.attach(comment, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> comment = abjad.LilyPondComment('a comment')
+        >>> abjad.attach(comment, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -25,12 +23,10 @@ class LilyPondComment(AbjadValueObject):
 
         Three-word comment:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> comment = abjad.LilyPondComment('yet another comment')
-            >>> abjad.attach(comment, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> comment = abjad.LilyPondComment('yet another comment')
+        >>> abjad.attach(comment, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -82,21 +78,17 @@ class LilyPondComment(AbjadValueObject):
 
             Two-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('a comment')
-                >>> str(comment)
-                '% a comment'
+            >>> comment = abjad.LilyPondComment('a comment')
+            >>> str(comment)
+            '% a comment'
 
         ..  container:: example
 
             Three-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('yet another comment')
-                >>> str(comment)
-                '% yet another comment'
+            >>> comment = abjad.LilyPondComment('yet another comment')
+            >>> str(comment)
+            '% yet another comment'
 
         Returns string.
         '''
@@ -130,21 +122,17 @@ class LilyPondComment(AbjadValueObject):
 
             Two-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('a comment')
-                >>> comment.contents_string
-                'a comment'
+            >>> comment = abjad.LilyPondComment('a comment')
+            >>> comment.contents_string
+            'a comment'
 
         ..  container:: example
 
             Three-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('yet another comment')
-                >>> comment.contents_string
-                'yet another comment'
+            >>> comment = abjad.LilyPondComment('yet another comment')
+            >>> comment.contents_string
+            'yet another comment'
 
         Returns string.
         '''
@@ -158,21 +146,17 @@ class LilyPondComment(AbjadValueObject):
 
             Two-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('a comment')
-                >>> comment.format_slot
-                'before'
+            >>> comment = abjad.LilyPondComment('a comment')
+            >>> comment.format_slot
+            'before'
 
         ..  container:: example
 
             Three-word comment:
 
-            ::
-
-                >>> comment = abjad.LilyPondComment('yet another comment')
-                >>> comment.format_slot
-                'before'
+            >>> comment = abjad.LilyPondComment('yet another comment')
+            >>> comment.format_slot
+            'before'
 
         Defaults to ``'before'``.
 

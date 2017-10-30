@@ -10,25 +10,21 @@ class MarkupList(TypedList):
 
         ..  container:: example
 
-            ::
+            >>> markups = ['Allegro', 'assai']
+            >>> markup_list = abjad.MarkupList(markups)
+            >>> abjad.f(markup_list)
+            abjad.MarkupList(
+                items=[
+                    abjad.Markup(
+                        contents=['Allegro'],
+                        ),
+                    abjad.Markup(
+                        contents=['assai'],
+                        ),
+                    ],
+                )
 
-                >>> markups = ['Allegro', 'assai']
-                >>> markup_list = abjad.MarkupList(markups)
-                >>> abjad.f(markup_list)
-                abjad.MarkupList(
-                    items=[
-                        abjad.Markup(
-                            contents=['Allegro'],
-                            ),
-                        abjad.Markup(
-                            contents=['assai'],
-                            ),
-                        ],
-                    )
-
-            ::
-
-                >>> abjad.show(markup_list) # doctest: +SKIP
+            >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
@@ -77,15 +73,11 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markups = ['Allegro', 'assai']
+                >>> markup_list = abjad.MarkupList(markups)
 
-                    >>> markups = ['Allegro', 'assai']
-                    >>> markup_list = abjad.MarkupList(markups)
-
-                ::
-
-                    >>> 'assai' in markup_list
-                    True
+                >>> 'assai' in markup_list
+                True
 
         Returns true or false.
         '''
@@ -100,8 +92,6 @@ class MarkupList(TypedList):
             ..  container:: example
 
                 Formats markup list:
-
-                ::
 
 
                     >>> markups = ['Allegro', 'assai']
@@ -130,35 +120,31 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList()
+                >>> markup_list.extend(['Allegro', 'assai'])
+                >>> markup_list += ['ma', 'non', 'troppo']
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['assai'],
+                            ),
+                        abjad.Markup(
+                            contents=['ma'],
+                            ),
+                        abjad.Markup(
+                            contents=['non'],
+                            ),
+                        abjad.Markup(
+                            contents=['troppo'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList()
-                    >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> markup_list += ['ma', 'non', 'troppo']
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['assai'],
-                                ),
-                            abjad.Markup(
-                                contents=['ma'],
-                                ),
-                            abjad.Markup(
-                                contents=['non'],
-                                ),
-                            abjad.Markup(
-                                contents=['troppo'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
@@ -186,25 +172,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markups = ['Allegro', 'assai']
+                >>> markup_list = abjad.MarkupList(markups)
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['assai'],
+                            ),
+                        ],
+                    )
 
-                    >>> markups = ['Allegro', 'assai']
-                    >>> markup_list = abjad.MarkupList(markups)
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['assai'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
@@ -236,26 +218,22 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList()
+                >>> markup_list.extend(['Allegro', 'assai'])
+                >>> markup_list[-1] = 'non troppo'
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['non troppo'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList()
-                    >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> markup_list[-1] = 'non troppo'
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['non troppo'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
@@ -302,10 +280,8 @@ class MarkupList(TypedList):
 
         ..  container:: example
 
-            ::
-
-                >>> abjad.MarkupList().item_class
-                <class 'abjad.tools.markuptools.Markup.Markup'>
+            >>> abjad.MarkupList().item_class
+            <class 'abjad.tools.markuptools.Markup.Markup'>
 
         Returns markup class.
         '''
@@ -322,27 +298,23 @@ class MarkupList(TypedList):
 
                 Initializes items positionally:
 
-                ::
-
-                    >>> items = ['Allegro', 'assai']
-                    >>> markup_list = abjad.MarkupList(items)
-                    >>> for item in markup_list.items:
-                    ...     item
-                    ...
-                    Markup(contents=['Allegro'])
-                    Markup(contents=['assai'])
+                >>> items = ['Allegro', 'assai']
+                >>> markup_list = abjad.MarkupList(items)
+                >>> for item in markup_list.items:
+                ...     item
+                ...
+                Markup(contents=['Allegro'])
+                Markup(contents=['assai'])
 
                 Initializes items from keyword:
 
-                ::
-
-                    >>> items = ['Allegro', 'assai']
-                    >>> markup_list = abjad.MarkupList(items=items)
-                    >>> for item in markup_list.items:
-                    ...     item
-                    ...
-                    Markup(contents=['Allegro'])
-                    Markup(contents=['assai'])
+                >>> items = ['Allegro', 'assai']
+                >>> markup_list = abjad.MarkupList(items=items)
+                >>> for item in markup_list.items:
+                ...     item
+                ...
+                Markup(contents=['Allegro'])
+                Markup(contents=['assai'])
 
         Returns tuple.
         '''
@@ -358,13 +330,11 @@ class MarkupList(TypedList):
 
             Keeps markup sorted:
 
-            ::
-
-                >>> markups = ['Allegro', 'assai']
-                >>> markup_list = abjad.MarkupList(keep_sorted=True)
-                >>> markup_list.append('assai')
-                >>> markup_list.append('Allegro')
-                >>> abjad.show(markup_list) # doctest: +SKIP
+            >>> markups = ['Allegro', 'assai']
+            >>> markup_list = abjad.MarkupList(keep_sorted=True)
+            >>> markup_list.append('assai')
+            >>> markup_list.append('Allegro')
+            >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
@@ -381,13 +351,11 @@ class MarkupList(TypedList):
 
             Does not keep markup sorted:
 
-            ::
-
-                >>> markups = ['Allegro', 'assai']
-                >>> markup_list = abjad.MarkupList()
-                >>> markup_list.append('assai')
-                >>> markup_list.append('Allegro')
-                >>> abjad.show(markup_list) # doctest: +SKIP
+            >>> markups = ['Allegro', 'assai']
+            >>> markup_list = abjad.MarkupList()
+            >>> markup_list.append('assai')
+            >>> markup_list.append('Allegro')
+            >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
@@ -418,25 +386,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList(['Allegro'])
+                >>> markup_list.append('assai')
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['assai'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList(['Allegro'])
-                    >>> markup_list.append('assai')
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['assai'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns none.
         '''
@@ -450,25 +414,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> city = abjad.Markup('Los Angeles')
-                    >>> date = abjad.Markup('May - August 2014')
-                    >>> markups = [city, date]
-                    >>> markup_list = abjad.MarkupList(markups)
-                    >>> markup = markup_list.center_column(direction=abjad.Up)
-                    >>> abjad.f(markup)
-                    ^ \markup {
-                        \center-column
-                            {
-                                "Los Angeles"
-                                "May - August 2014"
-                            }
+                >>> city = abjad.Markup('Los Angeles')
+                >>> date = abjad.Markup('May - August 2014')
+                >>> markups = [city, date]
+                >>> markup_list = abjad.MarkupList(markups)
+                >>> markup = markup_list.center_column(direction=abjad.Up)
+                >>> abjad.f(markup)
+                ^ \markup {
+                    \center-column
+                        {
+                            "Los Angeles"
+                            "May - August 2014"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -487,24 +447,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> city = abjad.Markup('Los Angeles')
-                    >>> date = abjad.Markup('May - August 2014')
-                    >>> markup_list = abjad.MarkupList([city, date])
-                    >>> markup = markup_list.column()
-                    >>> abjad.f(markup)
-                    \markup {
-                        \column
-                            {
-                                "Los Angeles"
-                                "May - August 2014"
-                            }
+                >>> city = abjad.Markup('Los Angeles')
+                >>> date = abjad.Markup('May - August 2014')
+                >>> markup_list = abjad.MarkupList([city, date])
+                >>> markup = markup_list.column()
+                >>> abjad.f(markup)
+                \markup {
+                    \column
+                        {
+                            "Los Angeles"
+                            "May - August 2014"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -522,24 +478,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_one = abjad.Markup('Allegro assai')
+                >>> markup_two = abjad.Markup.draw_line(13, 0)
+                >>> markup_list = [markup_one, markup_two]
+                >>> markup_list = abjad.MarkupList(markup_list)
+                >>> markup = markup_list.combine(direction=abjad.Up)
+                >>> abjad.f(markup)
+                ^ \markup {
+                    \combine
+                        "Allegro assai"
+                        \draw-line
+                            #'(13 . 0)
+                    }
 
-                    >>> markup_one = abjad.Markup('Allegro assai')
-                    >>> markup_two = abjad.Markup.draw_line(13, 0)
-                    >>> markup_list = [markup_one, markup_two]
-                    >>> markup_list = abjad.MarkupList(markup_list)
-                    >>> markup = markup_list.combine(direction=abjad.Up)
-                    >>> abjad.f(markup)
-                    ^ \markup {
-                        \combine
-                            "Allegro assai"
-                            \draw-line
-                                #'(13 . 0)
-                        }
-
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -562,30 +514,26 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> downbow = abjad.Markup.musicglyph('scripts.downbow')
-                    >>> hspace = abjad.Markup.hspace(1)
-                    >>> upbow = abjad.Markup.musicglyph('scripts.upbow')
-                    >>> markups = [downbow, hspace, upbow]
-                    >>> markup_list = abjad.MarkupList(markups)
-                    >>> markup = markup_list.concat(direction=abjad.Up)
-                    >>> abjad.f(markup)
-                    ^ \markup {
-                        \concat
-                            {
-                                \musicglyph
-                                    #"scripts.downbow"
-                                \hspace
-                                    #1
-                                \musicglyph
-                                    #"scripts.upbow"
-                            }
+                >>> downbow = abjad.Markup.musicglyph('scripts.downbow')
+                >>> hspace = abjad.Markup.hspace(1)
+                >>> upbow = abjad.Markup.musicglyph('scripts.upbow')
+                >>> markups = [downbow, hspace, upbow]
+                >>> markup_list = abjad.MarkupList(markups)
+                >>> markup = markup_list.concat(direction=abjad.Up)
+                >>> abjad.f(markup)
+                ^ \markup {
+                    \concat
+                        {
+                            \musicglyph
+                                #"scripts.downbow"
+                            \hspace
+                                #1
+                            \musicglyph
+                                #"scripts.upbow"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -603,23 +551,17 @@ class MarkupList(TypedList):
 
         ..  container:: example
 
-            ::
+            >>> markup_list = abjad.MarkupList()
+            >>> markup_list.extend(['Allegro', 'assai'])
 
-                >>> markup_list = abjad.MarkupList()
-                >>> markup_list.extend(['Allegro', 'assai'])
+            >>> abjad.show(markup_list) # doctest: +SKIP
 
-            ::
-
-                >>> abjad.show(markup_list) # doctest: +SKIP
-
-            ::
-
-                >>> markup_list.count('Allegro')
-                1
-                >>> markup_list.count('assai')
-                1
-                >>> markup_list.count('ma non troppo')
-                0
+            >>> markup_list.count('Allegro')
+            1
+            >>> markup_list.count('assai')
+            1
+            >>> markup_list.count('ma non troppo')
+            0
 
         Returns none.
         '''
@@ -633,25 +575,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList()
+                >>> markup_list.extend(['Allegro', 'assai'])
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['assai'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList()
-                    >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['assai'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
@@ -674,25 +612,21 @@ class MarkupList(TypedList):
 
         ..  container:: example
 
-            ::
+            >>> markup_list = abjad.MarkupList()
+            >>> markup_list.extend(['Allegro', 'assai'])
+            >>> abjad.f(markup_list)
+            abjad.MarkupList(
+                items=[
+                    abjad.Markup(
+                        contents=['Allegro'],
+                        ),
+                    abjad.Markup(
+                        contents=['assai'],
+                        ),
+                    ],
+                )
 
-                >>> markup_list = abjad.MarkupList()
-                >>> markup_list.extend(['Allegro', 'assai'])
-                >>> abjad.f(markup_list)
-                abjad.MarkupList(
-                    items=[
-                        abjad.Markup(
-                            contents=['Allegro'],
-                            ),
-                        abjad.Markup(
-                            contents=['assai'],
-                            ),
-                        ],
-                    )
-
-            ::
-
-                >>> abjad.show(markup_list) # doctest: +SKIP
+            >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
@@ -705,12 +639,10 @@ class MarkupList(TypedList):
                         }
                     }
 
-            ::
-
-                >>> markup_list.index('Allegro')
-                0
-                >>> markup_list.index('assai')
-                1
+            >>> markup_list.index('Allegro')
+            0
+            >>> markup_list.index('assai')
+            1
 
         Returns none.
         '''
@@ -724,25 +656,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList(['assai'])
+                >>> markup_list.insert(0, 'Allegro')
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        abjad.Markup(
+                            contents=['assai'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList(['assai'])
-                    >>> markup_list.insert(0, 'Allegro')
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            abjad.Markup(
-                                contents=['assai'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns markup class.
         '''
@@ -756,24 +684,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> city = abjad.Markup('Los Angeles')
-                    >>> date = abjad.Markup('May - August 2014')
-                    >>> markup_list = abjad.MarkupList([city, date])
-                    >>> markup = markup_list.left_column()
-                    >>> abjad.f(markup)
-                    \markup {
-                        \left-column
-                            {
-                                "Los Angeles"
-                                "May - August 2014"
-                            }
+                >>> city = abjad.Markup('Los Angeles')
+                >>> date = abjad.Markup('May - August 2014')
+                >>> markup_list = abjad.MarkupList([city, date])
+                >>> markup = markup_list.left_column()
+                >>> abjad.f(markup)
+                \markup {
+                    \left-column
+                        {
+                            "Los Angeles"
+                            "May - August 2014"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -791,24 +715,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> markups = ['Allegro', 'assai']
-                    >>> markup_list = abjad.MarkupList(markups)
-                    >>> markup = markup_list.line()
-                    >>> abjad.f(markup)
-                    \markup {
-                        \line
-                            {
-                                Allegro
-                                assai
-                            }
+                >>> markups = ['Allegro', 'assai']
+                >>> markup_list = abjad.MarkupList(markups)
+                >>> markup = markup_list.line()
+                >>> abjad.f(markup)
+                \markup {
+                    \line
+                        {
+                            Allegro
+                            assai
                         }
+                    }
 
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -826,24 +746,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> city = abjad.Markup('Los Angeles')
-                    >>> date = abjad.Markup('May - August 2014')
-                    >>> markup_list = abjad.MarkupList([city, date])
-                    >>> markup = markup_list.overlay(direction=abjad.Up)
-                    >>> abjad.f(markup)
-                    ^ \markup {
-                        \overlay
-                            {
-                                "Los Angeles"
-                                "May - August 2014"
-                            }
+                >>> city = abjad.Markup('Los Angeles')
+                >>> date = abjad.Markup('May - August 2014')
+                >>> markup_list = abjad.MarkupList([city, date])
+                >>> markup = markup_list.overlay(direction=abjad.Up)
+                >>> abjad.f(markup)
+                ^ \markup {
+                    \overlay
+                        {
+                            "Los Angeles"
+                            "May - August 2014"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -861,27 +777,21 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList()
+                >>> markup_list.extend(['Allegro', 'assai'])
+                >>> markup_list.pop()
+                Markup(contents=['assai'])
 
-                    >>> markup_list = abjad.MarkupList()
-                    >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> markup_list.pop()
-                    Markup(contents=['assai'])
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        ],
+                    )
 
-                ::
-
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns none.
         '''
@@ -895,23 +805,19 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
+                >>> markup_list = abjad.MarkupList()
+                >>> markup_list.extend(['Allegro', 'assai'])
+                >>> markup_list.remove('assai')
+                >>> abjad.f(markup_list)
+                abjad.MarkupList(
+                    items=[
+                        abjad.Markup(
+                            contents=['Allegro'],
+                            ),
+                        ],
+                    )
 
-                    >>> markup_list = abjad.MarkupList()
-                    >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> markup_list.remove('assai')
-                    >>> abjad.f(markup_list)
-                    abjad.MarkupList(
-                        items=[
-                            abjad.Markup(
-                                contents=['Allegro'],
-                                ),
-                            ],
-                        )
-
-                ::
-
-                    >>> abjad.show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
@@ -935,24 +841,20 @@ class MarkupList(TypedList):
 
             ..  container:: example
 
-                ::
-
-                    >>> city = abjad.Markup('Los Angeles')
-                    >>> date = abjad.Markup('May - August 2014')
-                    >>> markup_list = abjad.MarkupList([city, date])
-                    >>> markup = markup_list.right_column()
-                    >>> abjad.f(markup)
-                    \markup {
-                        \right-column
-                            {
-                                "Los Angeles"
-                                "May - August 2014"
-                            }
+                >>> city = abjad.Markup('Los Angeles')
+                >>> date = abjad.Markup('May - August 2014')
+                >>> markup_list = abjad.MarkupList([city, date])
+                >>> markup = markup_list.right_column()
+                >>> abjad.f(markup)
+                \markup {
+                    \right-column
+                        {
+                            "Los Angeles"
+                            "May - August 2014"
                         }
+                    }
 
-                ::
-
-                    >>> abjad.show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''

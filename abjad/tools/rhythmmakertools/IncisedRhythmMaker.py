@@ -10,27 +10,23 @@ class IncisedRhythmMaker(RhythmMaker):
 
     ..  container:: example
 
-        ::
+        >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+        ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+        ...         prefix_talea=[-1],
+        ...         prefix_counts=[0, 1],
+        ...         suffix_talea=[-1],
+        ...         suffix_counts=[1],
+        ...         talea_denominator=16,
+        ...         ),
+        ...     )
 
-            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-            ...         prefix_talea=[-1],
-            ...         prefix_counts=[0, 1],
-            ...         suffix_talea=[-1],
-            ...         suffix_counts=[1],
-            ...         talea_denominator=16,
-            ...         ),
-            ...     )
-
-        ::
-
-            >>> divisions = 4 * [(5, 16)]
-            >>> selections = rhythm_maker(divisions)
-            >>> lilypond_file = abjad.LilyPondFile.rhythm(
-            ...     selections,
-            ...     divisions,
-            ...     )
-            >>> abjad.show(lilypond_file) # doctest: +SKIP
+        >>> divisions = 4 * [(5, 16)]
+        >>> selections = rhythm_maker(divisions)
+        >>> lilypond_file = abjad.LilyPondFile.rhythm(
+        ...     selections,
+        ...     divisions,
+        ...     )
+        >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
@@ -477,25 +473,21 @@ class IncisedRhythmMaker(RhythmMaker):
 
             No division masks:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -529,31 +521,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Masks every other output division:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     division_masks=[
+            ...         abjad.Pattern(
+            ...             indices=[0],
+            ...             period=2,
+            ...             ),
+            ...         ],
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     division_masks=[
-                ...         abjad.Pattern(
-                ...             indices=[0],
-                ...             period=2,
-                ...             ),
-                ...         ],
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -594,28 +582,24 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Spells durations with the fewest number of glyphs:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -643,31 +627,27 @@ class IncisedRhythmMaker(RhythmMaker):
             Forbids notes with written duration greater than or equal to
             ``1/2``:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
+            ...         forbidden_duration=(1, 2),
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
-                ...         forbidden_duration=(1, 2),
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -698,31 +678,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Spells all divisions metrically when `spell_metrically` is true:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
+            ...         spell_metrically=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
-                ...         spell_metrically=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -752,31 +728,27 @@ class IncisedRhythmMaker(RhythmMaker):
             Spells only unassignable durations metrically when
             `spell_metrically` is ``'unassignable'``:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
+            ...         spell_metrically='unassignable',
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
-                ...         spell_metrically='unassignable',
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -803,31 +775,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Rewrites meter:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
+            ...         rewrite_meter=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
-                ...         rewrite_meter=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -880,19 +848,15 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Doesn't incise:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker()
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker()
-
-            ::
-
-                >>> divisions = [(5, 8), (5, 8), (5, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(5, 8), (5, 8), (5, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -917,29 +881,25 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Fills divisions with notes. Incises outer divisions only:
 
-            ::
+            >>> incise_specifier = abjad.rhythmmakertools.InciseSpecifier(
+            ...     prefix_talea=[-8, -7],
+            ...     prefix_counts=[2],
+            ...     suffix_talea=[-3],
+            ...     suffix_counts=[4],
+            ...     talea_denominator=32,
+            ...     outer_divisions_only=True,
+            ...     )
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=incise_specifier,
+            ...     )
 
-                >>> incise_specifier = abjad.rhythmmakertools.InciseSpecifier(
-                ...     prefix_talea=[-8, -7],
-                ...     prefix_counts=[2],
-                ...     suffix_talea=[-3],
-                ...     suffix_counts=[4],
-                ...     talea_denominator=32,
-                ...     outer_divisions_only=True,
-                ...     )
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=incise_specifier,
-                ...     )
-
-            ::
-
-                >>> divisions = [(5, 8), (5, 8), (5, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(5, 8), (5, 8), (5, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -969,30 +929,26 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Fills divisions with rests. Incises outer divisions only:
 
-            ::
+            >>> incise_specifier = abjad.rhythmmakertools.InciseSpecifier(
+            ...     prefix_talea=[7, 8],
+            ...     prefix_counts=[2],
+            ...     suffix_talea=[3],
+            ...     suffix_counts=[4],
+            ...     talea_denominator=32,
+            ...     fill_with_notes=False,
+            ...     outer_divisions_only=True,
+            ...     )
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=incise_specifier,
+            ...     )
 
-                >>> incise_specifier = abjad.rhythmmakertools.InciseSpecifier(
-                ...     prefix_talea=[7, 8],
-                ...     prefix_counts=[2],
-                ...     suffix_talea=[3],
-                ...     suffix_counts=[4],
-                ...     talea_denominator=32,
-                ...     fill_with_notes=False,
-                ...     outer_divisions_only=True,
-                ...     )
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=incise_specifier,
-                ...     )
-
-            ::
-
-                >>> divisions = [(5, 8), (5, 8), (5, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(5, 8), (5, 8), (5, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1030,28 +986,24 @@ class IncisedRhythmMaker(RhythmMaker):
 
             No logical tie masks:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         outer_divisions_only=True,
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         outer_divisions_only=True,
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1082,31 +1034,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Silences every other logical tie:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         outer_divisions_only=True,
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     logical_tie_masks=[
+            ...         abjad.silence_every([1], period=2),
+            ...         ],
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         outer_divisions_only=True,
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     logical_tie_masks=[
-                ...         abjad.silence_every([1], period=2),
-                ...         ],
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1151,27 +1099,23 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Does not replace rests with skips:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         fill_with_notes=False,
+            ...         prefix_talea=[1],
+            ...         prefix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     replace_rests_with_skips=False,
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         fill_with_notes=False,
-                ...         prefix_talea=[1],
-                ...         prefix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     replace_rests_with_skips=False,
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1205,27 +1149,23 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Does replace rests with skips:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         fill_with_notes=False,
+            ...         prefix_talea=[1],
+            ...         prefix_counts=[1],
+            ...         talea_denominator=16,
+            ...         ),
+            ...     replace_rests_with_skips=True,
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         fill_with_notes=False,
-                ...         prefix_talea=[1],
-                ...         prefix_counts=[1],
-                ...         talea_denominator=16,
-                ...         ),
-                ...     replace_rests_with_skips=True,
-                ...     )
-
-            ::
-
-                >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1280,28 +1220,24 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Does not tie across divisions:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1328,31 +1264,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Ties across divisions:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
+            ...         tie_across_divisions=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
-                ...         tie_across_divisions=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1379,35 +1311,31 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Patterns ties across divisions:
 
-            ::
+            >>> pattern = abjad.Pattern(
+            ...     indices=[0],
+            ...     period=2,
+            ...     )
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
+            ...         tie_across_divisions=pattern,
+            ...         ),
+            ...     )
 
-                >>> pattern = abjad.Pattern(
-                ...     indices=[0],
-                ...     period=2,
-                ...     )
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
-                ...         tie_across_divisions=pattern,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1434,32 +1362,28 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Uses Messiaen-style ties:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
+            ...         tie_across_divisions=True,
+            ...         use_messiaen_style_ties=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
-                ...         tie_across_divisions=True,
-                ...         use_messiaen_style_ties=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1486,31 +1410,27 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Strips all ties:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
+            ...         strip_ties=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
-                ...         strip_ties=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -1537,34 +1457,30 @@ class IncisedRhythmMaker(RhythmMaker):
 
             Spells durations metrically and then strips all ties:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
+            ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
+            ...         spell_metrically=True,
+            ...         ),
+            ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
+            ...         prefix_talea=[-1],
+            ...         prefix_counts=[1],
+            ...         outer_divisions_only=True,
+            ...         suffix_talea=[-1],
+            ...         suffix_counts=[1],
+            ...         talea_denominator=8,
+            ...         ),
+            ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
+            ...         strip_ties=True,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.IncisedRhythmMaker(
-                ...     duration_specifier=abjad.rhythmmakertools.DurationSpecifier(
-                ...         spell_metrically=True,
-                ...         ),
-                ...     incise_specifier=abjad.rhythmmakertools.InciseSpecifier(
-                ...         prefix_talea=[-1],
-                ...         prefix_counts=[1],
-                ...         outer_divisions_only=True,
-                ...         suffix_talea=[-1],
-                ...         suffix_counts=[1],
-                ...         talea_denominator=8,
-                ...         ),
-                ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
-                ...         strip_ties=True,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(8, 8), (4, 8), (6, 8)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(8, 8), (4, 8), (6, 8)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 

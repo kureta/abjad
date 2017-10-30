@@ -11,14 +11,12 @@ class ClefSpanner(Spanner):
 
         Attaches percussion clef spanner to notes in middle of staff:
 
-        ::
-
-            >>> staff = abjad.Staff("c' d' e' f' g' a' b' c''")
-            >>> clef = abjad.Clef('treble')
-            >>> abjad.attach(clef, staff[0])
-            >>> clef_spanner = abjad.ClefSpanner('percussion')
-            >>> abjad.attach(clef_spanner, staff[2:-2])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c' d' e' f' g' a' b' c''")
+        >>> clef = abjad.Clef('treble')
+        >>> abjad.attach(clef, staff[0])
+        >>> clef_spanner = abjad.ClefSpanner('percussion')
+        >>> abjad.attach(clef_spanner, staff[2:-2])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -42,16 +40,14 @@ class ClefSpanner(Spanner):
         Attaches two clef spanners to notes in middle of staff. Only the first
         clef spanner formats a new clef:
 
-        ::
-
-            >>> staff = abjad.Staff("r4 c'4 d'4 r4 e'4 f'4 r4")
-            >>> clef = abjad.Clef('treble')
-            >>> abjad.attach(clef, staff[0])
-            >>> clef_spanner = abjad.ClefSpanner('percussion')
-            >>> abjad.attach(clef_spanner, staff[1:3])
-            >>> clef_spanner = abjad.ClefSpanner('percussion')
-            >>> abjad.attach(clef_spanner, staff[4:6])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("r4 c'4 d'4 r4 e'4 f'4 r4")
+        >>> clef = abjad.Clef('treble')
+        >>> abjad.attach(clef, staff[0])
+        >>> clef_spanner = abjad.ClefSpanner('percussion')
+        >>> abjad.attach(clef_spanner, staff[1:3])
+        >>> clef_spanner = abjad.ClefSpanner('percussion')
+        >>> abjad.attach(clef_spanner, staff[4:6])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 

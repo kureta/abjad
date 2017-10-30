@@ -9,26 +9,22 @@ class Quantizer(AbjadObject):
         Quantizes sequences of attack-points, encapsulated by
         ``QEventSequences``, into score trees.
 
-        ::
-
-            >>> quantizer = abjad.quantizationtools.Quantizer()
-            >>> durations = [1000] * 8
-            >>> pitches = range(8)
-            >>> q_event_sequence = \
-            ...     abjad.quantizationtools.QEventSequence.from_millisecond_pitch_pairs(
-            ...     tuple(zip(durations, pitches)))
+        >>> quantizer = abjad.quantizationtools.Quantizer()
+        >>> durations = [1000] * 8
+        >>> pitches = range(8)
+        >>> q_event_sequence = \
+        ...     abjad.quantizationtools.QEventSequence.from_millisecond_pitch_pairs(
+        ...     tuple(zip(durations, pitches)))
 
     ..  container:: example
 
         Quantization defaults to outputting into a 4/4, quarter=60 musical
         structure:
 
-        ::
-
-            >>> result = quantizer(q_event_sequence)
-            >>> staff = abjad.Staff([result])
-            >>> score = abjad.Score([staff])
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> result = quantizer(q_event_sequence)
+        >>> staff = abjad.Staff([result])
+        >>> score = abjad.Score([staff])
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,22 +60,18 @@ class Quantizer(AbjadObject):
         which will cause the ``Quantizer`` to group the output into measures
         with different tempi and time signatures:
 
-        ::
+        >>> measurewise_q_schema = abjad.quantizationtools.MeasurewiseQSchema(
+        ...     {'tempo': ((1, 4), 78), 'time_signature': (2, 4)},
+        ...     {'tempo': ((1, 8), 57), 'time_signature': (5, 4)},
+        ...     )
 
-            >>> measurewise_q_schema = abjad.quantizationtools.MeasurewiseQSchema(
-            ...     {'tempo': ((1, 4), 78), 'time_signature': (2, 4)},
-            ...     {'tempo': ((1, 8), 57), 'time_signature': (5, 4)},
-            ...     )
-
-        ::
-
-            >>> result = quantizer(
-            ...     q_event_sequence,
-            ...     q_schema=measurewise_q_schema,
-            ...     )
-            >>> staff = abjad.Staff([result])
-            >>> score = abjad.Score([staff])
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> result = quantizer(
+        ...     q_event_sequence,
+        ...     q_schema=measurewise_q_schema,
+        ...     )
+        >>> staff = abjad.Staff([result])
+        >>> score = abjad.Score([staff])
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -145,24 +137,20 @@ class Quantizer(AbjadObject):
         or explicit time signatures.  The default beat-wise settings of
         quarter=60 persists until the third "beatspan":
 
-        ::
+        >>> beatwise_q_schema = abjad.quantizationtools.BeatwiseQSchema(
+        ... {
+        ...     2: {'tempo': ((1, 4), 120)},
+        ...     5: {'tempo': ((1, 4), 90)},
+        ...     7: {'tempo': ((1, 4), 30)},
+        ... })
 
-            >>> beatwise_q_schema = abjad.quantizationtools.BeatwiseQSchema(
-            ... {
-            ...     2: {'tempo': ((1, 4), 120)},
-            ...     5: {'tempo': ((1, 4), 90)},
-            ...     7: {'tempo': ((1, 4), 30)},
-            ... })
-
-        ::
-
-            >>> result = quantizer(
-            ...     q_event_sequence,
-            ...     q_schema=beatwise_q_schema,
-            ...     )
-            >>> staff = abjad.Staff([result])
-            >>> score = abjad.Score([staff])
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> result = quantizer(
+        ...     q_event_sequence,
+        ...     q_schema=beatwise_q_schema,
+        ...     )
+        >>> staff = abjad.Staff([result])
+        >>> score = abjad.Score([staff])
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 

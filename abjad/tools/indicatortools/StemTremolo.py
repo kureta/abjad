@@ -10,12 +10,10 @@ class StemTremolo(AbjadValueObject):
 
         Sixteenth-note tremolo:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> stem_tremolo = abjad.StemTremolo(16)
-            >>> abjad.attach(stem_tremolo, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> stem_tremolo = abjad.StemTremolo(16)
+        >>> abjad.attach(stem_tremolo, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -26,12 +24,10 @@ class StemTremolo(AbjadValueObject):
 
         Thirty-second-note tremolo:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> stem_tremolo = abjad.StemTremolo(32)
-            >>> abjad.attach(stem_tremolo, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> stem_tremolo = abjad.StemTremolo(32)
+        >>> abjad.attach(stem_tremolo, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -69,21 +65,17 @@ class StemTremolo(AbjadValueObject):
 
             Sixteenth-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(16)
-                >>> print(format(stem_tremolo))
-                :16
+            >>> stem_tremolo = abjad.StemTremolo(16)
+            >>> print(format(stem_tremolo))
+            :16
 
         ..  container:: example
 
             Thirty-second-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(32)
-                >>> print(format(stem_tremolo))
-                :32
+            >>> stem_tremolo = abjad.StemTremolo(32)
+            >>> print(format(stem_tremolo))
+            :32
 
         Returns string.
         '''
@@ -101,21 +93,17 @@ class StemTremolo(AbjadValueObject):
 
             Sixteenth-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(16)
-                >>> print(str(stem_tremolo))
-                :16
+            >>> stem_tremolo = abjad.StemTremolo(16)
+            >>> print(str(stem_tremolo))
+            :16
 
         ..  container:: example
 
             Thirty-second-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(32)
-                >>> print(str(stem_tremolo))
-                :32
+            >>> stem_tremolo = abjad.StemTremolo(32)
+            >>> print(str(stem_tremolo))
+            :32
 
         Returns string.
         '''
@@ -148,21 +136,17 @@ class StemTremolo(AbjadValueObject):
 
             Sixteenth-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(16)
-                >>> stem_tremolo.tremolo_flags
-                16
+            >>> stem_tremolo = abjad.StemTremolo(16)
+            >>> stem_tremolo.tremolo_flags
+            16
 
         ..  container:: example
 
             Thirty-second-note tremolo:
 
-            ::
-
-                >>> stem_tremolo = abjad.StemTremolo(32)
-                >>> stem_tremolo.tremolo_flags
-                32
+            >>> stem_tremolo = abjad.StemTremolo(32)
+            >>> stem_tremolo.tremolo_flags
+            32
 
         Set to nonnegative integer power of 2.
 

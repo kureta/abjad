@@ -7,12 +7,10 @@ class Glissando(Spanner):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-            >>> glissando = abjad.Glissando()
-            >>> abjad.attach(glissando, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> glissando = abjad.Glissando()
+        >>> abjad.attach(glissando, staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -28,14 +26,12 @@ class Glissando(Spanner):
 
         Glissando avoids bend-after indicators:
 
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-            >>> bend_after = abjad.BendAfter()
-            >>> abjad.attach(bend_after, staff[1])
-            >>> glissando = abjad.Glissando()
-            >>> abjad.attach(glissando, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> bend_after = abjad.BendAfter()
+        >>> abjad.attach(bend_after, staff[1])
+        >>> glissando = abjad.Glissando()
+        >>> abjad.attach(glissando, staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -173,14 +169,12 @@ class Glissando(Spanner):
 
             Does not allow repeated pitches:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=False,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=False,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -202,14 +196,12 @@ class Glissando(Spanner):
 
             Allows repeated pitches (but not ties):
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -229,15 +221,13 @@ class Glissando(Spanner):
 
             Allows both repeated pitches and ties:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=True,
-                ...     allow_ties=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=True,
+            ...     allow_ties=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -268,14 +258,12 @@ class Glissando(Spanner):
 
             Does not allow repeated pitches (including ties):
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=False,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=False,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -297,14 +285,12 @@ class Glissando(Spanner):
 
             Allows repeated pitches (but not ties):
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -324,15 +310,13 @@ class Glissando(Spanner):
 
             Allows both repeated pitches and ties:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=True,
-                ...     allow_ties=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=True,
+            ...     allow_ties=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -364,12 +348,10 @@ class Glissando(Spanner):
 
             Does not parenthesize repeated pitches:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando()
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando()
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -391,15 +373,13 @@ class Glissando(Spanner):
 
             Spans and parenthesizes repeated pitches:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     allow_repeat_pitches=True,
-                ...     parenthesize_repeated_pitches=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     allow_repeat_pitches=True,
+            ...     parenthesize_repeated_pitches=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -423,14 +403,12 @@ class Glissando(Spanner):
 
             Parenthesizes (but does not span) repeated pitches:
 
-            ::
-
-                >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
-                >>> glissando = abjad.Glissando(
-                ...     parenthesize_repeated_pitches=True,
-                ...     )
-                >>> abjad.attach(glissando, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
+            >>> glissando = abjad.Glissando(
+            ...     parenthesize_repeated_pitches=True,
+            ...     )
+            >>> abjad.attach(glissando, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

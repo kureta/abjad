@@ -8,12 +8,10 @@ class BendAfter(AbjadValueObject):
 
         A fall:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> bend = abjad.BendAfter(-4)
-            >>> abjad.attach(bend, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> bend = abjad.BendAfter(-4)
+        >>> abjad.attach(bend, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -24,12 +22,10 @@ class BendAfter(AbjadValueObject):
 
         A doit:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> bend = abjad.BendAfter(2)
-            >>> abjad.attach(bend, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> bend = abjad.BendAfter(2)
+        >>> abjad.attach(bend, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -40,10 +36,8 @@ class BendAfter(AbjadValueObject):
 
         Initializes from other bend:
 
-        ::
-
-            >>> abjad.BendAfter(abjad.BendAfter(16))
-            BendAfter(bend_amount=16.0)
+        >>> abjad.BendAfter(abjad.BendAfter(16))
+        BendAfter(bend_amount=16.0)
 
     '''
 
@@ -72,10 +66,8 @@ class BendAfter(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> str(abjad.BendAfter())
-                "- \\bendAfter #'-4.0"
+            >>> str(abjad.BendAfter())
+            "- \\bendAfter #'-4.0"
 
         Returns string.
         '''
@@ -108,21 +100,17 @@ class BendAfter(AbjadValueObject):
 
             Fall:
 
-            ::
-
-                >>> bend = abjad.BendAfter(-4)
-                >>> bend.bend_amount
-                -4.0
+            >>> bend = abjad.BendAfter(-4)
+            >>> bend.bend_amount
+            -4.0
 
         ..  container:: example
 
             Doit:
 
-            ::
-
-                >>> bend = abjad.BendAfter(2)
-                >>> bend.bend_amount
-                2.0
+            >>> bend = abjad.BendAfter(2)
+            >>> bend.bend_amount
+            2.0
 
         Returns float.
         '''

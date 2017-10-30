@@ -9,29 +9,23 @@ class MetronomeMarkSpanner(Spanner):
 
         With metronome marks only:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
-
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -114,35 +108,27 @@ class MetronomeMarkSpanner(Spanner):
 
         With an accelerando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> accelerando = abjad.Accelerando()
+        >>> spanner.attach(accelerando, staff[0])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> accelerando = abjad.Accelerando()
-            >>> spanner.attach(accelerando, staff[0])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -250,35 +236,27 @@ class MetronomeMarkSpanner(Spanner):
 
         With a ritardando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> ritardando = abjad.Ritardando()
+        >>> spanner.attach(ritardando, staff[3])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> ritardando = abjad.Ritardando()
-            >>> spanner.attach(ritardando, staff[3])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -386,37 +364,29 @@ class MetronomeMarkSpanner(Spanner):
 
         With both an accelerando and a ritardando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> accelerando = abjad.Accelerando()
+        >>> spanner.attach(accelerando, staff[0])
+        >>> ritardando = abjad.Ritardando()
+        >>> spanner.attach(ritardando, staff[3])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> accelerando = abjad.Accelerando()
-            >>> spanner.attach(accelerando, staff[0])
-            >>> ritardando = abjad.Ritardando()
-            >>> spanner.attach(ritardando, staff[3])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -548,33 +518,25 @@ class MetronomeMarkSpanner(Spanner):
 
         Implicit start to (music-initial) accelerando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> accelerando = abjad.Accelerando()
+        >>> spanner.attach(accelerando, staff[0])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> accelerando = abjad.Accelerando()
-            >>> spanner.attach(accelerando, staff[0])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -671,33 +633,25 @@ class MetronomeMarkSpanner(Spanner):
 
         Implicit start to (music-initial) ritardando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 72)
+        >>> spanner.attach(mark, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> ritardando = abjad.Ritardando()
+        >>> spanner.attach(ritardando, staff[0])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 72)
-            >>> spanner.attach(mark, staff[3])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> ritardando = abjad.Ritardando()
-            >>> spanner.attach(ritardando, staff[0])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -794,35 +748,27 @@ class MetronomeMarkSpanner(Spanner):
 
         Implicit start to (midmusic) accelerando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner(
+        ...     start_with_parenthesized_tempo=True,
+        ...     )
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner(
-            ...     start_with_parenthesized_tempo=True,
-            ...     )
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 120)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> accelerando = abjad.Accelerando()
+        >>> spanner.attach(accelerando, staff[3])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 120)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> accelerando = abjad.Accelerando()
-            >>> spanner.attach(accelerando, staff[3])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -936,35 +882,27 @@ class MetronomeMarkSpanner(Spanner):
 
         Implicit start to (midmusic) ritardando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner(
+        ...     start_with_parenthesized_tempo=True,
+        ...     )
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner(
-            ...     start_with_parenthesized_tempo=True,
-            ...     )
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[5])
 
-        ::
+        >>> ritardando = abjad.Ritardando()
+        >>> spanner.attach(ritardando, staff[3])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[5])
-
-        ::
-
-            >>> ritardando = abjad.Ritardando()
-            >>> spanner.attach(ritardando, staff[3])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -1078,33 +1016,25 @@ class MetronomeMarkSpanner(Spanner):
 
         With an accelerando over a line break:
 
-        ::
+        >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> score = abjad.Score([staff])
+        >>> command = abjad.LilyPondCommand('break', 'after')
+        >>> abjad.attach(command, staff[3])
 
-            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> score = abjad.Score([staff])
-            >>> command = abjad.LilyPondCommand('break', 'after')
-            >>> abjad.attach(command, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[6])
 
-        ::
+        >>> accelerando = abjad.Accelerando()
+        >>> spanner.attach(accelerando, staff[2])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[6])
-
-        ::
-
-            >>> accelerando = abjad.Accelerando()
-            >>> spanner.attach(accelerando, staff[2])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -1185,33 +1115,25 @@ class MetronomeMarkSpanner(Spanner):
 
         With a ritardando over a line break:
 
-        ::
+        >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> score = abjad.Score([staff])
+        >>> command = abjad.LilyPondCommand('break', 'after')
+        >>> abjad.attach(command, staff[3])
 
-            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> score = abjad.Score([staff])
-            >>> command = abjad.LilyPondCommand('break', 'after')
-            >>> abjad.attach(command, staff[3])
+        >>> mark = abjad.MetronomeMark((1, 4), 90)
+        >>> spanner.attach(mark, staff[2])
+        >>> mark = abjad.MetronomeMark((1, 4), 60)
+        >>> spanner.attach(mark, staff[6])
 
-        ::
+        >>> ritardando = abjad.Ritardando()
+        >>> spanner.attach(ritardando, staff[2])
 
-            >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> spanner.attach(mark, staff[2])
-            >>> mark = abjad.MetronomeMark((1, 4), 60)
-            >>> spanner.attach(mark, staff[6])
-
-        ::
-
-            >>> ritardando = abjad.Ritardando()
-            >>> spanner.attach(ritardando, staff[2])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -1292,31 +1214,25 @@ class MetronomeMarkSpanner(Spanner):
 
         With a metric modulation:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d'8. e'4. g'8. f'8. ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d'8. e'4. g'8. f'8. ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((3, 4), 90)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((3, 4), 60)
+        >>> spanner.attach(mark, staff[3])
+        >>> metric_modulation = abjad.MetricModulation(
+        ...     left_rhythm=abjad.Note('c4.'),
+        ...     right_rhythm=abjad.Note('c4'),
+        ...     )
+        >>> spanner.attach(metric_modulation, staff[3])
 
-        ::
-
-            >>> mark = abjad.MetronomeMark((3, 4), 90)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((3, 4), 60)
-            >>> spanner.attach(mark, staff[3])
-            >>> metric_modulation = abjad.MetricModulation(
-            ...     left_rhythm=abjad.Note('c4.'),
-            ...     right_rhythm=abjad.Note('c4'),
-            ...     )
-            >>> spanner.attach(metric_modulation, staff[3])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -1440,34 +1356,28 @@ class MetronomeMarkSpanner(Spanner):
 
         With a metric modulation and an accelerando:
 
-        ::
+        >>> staff = abjad.Staff("c'8. d'8. e'4. g'8. f'8. ef'4.")
+        >>> score = abjad.Score([staff])
+        >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+        >>> spanner = abjad.MetronomeMarkSpanner()
+        >>> abjad.attach(spanner, staff[:])
 
-            >>> staff = abjad.Staff("c'8. d'8. e'4. g'8. f'8. ef'4.")
-            >>> score = abjad.Score([staff])
-            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-            >>> spanner = abjad.MetronomeMarkSpanner()
-            >>> abjad.attach(spanner, staff[:])
+        >>> mark = abjad.MetronomeMark((3, 4), 90)
+        >>> spanner.attach(mark, staff[0])
+        >>> mark = abjad.MetronomeMark((3, 4), 60)
+        >>> spanner.attach(mark, staff[3])
+        >>> metric_modulation = abjad.MetricModulation(
+        ...     left_rhythm=abjad.Note('c4.'),
+        ...     right_rhythm=abjad.Note('c4'),
+        ...     )
+        >>> spanner.attach(metric_modulation, staff[3])
+        >>> spanner.attach(abjad.Accelerando(), staff[3])
+        >>> mark = abjad.MetronomeMark((3, 4), 90)
+        >>> spanner.attach(mark, staff[-1])
 
-        ::
-
-            >>> mark = abjad.MetronomeMark((3, 4), 90)
-            >>> spanner.attach(mark, staff[0])
-            >>> mark = abjad.MetronomeMark((3, 4), 60)
-            >>> spanner.attach(mark, staff[3])
-            >>> metric_modulation = abjad.MetricModulation(
-            ...     left_rhythm=abjad.Note('c4.'),
-            ...     right_rhythm=abjad.Note('c4'),
-            ...     )
-            >>> spanner.attach(metric_modulation, staff[3])
-            >>> spanner.attach(abjad.Accelerando(), staff[3])
-            >>> mark = abjad.MetronomeMark((3, 4), 90)
-            >>> spanner.attach(mark, staff[-1])
-
-        ::
-
-            >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> abjad.override(score).text_script.staff_padding = 2.25
+        >>> abjad.override(score).text_spanner.staff_padding = 3
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -1994,33 +1904,25 @@ class MetronomeMarkSpanner(Spanner):
 
             With left broken padding set to none:
 
-            ::
+            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> command = abjad.LilyPondCommand('break', 'after')
+            >>> abjad.attach(command, staff[3])
+            >>> spanner = abjad.MetronomeMarkSpanner()
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> command = abjad.LilyPondCommand('break', 'after')
-                >>> abjad.attach(command, staff[3])
-                >>> spanner = abjad.MetronomeMarkSpanner()
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[6])
 
-            ::
+            >>> ritardando = abjad.Ritardando()
+            >>> spanner.attach(ritardando, staff[2])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[6])
-
-            ::
-
-                >>> ritardando = abjad.Ritardando()
-                >>> spanner.attach(ritardando, staff[2])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2103,35 +2005,27 @@ class MetronomeMarkSpanner(Spanner):
 
             With left broken padding set explicitly:
 
-            ::
+            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> command = abjad.LilyPondCommand('break', 'after')
+            >>> abjad.attach(command, staff[3])
+            >>> spanner = abjad.MetronomeMarkSpanner(
+            ...     left_broken_padding=4,
+            ...     )
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> command = abjad.LilyPondCommand('break', 'after')
-                >>> abjad.attach(command, staff[3])
-                >>> spanner = abjad.MetronomeMarkSpanner(
-                ...     left_broken_padding=4,
-                ...     )
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[6])
 
-            ::
+            >>> ritardando = abjad.Ritardando()
+            >>> spanner.attach(ritardando, staff[2])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[6])
-
-            ::
-
-                >>> ritardando = abjad.Ritardando()
-                >>> spanner.attach(ritardando, staff[2])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2220,33 +2114,25 @@ class MetronomeMarkSpanner(Spanner):
 
             With left broken text set to none:
 
-            ::
+            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> command = abjad.LilyPondCommand('break', 'after')
+            >>> abjad.attach(command, staff[3])
+            >>> spanner = abjad.MetronomeMarkSpanner()
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> command = abjad.LilyPondCommand('break', 'after')
-                >>> abjad.attach(command, staff[3])
-                >>> spanner = abjad.MetronomeMarkSpanner()
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[6])
 
-            ::
+            >>> ritardando = abjad.Ritardando()
+            >>> spanner.attach(ritardando, staff[2])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[6])
-
-            ::
-
-                >>> ritardando = abjad.Ritardando()
-                >>> spanner.attach(ritardando, staff[2])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2330,36 +2216,28 @@ class MetronomeMarkSpanner(Spanner):
 
             With left broken text set explicitly:
 
-            ::
+            >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> command = abjad.LilyPondCommand('break', 'after')
+            >>> abjad.attach(command, staff[3])
+            >>> null_markup = abjad.Markup.null(direction=None)
+            >>> spanner = abjad.MetronomeMarkSpanner(
+            ...     left_broken_text=null_markup,
+            ...     )
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'4. d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> command = abjad.LilyPondCommand('break', 'after')
-                >>> abjad.attach(command, staff[3])
-                >>> null_markup = abjad.Markup.null(direction=None)
-                >>> spanner = abjad.MetronomeMarkSpanner(
-                ...     left_broken_text=null_markup,
-                ...     )
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[6])
 
-            ::
+            >>> ritardando = abjad.Ritardando()
+            >>> spanner.attach(ritardando, staff[2])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[6])
-
-            ::
-
-                >>> ritardando = abjad.Ritardando()
-                >>> spanner.attach(ritardando, staff[2])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2443,35 +2321,27 @@ class MetronomeMarkSpanner(Spanner):
 
             Does not start with parenthesized tempo:
 
-            ::
+            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> spanner = abjad.MetronomeMarkSpanner(
+            ...     start_with_parenthesized_tempo=False,
+            ...     )
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> spanner = abjad.MetronomeMarkSpanner(
-                ...     start_with_parenthesized_tempo=False,
-                ...     )
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[0])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 120)
+            >>> spanner.attach(mark, staff[5])
 
-            ::
+            >>> accelerando = abjad.Accelerando()
+            >>> spanner.attach(accelerando, staff[3])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[0])
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 120)
-                >>> spanner.attach(mark, staff[5])
-
-            ::
-
-                >>> accelerando = abjad.Accelerando()
-                >>> spanner.attach(accelerando, staff[3])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2568,35 +2438,27 @@ class MetronomeMarkSpanner(Spanner):
 
             Starts with parenthesized tempo:
 
-            ::
+            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> score = abjad.Score([staff])
+            >>> spanner = abjad.MetronomeMarkSpanner(
+            ...     start_with_parenthesized_tempo=True,
+            ...     )
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> score = abjad.Score([staff])
-                >>> spanner = abjad.MetronomeMarkSpanner(
-                ...     start_with_parenthesized_tempo=True,
-                ...     )
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[0])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 120)
+            >>> spanner.attach(mark, staff[5])
 
-            ::
+            >>> accelerando = abjad.Accelerando()
+            >>> spanner.attach(accelerando, staff[3])
 
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[0])
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 120)
-                >>> spanner.attach(mark, staff[5])
-
-            ::
-
-                >>> accelerando = abjad.Accelerando()
-                >>> spanner.attach(accelerando, staff[3])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.override(score).text_spanner.staff_padding = 3
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2721,29 +2583,23 @@ class MetronomeMarkSpanner(Spanner):
 
             REGRESSION: effective metronome marks still work:
 
-            ::
+            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+            >>> score = abjad.Score([staff])
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> spanner = abjad.MetronomeMarkSpanner()
+            >>> abjad.attach(spanner, staff[:])
 
-                >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
-                >>> score = abjad.Score([staff])
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
-                >>> spanner = abjad.MetronomeMarkSpanner()
-                >>> abjad.attach(spanner, staff[:])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[0])
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2])
+            >>> mark = abjad.MetronomeMark((1, 4), 72)
+            >>> spanner.attach(mark, staff[3])
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[5])
 
-            ::
-
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[0])
-                >>> mark = abjad.MetronomeMark((1, 4), 90)
-                >>> spanner.attach(mark, staff[2])
-                >>> mark = abjad.MetronomeMark((1, 4), 72)
-                >>> spanner.attach(mark, staff[3])
-                >>> mark = abjad.MetronomeMark((1, 4), 60)
-                >>> spanner.attach(mark, staff[5])
-
-            ::
-
-                >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -2822,11 +2678,9 @@ class MetronomeMarkSpanner(Spanner):
                     }
                 >>
 
-            ::
-
-                >>> prototype = abjad.MetronomeMark
-                >>> abjad.inspect(staff[-1]).get_effective(prototype)
-                MetronomeMark(reference_duration=Duration(1, 4), units_per_minute=60)
+            >>> prototype = abjad.MetronomeMark
+            >>> abjad.inspect(staff[-1]).get_effective(prototype)
+            MetronomeMark(reference_duration=Duration(1, 4), units_per_minute=60)
 
         Returns none.
         '''

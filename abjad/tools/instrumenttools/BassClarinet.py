@@ -6,12 +6,10 @@ class BassClarinet(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> bass_clarinet = abjad.BassClarinet()
-            >>> abjad.attach(bass_clarinet, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> bass_clarinet = abjad.BassClarinet()
+        >>> abjad.attach(bass_clarinet, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.allowable_clefs
-                ('treble', 'bass')
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.allowable_clefs
+            ('treble', 'bass')
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.middle_c_sounding_pitch
+            NamedPitch('bf,')
 
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.middle_c_sounding_pitch
-                NamedPitch('bf,')
-
-            ::
-
-                >>> abjad.show(bass_clarinet.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(bass_clarinet.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.name
-                'bass clarinet'
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.name
+            'bass clarinet'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.name_markup
+            Markup(contents=['Bass clarinet'])
 
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.name_markup
-                Markup(contents=['Bass clarinet'])
-
-            ::
-
-                >>> abjad.show(bass_clarinet.name_markup) # doctest: +SKIP
+            >>> abjad.show(bass_clarinet.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.pitch_range
+            PitchRange('[Bb1, G5]')
 
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.pitch_range
-                PitchRange('[Bb1, G5]')
-
-            ::
-
-                >>> abjad.show(bass_clarinet.pitch_range) # doctest: +SKIP
+            >>> abjad.show(bass_clarinet.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.short_name
-                'bass cl.'
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.short_name
+            'bass cl.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class BassClarinet(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_clarinet = abjad.BassClarinet()
+            >>> bass_clarinet.short_name_markup
+            Markup(contents=['Bass cl.'])
 
-                >>> bass_clarinet = abjad.BassClarinet()
-                >>> bass_clarinet.short_name_markup
-                Markup(contents=['Bass cl.'])
-
-            ::
-
-                >>> abjad.show(bass_clarinet.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(bass_clarinet.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

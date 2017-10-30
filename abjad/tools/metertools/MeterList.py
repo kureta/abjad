@@ -6,32 +6,26 @@ class MeterList(TypedList):
 
     ..  container:: example
 
-        ::
+        >>> meters = abjad.MeterList([
+        ...     (3, 4), (5, 16), (7, 8),
+        ...     ])
 
-            >>> meters = abjad.MeterList([
-            ...     (3, 4), (5, 16), (7, 8),
-            ...     ])
+        >>> abjad.f(meters)
+        abjad.MeterList(
+            [
+                abjad.Meter(
+                    '(3/4 (1/4 1/4 1/4))'
+                    ),
+                abjad.Meter(
+                    '(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))'
+                    ),
+                abjad.Meter(
+                    '(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))'
+                    ),
+                ]
+            )
 
-        ::
-
-            >>> abjad.f(meters)
-            abjad.MeterList(
-                [
-                    abjad.Meter(
-                        '(3/4 (1/4 1/4 1/4))'
-                        ),
-                    abjad.Meter(
-                        '(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))'
-                        ),
-                    abjad.Meter(
-                        '(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))'
-                        ),
-                    ]
-                )
-
-        ::
-
-            >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
+        >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
 
     '''
 
@@ -46,12 +40,10 @@ class MeterList(TypedList):
 
         ..  container:: example
 
-            ::
-
-                >>> meters = abjad.MeterList([
-                ...     (3, 4), (5, 16), (7, 8),
-                ...     ])
-                >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
+            >>> meters = abjad.MeterList([
+            ...     (3, 4), (5, 16), (7, 8),
+            ...     ])
+            >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
 
             ..  doctest
 

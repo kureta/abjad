@@ -9,11 +9,9 @@ class Tie(Spanner):
 
         Ties four notes:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 c' c' c'")
-            >>> abjad.attach(abjad.Tie(), staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 c' c' c'")
+        >>> abjad.attach(abjad.Tie(), staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -29,24 +27,20 @@ class Tie(Spanner):
 
         Fails attachment test when pitches differ:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> abjad.attach(abjad.Tie(), staff[:])
-            Traceback (most recent call last):
-                ...
-            Exception: Tie() attachment test fails for Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")]).
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> abjad.attach(abjad.Tie(), staff[:])
+        Traceback (most recent call last):
+            ...
+        Exception: Tie() attachment test fails for Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")]).
 
     ..  container:: example
 
         Ties consecutive chords if all adjacent pairs have at least one pitch
         in common:
 
-        ::
-
-            >>> staff = abjad.Staff("<c'>4 <c' d'>4 <d'>4")
-            >>> abjad.attach(abjad.Tie(), staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("<c'>4 <c' d'>4 <d'>4")
+        >>> abjad.attach(abjad.Tie(), staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -165,12 +159,10 @@ class Tie(Spanner):
 
             Forces ties up:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
-                >>> tie = abjad.Tie(direction=abjad.Up)
-                >>> abjad.attach(tie, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
+            >>> tie = abjad.Tie(direction=abjad.Up)
+            >>> abjad.attach(tie, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -182,21 +174,17 @@ class Tie(Spanner):
                     c'8
                 }
 
-            ::
-
-                >>> tie.direction
-                '^'
+            >>> tie.direction
+            '^'
 
         ..  container:: example
 
             Forces ties down:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
-                >>> tie = abjad.Tie(direction=abjad.Down)
-                >>> abjad.attach(tie, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
+            >>> tie = abjad.Tie(direction=abjad.Down)
+            >>> abjad.attach(tie, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -208,21 +196,17 @@ class Tie(Spanner):
                     c'8
                 }
 
-            ::
-
-                >>> tie.direction
-                '_'
+            >>> tie.direction
+            '_'
 
         ..  container:: example
 
             Positions ties according to LilyPond defaults:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
-                >>> tie = abjad.Tie(direction=None)
-                >>> abjad.attach(tie, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
+            >>> tie = abjad.Tie(direction=None)
+            >>> abjad.attach(tie, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -234,10 +218,8 @@ class Tie(Spanner):
                     c'8
                 }
 
-            ::
-
-                >>> tie.direction is None
-                True
+            >>> tie.direction is None
+            True
 
         Defaults to none.
 
@@ -256,12 +238,10 @@ class Tie(Spanner):
 
             Default values for Messiaen-style ties:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
-                >>> tie = abjad.Tie(direction=abjad.Up, use_messiaen_style_ties=True)
-                >>> abjad.attach(tie, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
+            >>> tie = abjad.Tie(direction=abjad.Up, use_messiaen_style_ties=True)
+            >>> abjad.attach(tie, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

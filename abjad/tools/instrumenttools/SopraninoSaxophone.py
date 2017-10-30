@@ -6,12 +6,10 @@ class SopraninoSaxophone(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-            >>> abjad.attach(sopranino_saxophone, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+        >>> abjad.attach(sopranino_saxophone, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.allowable_clefs
-                ('treble',)
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.middle_c_sounding_pitch
+            NamedPitch("ef'")
 
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.middle_c_sounding_pitch
-                NamedPitch("ef'")
-
-            ::
-
-                >>> abjad.show(sopranino_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(sopranino_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.name
-                'sopranino saxophone'
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.name
+            'sopranino saxophone'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.name_markup
+            Markup(contents=['Sopranino saxophone'])
 
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.name_markup
-                Markup(contents=['Sopranino saxophone'])
-
-            ::
-
-                >>> abjad.show(sopranino_saxophone.name_markup) # doctest: +SKIP
+            >>> abjad.show(sopranino_saxophone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.pitch_range
+            PitchRange('[Db4, F#6]')
 
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.pitch_range
-                PitchRange('[Db4, F#6]')
-
-            ::
-
-                >>> abjad.show(sopranino_saxophone.pitch_range) # doctest: +SKIP
+            >>> abjad.show(sopranino_saxophone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.short_name
-                'sopranino sax.'
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.short_name
+            'sopranino sax.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class SopraninoSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> sopranino_saxophone = abjad.SopraninoSaxophone()
+            >>> sopranino_saxophone.short_name_markup
+            Markup(contents=['Sopranino sax.'])
 
-                >>> sopranino_saxophone = abjad.SopraninoSaxophone()
-                >>> sopranino_saxophone.short_name_markup
-                Markup(contents=['Sopranino sax.'])
-
-            ::
-
-                >>> abjad.show(sopranino_saxophone.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(sopranino_saxophone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

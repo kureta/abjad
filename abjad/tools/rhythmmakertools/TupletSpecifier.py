@@ -193,25 +193,21 @@ class TupletSpecifier(AbjadValueObject):
             relatively prime when `preferred_denominator` is set to none. This
             means that ratios like ``6:4`` and ``10:8`` do not arise:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=None,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=None,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -256,25 +252,21 @@ class TupletSpecifier(AbjadValueObject):
             numerator and denominator are not necessarily relatively prime.
             This also means that ratios like ``6:4`` and ``10:8`` may arise:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator='divisions',
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator='divisions',
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -317,25 +309,21 @@ class TupletSpecifier(AbjadValueObject):
             duration when `preferred_denominator` is set to a duration. The
             setting does not affect the first tuplet:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=(1, 16),
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=(1, 16),
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -377,25 +365,21 @@ class TupletSpecifier(AbjadValueObject):
             Sets the preferred denominator of each tuplet in terms 32nd notes.
             The setting affects all tuplets:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=(1, 32),
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=(1, 32),
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -437,25 +421,21 @@ class TupletSpecifier(AbjadValueObject):
             Sets the preferred denominator each tuplet in terms 64th notes. The
             setting affects all tuplets:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=(1, 64),
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=(1, 64),
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -499,25 +479,21 @@ class TupletSpecifier(AbjadValueObject):
             sets the preferred denominator of each tuplet to ``8``. Setting
             does not affect the third tuplet:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=8,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=8,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -559,25 +535,21 @@ class TupletSpecifier(AbjadValueObject):
             Sets the preferred denominator of each tuplet to ``12``. Setting
             affects all tuplets:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=12,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=12,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
@@ -619,25 +591,21 @@ class TupletSpecifier(AbjadValueObject):
             Sets the preferred denominator of each tuplet to ``13``. Setting
             does not affect any tuplet:
 
-            ::
+            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
+            ...     tuplet_ratios=[(1, 4)],
+            ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
+            ...         avoid_dots=True,
+            ...         preferred_denominator=13,
+            ...         ),
+            ...     )
 
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(1, 4)],
-                ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(
-                ...         avoid_dots=True,
-                ...         preferred_denominator=13,
-                ...         ),
-                ...     )
-
-            ::
-
-                >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
-                >>> selections = rhythm_maker(divisions)
-                >>> lilypond_file = abjad.LilyPondFile.rhythm(
-                ...     selections,
-                ...     divisions,
-                ...     )
-                >>> abjad.show(lilypond_file) # doctest: +SKIP
+            >>> divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]
+            >>> selections = rhythm_maker(divisions)
+            >>> lilypond_file = abjad.LilyPondFile.rhythm(
+            ...     selections,
+            ...     divisions,
+            ...     )
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 

@@ -5,11 +5,9 @@ def annotate(component, name, indicator):
 
         Annotates first note in staff:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> abjad.annotate(staff[0], 'bow_direction', abjad.Down)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> abjad.annotate(staff[0], 'bow_direction', abjad.Down)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -21,20 +19,14 @@ def annotate(component, name, indicator):
                 f'4
             }
 
-        ::
+        >>> abjad.inspect(staff[0]).get_annotation('bow_direction')
+        Down
 
-            >>> abjad.inspect(staff[0]).get_annotation('bow_direction')
-            Down
+        >>> abjad.inspect(staff[0]).get_annotation('bow_fraction') is None
+        True
 
-        ::
-
-            >>> abjad.inspect(staff[0]).get_annotation('bow_fraction') is None
-            True
-
-        ::
-
-            >>> abjad.inspect(staff[0]).get_annotation('bow_fraction', 99)
-            99
+        >>> abjad.inspect(staff[0]).get_annotation('bow_fraction', 99)
+        99
 
     Returns none.
     '''

@@ -8,25 +8,19 @@ class FerneyhoughDemo(object):
 
         Initializes Ferneyhough demo:
 
-        ::
-
-            >>> demo = abjad.demos.ferneyhough.FerneyhoughDemo()
+        >>> demo = abjad.demos.ferneyhough.FerneyhoughDemo()
 
         Calls Ferneyhough demo:
 
-        ::
-
-            >>> lilypond_file = demo(
-            ...     tuplet_duration=abjad.Duration(1, 4),
-            ...     row_count=11,
-            ...     column_count=6,
-            ...     )
+        >>> lilypond_file = demo(
+        ...     tuplet_duration=abjad.Duration(1, 4),
+        ...     row_count=11,
+        ...     column_count=6,
+        ...     )
 
         Shows LilyPond file:
 
-        ::
-
-            >>> abjad.show(lilypond_file) # doctest: +SKIP
+        >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 

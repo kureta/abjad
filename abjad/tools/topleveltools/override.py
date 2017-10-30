@@ -5,11 +5,9 @@ def override(argument):
 
         Overrides staff symbol color:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
-            >>> abjad.override(staff).staff_symbol.color = 'red'
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
+        >>> abjad.override(staff).staff_symbol.color = 'red'
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -27,10 +25,8 @@ def override(argument):
 
         Returns LilyPond grob name manager:
 
-        ::
-
-            >>> abjad.override(staff)
-            LilyPondGrobNameManager(('staff_symbol', LilyPondNameManager(('color', 'red'))))
+        >>> abjad.override(staff)
+        LilyPondGrobNameManager(('staff_symbol', LilyPondNameManager(('color', 'red'))))
 
     '''
     from abjad.tools import lilypondnametools

@@ -6,15 +6,13 @@ class OffsetTimespanTimeRelation(TimeRelation):
 
     ..  container:: example
 
-        ::
-
-            >>> offset = abjad.Offset(5)
-            >>> timespan = abjad.Timespan(0, 10)
-            >>> time_relation = abjad.timespantools.offset_happens_during_timespan(
-            ...     offset=offset,
-            ...     timespan=timespan,
-            ...     hold=True,
-            ...     )
+        >>> offset = abjad.Offset(5)
+        >>> timespan = abjad.Timespan(0, 10)
+        >>> time_relation = abjad.timespantools.offset_happens_during_timespan(
+        ...     offset=offset,
+        ...     timespan=timespan,
+        ...     hold=True,
+        ...     )
 
         ::
 

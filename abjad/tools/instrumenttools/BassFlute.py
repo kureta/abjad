@@ -6,12 +6,10 @@ class BassFlute(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> bass_flute = abjad.BassFlute()
-            >>> abjad.attach(bass_flute, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> bass_flute = abjad.BassFlute()
+        >>> abjad.attach(bass_flute, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.allowable_clefs
-                ('treble',)
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.middle_c_sounding_pitch
+            NamedPitch('c')
 
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.middle_c_sounding_pitch
-                NamedPitch('c')
-
-            ::
-
-                >>> abjad.show(bass_flute.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(bass_flute.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.name
-                'bass flute'
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.name
+            'bass flute'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.name_markup
+            Markup(contents=['Bass flute'])
 
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.name_markup
-                Markup(contents=['Bass flute'])
-
-            ::
-
-                >>> abjad.show(bass_flute.name_markup) # doctest: +SKIP
+            >>> abjad.show(bass_flute.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.pitch_range
+            PitchRange('[C3, C6]')
 
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.pitch_range
-                PitchRange('[C3, C6]')
-
-            ::
-
-                >>> abjad.show(bass_flute.pitch_range) # doctest: +SKIP
+            >>> abjad.show(bass_flute.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.short_name
-                'bass fl.'
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.short_name
+            'bass fl.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class BassFlute(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> bass_flute = abjad.BassFlute()
+            >>> bass_flute.short_name_markup
+            Markup(contents=['Bass fl.'])
 
-                >>> bass_flute = abjad.BassFlute()
-                >>> bass_flute.short_name_markup
-                Markup(contents=['Bass fl.'])
-
-            ::
-
-                >>> abjad.show(bass_flute.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(bass_flute.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

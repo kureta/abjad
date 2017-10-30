@@ -8,18 +8,12 @@ class PitchSegment(Segment):
 
         Numbered pitch segment:
 
-        ::
+        >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+        >>> str(segment)
+        '<-2, -1.5, 6, 7, -1.5, 7>'
 
-        ::
-
-            >>> str(segment)
-            '<-2, -1.5, 6, 7, -1.5, 7>'
-
-        ::
-
-            >>> abjad.show(segment) # doctest: +SKIP
+        >>> abjad.show(segment) # doctest: +SKIP
 
         ..  docs::
 
@@ -50,18 +44,12 @@ class PitchSegment(Segment):
 
         Named pitch segment:
 
-        ::
+        >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
 
-            >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
+        >>> str(segment)
+        "<bf, aqs fs' g' bqf g'>"
 
-        ::
-
-            >>> str(segment)
-            "<bf, aqs fs' g' bqf g'>"
-
-        ::
-
-            >>> abjad.show(segment) # doctest: +SKIP
+        >>> abjad.show(segment) # doctest: +SKIP
 
         ..  docs::
 
@@ -92,19 +80,15 @@ class PitchSegment(Segment):
 
         Built-in max() works:
 
-        ::
-
-            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-            >>> max(segment)
-            NumberedPitch(7)
+        >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+        >>> max(segment)
+        NumberedPitch(7)
 
         Built-in min() works:
 
-        ::
-
-            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-            >>> min(segment)
-            NumberedPitch(-2)
+        >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+        >>> min(segment)
+        NumberedPitch(-2)
 
     '''
 
@@ -133,29 +117,19 @@ class PitchSegment(Segment):
 
             Numbered pitch segment:
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+            >>> abjad.NamedPitch('fs') in segment
+            False
 
-            ::
+            >>> 6 in segment
+            True
 
-                >>> abjad.NamedPitch('fs') in segment
-                False
+            >>> abjad.NamedPitch('f') in segment
+            False
 
-            ::
-
-                >>> 6 in segment
-                True
-
-            ::
-
-                >>> abjad.NamedPitch('f') in segment
-                False
-
-            ::
-
-                >>> 5 in segment
-                False
+            >>> 5 in segment
+            False
 
         Returns true or false.
         '''
@@ -166,13 +140,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
 
-                >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -233,25 +203,17 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> str(segment)
-                '<-2, -1.5, 6, 7, -1.5, 7>'
+            >>> str(segment)
+            '<-2, -1.5, 6, 7, -1.5, 7>'
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
 
-                >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
-
-            ::
-
-                >>> str(segment)
-                "<bf, aqs fs' g' bqf g'>"
+            >>> str(segment)
+            "<bf, aqs fs' g' bqf g'>"
 
         Returns string.
         '''
@@ -303,11 +265,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
-
-                >>> segment = abjad.PitchSegment('c e g b')
-                >>> segment.hertz
-                [130.81..., 164.81..., 195.99..., 246.94...]
+            >>> segment = abjad.PitchSegment('c e g b')
+            >>> segment.hertz
+            [130.81..., 164.81..., 195.99..., 246.94...]
 
         Returns list.
         '''
@@ -319,13 +279,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -352,10 +308,8 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
-
-                >>> segment.inflection_point_count
-                2
+            >>> segment.inflection_point_count
+            2
 
         Returns nonnegative integer.
         '''
@@ -367,13 +321,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -400,10 +350,8 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
-
-                >>> segment.local_maxima
-                [NumberedPitch(7)]
+            >>> segment.local_maxima
+            [NumberedPitch(7)]
 
         Returns list.
         '''
@@ -421,13 +369,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -454,10 +398,8 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
-
-                >>> segment.local_minima
-                [NumberedPitch(-1.5)]
+            >>> segment.local_minima
+            [NumberedPitch(-1.5)]
 
         Returns list.
         '''
@@ -481,21 +423,15 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
+            >>> staff_2 = abjad.Staff("c4. r8 g2")
+            >>> selection = abjad.select((staff_1, staff_2))
+            >>> segment = abjad.PitchSegment.from_selection(selection)
 
-                >>> staff_1 = abjad.Staff("c'4 <d' fs' a'>4 b2")
-                >>> staff_2 = abjad.Staff("c4. r8 g2")
-                >>> selection = abjad.select((staff_1, staff_2))
-                >>> segment = abjad.PitchSegment.from_selection(selection)
+            >>> str(segment)
+            "<c' d' fs' a' b c g>"
 
-            ::
-
-                >>> str(segment)
-                "<c' d' fs' a' b c g>"
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -550,19 +486,15 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
-
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-                >>> segment.has_duplicates()
-                True
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+            >>> segment.has_duplicates()
+            True
 
         ..  container:: example
 
-            ::
-
-                >>> segment = abjad.PitchSegment("c d e f g a b")
-                >>> segment.has_duplicates()
-                False
+            >>> segment = abjad.PitchSegment("c d e f g a b")
+            >>> segment.has_duplicates()
+            False
 
         Returns true or false.
         '''
@@ -574,13 +506,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -607,18 +535,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.invert(axis=0)
 
-                >>> segment = segment.invert(axis=0)
+            >>> str(segment)
+            '<2, 1.5, -6, -7, 1.5, -7>'
 
-            ::
-
-                >>> str(segment)
-                '<2, 1.5, -6, -7, 1.5, -7>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -664,11 +586,9 @@ class PitchSegment(Segment):
 
                 >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-            ::
-
-                >>> notes = segment.make_notes()
-                >>> staff = abjad.Staff(notes)
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> notes = segment.make_notes()
+            >>> staff = abjad.Staff(notes)
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -686,13 +606,11 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
-
-                >>> notes = segment.make_notes(4, abjad.Duration(5, 16))
-                >>> staff = abjad.Staff(notes)
-                >>> time_signature = abjad.TimeSignature((5, 4))
-                >>> abjad.attach(time_signature, staff[0])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> notes = segment.make_notes(4, abjad.Duration(5, 16))
+            >>> staff = abjad.Staff(notes)
+            >>> time_signature = abjad.TimeSignature((5, 4))
+            >>> abjad.attach(time_signature, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -728,13 +646,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -761,18 +675,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.multiply(n=3)
 
-                >>> segment = segment.multiply(n=3)
+            >>> str(segment)
+            '<-6, -4.5, 18, 21, -4.5, 21>'
 
-            ::
-
-                >>> str(segment)
-                '<-6, -4.5, 18, 21, -4.5, 21>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -810,13 +718,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -843,18 +747,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.retrograde()
 
-                >>> segment = segment.retrograde()
+            >>> str(segment)
+            '<7, -1.5, 7, 6, -1.5, -2>'
 
-            ::
-
-                >>> str(segment)
-                '<7, -1.5, 7, 6, -1.5, -2>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -891,13 +789,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -924,18 +818,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.rotate(n=1)
 
-                >>> segment = segment.rotate(n=1)
+            >>> str(segment)
+            '<7, -2, -1.5, 6, 7, -1.5>'
 
-            ::
-
-                >>> str(segment)
-                '<7, -2, -1.5, 6, 7, -1.5>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -980,13 +868,9 @@ class PitchSegment(Segment):
 
             To numbered pitch-class segment:
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1013,18 +897,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.to_pitch_classes()
 
-                >>> segment = segment.to_pitch_classes()
+            >>> str(segment)
+            'PC<10, 10.5, 6, 7, 10.5, 7>'
 
-            ::
-
-                >>> str(segment)
-                'PC<10, 10.5, 6, 7, 10.5, 7>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1045,13 +923,9 @@ class PitchSegment(Segment):
 
             To named pitch-class segment:
 
-            ::
+            >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
 
-                >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1078,18 +952,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.to_pitch_classes()
 
-                >>> segment = segment.to_pitch_classes()
+            >>> str(segment)
+            'PC<bf aqs fs g bqf g>'
 
-            ::
-
-                >>> str(segment)
-                'PC<bf aqs fs g bqf g>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1120,13 +988,9 @@ class PitchSegment(Segment):
 
             To numbered pitch segment:
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1153,18 +1017,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.to_pitches()
 
-                >>> segment = segment.to_pitches()
+            >>> str(segment)
+            '<-2, -1.5, 6, 7, -1.5, 7>'
 
-            ::
-
-                >>> str(segment)
-                '<-2, -1.5, 6, 7, -1.5, 7>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1195,13 +1053,9 @@ class PitchSegment(Segment):
 
             To named pitch segment:
 
-            ::
+            >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
 
-                >>> segment = abjad.PitchSegment("bf, aqs fs' g' bqf g'")
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1228,18 +1082,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.to_pitches()
 
-                >>> segment = segment.to_pitches()
+            >>> str(segment)
+            "<bf, aqs fs' g' bqf g'>"
 
-            ::
-
-                >>> str(segment)
-                "<bf, aqs fs' g' bqf g'>"
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1276,13 +1124,9 @@ class PitchSegment(Segment):
 
         ..  container:: example
 
-            ::
+            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
 
-                >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -1309,18 +1153,12 @@ class PitchSegment(Segment):
                     }
                 >>
 
-            ::
+            >>> segment = segment.transpose(n=11)
 
-                >>> segment = segment.transpose(n=11)
+            >>> str(segment)
+            '<9, 9.5, 17, 18, 9.5, 18>'
 
-            ::
-
-                >>> str(segment)
-                '<9, 9.5, 17, 18, 9.5, 18>'
-
-            ::
-
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 

@@ -8,19 +8,15 @@ class SkipRhythmMaker(RhythmMaker):
 
         Makes skips equal to the duration of input divisions.
 
-        ::
+        >>> rhythm_maker = abjad.rhythmmakertools.SkipRhythmMaker()
 
-            >>> rhythm_maker = abjad.rhythmmakertools.SkipRhythmMaker()
-
-        ::
-
-            >>> divisions = [(1, 4), (3, 16), (5, 8)]
-            >>> selections = rhythm_maker(divisions)
-            >>> lilypond_file = abjad.LilyPondFile.rhythm(
-            ...     selections,
-            ...     divisions,
-            ...     )
-            >>> abjad.show(lilypond_file) # doctest: +SKIP
+        >>> divisions = [(1, 4), (3, 16), (5, 8)]
+        >>> selections = rhythm_maker(divisions)
+        >>> lilypond_file = abjad.LilyPondFile.rhythm(
+        ...     selections,
+        ...     divisions,
+        ...     )
+        >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
@@ -70,11 +66,9 @@ class SkipRhythmMaker(RhythmMaker):
 
         ..  container:: example
 
-            ::
-
-                >>> rhythm_maker = abjad.rhythmmakertools.SkipRhythmMaker()
-                >>> abjad.f(rhythm_maker)
-                abjad.rhythmmakertools.SkipRhythmMaker()
+            >>> rhythm_maker = abjad.rhythmmakertools.SkipRhythmMaker()
+            >>> abjad.f(rhythm_maker)
+            abjad.rhythmmakertools.SkipRhythmMaker()
 
         Returns string.
         '''

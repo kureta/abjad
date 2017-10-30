@@ -5,11 +5,9 @@ def detach(prototype, component_expression=None):
 
         Detaches articulations from first note in staff:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> abjad.attach(abjad.Articulation('>'), staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> abjad.attach(abjad.Articulation('>'), staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -21,11 +19,9 @@ def detach(prototype, component_expression=None):
                 f'4
             }
 
-        ::
-
-            >>> abjad.detach(abjad.Articulation, staff[0])
-            (Articulation('>'),)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> abjad.detach(abjad.Articulation, staff[0])
+        (Articulation('>'),)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 

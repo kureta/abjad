@@ -5,13 +5,11 @@ def tweak(argument):
 
         Tweaks markup:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> markup = abjad.Markup('Allegro assai', direction=abjad.Up)
-            >>> abjad.tweak(markup).color = 'red'
-            >>> abjad.attach(markup, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup = abjad.Markup('Allegro assai', direction=abjad.Up)
+        >>> abjad.tweak(markup).color = 'red'
+        >>> abjad.attach(markup, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -27,15 +25,13 @@ def tweak(argument):
 
         Survives copy:
 
-        ::
-
-            >>> import copy
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> markup_1 = abjad.Markup('Allegro assai', direction=abjad.Up)
-            >>> abjad.tweak(markup_1).color = 'red'
-            >>> markup_2 = copy.copy(markup_1)
-            >>> abjad.attach(markup_2, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> import copy
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup_1 = abjad.Markup('Allegro assai', direction=abjad.Up)
+        >>> abjad.tweak(markup_1).color = 'red'
+        >>> markup_2 = copy.copy(markup_1)
+        >>> abjad.attach(markup_2, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -51,14 +47,12 @@ def tweak(argument):
 
         Survives dot-chaining:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> markup = abjad.Markup('Allegro assai', direction=abjad.Up)
-            >>> abjad.tweak(markup).color = 'red'
-            >>> markup = markup.italic()
-            >>> abjad.attach(markup, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup = abjad.Markup('Allegro assai', direction=abjad.Up)
+        >>> abjad.tweak(markup).color = 'red'
+        >>> markup = markup.italic()
+        >>> abjad.attach(markup, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -77,17 +71,15 @@ def tweak(argument):
 
         Works for opposite-directed coincident markup:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> markup_1 = abjad.Markup('Allegro assai ...', direction=abjad.Up)
-            >>> abjad.tweak(markup_1).color = 'red'
-            >>> abjad.attach(markup_1, staff[0])
-            >>> markup_2 = abjad.Markup('... ma non troppo', direction=abjad.Down)
-            >>> abjad.tweak(markup_2).color = 'blue'
-            >>> abjad.tweak(markup_2).staff_padding = 4
-            >>> abjad.attach(markup_2, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup_1 = abjad.Markup('Allegro assai ...', direction=abjad.Up)
+        >>> abjad.tweak(markup_1).color = 'red'
+        >>> abjad.attach(markup_1, staff[0])
+        >>> markup_2 = abjad.Markup('... ma non troppo', direction=abjad.Down)
+        >>> abjad.tweak(markup_2).color = 'blue'
+        >>> abjad.tweak(markup_2).staff_padding = 4
+        >>> abjad.attach(markup_2, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -106,17 +98,15 @@ def tweak(argument):
 
         Ignored for same-directed coincident markup:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> markup_1 = abjad.Markup('Allegro assai ...', direction=abjad.Up)
-            >>> abjad.tweak(markup_1).color = 'red'
-            >>> abjad.attach(markup_1, staff[0])
-            >>> markup_2 = abjad.Markup('... ma non troppo', direction=abjad.Up)
-            >>> abjad.tweak(markup_2).color = 'blue'
-            >>> abjad.tweak(markup_2).staff_padding = 4
-            >>> abjad.attach(markup_2, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup_1 = abjad.Markup('Allegro assai ...', direction=abjad.Up)
+        >>> abjad.tweak(markup_1).color = 'red'
+        >>> abjad.attach(markup_1, staff[0])
+        >>> markup_2 = abjad.Markup('... ma non troppo', direction=abjad.Up)
+        >>> abjad.tweak(markup_2).color = 'blue'
+        >>> abjad.tweak(markup_2).staff_padding = 4
+        >>> abjad.attach(markup_2, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -147,10 +137,8 @@ def tweak(argument):
 
         Returns LilyPond tweak manager:
 
-        ::
-
-            >>> abjad.tweak(markup_1)
-            LilyPondTweakManager(('color', 'red'))
+        >>> abjad.tweak(markup_1)
+        LilyPondTweakManager(('color', 'red'))
 
     '''
     from abjad.tools import lilypondnametools

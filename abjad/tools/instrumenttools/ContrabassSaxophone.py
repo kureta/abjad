@@ -6,12 +6,10 @@ class ContrabassSaxophone(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-            >>> abjad.attach(contrabass_saxophone, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+        >>> abjad.attach(contrabass_saxophone, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.allowable_clefs
-                ('treble',)
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.middle_c_sounding_pitch
+            NamedPitch('ef,,')
 
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.middle_c_sounding_pitch
-                NamedPitch('ef,,')
-
-            ::
-
-                >>> abjad.show(contrabass_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(contrabass_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.name
-                'contrabass saxophone'
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.name
+            'contrabass saxophone'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.name_markup
+            Markup(contents=['Contrabass saxophone'])
 
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.name_markup
-                Markup(contents=['Contrabass saxophone'])
-
-            ::
-
-                >>> abjad.show(contrabass_saxophone.name_markup) # doctest: +SKIP
+            >>> abjad.show(contrabass_saxophone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.pitch_range
+            PitchRange('[C1, Ab3]')
 
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.pitch_range
-                PitchRange('[C1, Ab3]')
-
-            ::
-
-                >>> abjad.show(contrabass_saxophone.pitch_range) # doctest: +SKIP
+            >>> abjad.show(contrabass_saxophone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.short_name
-                'cbass. sax.'
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.short_name
+            'cbass. sax.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class ContrabassSaxophone(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> contrabass_saxophone = abjad.ContrabassSaxophone()
+            >>> contrabass_saxophone.short_name_markup
+            Markup(contents=['Cbass. sax.'])
 
-                >>> contrabass_saxophone = abjad.ContrabassSaxophone()
-                >>> contrabass_saxophone.short_name_markup
-                Markup(contents=['Cbass. sax.'])
-
-            ::
-
-                >>> abjad.show(contrabass_saxophone.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(contrabass_saxophone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

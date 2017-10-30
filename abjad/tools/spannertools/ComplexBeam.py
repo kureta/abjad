@@ -6,11 +6,9 @@ class ComplexBeam(Beam):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'16 e'16 r16 f'16 g'2")
-            >>> abjad.setting(staff).auto_beaming = False
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'16 e'16 r16 f'16 g'2")
+        >>> abjad.setting(staff).auto_beaming = False
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -25,11 +23,9 @@ class ComplexBeam(Beam):
                 g'2
             }
 
-        ::
-
-            >>> beam = abjad.ComplexBeam()
-            >>> abjad.attach(beam, staff[:4])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> beam = abjad.ComplexBeam()
+        >>> abjad.attach(beam, staff[:4])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -283,12 +279,10 @@ class ComplexBeam(Beam):
 
             Does not beam rests:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 r r d'")
-                >>> beam = abjad.ComplexBeam(beam_rests=False)
-                >>> abjad.attach(beam, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 r r d'")
+            >>> beam = abjad.ComplexBeam(beam_rests=False)
+            >>> abjad.attach(beam, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -310,12 +304,10 @@ class ComplexBeam(Beam):
 
             Does beam rests:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 r r d'")
-                >>> beam = abjad.ComplexBeam(beam_rests=True)
-                >>> abjad.attach(beam, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 r r d'")
+            >>> beam = abjad.ComplexBeam(beam_rests=True)
+            >>> abjad.attach(beam, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -339,12 +331,10 @@ class ComplexBeam(Beam):
 
             Does not beam skips:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 s s d'")
-                >>> beam = abjad.ComplexBeam(beam_rests=False)
-                >>> abjad.attach(beam, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 s s d'")
+            >>> beam = abjad.ComplexBeam(beam_rests=False)
+            >>> abjad.attach(beam, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -366,12 +356,10 @@ class ComplexBeam(Beam):
 
             Does beam skips:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 s s d'")
-                >>> beam = abjad.ComplexBeam(beam_rests=True)
-                >>> abjad.attach(beam, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 s s d'")
+            >>> beam = abjad.ComplexBeam(beam_rests=True)
+            >>> abjad.attach(beam, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -407,12 +395,10 @@ class ComplexBeam(Beam):
 
             Beams lone leaf and forces nib to the left:
 
-            ::
-
-                >>> measure = abjad.Measure((1, 16), "c'16")
-                >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Left)
-                >>> abjad.attach(beam, measure[:])
-                >>> abjad.show(measure) # doctest: +SKIP
+            >>> measure = abjad.Measure((1, 16), "c'16")
+            >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Left)
+            >>> abjad.attach(beam, measure[:])
+            >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
@@ -428,12 +414,10 @@ class ComplexBeam(Beam):
 
             Beams lone leaf and forces nib to the right:
 
-            ::
-
-                >>> measure = abjad.Measure((1, 16), "c'16")
-                >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Right)
-                >>> abjad.attach(beam, measure[:])
-                >>> abjad.show(measure) # doctest: +SKIP
+            >>> measure = abjad.Measure((1, 16), "c'16")
+            >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Right)
+            >>> abjad.attach(beam, measure[:])
+            >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
@@ -449,12 +433,10 @@ class ComplexBeam(Beam):
 
             Beams lone leaf and forces nibs both left and right:
 
-            ::
-
-                >>> measure = abjad.Measure((1, 16), "c'16")
-                >>> beam = abjad.ComplexBeam(isolated_nib_direction=True)
-                >>> abjad.attach(beam, measure[:])
-                >>> abjad.show(measure) # doctest: +SKIP
+            >>> measure = abjad.Measure((1, 16), "c'16")
+            >>> beam = abjad.ComplexBeam(isolated_nib_direction=True)
+            >>> abjad.attach(beam, measure[:])
+            >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
@@ -470,12 +452,10 @@ class ComplexBeam(Beam):
 
             Does not beam isolated_nib_direction leaf:
 
-            ::
-
-                >>> measure = abjad.Measure((1, 16), "c'16")
-                >>> beam = abjad.ComplexBeam(isolated_nib_direction=False)
-                >>> abjad.attach(beam, measure[:])
-                >>> abjad.show(measure) # doctest: +SKIP
+            >>> measure = abjad.Measure((1, 16), "c'16")
+            >>> beam = abjad.ComplexBeam(isolated_nib_direction=False)
+            >>> abjad.attach(beam, measure[:])
+            >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 

@@ -9,29 +9,23 @@ class TwelveToneRow(PitchClassSegment):
 
         Initializes from defaults:
 
-        ::
-
-            >>> row = abjad.TwelveToneRow()
-            >>> abjad.show(row) # doctest: +SKIP
+        >>> row = abjad.TwelveToneRow()
+        >>> abjad.show(row) # doctest: +SKIP
 
     ..  container:: example
 
         Initializes from integers:
 
-        ::
-
-            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-            >>> row = abjad.TwelveToneRow(numbers)
-            >>> abjad.show(row) # doctest: +SKIP
+        >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+        >>> row = abjad.TwelveToneRow(numbers)
+        >>> abjad.show(row) # doctest: +SKIP
 
     ..  container:: example
 
         Interpreter representation:
 
-        ::
-
-            >>> row
-            TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+        >>> row
+        TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
     '''
 
@@ -60,45 +54,33 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Permutes pitch-classes:
 
-            ::
+            >>> row([abjad.NumberedPitchClass(2)])
+            [NumberedPitchClass(9)]
 
-                >>> row([abjad.NumberedPitchClass(2)])
-                [NumberedPitchClass(9)]
+            >>> row([abjad.NumberedPitchClass(3)])
+            [NumberedPitchClass(3)]
 
-            ::
-
-                >>> row([abjad.NumberedPitchClass(3)])
-                [NumberedPitchClass(3)]
-
-            ::
-
-                >>> row([abjad.NumberedPitchClass(4)])
-                [NumberedPitchClass(6)]
+            >>> row([abjad.NumberedPitchClass(4)])
+            [NumberedPitchClass(6)]
 
         ..  container:: example
 
             Permutes pitch-class segment:
 
-            ::
+            >>> items = [-2, -1, 6, 7, -1, 7]
+            >>> segment = abjad.PitchClassSegment(items=items)
+            >>> abjad.show(segment) # doctest: +SKIP
 
-                >>> items = [-2, -1, 6, 7, -1, 7]
-                >>> segment = abjad.PitchClassSegment(items=items)
-                >>> abjad.show(segment) # doctest: +SKIP
-
-            ::
-
-                >>> segment_ = row(segment)
-                >>> abjad.show(segment_) # doctest: +SKIP
+            >>> segment_ = row(segment)
+            >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
@@ -119,11 +101,9 @@ class TwelveToneRow(PitchClassSegment):
 
             Permutes row:
 
-            ::
-
-                >>> numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                >>> row_2 = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row_2) # doctest: +SKIP
+            >>> numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            >>> row_2 = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row_2) # doctest: +SKIP
 
             ..  docs::
 
@@ -146,10 +126,8 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> row_3 = row(row_2)
-                >>> abjad.show(row_3) # doctest: +SKIP
+            >>> row_3 = row(row_2)
+            >>> abjad.show(row_3) # doctest: +SKIP
 
             ..  docs::
 
@@ -176,11 +154,9 @@ class TwelveToneRow(PitchClassSegment):
 
             Permutes row:
 
-            ::
-
-                >>> numbers = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-                >>> row_2 = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row_2) # doctest: +SKIP
+            >>> numbers = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+            >>> row_2 = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row_2) # doctest: +SKIP
 
             ..  docs::
 
@@ -203,10 +179,8 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> row_3 = row(row_2)
-                >>> abjad.show(row_3) # doctest: +SKIP
+            >>> row_3 = row(row_2)
+            >>> abjad.show(row_3) # doctest: +SKIP
 
             ..  docs::
 
@@ -233,11 +207,9 @@ class TwelveToneRow(PitchClassSegment):
 
             Permutes row:
 
-            ::
-
-                >>> numbers = [10, 0, 2, 6, 8, 7, 5, 3, 1, 9, 4, 11]
-                >>> row_2 = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row_2) # doctest: +SKIP
+            >>> numbers = [10, 0, 2, 6, 8, 7, 5, 3, 1, 9, 4, 11]
+            >>> row_2 = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row_2) # doctest: +SKIP
 
             ..  docs::
 
@@ -260,10 +232,8 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> row_3 = row(row_2)
-                >>> abjad.show(row_3) # doctest: +SKIP
+            >>> row_3 = row(row_2)
+            >>> abjad.show(row_3) # doctest: +SKIP
 
             ..  docs::
 
@@ -305,20 +275,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Gets first hexachord:
 
-            ::
-
-                >>> abjad.show(row[:6]) # doctest: +SKIP
-                PitchClassSegment([0, 1, 11, 9, 3, 6])
+            >>> abjad.show(row[:6]) # doctest: +SKIP
+            PitchClassSegment([0, 1, 11, 9, 3, 6])
 
             ..  docs::
 
@@ -339,9 +305,7 @@ class TwelveToneRow(PitchClassSegment):
 
             Gets second hexachord:
 
-            ::
-
-                >>> abjad.show(row[-6:]) # doctest: +SKIP
+            >>> abjad.show(row[-6:]) # doctest: +SKIP
 
             ..  docs::
 
@@ -362,10 +326,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns pitch-class segment:
 
-            ::
-
-                >>> row[-6:]
-                PitchClassSegment([5, 4, 10, 2, 8, 0])
+            >>> row[-6:]
+            PitchClassSegment([5, 4, 10, 2, 8, 0])
 
         '''
         from abjad.tools import pitchtools
@@ -385,10 +347,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Illustrates row:
 
-            ::
-
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
             ..  docs::
 
@@ -416,11 +376,9 @@ class TwelveToneRow(PitchClassSegment):
 
             Illustrates row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
             ..  docs::
 
@@ -447,10 +405,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns LilyPond file:
 
-            ::
-
-                >>> type(row.__illustrate__())
-                <class 'abjad.tools.lilypondfiletools.LilyPondFile.LilyPondFile'>
+            >>> type(row.__illustrate__())
+            <class 'abjad.tools.lilypondfiletools.LilyPondFile.LilyPondFile'>
 
         '''
         superclass = super(PitchClassSegment, self)
@@ -463,15 +419,11 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies row:
 
-            ::
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> segment = 2 * row
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> segment = 2 * row
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -510,16 +462,12 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies row:
 
-            ::
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> segment = 2 * row
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> segment = 2 * row
+            >>> abjad.show(segment) # doctest: +SKIP
 
 
             ..  docs::
@@ -559,10 +507,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns pitch-class segment:
 
-            ::
-
-                >>> segment
-                PitchClassSegment([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0, 1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+            >>> segment
+            PitchClassSegment([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0, 1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
         Returns pitch-class segment.
         '''
@@ -575,15 +521,11 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies integer by row:
 
-            ::
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> segment = row * 2
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> segment = row * 2
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -622,16 +564,12 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies integer by row:
 
-            ::
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> segment = row * 2
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> segment = row * 2
+            >>> abjad.show(segment) # doctest: +SKIP
 
             ..  docs::
 
@@ -670,10 +608,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns pitch-class segment:
 
-            ::
-
-                >>> segment
-                PitchClassSegment([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0, 1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+            >>> segment
+            PitchClassSegment([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0, 1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
         '''
         return PitchClassSegment(self) * argument
@@ -705,39 +641,29 @@ class TwelveToneRow(PitchClassSegment):
 
             Gets item class:
 
-            ::
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> row.item_class
-                <class 'abjad.tools.pitchtools.NumberedPitchClass.NumberedPitchClass'>
+            >>> row.item_class
+            <class 'abjad.tools.pitchtools.NumberedPitchClass.NumberedPitchClass'>
 
         ..  container:: example
 
             Gets item class:
 
-            ::
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> row.item_class
-                <class 'abjad.tools.pitchtools.NumberedPitchClass.NumberedPitchClass'>
+            >>> row.item_class
+            <class 'abjad.tools.pitchtools.NumberedPitchClass.NumberedPitchClass'>
 
         ..  container:: example
 
             Returns numbered pitch-class class:
 
-            ::
-
-                >>> type(row.item_class)
-                <class 'abc.ABCMeta'>
+            >>> type(row.item_class)
+            <class 'abc.ABCMeta'>
 
         '''
         superclass = super(PitchClassSegment, self)
@@ -751,66 +677,56 @@ class TwelveToneRow(PitchClassSegment):
 
             Gets items in row:
 
-            ::
-
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
 
-            ::
-
-                >>> for item in row.items:
-                ...     item
-                ...
-                NumberedPitchClass(0)
-                NumberedPitchClass(1)
-                NumberedPitchClass(2)
-                NumberedPitchClass(3)
-                NumberedPitchClass(4)
-                NumberedPitchClass(5)
-                NumberedPitchClass(6)
-                NumberedPitchClass(7)
-                NumberedPitchClass(8)
-                NumberedPitchClass(9)
-                NumberedPitchClass(10)
-                NumberedPitchClass(11)
+            >>> for item in row.items:
+            ...     item
+            ...
+            NumberedPitchClass(0)
+            NumberedPitchClass(1)
+            NumberedPitchClass(2)
+            NumberedPitchClass(3)
+            NumberedPitchClass(4)
+            NumberedPitchClass(5)
+            NumberedPitchClass(6)
+            NumberedPitchClass(7)
+            NumberedPitchClass(8)
+            NumberedPitchClass(9)
+            NumberedPitchClass(10)
+            NumberedPitchClass(11)
 
         ..  container:: example
 
             Gets items in row:
 
-            ::
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> for item in row.items:
-                ...     item
-                ...
-                NumberedPitchClass(1)
-                NumberedPitchClass(11)
-                NumberedPitchClass(9)
-                NumberedPitchClass(3)
-                NumberedPitchClass(6)
-                NumberedPitchClass(7)
-                NumberedPitchClass(5)
-                NumberedPitchClass(4)
-                NumberedPitchClass(10)
-                NumberedPitchClass(2)
-                NumberedPitchClass(8)
-                NumberedPitchClass(0)
+            >>> for item in row.items:
+            ...     item
+            ...
+            NumberedPitchClass(1)
+            NumberedPitchClass(11)
+            NumberedPitchClass(9)
+            NumberedPitchClass(3)
+            NumberedPitchClass(6)
+            NumberedPitchClass(7)
+            NumberedPitchClass(5)
+            NumberedPitchClass(4)
+            NumberedPitchClass(10)
+            NumberedPitchClass(2)
+            NumberedPitchClass(8)
+            NumberedPitchClass(0)
 
         ..  container:: example
 
             Returns list:
 
-            ::
-
-                >>> isinstance(row.items, list)
-                True
+            >>> isinstance(row.items, list)
+            True
 
         '''
         superclass = super(PitchClassSegment, self)
@@ -825,47 +741,37 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Counts pitch-class 11 in row:
 
-            ::
-
-                >>> row.count(11)
-                1
+            >>> row.count(11)
+            1
 
         ..  container:: example
 
             Counts pitch-class 9 in row:
 
-            ::
-
-                >>> row.count(9)
-                1
+            >>> row.count(9)
+            1
 
         ..  container:: example
 
             Counts string in row:
 
-            ::
-
-                >>> row.count('text')
-                0
+            >>> row.count('text')
+            0
 
         ..  container:: example
 
             Returns nonnegative integer equal to 0 or 1:
 
-            ::
-
-                >>> isinstance(row.count('text'), int)
-                True
+            >>> isinstance(row.count('text'), int)
+            True
 
         '''
         superclass = super(TwelveToneRow, self)
@@ -892,30 +798,22 @@ class TwelveToneRow(PitchClassSegment):
 
             Is false:
 
-            ::
+            >>> row = abjad.TwelveToneRow()
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> row = abjad.TwelveToneRow()
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> row.has_duplicates()
-                False
+            >>> row.has_duplicates()
+            False
 
         ..  container:: example
 
             Is false:
 
-            ::
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
-
-            ::
-
-                >>> row.has_duplicates()
-                False
+            >>> row.has_duplicates()
+            False
 
         Twelve-tone rows have no duplicates.
 
@@ -931,38 +829,30 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Gets index of pitch-class 11:
 
-            ::
-
-                >>> row.index(11)
-                1
+            >>> row.index(11)
+            1
 
         ..  container:: example
 
             Gets index of pitch-class 9:
 
-            ::
-
-                >>> row.index(9)
-                2
+            >>> row.index(9)
+            2
 
         ..  container:: example
 
             Returns nonnegative integer less than 12:
 
-            ::
-
-                >>> isinstance(row.index(9), int)
-                True
+            >>> isinstance(row.index(9), int)
+            True
 
         '''
         superclass = super(TwelveToneRow, self)
@@ -975,20 +865,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Inverts row about first pitch-class when `axis` is none:
 
-            ::
-
-                >>> inversion = row.invert()
-                >>> abjad.show(inversion) # doctest: +SKIP
+            >>> inversion = row.invert()
+            >>> abjad.show(inversion) # doctest: +SKIP
 
             ..  docs::
 
@@ -1013,20 +899,16 @@ class TwelveToneRow(PitchClassSegment):
 
             First pitch-classes are equal:
 
-            ::
-
-                >>> row[0] == inversion[0]
-                True
+            >>> row[0] == inversion[0]
+            True
 
         ..  container:: example
 
             Inverts row about pitch-class 1:
 
-            ::
-
-                >>> inversion = row.invert(axis=1)
-                >>> abjad.show(inversion) # doctest: +SKIP
-                TwelveToneRow([1, 3, 5, 11, 8, 7, 9, 10, 4, 0, 6, 2])
+            >>> inversion = row.invert(axis=1)
+            >>> abjad.show(inversion) # doctest: +SKIP
+            TwelveToneRow([1, 3, 5, 11, 8, 7, 9, 10, 4, 0, 6, 2])
 
             ..  docs::
 
@@ -1055,10 +937,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Inverts row about pitch-class 0:
 
-            ::
-
-                >>> inversion = row.invert(axis=0)
-                >>> abjad.show(inversion) # doctest: +SKIP
+            >>> inversion = row.invert(axis=0)
+            >>> abjad.show(inversion) # doctest: +SKIP
 
             ..  docs::
 
@@ -1085,10 +965,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Inverts row about pitch-class 5:
 
-            ::
-
-                >>> inversion = row.invert(axis=5)
-                >>> abjad.show(inversion) # doctest: +SKIP
+            >>> inversion = row.invert(axis=5)
+            >>> abjad.show(inversion) # doctest: +SKIP
 
             ..  docs::
 
@@ -1115,10 +993,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns twelve-tone row:
 
-            ::
-
-                >>> inversion
-                TwelveToneRow([9, 11, 1, 7, 4, 3, 5, 6, 0, 8, 2, 10])
+            >>> inversion
+            TwelveToneRow([9, 11, 1, 7, 4, 3, 5, 6, 0, 8, 2, 10])
 
         '''
         if axis is None:
@@ -1133,20 +1009,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Multiplies pitch-classes in row by 5:
 
-            ::
-
-                >>> multiplication = row.multiply(n=5)
-                >>> abjad.show(multiplication) # doctest: +SKIP
+            >>> multiplication = row.multiply(n=5)
+            >>> abjad.show(multiplication) # doctest: +SKIP
 
             ..  docs::
 
@@ -1173,10 +1045,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies pitch-classes in row by 7:
 
-            ::
-
-                >>> multiplication = row.multiply(n=7)
-                >>> abjad.show(multiplication) # doctest: +SKIP
+            >>> multiplication = row.multiply(n=7)
+            >>> abjad.show(multiplication) # doctest: +SKIP
 
             ..  docs::
 
@@ -1203,10 +1073,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Multiplies pitch-classes in row by 1:
 
-            ::
-
-                >>> multiplication = row.multiply(n=1)
-                >>> abjad.show(multiplication) # doctest: +SKIP
+            >>> multiplication = row.multiply(n=1)
+            >>> abjad.show(multiplication) # doctest: +SKIP
 
             ..  docs::
 
@@ -1233,10 +1101,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns twelve-tone row:
 
-            ::
-
-                >>> multiplication
-                TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+            >>> multiplication
+            TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
         '''
         superclass = super(TwelveToneRow, self)
@@ -1249,20 +1115,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Gets retrograde of row:
 
-            ::
-
-                >>> retrograde = row.retrograde()
-                >>> abjad.show(retrograde) # doctest: +SKIP
+            >>> retrograde = row.retrograde()
+            >>> abjad.show(retrograde) # doctest: +SKIP
 
             ..  docs::
 
@@ -1289,10 +1151,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Gets retrograde of retrograde of row:
 
-            ::
-
-                >>> retrograde = row.retrograde().retrograde()
-                >>> abjad.show(retrograde) # doctest: +SKIP
+            >>> retrograde = row.retrograde().retrograde()
+            >>> abjad.show(retrograde) # doctest: +SKIP
 
             ..  docs::
 
@@ -1315,19 +1175,15 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> retrograde == row
-                True
+            >>> retrograde == row
+            True
 
         ..  container:: example
 
             Returns row:
 
-            ::
-
-                >>> retrograde
-                TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+            >>> retrograde
+            TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
         '''
         superclass = super(TwelveToneRow, self)
@@ -1340,20 +1196,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Rotates row to the right:
 
-            ::
-
-                >>> rotation = row.rotate(n=1)
-                >>> abjad.show(rotation) # doctest: +SKIP
+            >>> rotation = row.rotate(n=1)
+            >>> abjad.show(rotation) # doctest: +SKIP
 
             ..  docs::
 
@@ -1380,10 +1232,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Rotates row to the left:
 
-            ::
-
-                >>> rotation = row.rotate(n=-1)
-                >>> abjad.show(rotation) # doctest: +SKIP
+            >>> rotation = row.rotate(n=-1)
+            >>> abjad.show(rotation) # doctest: +SKIP
 
             ..  docs::
 
@@ -1410,10 +1260,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Rotates row by zero:
 
-            ::
-
-                >>> rotation = row.rotate(n=0)
-                >>> abjad.show(rotation) # doctest: +SKIP
+            >>> rotation = row.rotate(n=0)
+            >>> abjad.show(rotation) # doctest: +SKIP
 
             ..  docs::
 
@@ -1436,19 +1284,15 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> rotation == row
-                True
+            >>> rotation == row
+            True
 
         ..  container:: example
 
             Stravinsky-style rotation back-transposes row to zero:
 
-            ::
-
-                >>> rotation = row.rotate(n=-1, stravinsky=True)
-                >>> abjad.show(rotation) # doctest: +SKIP
+            >>> rotation = row.rotate(n=-1, stravinsky=True)
+            >>> abjad.show(rotation) # doctest: +SKIP
 
             ..  docs::
 
@@ -1475,10 +1319,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Returns row:
 
-            ::
-
-                >>> rotation
-                TwelveToneRow([0, 10, 4, 7, 8, 6, 5, 11, 3, 9, 1, 2])
+            >>> rotation
+            TwelveToneRow([0, 10, 4, 7, 8, 6, 5, 11, 3, 9, 1, 2])
 
         '''
         superclass = super(TwelveToneRow, self)
@@ -1491,20 +1333,16 @@ class TwelveToneRow(PitchClassSegment):
 
             Example row:
 
-            ::
-
-                >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
-                >>> row = abjad.TwelveToneRow(numbers)
-                >>> abjad.show(row) # doctest: +SKIP
+            >>> numbers = [1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0]
+            >>> row = abjad.TwelveToneRow(numbers)
+            >>> abjad.show(row) # doctest: +SKIP
 
         ..  container:: example
 
             Transposes row by positive index:
 
-            ::
-
-                >>> transposition = row.transpose(n=13)
-                >>> abjad.show(transposition) # doctest: +SKIP
+            >>> transposition = row.transpose(n=13)
+            >>> abjad.show(transposition) # doctest: +SKIP
 
             ..  docs::
 
@@ -1531,10 +1369,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Transposes row by negative index:
 
-            ::
-
-                >>> transposition = row.transpose(n=-13)
-                >>> abjad.show(transposition) # doctest: +SKIP
+            >>> transposition = row.transpose(n=-13)
+            >>> abjad.show(transposition) # doctest: +SKIP
 
             ..  docs::
 
@@ -1561,10 +1397,8 @@ class TwelveToneRow(PitchClassSegment):
 
             Transposes row by zero index:
 
-            ::
-
-                >>> transposition = row.transpose(n=0)
-                >>> abjad.show(transposition) # doctest: +SKIP
+            >>> transposition = row.transpose(n=0)
+            >>> abjad.show(transposition) # doctest: +SKIP
 
             ..  docs::
 
@@ -1587,19 +1421,15 @@ class TwelveToneRow(PitchClassSegment):
                     \override Score.BarLine.transparent = ##f
                 }
 
-            ::
-
-                >>> transposition == row
-                True
+            >>> transposition == row
+            True
 
         ..  container:: example
 
             Returns row:
 
-            ::
-
-                >>> transposition
-                TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
+            >>> transposition
+            TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])
 
         '''
         superclass = super(TwelveToneRow, self)

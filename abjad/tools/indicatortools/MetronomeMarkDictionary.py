@@ -7,20 +7,16 @@ class MetronomeMarkDictionary(TypedOrderedDict):
 
     ..  container:: example
 
-        ::
+        >>> marks = abjad.MetronomeMarkDictionary([
+        ...     ('andante', ((1, 8), 72, 'Andante')),
+        ...     ('allegro', ((1, 8), 84, 'Allegro')),
+        ...     ])
 
-            >>> marks = abjad.MetronomeMarkDictionary([
-            ...     ('andante', ((1, 8), 72, 'Andante')),
-            ...     ('allegro', ((1, 8), 84, 'Allegro')),
-            ...     ])
-
-        ::
-
-            >>> for name in marks:
-            ...     marks[name]
-            ...
-            MetronomeMark(reference_duration=Duration(1, 8), units_per_minute=72, textual_indication='Andante')
-            MetronomeMark(reference_duration=Duration(1, 8), units_per_minute=84, textual_indication='Allegro')
+        >>> for name in marks:
+        ...     marks[name]
+        ...
+        MetronomeMark(reference_duration=Duration(1, 8), units_per_minute=72, textual_indication='Andante')
+        MetronomeMark(reference_duration=Duration(1, 8), units_per_minute=84, textual_indication='Allegro')
 
     '''
 
@@ -37,36 +33,32 @@ class MetronomeMarkDictionary(TypedOrderedDict):
 
         ..  container:: example
 
-            ::
+            >>> marks = abjad.MetronomeMarkDictionary([
+            ...     ('andante', ((1, 8), 72, 'Andante')),
+            ...     ('allegro', ((1, 8), 84, 'Allegro')),
+            ...     ])
 
-                >>> marks = abjad.MetronomeMarkDictionary([
-                ...     ('andante', ((1, 8), 72, 'Andante')),
-                ...     ('allegro', ((1, 8), 84, 'Allegro')),
-                ...     ])
-
-            ::
-
-                >>> abjad.f(marks)
-                abjad.MetronomeMarkDictionary(
-                    [
-                        (
-                            'andante',
-                            abjad.MetronomeMark(
-                                reference_duration=abjad.Duration(1, 8),
-                                units_per_minute=72,
-                                textual_indication='Andante',
-                                ),
+            >>> abjad.f(marks)
+            abjad.MetronomeMarkDictionary(
+                [
+                    (
+                        'andante',
+                        abjad.MetronomeMark(
+                            reference_duration=abjad.Duration(1, 8),
+                            units_per_minute=72,
+                            textual_indication='Andante',
                             ),
-                        (
-                            'allegro',
-                            abjad.MetronomeMark(
-                                reference_duration=abjad.Duration(1, 8),
-                                units_per_minute=84,
-                                textual_indication='Allegro',
-                                ),
+                        ),
+                    (
+                        'allegro',
+                        abjad.MetronomeMark(
+                            reference_duration=abjad.Duration(1, 8),
+                            units_per_minute=84,
+                            textual_indication='Allegro',
                             ),
-                        ]
-                    )
+                        ),
+                    ]
+                )
 
         Returns string.
         '''
@@ -78,16 +70,12 @@ class MetronomeMarkDictionary(TypedOrderedDict):
 
         ..  container:: example
 
-            ::
+            >>> marks = abjad.MetronomeMarkDictionary([
+            ...     ('andante', ((1, 8), 72, 'Andante')),
+            ...     ('allegro', ((1, 8), 84, 'Allegro')),
+            ...     ])
 
-                >>> marks = abjad.MetronomeMarkDictionary([
-                ...     ('andante', ((1, 8), 72, 'Andante')),
-                ...     ('allegro', ((1, 8), 84, 'Allegro')),
-                ...     ])
-
-            ::
-
-                >>> abjad.show(marks) # doctest: +SKIP
+            >>> abjad.show(marks) # doctest: +SKIP
 
             ..  docs::
 

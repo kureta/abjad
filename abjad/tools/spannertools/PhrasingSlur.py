@@ -9,12 +9,10 @@ class PhrasingSlur(Spanner):
 
         Spans four notes:
 
-        ::
-
-            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-            >>> slur = abjad.PhrasingSlur()
-            >>> abjad.attach(slur, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> slur = abjad.PhrasingSlur()
+        >>> abjad.attach(slur, staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -30,14 +28,12 @@ class PhrasingSlur(Spanner):
 
         Requires at least two leaves:
 
-        ::
-
-            >>> staff = abjad.Staff("c'8 d' e' f'")
-            >>> phrasing_slur = abjad.PhrasingSlur()
-            >>> abjad.attach(phrasing_slur, staff[:1])
-            Traceback (most recent call last):
-                ...
-            Exception: PhrasingSlur() attachment test fails for Selection([Note("c'8")]).
+        >>> staff = abjad.Staff("c'8 d' e' f'")
+        >>> phrasing_slur = abjad.PhrasingSlur()
+        >>> abjad.attach(phrasing_slur, staff[:1])
+        Traceback (most recent call last):
+            ...
+        Exception: PhrasingSlur() attachment test fails for Selection([Note("c'8")]).
 
     Formats LilyPond ``\(`` command on first leaf in spanner.
 
@@ -98,12 +94,10 @@ class PhrasingSlur(Spanner):
 
             Positions phrasing slur above staff:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> slur = abjad.PhrasingSlur(direction=abjad.Up)
-                >>> abjad.attach(slur, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+            >>> slur = abjad.PhrasingSlur(direction=abjad.Up)
+            >>> abjad.attach(slur, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -119,12 +113,10 @@ class PhrasingSlur(Spanner):
 
             Positions phrasing slur below staff:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> slur = abjad.PhrasingSlur(direction=abjad.Down)
-                >>> abjad.attach(slur, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+            >>> slur = abjad.PhrasingSlur(direction=abjad.Down)
+            >>> abjad.attach(slur, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -140,12 +132,10 @@ class PhrasingSlur(Spanner):
 
             Positions phrasing slur according to LilyPond defaults:
 
-            ::
-
-                >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> slur = abjad.PhrasingSlur(direction=None)
-                >>> abjad.attach(slur, staff[:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+            >>> slur = abjad.PhrasingSlur(direction=None)
+            >>> abjad.attach(slur, staff[:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

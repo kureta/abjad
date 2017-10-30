@@ -6,12 +6,10 @@ class Guitar(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> guitar = abjad.Guitar()
-            >>> abjad.attach(guitar, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> guitar = abjad.Guitar()
+        >>> abjad.attach(guitar, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -70,11 +68,9 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> guitar = abjad.Guitar()
-                >>> guitar.allowable_clefs
-                ('treble',)
+            >>> guitar = abjad.Guitar()
+            >>> guitar.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -86,11 +82,9 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> guitar = abjad.Guitar()
-                >>> guitar.default_tuning
-                Tuning(pitches=PitchSegment(['e,', 'a,', 'd', 'g', 'b', "e'"]))
+            >>> guitar = abjad.Guitar()
+            >>> guitar.default_tuning
+            Tuning(pitches=PitchSegment(['e,', 'a,', 'd', 'g', 'b', "e'"]))
 
         Returns tuning.
         '''
@@ -102,15 +96,11 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> guitar = abjad.Guitar()
+            >>> guitar.middle_c_sounding_pitch
+            NamedPitch('c')
 
-                >>> guitar = abjad.Guitar()
-                >>> guitar.middle_c_sounding_pitch
-                NamedPitch('c')
-
-            ::
-
-                >>> abjad.show(guitar.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(guitar.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -122,11 +112,9 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> guitar = abjad.Guitar()
-                >>> guitar.name
-                'guitar'
+            >>> guitar = abjad.Guitar()
+            >>> guitar.name
+            'guitar'
 
         Returns string.
         '''
@@ -138,15 +126,11 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> guitar = abjad.Guitar()
+            >>> guitar.name_markup
+            Markup(contents=['Guitar'])
 
-                >>> guitar = abjad.Guitar()
-                >>> guitar.name_markup
-                Markup(contents=['Guitar'])
-
-            ::
-
-                >>> abjad.show(guitar.name_markup) # doctest: +SKIP
+            >>> abjad.show(guitar.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -158,15 +142,11 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> guitar = abjad.Guitar()
+            >>> guitar.pitch_range
+            PitchRange('[E2, E5]')
 
-                >>> guitar = abjad.Guitar()
-                >>> guitar.pitch_range
-                PitchRange('[E2, E5]')
-
-            ::
-
-                >>> abjad.show(guitar.pitch_range) # doctest: +SKIP
+            >>> abjad.show(guitar.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -178,11 +158,9 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> guitar = abjad.Guitar()
-                >>> guitar.short_name
-                'gt.'
+            >>> guitar = abjad.Guitar()
+            >>> guitar.short_name
+            'gt.'
 
         Returns string.
         '''
@@ -194,15 +172,11 @@ class Guitar(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> guitar = abjad.Guitar()
+            >>> guitar.short_name_markup
+            Markup(contents=['Gt.'])
 
-                >>> guitar = abjad.Guitar()
-                >>> guitar.short_name_markup
-                Markup(contents=['Gt.'])
-
-            ::
-
-                >>> abjad.show(guitar.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(guitar.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -6,12 +6,10 @@ class EnglishHorn(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> english_horn = abjad.EnglishHorn()
-            >>> abjad.attach(english_horn, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> english_horn = abjad.EnglishHorn()
+        >>> abjad.attach(english_horn, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.allowable_clefs
-                ('treble',)
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.middle_c_sounding_pitch
+            NamedPitch('f')
 
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.middle_c_sounding_pitch
-                NamedPitch('f')
-
-            ::
-
-                >>> abjad.show(english_horn.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(english_horn.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.name
-                'English horn'
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.name
+            'English horn'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.name_markup
+            Markup(contents=['English horn'])
 
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.name_markup
-                Markup(contents=['English horn'])
-
-            ::
-
-                >>> abjad.show(english_horn.name_markup) # doctest: +SKIP
+            >>> abjad.show(english_horn.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.pitch_range
+            PitchRange('[E3, C6]')
 
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.pitch_range
-                PitchRange('[E3, C6]')
-
-            ::
-
-                >>> abjad.show(english_horn.pitch_range) # doctest: +SKIP
+            >>> abjad.show(english_horn.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.short_name
-                'Eng. hn.'
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.short_name
+            'Eng. hn.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class EnglishHorn(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> english_horn = abjad.EnglishHorn()
+            >>> english_horn.short_name_markup
+            Markup(contents=['Eng. hn.'])
 
-                >>> english_horn = abjad.EnglishHorn()
-                >>> english_horn.short_name_markup
-                Markup(contents=['Eng. hn.'])
-
-            ::
-
-                >>> abjad.show(english_horn.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(english_horn.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -8,12 +8,10 @@ class Arpeggio(AbjadValueObject):
 
         Without direction arrow:
 
-        ::
-
-            >>> chord = abjad.Chord("<c' e' g' c''>4")
-            >>> arpeggio = abjad.Arpeggio()
-            >>> abjad.attach(arpeggio, chord)
-            >>> abjad.show(chord) # doctest: +SKIP
+        >>> chord = abjad.Chord("<c' e' g' c''>4")
+        >>> arpeggio = abjad.Arpeggio()
+        >>> abjad.attach(arpeggio, chord)
+        >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
@@ -24,12 +22,10 @@ class Arpeggio(AbjadValueObject):
 
         With direction arrow:
 
-        ::
-
-            >>> chord = abjad.Chord("<c' e' g' c''>4")
-            >>> arpeggio = abjad.Arpeggio(direction=abjad.Down)
-            >>> abjad.attach(arpeggio, chord)
-            >>> abjad.show(chord) # doctest: +SKIP
+        >>> chord = abjad.Chord("<c' e' g' c''>4")
+        >>> arpeggio = abjad.Arpeggio(direction=abjad.Down)
+        >>> abjad.attach(arpeggio, chord)
+        >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
@@ -80,21 +76,17 @@ class Arpeggio(AbjadValueObject):
 
             Without direction arrow:
 
-            ::
-
-                >>> arpeggio = abjad.Arpeggio()
-                >>> arpeggio.direction is None
-                True
+            >>> arpeggio = abjad.Arpeggio()
+            >>> arpeggio.direction is None
+            True
 
         ..  container:: example
 
             With direction arrow:
 
-            ::
-
-                >>> arpeggio = abjad.Arpeggio(direction=abjad.Down)
-                >>> arpeggio.direction
-                Down
+            >>> arpeggio = abjad.Arpeggio(direction=abjad.Down)
+            >>> arpeggio.direction
+            Down
 
         Returns ordinal constant or none.
         '''

@@ -6,12 +6,10 @@ class Marimba(Instrument):
 
     ..  container:: example
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
-            >>> marimba = abjad.Marimba()
-            >>> abjad.attach(marimba, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
+        >>> marimba = abjad.Marimba()
+        >>> abjad.attach(marimba, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,11 +62,9 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> marimba = abjad.Marimba()
-                >>> marimba.allowable_clefs
-                ('treble', 'bass')
+            >>> marimba = abjad.Marimba()
+            >>> marimba.allowable_clefs
+            ('treble', 'bass')
 
         Returns clef list.
         '''
@@ -80,15 +76,11 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> marimba = abjad.Marimba()
+            >>> marimba.middle_c_sounding_pitch
+            NamedPitch("c'")
 
-                >>> marimba = abjad.Marimba()
-                >>> marimba.middle_c_sounding_pitch
-                NamedPitch("c'")
-
-            ::
-
-                >>> abjad.show(marimba.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(marimba.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -100,11 +92,9 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> marimba = abjad.Marimba()
-                >>> marimba.name
-                'marimba'
+            >>> marimba = abjad.Marimba()
+            >>> marimba.name
+            'marimba'
 
         Returns string.
         '''
@@ -116,15 +106,11 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> marimba = abjad.Marimba()
+            >>> marimba.name_markup
+            Markup(contents=['Marimba'])
 
-                >>> marimba = abjad.Marimba()
-                >>> marimba.name_markup
-                Markup(contents=['Marimba'])
-
-            ::
-
-                >>> abjad.show(marimba.name_markup) # doctest: +SKIP
+            >>> abjad.show(marimba.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -136,15 +122,11 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> marimba = abjad.Marimba()
+            >>> marimba.pitch_range
+            PitchRange('[F2, C7]')
 
-                >>> marimba = abjad.Marimba()
-                >>> marimba.pitch_range
-                PitchRange('[F2, C7]')
-
-            ::
-
-                >>> abjad.show(marimba.pitch_range) # doctest: +SKIP
+            >>> abjad.show(marimba.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -156,11 +138,9 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> marimba = abjad.Marimba()
-                >>> marimba.short_name
-                'mb.'
+            >>> marimba = abjad.Marimba()
+            >>> marimba.short_name
+            'mb.'
 
         Returns string.
         '''
@@ -172,15 +152,11 @@ class Marimba(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> marimba = abjad.Marimba()
+            >>> marimba.short_name_markup
+            Markup(contents=['Mb.'])
 
-                >>> marimba = abjad.Marimba()
-                >>> marimba.short_name_markup
-                Markup(contents=['Mb.'])
-
-            ::
-
-                >>> abjad.show(marimba.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(marimba.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

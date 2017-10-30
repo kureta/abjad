@@ -8,25 +8,21 @@ class StringContactPoint(AbjadValueObject):
 
         Sul ponticello:
 
-        ::
-
-            >>> indicator = abjad.StringContactPoint('sul ponticello')
-            >>> abjad.f(indicator)
-            abjad.StringContactPoint(
-                contact_point='sul ponticello',
-                )
+        >>> indicator = abjad.StringContactPoint('sul ponticello')
+        >>> abjad.f(indicator)
+        abjad.StringContactPoint(
+            contact_point='sul ponticello',
+            )
 
     ..  container:: example
 
         Sul tasto:
 
-        ::
-
-            >>> indicator = abjad.StringContactPoint('sul tasto')
-            >>> abjad.f(indicator)
-            abjad.StringContactPoint(
-                contact_point='sul tasto',
-                )
+        >>> indicator = abjad.StringContactPoint('sul tasto')
+        >>> abjad.f(indicator)
+        abjad.StringContactPoint(
+            contact_point='sul tasto',
+            )
 
     '''
 
@@ -80,21 +76,17 @@ class StringContactPoint(AbjadValueObject):
 
             Sul ponticello:
 
-            ::
-
-                >>> indicator = abjad.StringContactPoint('sul ponticello')
-                >>> indicator.contact_point
-                'sul ponticello'
+            >>> indicator = abjad.StringContactPoint('sul ponticello')
+            >>> indicator.contact_point
+            'sul ponticello'
 
         ..  container:: example
 
             Sul tasto:
 
-            ::
-
-                >>> indicator = abjad.StringContactPoint('sul tasto')
-                >>> indicator.contact_point
-                'sul tasto'
+            >>> indicator = abjad.StringContactPoint('sul tasto')
+            >>> indicator.contact_point
+            'sul tasto'
 
         Set to known string.
 
@@ -112,10 +104,8 @@ class StringContactPoint(AbjadValueObject):
 
             Sul ponticello:
 
-            ::
-
-                >>> indicator = abjad.StringContactPoint('sul ponticello')
-                >>> abjad.show(indicator.markup) # doctest: +SKIP
+            >>> indicator = abjad.StringContactPoint('sul ponticello')
+            >>> abjad.show(indicator.markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -129,10 +119,8 @@ class StringContactPoint(AbjadValueObject):
 
             Sul tasto:
 
-            ::
-
-                >>> indicator = abjad.StringContactPoint('sul tasto')
-                >>> abjad.show(indicator.markup) # doctest: +SKIP
+            >>> indicator = abjad.StringContactPoint('sul tasto')
+            >>> abjad.show(indicator.markup) # doctest: +SKIP
 
             ..  docs::
 

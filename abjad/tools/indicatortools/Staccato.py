@@ -9,12 +9,10 @@ class Staccato(AbjadValueObject):
 
         Attached to a single note:
 
-        ::
-
-            >>> note = abjad.Note("c'4")
-            >>> staccato = abjad.Staccato()
-            >>> abjad.attach(staccato, note)
-            >>> abjad.show(note) # doctest: +SKIP
+        >>> note = abjad.Note("c'4")
+        >>> staccato = abjad.Staccato()
+        >>> abjad.attach(staccato, note)
+        >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
@@ -25,14 +23,12 @@ class Staccato(AbjadValueObject):
 
         Attached to notes in a staff:
 
-        ::
-
-            >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
-            >>> abjad.attach(abjad.Beam(), staff[:4])
-            >>> abjad.attach(abjad.Beam(), staff[4:])
-            >>> abjad.attach(abjad.Staccato(), staff[3])
-            >>> abjad.attach(abjad.Staccato(), staff[7])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+        >>> abjad.attach(abjad.Beam(), staff[:4])
+        >>> abjad.attach(abjad.Beam(), staff[4:])
+        >>> abjad.attach(abjad.Staccato(), staff[3])
+        >>> abjad.attach(abjad.Staccato(), staff[7])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -78,10 +74,8 @@ class Staccato(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> str(abjad.Staccato())
-                '\\staccato'
+            >>> str(abjad.Staccato())
+            '\\staccato'
 
         Returns string.
         '''

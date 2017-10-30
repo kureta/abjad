@@ -9,12 +9,10 @@ class TextSpanner(Spanner):
 
         Text spanner with no grob overrides:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> text_spanner = abjad.TextSpanner()
-            >>> abjad.attach(text_spanner, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> text_spanner = abjad.TextSpanner()
+        >>> abjad.attach(text_spanner, staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -32,15 +30,13 @@ class TextSpanner(Spanner):
 
         Text spanner with grob override for left text:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> text_spanner = abjad.TextSpanner()
-            >>> markup = abjad.Markup('foo').italic().bold()
-            >>> abjad.override(text_spanner).text_spanner.bound_details__left__text = markup
-            >>> abjad.override(text_spanner).text_spanner.bound_details__left__stencil_align_dir_y = 0
-            >>> abjad.attach(text_spanner, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> text_spanner = abjad.TextSpanner()
+        >>> markup = abjad.Markup('foo').italic().bold()
+        >>> abjad.override(text_spanner).text_spanner.bound_details__left__text = markup
+        >>> abjad.override(text_spanner).text_spanner.bound_details__left__stencil_align_dir_y = 0
+        >>> abjad.attach(text_spanner, staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -64,13 +60,11 @@ class TextSpanner(Spanner):
         Text spanner interacting with piecewise markup. At beginning of
         spanner:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> spanner.attach(abjad.Markup('pont.'), staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> spanner.attach(abjad.Markup('pont.'), staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -88,13 +82,11 @@ class TextSpanner(Spanner):
 
         Text spanner interacting with piecewise markup. At end of spanner:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -113,14 +105,12 @@ class TextSpanner(Spanner):
         Text spanner interacting with piecewise markup. At beginning and
         end of spanner:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> spanner.attach(abjad.Markup('pont.'), staff[0])
-            >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> spanner.attach(abjad.Markup('pont.'), staff[0])
+        >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -138,17 +128,15 @@ class TextSpanner(Spanner):
 
         Text spanner interacting with piecewise indicators:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> spanner.attach(abjad.Markup('one'), staff[0])
-            >>> spanner.attach(abjad.LineSegment(), staff[0])
-            >>> spanner.attach(abjad.Markup('two'), staff[1])
-            >>> spanner.attach(abjad.ArrowLineSegment(), staff[1])
-            >>> spanner.attach(abjad.Markup('three'), staff[-1])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> spanner.attach(abjad.Markup('one'), staff[0])
+        >>> spanner.attach(abjad.LineSegment(), staff[0])
+        >>> spanner.attach(abjad.Markup('two'), staff[1])
+        >>> spanner.attach(abjad.ArrowLineSegment(), staff[1])
+        >>> spanner.attach(abjad.Markup('three'), staff[-1])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -181,21 +169,17 @@ class TextSpanner(Spanner):
 
         Text spanner interacting with piecewise and nonpiecewise indicators:
 
-        ::
+        >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:])
+        >>> spanner.attach(abjad.Markup('ord.'), staff[0])
+        >>> spanner.attach(abjad.ArrowLineSegment(), staff[0])
+        >>> spanner.attach(abjad.Markup('pont.'), staff[-1])
+        >>> abjad.attach(abjad.Markup('leggieriss.'), staff[0])
 
-            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:])
-            >>> spanner.attach(abjad.Markup('ord.'), staff[0])
-            >>> spanner.attach(abjad.ArrowLineSegment(), staff[0])
-            >>> spanner.attach(abjad.Markup('pont.'), staff[-1])
-            >>> abjad.attach(abjad.Markup('leggieriss.'), staff[0])
-
-        ::
-
-            >>> abjad.override(staff).text_spanner.staff_padding = 2.5
-            >>> abjad.override(staff).text_script.staff_padding = 2
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> abjad.override(staff).text_spanner.staff_padding = 2.5
+        >>> abjad.override(staff).text_script.staff_padding = 2
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -230,14 +214,12 @@ class TextSpanner(Spanner):
 
         Raises exception on fewer than two leaves:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> spanner = abjad.TextSpanner()
-            >>> abjad.attach(spanner, staff[:1])
-            Traceback (most recent call last):
-                ...
-            Exception: TextSpanner() attachment test fails for Selection([Note("c'4")]).
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> spanner = abjad.TextSpanner()
+        >>> abjad.attach(spanner, staff[:1])
+        Traceback (most recent call last):
+            ...
+        Exception: TextSpanner() attachment test fails for Selection([Note("c'4")]).
 
     '''
 
@@ -396,22 +378,20 @@ class TextSpanner(Spanner):
             Overlapping spanner regression test. Red spanner reverts color
             before default spanner begins:
 
-            ::
-
-                >>> staff = abjad.Staff("c'4 d' e' f' c' d' e' f'")
-                >>> text_spanner_1 = abjad.TextSpanner()
-                >>> markup = abjad.Markup('red').italic().bold()
-                >>> abjad.override(text_spanner_1).text_spanner.bound_details__left__text = markup
-                >>> abjad.override(text_spanner_1).text_spanner.bound_details__left__stencil_align_dir_y = 0
-                >>> abjad.override(text_spanner_1).text_spanner.bound_details__right__padding = 1
-                >>> abjad.override(text_spanner_1).text_spanner.color = 'red'
-                >>> abjad.attach(text_spanner_1, staff[:4])
-                >>> text_spanner_2 = abjad.TextSpanner()
-                >>> markup = abjad.Markup('default').italic().bold()
-                >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__text = markup
-                >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__stencil_align_dir_y = 0
-                >>> abjad.attach(text_spanner_2, staff[-5:])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'4 d' e' f' c' d' e' f'")
+            >>> text_spanner_1 = abjad.TextSpanner()
+            >>> markup = abjad.Markup('red').italic().bold()
+            >>> abjad.override(text_spanner_1).text_spanner.bound_details__left__text = markup
+            >>> abjad.override(text_spanner_1).text_spanner.bound_details__left__stencil_align_dir_y = 0
+            >>> abjad.override(text_spanner_1).text_spanner.bound_details__right__padding = 1
+            >>> abjad.override(text_spanner_1).text_spanner.color = 'red'
+            >>> abjad.attach(text_spanner_1, staff[:4])
+            >>> text_spanner_2 = abjad.TextSpanner()
+            >>> markup = abjad.Markup('default').italic().bold()
+            >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__text = markup
+            >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__stencil_align_dir_y = 0
+            >>> abjad.attach(text_spanner_2, staff[-5:])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

@@ -6,10 +6,8 @@ class Retrograde(AbjadValueObject):
 
     ..  container:: example:
 
-        ::
-
-            >>> abjad.Retrograde()
-            Retrograde()
+        >>> abjad.Retrograde()
+        Retrograde()
 
     Object model of twelve-tone retrograde operator.
     '''
@@ -37,33 +35,25 @@ class Retrograde(AbjadValueObject):
 
             Example segment:
 
-            ::
-
-                >>> items = [0, 2, 4, 5]
-                >>> segment = abjad.PitchClassSegment(items=items)
-                >>> abjad.show(segment) # doctest: +SKIP
+            >>> items = [0, 2, 4, 5]
+            >>> segment = abjad.PitchClassSegment(items=items)
+            >>> abjad.show(segment) # doctest: +SKIP
 
             Example operators:
 
-            ::
-
-                >>> retrograde = abjad.Retrograde()
-                >>> transposition = abjad.Transposition(n=3)
+            >>> retrograde = abjad.Retrograde()
+            >>> transposition = abjad.Transposition(n=3)
 
         ..  container:: example
 
             Transposition followed by retrograde:
 
-            ::
+            >>> operator = retrograde + transposition
+            >>> str(operator)
+            'RT3'
 
-                >>> operator = retrograde + transposition
-                >>> str(operator)
-                'RT3'
-
-            ::
-
-                >>> segment_ = operator(segment)
-                >>> abjad.show(segment_) # doctest: +SKIP
+            >>> segment_ = operator(segment)
+            >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
@@ -82,16 +72,12 @@ class Retrograde(AbjadValueObject):
 
             Same as above because retrograde and transposition commute:
 
-            ::
+            >>> operator = transposition + retrograde
+            >>> str(operator)
+            'T3R'
 
-                >>> operator = transposition + retrograde
-                >>> str(operator)
-                'T3R'
-
-            ::
-
-                >>> segment_ = operator(segment)
-                >>> abjad.show(segment_) # doctest: +SKIP
+            >>> segment_ = operator(segment)
+            >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
@@ -110,17 +96,15 @@ class Retrograde(AbjadValueObject):
 
             Returns compound operator:
 
-            ::
-
-                >>> abjad.f(operator)
-                abjad.CompoundOperator(
-                    operators=[
-                        abjad.Retrograde(),
-                        abjad.Transposition(
-                            n=3,
-                            ),
-                        ],
-                    )
+            >>> abjad.f(operator)
+            abjad.CompoundOperator(
+                operators=[
+                    abjad.Retrograde(),
+                    abjad.Transposition(
+                        n=3,
+                        ),
+                    ],
+                )
 
         '''
         from abjad.tools import pitchtools
@@ -133,23 +117,19 @@ class Retrograde(AbjadValueObject):
 
             Gets retrograde pitch classes:
 
-            ::
-
-                >>> retrograde = abjad.Retrograde()
-                >>> segment = abjad.PitchClassSegment([0, 1, 4, 7])
-                >>> retrograde(segment)
-                PitchClassSegment([7, 4, 1, 0])
+            >>> retrograde = abjad.Retrograde()
+            >>> segment = abjad.PitchClassSegment([0, 1, 4, 7])
+            >>> retrograde(segment)
+            PitchClassSegment([7, 4, 1, 0])
 
         ..  container:: example
 
             Does not retrograde single pitches or pitch-classes:
 
-            ::
-
-                >>> retrogresion = abjad.Retrograde()
-                >>> pitch_class = abjad.NumberedPitchClass(6)
-                >>> retrograde(pitch_class)
-                NumberedPitchClass(6)
+            >>> retrogresion = abjad.Retrograde()
+            >>> pitch_class = abjad.NumberedPitchClass(6)
+            >>> retrograde(pitch_class)
+            NumberedPitchClass(6)
 
         ..  container:: example
 
@@ -157,12 +137,10 @@ class Retrograde(AbjadValueObject):
 
             ..  todo:: Deprecated.
 
-            ::
-
-                >>> retrograde = abjad.Retrograde(period=3)
-                >>> segment = abjad.PitchSegment("c' d' e' f' g' a' b' c''")
-                >>> retrograde(segment)
-                PitchSegment("e' d' c' a' g' f' c'' b'")
+            >>> retrograde = abjad.Retrograde(period=3)
+            >>> segment = abjad.PitchSegment("c' d' e' f' g' a' b' c''")
+            >>> retrograde(segment)
+            PitchSegment("e' d' c' a' g' f' c'' b'")
 
         Returns new object with type equal to that of `argument`.
         '''
@@ -191,12 +169,10 @@ class Retrograde(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> abjad.Retrograde().__radd__(abjad.Retrograde())
-                Traceback (most recent call last):
-                ...
-                NotImplementedError: right-addition not defined on Retrograde.
+            >>> abjad.Retrograde().__radd__(abjad.Retrograde())
+            Traceback (most recent call last):
+            ...
+            NotImplementedError: right-addition not defined on Retrograde.
 
         Raises not implemented error.
         '''
@@ -209,10 +185,8 @@ class Retrograde(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> str(abjad.Retrograde())
-                'R'
+            >>> str(abjad.Retrograde())
+            'R'
 
         '''
         return 'R'
@@ -236,11 +210,9 @@ class Retrograde(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> retrograde = abjad.Retrograde(period=3)
-                >>> retrograde.period
-                3
+            >>> retrograde = abjad.Retrograde(period=3)
+            >>> retrograde.period
+            3
 
         Returns integer or none.
         '''

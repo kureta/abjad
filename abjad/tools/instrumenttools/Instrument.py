@@ -252,12 +252,10 @@ class Instrument(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> staff = abjad.Staff("<c' e' g'>4 d'4 r4 e'4")
-                >>> clarinet = abjad.ClarinetInBFlat()
-                >>> abjad.attach(clarinet, staff[0])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("<c' e' g'>4 d'4 r4 e'4")
+            >>> clarinet = abjad.ClarinetInBFlat()
+            >>> abjad.attach(clarinet, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -271,10 +269,8 @@ class Instrument(AbjadValueObject):
                     e'4
                 }
 
-            ::
-
-                >>> abjad.Instrument.transpose_from_sounding_pitch(staff)
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> abjad.Instrument.transpose_from_sounding_pitch(staff)
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -316,12 +312,10 @@ class Instrument(AbjadValueObject):
 
         ..  container:: example
 
-            ::
-
-                >>> staff = abjad.Staff("<c' e' g'>4 d'4 r4 e'4")
-                >>> clarinet = abjad.ClarinetInBFlat()
-                >>> abjad.attach(clarinet, staff[0])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("<c' e' g'>4 d'4 r4 e'4")
+            >>> clarinet = abjad.ClarinetInBFlat()
+            >>> abjad.attach(clarinet, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -335,10 +329,8 @@ class Instrument(AbjadValueObject):
                     e'4
                 }
 
-            ::
-
-                >>> abjad.Instrument.transpose_from_written_pitch(staff)
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> abjad.Instrument.transpose_from_written_pitch(staff)
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

@@ -6,13 +6,11 @@ class MezzoSopranoVoice(Instrument):
 
     ..  container:: example
 
-        ::
 
-
-            >>> staff = abjad.Staff("c''4 d''4 e''4 fs''4")
-            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-            >>> abjad.attach(mezzo_soprano, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c''4 d''4 e''4 fs''4")
+        >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+        >>> abjad.attach(mezzo_soprano, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -67,11 +65,9 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.allowable_clefs
-                ('treble',)
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.allowable_clefs
+            ('treble',)
 
         Returns clef list.
         '''
@@ -83,15 +79,11 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.middle_c_sounding_pitch
+            NamedPitch("c'")
 
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.middle_c_sounding_pitch
-                NamedPitch("c'")
-
-            ::
-
-                >>> abjad.show(mezzo_soprano.middle_c_sounding_pitch) # doctest: +SKIP
+            >>> abjad.show(mezzo_soprano.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -103,11 +95,9 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.name
-                'mezzo-soprano'
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.name
+            'mezzo-soprano'
 
         Returns string.
         '''
@@ -119,15 +109,11 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.name_markup
+            Markup(contents=['Mezzo-soprano'])
 
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.name_markup
-                Markup(contents=['Mezzo-soprano'])
-
-            ::
-
-                >>> abjad.show(mezzo_soprano.name_markup) # doctest: +SKIP
+            >>> abjad.show(mezzo_soprano.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -139,15 +125,11 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.pitch_range
+            PitchRange('[A3, C6]')
 
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.pitch_range
-                PitchRange('[A3, C6]')
-
-            ::
-
-                >>> abjad.show(mezzo_soprano.pitch_range) # doctest: +SKIP
+            >>> abjad.show(mezzo_soprano.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -159,11 +141,9 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
-
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.short_name
-                'mezz.'
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.short_name
+            'mezz.'
 
         Returns string.
         '''
@@ -175,15 +155,11 @@ class MezzoSopranoVoice(Instrument):
 
         ..  container:: example
 
-            ::
+            >>> mezzo_soprano = abjad.MezzoSopranoVoice()
+            >>> mezzo_soprano.short_name_markup
+            Markup(contents=['Mezz.'])
 
-                >>> mezzo_soprano = abjad.MezzoSopranoVoice()
-                >>> mezzo_soprano.short_name_markup
-                Markup(contents=['Mezz.'])
-
-            ::
-
-                >>> abjad.show(mezzo_soprano.short_name_markup) # doctest: +SKIP
+            >>> abjad.show(mezzo_soprano.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
