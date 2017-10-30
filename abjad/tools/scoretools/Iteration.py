@@ -2067,7 +2067,7 @@ class Iteration(abctools.AbjadObject):
         if not reverse:
             while components:
                 current_start_offset = min(
-                    _._get_timespan().start_offset
+                    abjad.inspect(_).get_timespan().start_offset
                     for _ in components
                     )
                 components.sort(
@@ -2079,7 +2079,7 @@ class Iteration(abctools.AbjadObject):
                 components = []
                 while components_to_process:
                     component = components_to_process.pop()
-                    start_offset = component._get_timespan().start_offset
+                    start_offset = abjad.inspect(component).get_timespan().start_offset
                     #print('    COMPONENT:', component)
                     if current_start_offset < start_offset:
                         components.append(component)
@@ -2105,7 +2105,7 @@ class Iteration(abctools.AbjadObject):
                 #print('STEP')
                 #print()
                 current_stop_offset = max(
-                    _._get_timespan().stop_offset
+                    abjad.inspect(_).get_timespan().stop_offset
                     for _ in components
                     )
                 components.sort(
@@ -2117,7 +2117,7 @@ class Iteration(abctools.AbjadObject):
                 components = []
                 while components_to_process:
                     component = components_to_process.pop()
-                    stop_offset = component._get_timespan().stop_offset
+                    stop_offset = abjad.inspect(component).get_timespan().stop_offset
                     #print('\tCOMPONENT:', component)
                     if stop_offset < current_stop_offset:
                         components.insert(0, component)

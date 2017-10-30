@@ -942,10 +942,13 @@ class Selection(AbjadValueObject):
             )
 
     def _get_offset_lists(self):
+        import abjad
         start_offsets, stop_offsets = [], []
         for component in self:
-            start_offsets.append(component._get_timespan().start_offset)
-            stop_offsets.append(component._get_timespan().stop_offset)
+            start_offsets.append(
+                abjad.inspect(component).get_timespan().start_offset)
+            stop_offsets.append(
+                abjad.inspect(component).get_timespan().stop_offset)
         return start_offsets, stop_offsets
 
     def _get_parent_and_start_stop_indices(self):
@@ -997,20 +1000,20 @@ class Selection(AbjadValueObject):
         template = '.{}({})'.format(function_name, arguments)
         return selector.template + template
 
-    def _get_timespan(self, in_seconds=False):
-        import abjad
-        if len(self):
-            timespan_ = self[0]._get_timespan(in_seconds=in_seconds)
-            start_offset = timespan_.start_offset
-            timespan_ = self[-1]._get_timespan(in_seconds=in_seconds)
-            stop_offset = timespan_.stop_offset
-        else:
-            start_offset = abjad.Duration(0)
-            stop_offset = abjad.Duration(0)
-        return abjad.Timespan(
-            start_offset=start_offset,
-            stop_offset=stop_offset,
-            )
+#    def _get_timespan(self, in_seconds=False):
+#        import abjad
+#        if len(self):
+#            timespan_ = self[0]._get_timespan(in_seconds=in_seconds)
+#            start_offset = timespan_.start_offset
+#            timespan_ = self[-1]._get_timespan(in_seconds=in_seconds)
+#            stop_offset = timespan_.stop_offset
+#        else:
+#            start_offset = abjad.Duration(0)
+#            stop_offset = abjad.Duration(0)
+#        return abjad.Timespan(
+#            start_offset=start_offset,
+#            stop_offset=stop_offset,
+#            )
 
     def _give_components_to_empty_container(self, container):
         r'''Not composer-safe.
@@ -2426,26 +2429,11 @@ class Selection(AbjadValueObject):
 #        import abjad
 #       return abjad.inspect(self).get_pitches()
 
-    def get_timespan(self, in_seconds=False):
-        r'''Gets timespan.
-
-        Returns timespan.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        if in_seconds:
-            raise NotImplementedError
-        timespan = self[0]._get_timespan()
-        start_offset = timespan.start_offset
-        stop_offset = timespan.stop_offset
-        for x in self[1:]:
-            timespan = x._get_timespan()
-            if timespan.start_offset < start_offset:
-                start_offset = timespan.start_offset
-            if stop_offset < timespan.stop_offset:
-                stop_offset = timespan.stop_offset
-        return abjad.Timespan(start_offset, stop_offset)
+#    def get_timespan(self, in_seconds=False):
+#        r'''DEPRECATED.
+#        '''
+#        import abjad
+#        return abjad.inspect(self).get_timespan(in_seconds=in_seconds)
 
     def group(self, predicate=None):
         r'''Groups items in selection by `predicate`.

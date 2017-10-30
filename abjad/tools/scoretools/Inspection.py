@@ -1108,9 +1108,24 @@ class Inspection(abctools.AbjadObject):
 
         Returns timespan.
         '''
-        return self.client._get_timespan(
+        import abjad
+        if hasattr(self.client, 'get_timespan'):
+            return self.client.get_timespan(in_seconds=in_seconds)
+        if hasattr(self.client, '_get_timespan'):
+            return self.client._get_timespan(in_seconds=in_seconds)
+        assert isinstance(self.client, collections.Iterable), repr(self.client)
+        timespan = abjad.inspect(self.client[0]).get_timespan(
             in_seconds=in_seconds,
             )
+        start_offset = timespan.start_offset
+        stop_offset = timespan.stop_offset
+        for item in self.client[1:]:
+            timespan = abjad.inspect(item).get_timespan(in_seconds=in_seconds)
+            if timespan.start_offset < start_offset:
+                start_offset = timespan.start_offset
+            if stop_offset < timespan.stop_offset:
+                stop_offset = timespan.stop_offset
+        return abjad.Timespan(start_offset, stop_offset)
 
     def get_tuplet(self, n=0):
         r'''Gets tuplet `n`.
@@ -1343,7 +1358,7 @@ class Inspection(abctools.AbjadObject):
             time_signature_duration = time_signature.duration
         partial = getattr(time_signature, 'partial', 0)
         partial = partial or 0
-        start_offset = self.client._get_timespan().start_offset
+        start_offset = abjad.inspect(self.client).get_timespan().start_offset
         shifted_start = start_offset - partial
         shifted_start %= time_signature_duration
         stop_offset = self.client._get_duration() + shifted_start

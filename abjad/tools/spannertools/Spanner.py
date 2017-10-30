@@ -568,8 +568,9 @@ class Spanner(AbjadObject):
         self._remove_leaf(leaf)
 
     def _start_offset_in_me(self, leaf):
-        leaf_start_offset = leaf._get_timespan().start_offset
-        self_start_offset = self._get_timespan().start_offset
+        import abjad
+        leaf_start_offset = abjad.inspect(leaf).get_timespan().start_offset
+        self_start_offset = abjad.inspect(self).get_timespan().start_offset
         return leaf_start_offset - self_start_offset
 
     def _stop_offset_in_me(self, leaf):

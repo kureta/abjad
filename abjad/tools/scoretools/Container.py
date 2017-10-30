@@ -679,15 +679,16 @@ class Container(Component):
         This version is useful for finding spanners that dominant
         a zero-length slice between components, as in staff[2:2].
         '''
+        import abjad
         if left is None or right is None:
             return set([])
         left_contained = left._get_descendants()._get_spanners()
         right_contained = right._get_descendants()._get_spanners()
         dominant_spanners = left_contained & right_contained
-        right_start_offset = right._get_timespan().start_offset
+        right_start_offset = abjad.inspect(right).get_timespan().start_offset
         components_after_gap = []
         for component in right._get_lineage():
-            if component._get_timespan().start_offset == right_start_offset:
+            if abjad.inspect(component).get_timespan().start_offset == right_start_offset:
                 components_after_gap.append(component)
         receipt = set([])
         for spanner in dominant_spanners:
@@ -1800,8 +1801,10 @@ class Container(Component):
 
         Returns none.
         '''
+        import abjad
         self._components.reverse()
         self._update_later(offsets=True)
         spanners = self._get_descendants()._get_spanners()
         for spanner in spanners:
-            spanner._leaves.sort(key=lambda x: x._get_timespan().start_offset)
+            spanner._leaves.sort(
+                key=lambda x: abjad.inspect(x).get_timespan().start_offset)

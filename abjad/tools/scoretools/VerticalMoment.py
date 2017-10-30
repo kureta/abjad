@@ -130,12 +130,13 @@ class VerticalMoment(Selection):
     def _find_index(container, offset):
         r'''Based off of Python's bisect.bisect() function.
         '''
+        import abjad
         lo = 0
         hi = len(container)
         while lo < hi:
             mid = (lo + hi) // 2
-            start_offset = container[mid]._get_timespan().start_offset
-            stop_offset = container[mid]._get_timespan().stop_offset
+            start_offset = abjad.inspect(container[mid]).get_timespan().start_offset
+            stop_offset = abjad.inspect(container[mid]).get_timespan().stop_offset
             if start_offset <= offset < stop_offset:
                 lo = mid + 1
             # if container[mid] is of nonzero duration
@@ -179,9 +180,10 @@ class VerticalMoment(Selection):
 
     @staticmethod
     def _recurse(component, offset):
+        import abjad
         result = []
-        if (component._get_timespan().start_offset <=
-            offset < component._get_timespan().stop_offset):
+        if (abjad.inspect(component).get_timespan().start_offset <=
+            offset < abjad.inspect(component).get_timespan().stop_offset):
             result.append(component)
             if hasattr(component, 'components'):
                 if component.is_simultaneous:
@@ -256,8 +258,8 @@ class VerticalMoment(Selection):
         import abjad
         candidate_shortest_leaf = self.leaves[0]
         for leaf in self.leaves[1:]:
-            if (leaf._get_timespan().stop_offset <
-                candidate_shortest_leaf._get_timespan().stop_offset):
+            if (abjad.inspect(leaf).get_timespan().stop_offset <
+                abjad.inspect(candidate_shortest_leaf).get_timespan().stop_offset):
                 candidate_shortest_leaf = leaf
         next_leaf = candidate_shortest_leaf._get_in_my_logical_voice(
             1, prototype=abjad.Leaf)
@@ -353,7 +355,7 @@ class VerticalMoment(Selection):
         for leaf in self.leaves:
             #print ''
             #print leaf
-            leaf_start = leaf._get_timespan().start_offset
+            leaf_start = abjad.inspect(leaf).get_timespan().start_offset
             if leaf_start < self.offset:
                 #print 'found leaf starting before this moment ...'
                 if most_recent_start_offset <= leaf_start:
@@ -364,7 +366,7 @@ class VerticalMoment(Selection):
                 try:
                     previous_leaf = leaf._get_in_my_logical_voice(
                         -1, prototype=abjad.Leaf)
-                    start = previous_leaf._get_timespan().start_offset
+                    start = abjad.inspect(previous_leaf).get_timespan().start_offset
                     #print previous_leaf, start
                     if most_recent_start_offset <= start:
                         most_recent_start_offset = start
@@ -383,9 +385,10 @@ class VerticalMoment(Selection):
         r'''Tuple of components in vertical moment starting with at vertical
         moment, ordered by score index.
         '''
+        import abjad
         result = []
         for component in self.components:
-            if component._get_timespan().start_offset == self.offset:
+            if abjad.inspect(component).get_timespan().start_offset == self.offset:
                 result.append(component)
         result = tuple(result)
         return result

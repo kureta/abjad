@@ -457,9 +457,10 @@ class IndicatorWrapper(AbjadValueObject):
 
         Returns offset.
         '''
+        import abjad
         if self._synthetic_offset is not None:
             return self._synthetic_offset
-        return self._component._get_timespan().start_offset
+        return abjad.inspect(self._component).get_timespan().start_offset
 
     @property
     def synthetic_offset(self):

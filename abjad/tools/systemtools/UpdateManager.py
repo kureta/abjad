@@ -128,7 +128,7 @@ class UpdateManager(AbjadObject):
             previous = component._get_nth_component_in_time_order_from(-1)
             if previous is not None:
                 component._start_offset_in_seconds = \
-                    previous._get_timespan(in_seconds=True)._stop_offset
+                    abjad.inspect(previous).get_timespan(in_seconds=True).stop_offset
             else:
                 component._start_offset_in_seconds = abjad.Offset(0)
             # this one case is possible for containers only
@@ -230,7 +230,7 @@ class UpdateManager(AbjadObject):
         pairs = []
         for wrapper in wrappers:
             inspector = abjad.inspect(wrapper.component)
-            start_offset = inspector.get_timespan()._start_offset
+            start_offset = inspector.get_timespan().start_offset
             time_signature = wrapper.indicator
             pair = start_offset, time_signature
             pairs.append(pair)
@@ -245,7 +245,7 @@ class UpdateManager(AbjadObject):
         parentage = component._get_parentage()
         score_root = parentage.root
         inspector = abjad.inspect(score_root)
-        score_stop_offset = inspector.get_timespan()._stop_offset
+        score_stop_offset = inspector.get_timespan().stop_offset
         dummy_last_pair = (score_stop_offset, None)
         pairs.append(dummy_last_pair)
         measure_start_offsets = []
@@ -266,7 +266,7 @@ class UpdateManager(AbjadObject):
         ):
         import abjad
         inspector = abjad.inspect(component)
-        component_start_offset = inspector.get_timespan()._start_offset
+        component_start_offset = inspector.get_timespan().start_offset
         logical_measure_number_start_offsets = \
             logical_measure_number_start_offsets[:]
         logical_measure_number_start_offsets.append(abjad.mathtools.Infinity())

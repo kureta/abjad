@@ -91,8 +91,8 @@ class Descendants(Selection):
         else:
             for component in components:
                 append_x = True
-                if not (component._get_timespan().start_offset < cross_offset and
-                    cross_offset < component._get_timespan().stop_offset):
+                if not (abjad.inspect(component).get_timespan().start_offset < cross_offset and
+                    cross_offset < abjad.inspect(component).get_timespan().stop_offset):
                     append_x = False
                 if append_x:
                     result.append(component)

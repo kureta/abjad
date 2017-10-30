@@ -344,7 +344,7 @@ class Component(AbjadObject):
             return
         # elect most recent candidate wrapper
         all_offsets = sorted(candidate_wrappers)
-        start_offset = self._get_timespan()._start_offset
+        start_offset = abjad.inspect(self).get_timespan().start_offset
         index = bisect.bisect(all_offsets, start_offset) - 1 + int(n)
         if index < 0:
             return
@@ -652,7 +652,7 @@ class Component(AbjadObject):
 
     def _get_vertical_moment(self, governor=None):
         import abjad
-        offset = self._get_timespan()._start_offset
+        offset = abjad.inspect(self).get_timespan().start_offset
         if governor is None:
             governor = self._get_parentage().root
         return abjad.VerticalMoment(governor, offset)
@@ -797,12 +797,13 @@ class Component(AbjadObject):
         selection = abjad.select(self)
         if direction == abjad.Right:
             if grow_spanners:
-                insert_offset = self._get_timespan()._stop_offset
+                insert_offset = abjad.inspect(self).get_timespan().stop_offset
                 receipt = selection._get_dominant_spanners()
                 for spanner, index in receipt:
                     insert_component = None
                     for component in spanner:
-                        start_offset = component._get_timespan()._start_offset
+                        start_offset = abjad.inspect(
+                            component).get_timespan().start_offset
                         if start_offset == insert_offset:
                             insert_component = component
                             break
@@ -829,11 +830,11 @@ class Component(AbjadObject):
             return [self] + components
         else:
             if grow_spanners:
-                offset = self._get_timespan()._start_offset
+                offset = abjad.inspect(self).get_timespan().start_offset
                 receipt = selection._get_dominant_spanners()
                 for spanner, x in receipt:
                     for component in spanner:
-                        if component._get_timespan()._start_offset == offset:
+                        if abjad.inspect(component).get_timespan().start_offset == offset:
                             index = spanner._index(component)
                             break
                     else:
