@@ -169,12 +169,10 @@ class Parentage(abctools.AbjadObject):
 
             Grace notes:
 
-            ::
-
-                >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
-                >>> container = abjad.GraceContainer("c'16 d'16")
-                >>> abjad.attach(container, voice[1])
-                >>> abjad.show(voice) # doctest: +SKIP
+            >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
+            >>> container = abjad.GraceContainer("c'16 d'16")
+            >>> abjad.attach(container, voice[1])
+            >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
@@ -190,18 +188,16 @@ class Parentage(abctools.AbjadObject):
                     f'4
                 }
 
-            ::
-
-                >>> for leaf in abjad.iterate(voice).leaves():
-                ...     parentage = abjad.inspect(leaf).get_parentage()
-                ...     print(leaf, parentage.is_grace_note)
-                ...
-                c'4 False
-                c'16 True
-                d'16 True
-                d'4 False
-                e'4 False
-                f'4 False
+            >>> for leaf in abjad.iterate(voice).leaves():
+            ...     parentage = abjad.inspect(leaf).get_parentage()
+            ...     print(leaf, parentage.is_grace_note)
+            ...
+            c'4 False
+            c'16 True
+            d'16 True
+            d'4 False
+            e'4 False
+            f'4 False
 
         Returns true or false.
         '''
@@ -228,12 +224,10 @@ class Parentage(abctools.AbjadObject):
 
             Gets logical voice of note:
 
-            ::
-
-                >>> voice = abjad.Voice("c'4 d'4 e'4 f'4", name='CustomVoice')
-                >>> staff = abjad.Staff([voice], name='CustomStaff')
-                >>> score = abjad.Score([staff], name='CustomScore')
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> voice = abjad.Voice("c'4 d'4 e'4 f'4", name='CustomVoice')
+            >>> staff = abjad.Staff([voice], name='CustomStaff')
+            >>> score = abjad.Score([staff], name='CustomScore')
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -249,21 +243,17 @@ class Parentage(abctools.AbjadObject):
                     }
                 >>
 
-            ::
+            >>> note = voice[0]
+            >>> parentage = abjad.inspect(note).get_parentage()
+            >>> logical_voice = parentage.logical_voice
 
-                >>> note = voice[0]
-                >>> parentage = abjad.inspect(note).get_parentage()
-                >>> logical_voice = parentage.logical_voice
-
-            ::
-
-                >>> for key, value in logical_voice.items():
-                ...     print('%12s: %s' % (key, value))
-                ...
-                score: Score-'CustomScore'
-                staff group:
-                staff: Staff-'CustomStaff'
-                voice: Voice-'CustomVoice'
+            >>> for key, value in logical_voice.items():
+            ...     print('%12s: %s' % (key, value))
+            ...
+            score: Score-'CustomScore'
+            staff group:
+            staff: Staff-'CustomStaff'
+            voice: Voice-'CustomVoice'
 
         Returns ordered dictionary.
         '''
@@ -332,12 +322,10 @@ class Parentage(abctools.AbjadObject):
 
             Gets note score indices:
 
-            ::
-
-                >>> staff_1 = abjad.Staff(r"\times 2/3 { c''2 b'2 a'2 }")
-                >>> staff_2 = abjad.Staff("c'2 d'2")
-                >>> score = abjad.Score([staff_1, staff_2])
-                >>> abjad.show(score) # doctest: +SKIP
+            >>> staff_1 = abjad.Staff(r"\times 2/3 { c''2 b'2 a'2 }")
+            >>> staff_2 = abjad.Staff("c'2 d'2")
+            >>> score = abjad.Score([staff_1, staff_2])
+            >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
@@ -356,28 +344,24 @@ class Parentage(abctools.AbjadObject):
                     }
                 >>
 
-            ::
-
-                >>> for leaf in abjad.select(score).leaves():
-                ...     parentage = abjad.inspect(leaf).get_parentage()
-                ...     leaf, parentage.score_index
-                ...
-                (Note("c''2"), (0, 0, 0))
-                (Note("b'2"), (0, 0, 1))
-                (Note("a'2"), (0, 0, 2))
-                (Note("c'2"), (1, 0))
-                (Note("d'2"), (1, 1))
+            >>> for leaf in abjad.select(score).leaves():
+            ...     parentage = abjad.inspect(leaf).get_parentage()
+            ...     leaf, parentage.score_index
+            ...
+            (Note("c''2"), (0, 0, 0))
+            (Note("b'2"), (0, 0, 1))
+            (Note("a'2"), (0, 0, 2))
+            (Note("c'2"), (1, 0))
+            (Note("d'2"), (1, 1))
 
         ..  container:: example
 
             With grace notes:
 
-            ::
-
-                >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
-                >>> container = abjad.GraceContainer("cf''16 bf'16")
-                >>> abjad.attach(container, voice[1])
-                >>> abjad.show(voice) # doctest: +SKIP
+            >>> voice = abjad.Voice("c'8 [ d'8 e'8 f'8 ]")
+            >>> container = abjad.GraceContainer("cf''16 bf'16")
+            >>> abjad.attach(container, voice[1])
+            >>> abjad.show(voice) # doctest: +SKIP
 
             ..  docs::
 
@@ -393,20 +377,18 @@ class Parentage(abctools.AbjadObject):
                     f'8 ]
                 }
 
-            ::
-
-                >>> leaves = abjad.iterate(voice).components()
-                >>> for leaf in leaves:
-                ...     parentage = abjad.inspect(leaf).get_parentage()
-                ...     leaf, parentage.score_index
-                ...
-                (Voice("c'8 d'8 e'8 f'8"), ())
-                (Note("c'8"), (0,))
-                (Note("cf''16"), (0,))
-                (Note("bf'16"), (1,))
-                (Note("d'8"), (1,))
-                (Note("e'8"), (2,))
-                (Note("f'8"), (3,))
+            >>> leaves = abjad.iterate(voice).components()
+            >>> for leaf in leaves:
+            ...     parentage = abjad.inspect(leaf).get_parentage()
+            ...     leaf, parentage.score_index
+            ...
+            (Voice("c'8 d'8 e'8 f'8"), ())
+            (Note("c'8"), (0,))
+            (Note("cf''16"), (0,))
+            (Note("bf'16"), (1,))
+            (Note("d'8"), (1,))
+            (Note("e'8"), (2,))
+            (Note("f'8"), (3,))
 
             ..  todo:: Incorrect values returned for grace notes.
 
@@ -429,12 +411,10 @@ class Parentage(abctools.AbjadObject):
 
             Gets tuplet depth:
 
-            ::
-
-                >>> tuplet = abjad.Tuplet((2, 3), "c'2 d'2 e'2")
-                >>> staff = abjad.Staff([tuplet])
-                >>> note = tuplet[0]
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> tuplet = abjad.Tuplet((2, 3), "c'2 d'2 e'2")
+            >>> staff = abjad.Staff([tuplet])
+            >>> note = tuplet[0]
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -447,20 +427,14 @@ class Parentage(abctools.AbjadObject):
                     }
                 }
 
-            ::
+            >>> abjad.inspect(note).get_parentage().tuplet_depth
+            1
 
-                >>> abjad.inspect(note).get_parentage().tuplet_depth
-                1
+            >>> abjad.inspect(tuplet).get_parentage().tuplet_depth
+            0
 
-            ::
-
-                >>> abjad.inspect(tuplet).get_parentage().tuplet_depth
-                0
-
-            ::
-
-                >>> abjad.inspect(staff).get_parentage().tuplet_depth
-                0
+            >>> abjad.inspect(staff).get_parentage().tuplet_depth
+            0
 
         Returns nonnegative integer.
         '''

@@ -7,19 +7,17 @@ class Lineage(abctools.AbjadObject):
 
     ..  container:: example
 
-        ::
-
-            >>> score = abjad.Score()
-            >>> staff = abjad.Staff(
-            ...     r"""\new Voice = "Treble Voice" { c'4 }""",
-            ...     name='Treble Staff',
-            ...     )
-            >>> score.append(staff)
-            >>> bass = abjad.Staff(
-            ...     r"""\new Voice = "Bass Voice" { b,4 }""",
-            ...     name='Bass Staff',
-            ...     )
-            >>> score.append(bass)
+        >>> score = abjad.Score()
+        >>> staff = abjad.Staff(
+        ...     r"""\new Voice = "Treble Voice" { c'4 }""",
+        ...     name='Treble Staff',
+        ...     )
+        >>> score.append(staff)
+        >>> bass = abjad.Staff(
+        ...     r"""\new Voice = "Bass Voice" { b,4 }""",
+        ...     name='Bass Staff',
+        ...     )
+        >>> score.append(bass)
 
         ..  docs::
 
@@ -37,29 +35,25 @@ class Lineage(abctools.AbjadObject):
                 }
             >>
 
-        ::
+        >>> for component in abjad.inspect(score).get_lineage():
+        ...     component
+        ...
+        <Score<<2>>>
+        <Staff-"Treble Staff"{1}>
+        Voice("c'4", name='Treble Voice')
+        Note("c'4")
+        <Staff-"Bass Staff"{1}>
+        Voice('b,4', name='Bass Voice')
+        Note('b,4')
 
-            >>> for component in abjad.inspect(score).get_lineage():
-            ...     component
-            ...
-            <Score<<2>>>
-            <Staff-"Treble Staff"{1}>
-            Voice("c'4", name='Treble Voice')
-            Note("c'4")
-            <Staff-"Bass Staff"{1}>
-            Voice('b,4', name='Bass Voice')
-            Note('b,4')
-
-        ::
-
-            >>> bass_voice = score['Bass Voice']
-            >>> for component in abjad.inspect(bass_voice).get_lineage():
-            ...     component
-            ...
-            <Score<<2>>>
-            <Staff-"Bass Staff"{1}>
-            Voice('b,4', name='Bass Voice')
-            Note('b,4')
+        >>> bass_voice = score['Bass Voice']
+        >>> for component in abjad.inspect(bass_voice).get_lineage():
+        ...     component
+        ...
+        <Score<<2>>>
+        <Staff-"Bass Staff"{1}>
+        Voice('b,4', name='Bass Voice')
+        Note('b,4')
 
     '''
 

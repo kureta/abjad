@@ -12,13 +12,11 @@ class GraceContainer(Container):
 
         Grace notes:
 
-        ::
-
-            >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
-            >>> grace_notes = [abjad.Note("c'16"), abjad.Note("d'16")]
-            >>> grace_container = abjad.GraceContainer(grace_notes)
-            >>> abjad.attach(grace_container, voice[1])
-            >>> abjad.show(voice) # doctest: +SKIP
+        >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
+        >>> grace_notes = [abjad.Note("c'16"), abjad.Note("d'16")]
+        >>> grace_container = abjad.GraceContainer(grace_notes)
+        >>> abjad.attach(grace_container, voice[1])
+        >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
@@ -42,16 +40,14 @@ class GraceContainer(Container):
 
         Detaches grace container:
 
-        ::
-
-            >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
-            >>> note = abjad.Note("cs'16")
-            >>> grace_container = abjad.GraceContainer([note])
-            >>> abjad.attach(grace_container, voice[1])
-            >>> note = abjad.Note("ds'16")
-            >>> after_grace_container = abjad.AfterGraceContainer([note])
-            >>> abjad.attach(after_grace_container, voice[1])
-            >>> abjad.show(voice) # doctest: +SKIP
+        >>> voice = abjad.Voice("c'4 d'4 e'4 f'4")
+        >>> note = abjad.Note("cs'16")
+        >>> grace_container = abjad.GraceContainer([note])
+        >>> abjad.attach(grace_container, voice[1])
+        >>> note = abjad.Note("ds'16")
+        >>> after_grace_container = abjad.AfterGraceContainer([note])
+        >>> abjad.attach(after_grace_container, voice[1])
+        >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
@@ -70,11 +66,9 @@ class GraceContainer(Container):
                 f'4
             }
 
-        ::
-
-            >>> abjad.detach(abjad.GraceContainer, voice[1])
-            (GraceContainer("cs'16"),)
-            >>> abjad.show(voice) # doctest: +SKIP
+        >>> abjad.detach(abjad.GraceContainer, voice[1])
+        (GraceContainer("cs'16"),)
+        >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
@@ -94,12 +88,10 @@ class GraceContainer(Container):
 
         Grace containers can be moved:
 
-        ::
-
-            >>> staff = abjad.Staff("c'4 d'")
-            >>> container = abjad.GraceContainer("fs'32")
-            >>> abjad.attach(container, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> staff = abjad.Staff("c'4 d'")
+        >>> container = abjad.GraceContainer("fs'32")
+        >>> abjad.attach(container, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -112,10 +104,8 @@ class GraceContainer(Container):
                 d'4
             }
 
-        ::
-
-            >>> result = abjad.detach(abjad.GraceContainer, staff[0])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> result = abjad.detach(abjad.GraceContainer, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -125,10 +115,8 @@ class GraceContainer(Container):
                 d'4
             }
 
-        ::
-
-            >>> abjad.attach(result[0], staff[1])
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> abjad.attach(result[0], staff[1])
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 

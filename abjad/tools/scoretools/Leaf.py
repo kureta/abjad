@@ -244,7 +244,7 @@ class Leaf(Component):
                 ]
             for candidate in candidates:
                 selection = abjad.select([component, candidate])
-                if selection.in_logical_voice():
+                if selection.are_logical_voice():
                     return candidate
 
         def previous(component):
@@ -257,7 +257,7 @@ class Leaf(Component):
                 ]
             for candidate in candidates:
                 selection = abjad.select([component, candidate])
-                if selection.in_logical_voice():
+                if selection.are_logical_voice():
                     return candidate
         current_leaf = self
         if n < 0:

@@ -7,12 +7,10 @@ class Score(Context):
 
     ..  container:: example
 
-        ::
-
-            >>> staff_1 = abjad.Staff("c'8 d'8 e'8 f'8")
-            >>> staff_2 = abjad.Staff("c'8 d'8 e'8 f'8")
-            >>> score = abjad.Score([staff_1, staff_2])
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> staff_1 = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> staff_2 = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> score = abjad.Score([staff_1, staff_2])
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -86,10 +84,8 @@ class Score(Context):
             >>
 
 
-        ::
-
-            >>> bar_line = score.add_final_bar_line()
-            >>> abjad.show(score) # doctest: +SKIP
+        >>> bar_line = score.add_final_bar_line()
+        >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
@@ -128,19 +124,17 @@ class Score(Context):
 
             Adds markup to last leaf:
 
-            ::
-
-                >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-                >>> score = abjad.Score([staff])
-                >>> place = abjad.Markup('Bremen - Boston - LA.', direction=abjad.Down)
-                >>> date = abjad.Markup('July 2010 - May 2011.')
-                >>> markup = abjad.Markup.right_column([place, date], direction=abjad.Down)
-                >>> markup = markup.italic()
-                >>> markup = score.add_final_markup(
-                ...     markup,
-                ...     extra_offset=(0.5, -2),
-                ...     )
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> score = abjad.Score([staff])
+            >>> place = abjad.Markup('Bremen - Boston - LA.', direction=abjad.Down)
+            >>> date = abjad.Markup('July 2010 - May 2011.')
+            >>> markup = abjad.Markup.right_column([place, date], direction=abjad.Down)
+            >>> markup = markup.italic()
+            >>> markup = score.add_final_markup(
+            ...     markup,
+            ...     extra_offset=(0.5, -2),
+            ...     )
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -166,26 +160,24 @@ class Score(Context):
 
             Adds markup to last multimeasure rest:
 
-            ::
-
-                >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-                >>> staff.append(abjad.MultimeasureRest((4, 4)))
-                >>> score = abjad.Score([staff])
-                >>> place = abjad.Markup(
-                ...     'Bremen - Boston - LA.',
-                ...     direction=abjad.Down,
-                ...     )
-                >>> date = abjad.Markup('July 2010 - May 2011.')
-                >>> markup = abjad.Markup.right_column(
-                ...     [place, date],
-                ...     direction=abjad.Down,
-                ...     )
-                >>> markup = markup.italic()
-                >>> markup = score.add_final_markup(
-                ...     markup,
-                ...     extra_offset=(14.5, -2),
-                ...     )
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> staff.append(abjad.MultimeasureRest((4, 4)))
+            >>> score = abjad.Score([staff])
+            >>> place = abjad.Markup(
+            ...     'Bremen - Boston - LA.',
+            ...     direction=abjad.Down,
+            ...     )
+            >>> date = abjad.Markup('July 2010 - May 2011.')
+            >>> markup = abjad.Markup.right_column(
+            ...     [place, date],
+            ...     direction=abjad.Down,
+            ...     )
+            >>> markup = markup.italic()
+            >>> markup = score.add_final_markup(
+            ...     markup,
+            ...     extra_offset=(14.5, -2),
+            ...     )
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -232,31 +224,25 @@ class Score(Context):
 
             Makes empty piano score:
 
-            ::
+            >>> result = abjad.Score.make_piano_score()
 
-                >>> result = abjad.Score.make_piano_score()
-
-            ::
-
-                >>> abjad.f(result[0])
-                \new Score <<
-                    \new PianoStaff <<
-                        \context Staff = "Treble Staff" {
-                        }
-                        \context Staff = "Bass Staff" {
-                        }
-                    >>
+            >>> abjad.f(result[0])
+            \new Score <<
+                \new PianoStaff <<
+                    \context Staff = "Treble Staff" {
+                    }
+                    \context Staff = "Bass Staff" {
+                    }
                 >>
+            >>
 
         ..  container:: example
 
             Makes piano score from leaves:
 
-            ::
-
-                >>> notes = [abjad.Note(x, (1, 4)) for x in [-12, 37, -10, 2, 4, 17]]
-                >>> result = abjad.Score.make_piano_score(leaves=notes)
-                >>> abjad.show(result[0]) # doctest: +SKIP
+            >>> notes = [abjad.Note(x, (1, 4)) for x in [-12, 37, -10, 2, 4, 17]]
+            >>> result = abjad.Score.make_piano_score(leaves=notes)
+            >>> abjad.show(result[0]) # doctest: +SKIP
 
             ..  docs::
 
@@ -288,18 +274,16 @@ class Score(Context):
 
             Makes piano sketch score from leaves:
 
-            ::
-
-                >>> maker = abjad.NoteMaker()
-                >>> notes = maker(
-                ...     [-12, -10, -8, -7, -5, 0, 2, 4, 5, 7],
-                ...     [(1, 16)],
-                ...     )
-                >>> result = abjad.Score.make_piano_score(
-                ...     leaves=notes,
-                ...     sketch=True,
-                ...     )
-                >>> abjad.show(result[0]) # doctest: +SKIP
+            >>> maker = abjad.NoteMaker()
+            >>> notes = maker(
+            ...     [-12, -10, -8, -7, -5, 0, 2, 4, 5, 7],
+            ...     [(1, 16)],
+            ...     )
+            >>> result = abjad.Score.make_piano_score(
+            ...     leaves=notes,
+            ...     sketch=True,
+            ...     )
+            >>> abjad.show(result[0]) # doctest: +SKIP
 
             ..  docs::
 

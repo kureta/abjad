@@ -8,11 +8,9 @@ class Rest(Leaf):
 
     ..  container:: example
 
-        ::
-
-            >>> rest = abjad.Rest('r8.')
-            >>> measure = abjad.Measure((3, 16), [rest])
-            >>> abjad.show(measure) # doctest: +SKIP
+        >>> rest = abjad.Rest('r8.')
+        >>> measure = abjad.Measure((3, 16), [rest])
+        >>> abjad.show(measure) # doctest: +SKIP
 
         ..  docs::
 

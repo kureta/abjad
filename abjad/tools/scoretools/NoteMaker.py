@@ -13,12 +13,10 @@ class NoteMaker(AbjadValueObject):
         Cycles through `pitches` when the length of `pitches` is less than the
         length of `durations`:
 
-        ::
-
-            >>> maker = abjad.NoteMaker()
-            >>> notes = maker([0], [(1, 16), (1, 8), (1, 8)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker()
+        >>> notes = maker([0], [(1, 16), (1, 8), (1, 8)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -34,15 +32,13 @@ class NoteMaker(AbjadValueObject):
         Cycles through `durations` when the length of `durations` is less than
         the length of `pitches`:
 
-        ::
-
-            >>> maker = abjad.NoteMaker()
-            >>> notes = maker(
-            ...     [0, 2, 4, 5, 7],
-            ...     [(1, 16), (1, 8), (1, 8)],
-            ...     )
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker()
+        >>> notes = maker(
+        ...     [0, 2, 4, 5, 7],
+        ...     [(1, 16), (1, 8), (1, 8)],
+        ...     )
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -59,12 +55,10 @@ class NoteMaker(AbjadValueObject):
 
         Creates ad hoc tuplets for nonassignable durations:
 
-        ::
-
-            >>> maker = abjad.NoteMaker()
-            >>> notes = maker([0], [(1, 16), (1, 12), (1, 8)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker()
+        >>> notes = maker([0], [(1, 16), (1, 12), (1, 8)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -83,12 +77,10 @@ class NoteMaker(AbjadValueObject):
         Set ``decrease_monotonic=True`` to express tied values in decreasing
         duration:
 
-        ::
-
-            >>> maker = abjad.NoteMaker(decrease_monotonic=True)
-            >>> notes = maker([0], [(13, 16)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker(decrease_monotonic=True)
+        >>> notes = maker([0], [(13, 16)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -103,12 +95,10 @@ class NoteMaker(AbjadValueObject):
         Set ``decrease_monotonic=False`` to express tied values in increasing
         duration:
 
-        ::
-
-            >>> maker = abjad.NoteMaker(decrease_monotonic=False)
-            >>> notes = maker([0], [(13, 16)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker(decrease_monotonic=False)
+        >>> notes = maker([0], [(13, 16)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -122,12 +112,10 @@ class NoteMaker(AbjadValueObject):
 
         Uses Messiaen-style ties:
 
-        ::
-
-            >>> maker = abjad.NoteMaker(use_messiaen_style_ties=True)
-            >>> notes = maker([0], [(13, 16)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker(use_messiaen_style_ties=True)
+        >>> notes = maker([0], [(13, 16)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
@@ -141,13 +129,11 @@ class NoteMaker(AbjadValueObject):
 
         Works with pitch segments:
 
-        ::
-
-            >>> maker = abjad.NoteMaker()
-            >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
-            >>> notes = maker(segment, [(1, 8)])
-            >>> staff = abjad.Staff(notes)
-            >>> abjad.show(staff) # doctest: +SKIP
+        >>> maker = abjad.NoteMaker()
+        >>> segment = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])
+        >>> notes = maker(segment, [(1, 8)])
+        >>> staff = abjad.Staff(notes)
+        >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 

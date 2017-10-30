@@ -139,7 +139,7 @@ class WellformednessManager(AbjadObject):
         spanners = abjad.inspect(descendants).get_spanners()
         for spanner in spanners:
             if spanner._contiguity_constraint == 'logical voice':
-                if not spanner[:].in_contiguous_logical_voice():
+                if not spanner[:].are_contiguous_logical_voice():
                     violators.append(spanner)
         return violators, len(spanners)
 

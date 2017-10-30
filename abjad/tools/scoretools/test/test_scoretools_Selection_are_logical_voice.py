@@ -1,7 +1,7 @@
 import abjad
 
 
-def test_scoretools_Selection_in_logical_voice_01():
+def test_scoretools_Selection_are_logical_voice_01():
     r'''Unincorporated leaves do not share a logical voice.
     Unicorporated leaves do not share a root component.
     False if not allow orphans; True if allow orphans.
@@ -10,11 +10,11 @@ def test_scoretools_Selection_in_logical_voice_01():
     notes = [
         abjad.Note("c'8"),
         abjad.Note("d'8"), abjad.Note("e'8"), abjad.Note("f'8")]
-    assert abjad.select(notes).in_logical_voice()
-    assert not abjad.select(notes).in_logical_voice(allow_orphans=False)
+    assert abjad.select(notes).are_logical_voice()
+    assert not abjad.select(notes).are_logical_voice(allow_orphans=False)
 
 
-def test_scoretools_Selection_in_logical_voice_02():
+def test_scoretools_Selection_are_logical_voice_02():
     r'''Container and leaves all logical voice.
     '''
 
@@ -29,10 +29,10 @@ def test_scoretools_Selection_in_logical_voice_02():
     }
     '''
 
-    assert abjad.select(container).components().in_logical_voice()
+    assert abjad.select(container).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_03():
+def test_scoretools_Selection_are_logical_voice_03():
     r'''Tuplet and leaves all logical voice.
     '''
 
@@ -46,10 +46,10 @@ def test_scoretools_Selection_in_logical_voice_03():
     }
     '''
 
-    assert abjad.select(tuplet).components().in_logical_voice()
+    assert abjad.select(tuplet).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_04():
+def test_scoretools_Selection_are_logical_voice_04():
     r'''Voice and leaves all appear in same logical voice.
     '''
 
@@ -64,10 +64,10 @@ def test_scoretools_Selection_in_logical_voice_04():
     }
     '''
 
-    assert abjad.select(voice).components().in_logical_voice()
+    assert abjad.select(voice).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_05():
+def test_scoretools_Selection_are_logical_voice_05():
     r'''Anonymous staff and leaves all appear in same logical voice.
     '''
 
@@ -82,10 +82,10 @@ def test_scoretools_Selection_in_logical_voice_05():
     }
     '''
 
-    assert abjad.select(staff).components().in_logical_voice()
+    assert abjad.select(staff).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_06():
+def test_scoretools_Selection_are_logical_voice_06():
     r'''Voice, sequential and leaves all appear in same logical voice.
     '''
 
@@ -123,10 +123,10 @@ def test_scoretools_Selection_in_logical_voice_06():
         '''
         )
 
-    assert abjad.select(voice).components().in_logical_voice()
+    assert abjad.select(voice).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_07():
+def test_scoretools_Selection_are_logical_voice_07():
     r'''Anonymous voice, tuplets and leaves all appear in same logical voice.
     '''
 
@@ -160,10 +160,10 @@ def test_scoretools_Selection_in_logical_voice_07():
         '''
         )
 
-    assert abjad.select(voice).components().in_logical_voice()
+    assert abjad.select(voice).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_08():
+def test_scoretools_Selection_are_logical_voice_08():
     r'''Logical voice does not extend across anonymous voices.
     '''
 
@@ -202,13 +202,13 @@ def test_scoretools_Selection_in_logical_voice_08():
         )
 
     leaves = abjad.select(staff).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
-    assert not staff[:].in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
+    assert not staff[:].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_09():
+def test_scoretools_Selection_are_logical_voice_09():
     r'''Logical voice encompasses across like-named voices.
     '''
 
@@ -247,10 +247,10 @@ def test_scoretools_Selection_in_logical_voice_09():
         )
 
     leaves = abjad.select(staff).leaves()
-    assert leaves.in_logical_voice()
+    assert leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_10():
+def test_scoretools_Selection_are_logical_voice_10():
     r'''Logical voice does not extend across differently named voices.
     '''
 
@@ -281,10 +281,10 @@ def test_scoretools_Selection_in_logical_voice_10():
         )
 
     leaves = abjad.select(staff).leaves()
-    assert not leaves.in_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_11():
+def test_scoretools_Selection_are_logical_voice_11():
     r'''Logical voice does not across anonymous voices.
     Logical voice does not extend across anonymous staves.
     '''
@@ -324,10 +324,10 @@ def test_scoretools_Selection_in_logical_voice_11():
         )
 
     leaves = abjad.select(container).leaves()
-    assert not leaves.in_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_12():
+def test_scoretools_Selection_are_logical_voice_12():
     r'''Logical voice does not extend across anonymous voices.
     Logical voice does not extend across anonymous staves.
     '''
@@ -383,10 +383,10 @@ def test_scoretools_Selection_in_logical_voice_12():
         )
 
     leaves = abjad.select(container).leaves()
-    assert not leaves[:4].in_logical_voice()
+    assert not leaves[:4].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_13():
+def test_scoretools_Selection_are_logical_voice_13():
     r'''Anonymous voice, sequentials and leaves all appear in same
     logical voice.
     '''
@@ -418,10 +418,10 @@ def test_scoretools_Selection_in_logical_voice_13():
         )
 
     leaves = abjad.select(voice).leaves()
-    assert leaves.in_logical_voice()
+    assert leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_14():
+def test_scoretools_Selection_are_logical_voice_14():
     r'''Logical voice can extend across like-named staves.
     Logical voice can not extend across differently named implicit voices.
     '''
@@ -461,11 +461,11 @@ def test_scoretools_Selection_in_logical_voice_14():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_15():
+def test_scoretools_Selection_are_logical_voice_15():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -504,12 +504,12 @@ def test_scoretools_Selection_in_logical_voice_15():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_16():
+def test_scoretools_Selection_are_logical_voice_16():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -548,12 +548,12 @@ def test_scoretools_Selection_in_logical_voice_16():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_17():
+def test_scoretools_Selection_are_logical_voice_17():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -590,12 +590,12 @@ def test_scoretools_Selection_in_logical_voice_17():
     '''
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_18():
+def test_scoretools_Selection_are_logical_voice_18():
     r'''Logical voice can not extend acrossdifferently named implicit voices.
     '''
 
@@ -634,12 +634,12 @@ def test_scoretools_Selection_in_logical_voice_18():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_19():
+def test_scoretools_Selection_are_logical_voice_19():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -678,12 +678,12 @@ def test_scoretools_Selection_in_logical_voice_19():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_20():
+def test_scoretools_Selection_are_logical_voice_20():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -722,12 +722,12 @@ def test_scoretools_Selection_in_logical_voice_20():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_21():
+def test_scoretools_Selection_are_logical_voice_21():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -762,12 +762,12 @@ def test_scoretools_Selection_in_logical_voice_21():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_22():
+def test_scoretools_Selection_are_logical_voice_22():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -802,12 +802,12 @@ def test_scoretools_Selection_in_logical_voice_22():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_23():
+def test_scoretools_Selection_are_logical_voice_23():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -842,12 +842,12 @@ def test_scoretools_Selection_in_logical_voice_23():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_24():
+def test_scoretools_Selection_are_logical_voice_24():
     r'''Logical voice can not extend across differently named implicit voices.
     NOTE: THIS IS THE LILYPOND LACUNA.
     LilyPond *does* extend logical voice in this case.
@@ -885,12 +885,12 @@ def test_scoretools_Selection_in_logical_voice_24():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_25():
+def test_scoretools_Selection_are_logical_voice_25():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -925,12 +925,12 @@ def test_scoretools_Selection_in_logical_voice_25():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_26():
+def test_scoretools_Selection_are_logical_voice_26():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -965,12 +965,12 @@ def test_scoretools_Selection_in_logical_voice_26():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_27():
+def test_scoretools_Selection_are_logical_voice_27():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -999,12 +999,12 @@ def test_scoretools_Selection_in_logical_voice_27():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_28():
+def test_scoretools_Selection_are_logical_voice_28():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -1032,12 +1032,12 @@ def test_scoretools_Selection_in_logical_voice_28():
     '''
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_29():
+def test_scoretools_Selection_are_logical_voice_29():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -1068,12 +1068,12 @@ def test_scoretools_Selection_in_logical_voice_29():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_30():
+def test_scoretools_Selection_are_logical_voice_30():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -1102,12 +1102,12 @@ def test_scoretools_Selection_in_logical_voice_30():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_31():
+def test_scoretools_Selection_are_logical_voice_31():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -1144,11 +1144,11 @@ def test_scoretools_Selection_in_logical_voice_31():
         )
 
     leaves = abjad.select(container).leaves()
-    assert not leaves[:8].in_logical_voice()
-    assert not leaves[4:].in_logical_voice()
+    assert not leaves[:8].are_logical_voice()
+    assert not leaves[4:].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_32():
+def test_scoretools_Selection_are_logical_voice_32():
     r'''Logical voice can not extend across differently named implicit voices.
     '''
 
@@ -1199,11 +1199,11 @@ def test_scoretools_Selection_in_logical_voice_32():
         )
 
     leaves = abjad.select(container).leaves()
-    assert not leaves[:8].in_logical_voice()
-    assert not leaves[4:].in_logical_voice()
+    assert not leaves[:8].are_logical_voice()
+    assert not leaves[4:].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_33():
+def test_scoretools_Selection_are_logical_voice_33():
     r'''Logical voice does extend across gaps.
     Logical voice can not extend across differently named voices.
     '''
@@ -1255,13 +1255,13 @@ def test_scoretools_Selection_in_logical_voice_33():
         )
 
     leaves = abjad.select(container).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in middle]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
-    assert not leaves[:4].in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in middle]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).are_logical_voice()
+    assert not leaves[:4].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_34():
+def test_scoretools_Selection_are_logical_voice_34():
     r'''Logical voice does extend across gaps.
     Logical voice can not extend across differently named implicit voices.
     '''
@@ -1313,13 +1313,13 @@ def test_scoretools_Selection_in_logical_voice_34():
         )
 
     leaves = abjad.select(staff).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in middle]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
-    assert not leaves[:4].in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in middle]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).are_logical_voice()
+    assert not leaves[:4].are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_35():
+def test_scoretools_Selection_are_logical_voice_35():
     r'''Containers and leaves all appear in same logical voice.
     '''
 
@@ -1365,10 +1365,10 @@ def test_scoretools_Selection_in_logical_voice_35():
         '''
         )
 
-    assert abjad.select(container).components().in_logical_voice()
+    assert abjad.select(container).components().are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_36():
+def test_scoretools_Selection_are_logical_voice_36():
     r'''Logical voice can not extend across differently named voices.
     '''
 
@@ -1414,12 +1414,12 @@ def test_scoretools_Selection_in_logical_voice_36():
     inner = (2, 3, 4, 5)
 
     leaves = abjad.select(container).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_37():
+def test_scoretools_Selection_are_logical_voice_37():
     r'''Logical voice does not extend over differently named voices.
     '''
 
@@ -1462,12 +1462,12 @@ def test_scoretools_Selection_in_logical_voice_37():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_38():
+def test_scoretools_Selection_are_logical_voice_38():
     r'''Can not nest across differently named implicit voices.
     '''
 
@@ -1518,12 +1518,12 @@ def test_scoretools_Selection_in_logical_voice_38():
     inner = (2, 3, 4, 5)
 
     leaves = abjad.select(container).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_39():
+def test_scoretools_Selection_are_logical_voice_39():
     r'''Logical voice can not extend across differently named voices.
     '''
 
@@ -1586,12 +1586,12 @@ def test_scoretools_Selection_in_logical_voice_39():
     inner = (6, 7, 8, 9)
 
     leaves = abjad.select(voice).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert abjad.select([leaves[i] for i in inner]).in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert abjad.select([leaves[i] for i in inner]).are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_40():
+def test_scoretools_Selection_are_logical_voice_40():
     r'''Logical voice can not extend across differently named anonymous voices.
     '''
 
@@ -1638,15 +1638,15 @@ def test_scoretools_Selection_in_logical_voice_40():
         )
 
     leaves = abjad.select(container).leaves()
-    assert leaves[:4].in_logical_voice()
-    assert leaves[4:8].in_logical_voice()
-    assert leaves[8:].in_logical_voice()
-    assert not leaves[:8].in_logical_voice()
-    assert not leaves[4:].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert leaves[:4].are_logical_voice()
+    assert leaves[4:8].are_logical_voice()
+    assert leaves[8:].are_logical_voice()
+    assert not leaves[:8].are_logical_voice()
+    assert not leaves[4:].are_logical_voice()
+    assert not leaves.are_logical_voice()
 
 
-def test_scoretools_Selection_in_logical_voice_41():
+def test_scoretools_Selection_are_logical_voice_41():
     r'''Logical voice can not extend across differently named anonymous voices.
     '''
 
@@ -1699,8 +1699,8 @@ def test_scoretools_Selection_in_logical_voice_41():
     outer = (0, 1, 10, 11)
 
     leaves = abjad.select(container).leaves()
-    assert abjad.select([leaves[i] for i in outer]).in_logical_voice()
-    assert leaves[2:6].in_logical_voice()
-    assert leaves[6:10].in_logical_voice()
-    assert not leaves[:6].in_logical_voice()
-    assert not leaves.in_logical_voice()
+    assert abjad.select([leaves[i] for i in outer]).are_logical_voice()
+    assert leaves[2:6].are_logical_voice()
+    assert leaves[6:10].are_logical_voice()
+    assert not leaves[:6].are_logical_voice()
+    assert not leaves.are_logical_voice()

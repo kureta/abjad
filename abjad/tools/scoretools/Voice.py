@@ -6,10 +6,8 @@ class Voice(Context):
 
     ..  container:: example
 
-        ::
-
-            >>> voice = abjad.Voice("c'8 d'8 e'8 f'8")
-            >>> abjad.show(voice) # doctest: +SKIP
+        >>> voice = abjad.Voice("c'8 d'8 e'8 f'8")
+        >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 

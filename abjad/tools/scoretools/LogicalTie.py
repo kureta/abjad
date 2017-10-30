@@ -7,15 +7,11 @@ class LogicalTie(Selection):
 
     ..  container:: example
 
-        ::
+        >>> staff = abjad.Staff("c' d' e' ~ e'")
+        >>> abjad.show(staff) # doctest: +SKIP
 
-            >>> staff = abjad.Staff("c' d' e' ~ e'")
-            >>> abjad.show(staff) # doctest: +SKIP
-
-        ::
-
-            >>> abjad.inspect(staff[2]).get_logical_tie()
-            LogicalTie([Note("e'4"), Note("e'4")])
+        >>> abjad.inspect(staff[2]).get_logical_tie()
+        LogicalTie([Note("e'4"), Note("e'4")])
 
     '''
 
@@ -208,15 +204,13 @@ class LogicalTie(Selection):
 
             Changes logical tie to diminished tuplet:
 
-            ::
-
-                >>> staff = abjad.Staff(r"c'8 ~ c'16 cqs''4")
-                >>> crescendo = abjad.Hairpin('p < f')
-                >>> abjad.attach(crescendo, staff[:])
-                >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> time_signature = abjad.TimeSignature((7, 16))
-                >>> abjad.attach(time_signature, staff[0])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff(r"c'8 ~ c'16 cqs''4")
+            >>> crescendo = abjad.Hairpin('p < f')
+            >>> abjad.attach(crescendo, staff[:])
+            >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
+            >>> time_signature = abjad.TimeSignature((7, 16))
+            >>> abjad.attach(time_signature, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -230,17 +224,13 @@ class LogicalTie(Selection):
                     cqs''4 \f
                 }
 
-            ::
+            >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
+            >>> logical_tie.to_tuplet([2, 1, 1, 1], is_diminution=True)
+            Tuplet(Multiplier(3, 5), "c'8 c'16 c'16 c'16")
 
-                >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
-                >>> logical_tie.to_tuplet([2, 1, 1, 1], is_diminution=True)
-                Tuplet(Multiplier(3, 5), "c'8 c'16 c'16 c'16")
-
-            ::
-
-                >>> time_signature = abjad.TimeSignature((7, 16))
-                >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(time_signature, leaf)
+            >>> time_signature = abjad.TimeSignature((7, 16))
+            >>> leaf = abjad.inspect(staff).get_leaf(0)
+            >>> abjad.attach(time_signature, leaf)
 
             ..  docs::
 
@@ -259,23 +249,19 @@ class LogicalTie(Selection):
                     cqs''4 \f
                 }
 
-            ::
-
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  container:: example
 
             Changes logical tie to augmented tuplet:
 
-            ::
-
-                >>> staff = abjad.Staff(r"c'8 ~ c'16 cqs''4")
-                >>> crescendo = abjad.Hairpin(descriptor='p < f')
-                >>> abjad.attach(crescendo, staff[:])
-                >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
-                >>> time_signature = abjad.TimeSignature((7, 16))
-                >>> abjad.attach(time_signature, staff[0])
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> staff = abjad.Staff(r"c'8 ~ c'16 cqs''4")
+            >>> crescendo = abjad.Hairpin(descriptor='p < f')
+            >>> abjad.attach(crescendo, staff[:])
+            >>> abjad.override(staff).dynamic_line_spanner.staff_padding = 3
+            >>> time_signature = abjad.TimeSignature((7, 16))
+            >>> abjad.attach(time_signature, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
@@ -289,17 +275,15 @@ class LogicalTie(Selection):
                     cqs''4 \f
                 }
 
-            ::
-
-                >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
-                >>> tuplet = logical_tie.to_tuplet(
-                ...     [2, 1, 1, 1],
-                ...     is_diminution=False,
-                ...     )
-                >>> time_signature = abjad.TimeSignature((7, 16))
-                >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(time_signature, leaf)
-                >>> abjad.show(staff) # doctest: +SKIP
+            >>> logical_tie = abjad.inspect(staff[0]).get_logical_tie()
+            >>> tuplet = logical_tie.to_tuplet(
+            ...     [2, 1, 1, 1],
+            ...     is_diminution=False,
+            ...     )
+            >>> time_signature = abjad.TimeSignature((7, 16))
+            >>> leaf = abjad.inspect(staff).get_leaf(0)
+            >>> abjad.attach(time_signature, leaf)
+            >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 

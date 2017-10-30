@@ -677,7 +677,7 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         # check input
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         # return empty list when nothing to copy
         if n < 1:
             return []
@@ -721,7 +721,7 @@ class Selection(AbjadValueObject):
 
     def _copy_and_include_enclosing_containers(self):
         import abjad
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         # get governor
         parentage = abjad.inspect(self[0]).get_parentage(include_self=True)
         governor = parentage._get_governor()
@@ -762,7 +762,7 @@ class Selection(AbjadValueObject):
 
     def _fuse(self):
         import abjad
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         if self.are_leaves():
             return self._fuse_leaves()
         elif all(isinstance(_, abjad.Tuplet) for _ in self):
@@ -776,7 +776,7 @@ class Selection(AbjadValueObject):
     def _fuse_leaves(self):
         import abjad
         assert self.are_leaves()
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         leaves = self
         if len(leaves) <= 1:
             return leaves
@@ -790,7 +790,7 @@ class Selection(AbjadValueObject):
 
     def _fuse_measures(self):
         import abjad
-        assert self.in_same_parent(prototype=abjad.Measure)
+        assert self.are_same_parent(prototype=abjad.Measure)
         if len(self) == 0:
             return None
         # TODO: instantiate a new measure
@@ -833,7 +833,7 @@ class Selection(AbjadValueObject):
 
     def _fuse_tuplets(self):
         import abjad
-        assert self.in_same_parent(prototype=abjad.Tuplet)
+        assert self.are_same_parent(prototype=abjad.Tuplet)
         if len(self) == 0:
             return None
         first = self[0]
@@ -892,7 +892,7 @@ class Selection(AbjadValueObject):
         intersection -- between the components of P and C.
         '''
         import abjad
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         all_components = set(abjad.iterate(self).components())
         contained_spanners = set()
         for component in abjad.iterate(self).components():
@@ -915,7 +915,7 @@ class Selection(AbjadValueObject):
         score tree before reattaching spanners.
         score components.
         '''
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         receipt = set([])
         if len(self) == 0:
             return receipt
@@ -951,7 +951,7 @@ class Selection(AbjadValueObject):
         return start_offsets, stop_offsets
 
     def _get_parent_and_start_stop_indices(self):
-        assert self.in_same_parent()
+        assert self.are_same_parent()
         if self:
             first, last = self[0], self[-1]
             parent = first._parent
@@ -1003,7 +1003,7 @@ class Selection(AbjadValueObject):
         r'''Not composer-safe.
         '''
         import abjad
-        assert self.in_same_parent()
+        assert self.are_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container
         components = []
@@ -1020,8 +1020,8 @@ class Selection(AbjadValueObject):
         Not composer-safe.
         '''
         import abjad
-        assert self.in_contiguous_logical_voice()
-        assert abjad.select(recipients).in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
+        assert abjad.select(recipients).are_contiguous_logical_voice()
         receipt = self._get_dominant_spanners()
         for spanner, index in receipt:
             for recipient in reversed(recipients):
@@ -1033,7 +1033,7 @@ class Selection(AbjadValueObject):
         r'''Not composer-safe.
         '''
         import abjad
-        assert self.in_same_parent()
+        assert self.are_same_parent()
         assert isinstance(container, abjad.Container)
         parent, start, stop = self._get_parent_and_start_stop_indices()
         if parent is not None:
@@ -1206,7 +1206,7 @@ class Selection(AbjadValueObject):
         r'''Not composer-safe.
         '''
         import abjad
-        assert self.in_contiguous_logical_voice()
+        assert self.are_contiguous_logical_voice()
         crossing_spanners = self._get_crossing_spanners()
         components_including_children = abjad.select(self).components()
         for crossing_spanner in list(crossing_spanners):
@@ -1233,6 +1233,59 @@ class Selection(AbjadValueObject):
 
     ### PUBLIC METHODS ###
 
+    def are_contiguous_logical_voice(self, prototype=None, allow_orphans=True):
+        r'''Is true when items in selection are in contiguous logical voice.
+
+        Returns true or false.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        if not isinstance(self, collections.Iterable):
+            return False
+        prototype = prototype or (abjad.Component,)
+        if not isinstance(prototype, tuple):
+            prototype = (prototype, )
+        assert isinstance(prototype, tuple)
+        if len(self) == 0:
+            return True
+        all_are_orphans_of_correct_type = True
+        if allow_orphans:
+            for component in self:
+                if not isinstance(component, prototype):
+                    all_are_orphans_of_correct_type = False
+                    break
+                if not abjad.inspect(component).get_parentage().is_orphan:
+                    all_are_orphans_of_correct_type = False
+                    break
+            if all_are_orphans_of_correct_type:
+                return True
+        if not allow_orphans:
+            if any(abjad.inspect(x).get_parentage().is_orphan for x in self):
+                return False
+        first = self[0]
+        if not isinstance(first, prototype):
+            return False
+        first_parentage = abjad.inspect(first).get_parentage()
+        first_logical_voice = first_parentage.logical_voice
+        first_root = first_parentage.root
+        previous = first
+        for current in self[1:]:
+            current_parentage = abjad.inspect(current).get_parentage()
+            current_logical_voice = current_parentage.logical_voice
+            # false if wrong type of component found
+            if not isinstance(current, prototype):
+                return False
+            # false if in different logical voices
+            if current_logical_voice != first_logical_voice:
+                return False
+            # false if components are in same score and are discontiguous
+            if current_parentage.root == first_root:
+                if not previous._is_immediate_temporal_successor_of(current):
+                    return False
+            previous = current
+        return True
+
     def are_leaves(self):
         r'''Is true when items in selection are all leaves.
 
@@ -1247,6 +1300,109 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         return all(isinstance(_, abjad.Leaf) for _ in self)
+
+    def are_logical_voice(self, prototype=None, allow_orphans=True):
+        r'''Is true when items in selection are in same logical voice.
+
+        Returns true or false.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        prototype = prototype or (abjad.Component,)
+        if not isinstance(prototype, tuple):
+            prototype = (prototype, )
+        assert isinstance(prototype, tuple)
+        if len(self) == 0:
+            return True
+        all_are_orphans_of_correct_type = True
+        if allow_orphans:
+            for component in self:
+                if not isinstance(component, prototype):
+                    all_are_orphans_of_correct_type = False
+                    break
+                if not abjad.inspect(component).get_parentage().is_orphan:
+                    all_are_orphans_of_correct_type = False
+                    break
+            if all_are_orphans_of_correct_type:
+                return True
+        first = self[0]
+        if not isinstance(first, prototype):
+            return False
+        orphan_components = True
+        if not abjad.inspect(first).get_parentage().is_orphan:
+            orphan_components = False
+        same_logical_voice = True
+        first_signature = abjad.inspect(first).get_parentage().logical_voice
+        for component in self[1:]:
+            parentage = abjad.inspect(component).get_parentage()
+            if not parentage.is_orphan:
+                orphan_components = False
+            if not allow_orphans and orphan_components:
+                return False
+            if parentage.logical_voice != first_signature:
+                same_logical_voice = False
+            if not allow_orphans and not same_logical_voice:
+                return False
+            if (allow_orphans and
+                not orphan_components and
+                not same_logical_voice
+                ):
+                return False
+        return True
+
+    def are_same_parent(self, prototype=None, allow_orphans=True):
+        r'''Is true when items in selection are all in same parent.
+
+        Returns true or false.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        prototype = prototype or (abjad.Component, )
+        if not isinstance(prototype, tuple):
+            prototype = (prototype, )
+        assert isinstance(prototype, tuple)
+        if len(self) == 0:
+            return True
+        all_are_orphans_of_correct_type = True
+        if allow_orphans:
+            for component in self:
+                if not isinstance(component, prototype):
+                    all_are_orphans_of_correct_type = False
+                    break
+                if not abjad.inspect(component).get_parentage().is_orphan:
+                    all_are_orphans_of_correct_type = False
+                    break
+            if all_are_orphans_of_correct_type:
+                return True
+        first = self[0]
+        if not isinstance(first, prototype):
+            return False
+        first_parent = first._parent
+        if first_parent is None:
+            if allow_orphans:
+                orphan_components = True
+            else:
+                return False
+        same_parent = True
+        strictly_contiguous = True
+        previous = first
+        for current in self[1:]:
+            if not isinstance(current, prototype):
+                return False
+            if not abjad.inspect(current).get_parentage().is_orphan:
+                orphan_components = False
+            if current._parent is not first_parent:
+                same_parent = False
+            if not previous._is_immediate_temporal_successor_of(current):
+                strictly_contiguous = False
+            if ((not allow_orphans or
+                (allow_orphans and not orphan_components)) and
+                (not same_parent or not strictly_contiguous)):
+                return False
+            previous = current
+        return True
 
     def chord(self, n):
         r'''Selects chord `n`.
@@ -3125,162 +3281,6 @@ class Selection(AbjadValueObject):
         def predicate(argument):
             return abjad.PitchSet.from_selection(argument)
         return self.group(predicate)
-
-    def in_contiguous_logical_voice(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are in contiguous logical voice.
-
-        Returns true or false.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        if not isinstance(self, collections.Iterable):
-            return False
-        prototype = prototype or (abjad.Component,)
-        if not isinstance(prototype, tuple):
-            prototype = (prototype, )
-        assert isinstance(prototype, tuple)
-        if len(self) == 0:
-            return True
-        all_are_orphans_of_correct_type = True
-        if allow_orphans:
-            for component in self:
-                if not isinstance(component, prototype):
-                    all_are_orphans_of_correct_type = False
-                    break
-                if not abjad.inspect(component).get_parentage().is_orphan:
-                    all_are_orphans_of_correct_type = False
-                    break
-            if all_are_orphans_of_correct_type:
-                return True
-        if not allow_orphans:
-            if any(abjad.inspect(x).get_parentage().is_orphan for x in self):
-                return False
-        first = self[0]
-        if not isinstance(first, prototype):
-            return False
-        first_parentage = abjad.inspect(first).get_parentage()
-        first_logical_voice = first_parentage.logical_voice
-        first_root = first_parentage.root
-        previous = first
-        for current in self[1:]:
-            current_parentage = abjad.inspect(current).get_parentage()
-            current_logical_voice = current_parentage.logical_voice
-            # false if wrong type of component found
-            if not isinstance(current, prototype):
-                return False
-            # false if in different logical voices
-            if current_logical_voice != first_logical_voice:
-                return False
-            # false if components are in same score and are discontiguous
-            if current_parentage.root == first_root:
-                if not previous._is_immediate_temporal_successor_of(current):
-                    return False
-            previous = current
-        return True
-
-    def in_logical_voice(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are in same logical voice.
-
-        Returns true or false.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        prototype = prototype or (abjad.Component,)
-        if not isinstance(prototype, tuple):
-            prototype = (prototype, )
-        assert isinstance(prototype, tuple)
-        if len(self) == 0:
-            return True
-        all_are_orphans_of_correct_type = True
-        if allow_orphans:
-            for component in self:
-                if not isinstance(component, prototype):
-                    all_are_orphans_of_correct_type = False
-                    break
-                if not abjad.inspect(component).get_parentage().is_orphan:
-                    all_are_orphans_of_correct_type = False
-                    break
-            if all_are_orphans_of_correct_type:
-                return True
-        first = self[0]
-        if not isinstance(first, prototype):
-            return False
-        orphan_components = True
-        if not abjad.inspect(first).get_parentage().is_orphan:
-            orphan_components = False
-        same_logical_voice = True
-        first_signature = abjad.inspect(first).get_parentage().logical_voice
-        for component in self[1:]:
-            parentage = abjad.inspect(component).get_parentage()
-            if not parentage.is_orphan:
-                orphan_components = False
-            if not allow_orphans and orphan_components:
-                return False
-            if parentage.logical_voice != first_signature:
-                same_logical_voice = False
-            if not allow_orphans and not same_logical_voice:
-                return False
-            if (allow_orphans and
-                not orphan_components and
-                not same_logical_voice
-                ):
-                return False
-        return True
-
-    def in_same_parent(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are all in same parent.
-
-        Returns true or false.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        prototype = prototype or (abjad.Component, )
-        if not isinstance(prototype, tuple):
-            prototype = (prototype, )
-        assert isinstance(prototype, tuple)
-        if len(self) == 0:
-            return True
-        all_are_orphans_of_correct_type = True
-        if allow_orphans:
-            for component in self:
-                if not isinstance(component, prototype):
-                    all_are_orphans_of_correct_type = False
-                    break
-                if not abjad.inspect(component).get_parentage().is_orphan:
-                    all_are_orphans_of_correct_type = False
-                    break
-            if all_are_orphans_of_correct_type:
-                return True
-        first = self[0]
-        if not isinstance(first, prototype):
-            return False
-        first_parent = first._parent
-        if first_parent is None:
-            if allow_orphans:
-                orphan_components = True
-            else:
-                return False
-        same_parent = True
-        strictly_contiguous = True
-        previous = first
-        for current in self[1:]:
-            if not isinstance(current, prototype):
-                return False
-            if not abjad.inspect(current).get_parentage().is_orphan:
-                orphan_components = False
-            if current._parent is not first_parent:
-                same_parent = False
-            if not previous._is_immediate_temporal_successor_of(current):
-                strictly_contiguous = False
-            if ((not allow_orphans or
-                (allow_orphans and not orphan_components)) and
-                (not same_parent or not strictly_contiguous)):
-                return False
-            previous = current
-        return True
 
     def leaf(self, n):
         r'''Selects leaf `n`.
