@@ -28,11 +28,11 @@ class LilyPondGrobNameManager(LilyPondNameManager):
 
                 >>> staff = abjad.Staff("c'4 d' e' f'")
                 >>> abjad.override(staff).note_head.color = 'red'
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override NoteHead.color = #red
                 } {

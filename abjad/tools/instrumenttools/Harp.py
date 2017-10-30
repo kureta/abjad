@@ -14,11 +14,11 @@ class Harp(Instrument):
             >>> harp = abjad.Harp()
             >>> abjad.attach(harp, staff_group[0][0])
             >>> abjad.attach(abjad.Clef('bass'), staff_group[1][0])
-            >>> show(staff_group) # doctest: +SKIP
+            >>> abjad.show(staff_group) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff_group)
+            >>> abjad.f(staff_group)
             \new PianoStaff <<
                 \new Staff {
                     \set PianoStaff.instrumentName = \markup { Harp }
@@ -116,7 +116,7 @@ class Harp(Instrument):
 
             ::
 
-                >>> show(harp.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(harp.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -152,7 +152,7 @@ class Harp(Instrument):
 
             ::
 
-                >>> show(harp.name_markup) # doctest: +SKIP
+                >>> abjad.show(harp.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -172,7 +172,7 @@ class Harp(Instrument):
 
             ::
 
-                >>> show(harp.pitch_range) # doctest: +SKIP
+                >>> abjad.show(harp.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -208,7 +208,7 @@ class Harp(Instrument):
 
             ::
 
-                >>> show(harp.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(harp.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

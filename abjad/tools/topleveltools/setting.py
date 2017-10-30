@@ -9,12 +9,12 @@ def setting(argument):
 
             >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
             >>> abjad.setting(staff).instrument_name = abjad.Markup('Vn. I')
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 instrumentName = \markup { "Vn. I" }
             } {

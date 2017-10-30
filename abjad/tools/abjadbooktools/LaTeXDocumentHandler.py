@@ -23,7 +23,7 @@ class LaTeXDocumentHandler(abctools.AbjadObject):
         ... \\begin{comment}
         ... <abjad>
         ... just_a_string = \'\'\'
-        ... show(Nothing!)
+        ... abjad.show(Nothing!)
         ... \'\'\'
         ... </abjad>
         ... \\end{comment}
@@ -32,7 +32,7 @@ class LaTeXDocumentHandler(abctools.AbjadObject):
         ...
         ... \\begin{comment}
         ... <abjad>
-        ... show(Note("c'4"))
+        ... abjad.show(Note("c'4"))
         ... </abjad>
         ... \\end{comment}
         ...

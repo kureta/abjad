@@ -10,11 +10,11 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
         ::
 
             >>> template = abjad.StringOrchestraScoreTemplate()
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "Score" <<
                 \tag #'(Violin1 Violin2 Violin3 Violin4 Violin5 Violin6 Viola1 Viola2 Viola3 Viola4 Cello1 Cello2 Cello3 Contrabass1 Contrabass2)
                 \context GlobalContext = "GlobalContext" {
@@ -253,11 +253,11 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
             ...     cello_count=1,
             ...     contrabass_count=0,
             ...     )
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "Score" <<
                 \tag #'(Violin1 Violin2 Viola Cello)
                 \context GlobalContext = "GlobalContext" {
@@ -340,11 +340,11 @@ class StringOrchestraScoreTemplate(ScoreTemplate):
             ...     cello_count=1,
             ...     contrabass_count=0,
             ...     )
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "Score" <<
                 \tag #'(Cello)
                 \context GlobalContext = "GlobalContext" {

@@ -15,7 +15,7 @@ class WeightedSearchTree(SearchTree):
 
         ::
 
-            >>> f(search_tree)
+            >>> abjad.f(search_tree)
             abjad.quantizationtools.WeightedSearchTree(
                 definition={
                     'divisors': (2, 3, 5, 7),

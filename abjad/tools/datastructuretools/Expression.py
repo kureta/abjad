@@ -249,7 +249,7 @@ class Expression(AbjadValueObject):
                 ...     evaluation_template='{} + {}',
                 ...     )
                 >>> expression = expression_1 + expression_2
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression(
                     argument_count=2,
                     evaluation_template='{}.__add__({})',
@@ -422,7 +422,7 @@ class Expression(AbjadValueObject):
 
             ::
 
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression()
 
         Returns string.
@@ -1721,11 +1721,11 @@ class Expression(AbjadValueObject):
             ::
 
                 >>> markup = expression.get_markup()
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \line
                         {
@@ -1976,11 +1976,11 @@ class Expression(AbjadValueObject):
                 ::
 
                     >>> expression(staff)
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         c'4.
                             ^ \markup {
@@ -2067,7 +2067,7 @@ class Expression(AbjadValueObject):
 
             ::
 
-                >>> show(J) # doctest: +SKIP
+                >>> abjad.show(J) # doctest: +SKIP
 
             ..  container:: example expression
 
@@ -2086,14 +2086,14 @@ class Expression(AbjadValueObject):
 
                     >>> segment = expression([-2, -1.5, 6, 7, -1.5, 7])
                     >>> markup = expression.get_markup()
-                    >>> show(segment, figure_name=markup) # doctest: +SKIP
+                    >>> abjad.show(segment, figure_name=markup) # doctest: +SKIP
 
                 ..  docs::
 
                     >>> lilypond_file = segment.__illustrate__(
                     ...     figure_name=markup,
                     ...     )
-                    >>> f(lilypond_file[abjad.Voice])
+                    >>> abjad.f(lilypond_file[abjad.Voice])
                     \new Voice {
                         b'8
                             ^ \markup {
@@ -2169,11 +2169,11 @@ class Expression(AbjadValueObject):
                     >>> staff.append(abjad.Measure((2, 8), "<c' bf'>8 <g' a'>8"))
                     >>> staff.append(abjad.Measure((2, 8), "af'8 r8"))
                     >>> staff.append(abjad.Measure((2, 8), "r8 gf'8"))
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff {
                         {
                             \time 2/8
@@ -2269,7 +2269,7 @@ class Expression(AbjadValueObject):
 
             ::
 
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(

@@ -11,11 +11,11 @@ class Flute(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> flute = abjad.Flute()
             >>> abjad.attach(flute, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Flute }
                 \set Staff.shortInstrumentName = \markup { Fl. }
@@ -89,7 +89,7 @@ class Flute(Instrument):
 
             ::
 
-                >>> show(flute.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(flute.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -125,7 +125,7 @@ class Flute(Instrument):
 
             ::
 
-                >>> show(flute.name_markup) # doctest: +SKIP
+                >>> abjad.show(flute.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -145,7 +145,7 @@ class Flute(Instrument):
 
             ::
 
-                >>> show(flute.pitch_range) # doctest: +SKIP
+                >>> abjad.show(flute.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -181,7 +181,7 @@ class Flute(Instrument):
 
             ::
 
-                >>> show(flute.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(flute.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

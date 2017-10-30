@@ -21,7 +21,7 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
 
         ::
 
-            >>> f(container)
+            >>> abjad.f(container)
             abjad.rhythmtreetools.RhythmTreeContainer(
                 preprolated_duration=abjad.Duration(1, 1),
                 )
@@ -37,7 +37,7 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
             >>> leaf_a = abjad.rhythmtreetools.RhythmTreeLeaf(preprolated_duration=1)
             >>> leaf_b = abjad.rhythmtreetools.RhythmTreeLeaf(preprolated_duration=2)
             >>> container.extend([leaf_a, leaf_b])
-            >>> f(container)
+            >>> abjad.f(container)
             abjad.rhythmtreetools.RhythmTreeContainer(
                 children=(
                     abjad.rhythmtreetools.RhythmTreeLeaf(
@@ -60,7 +60,7 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
             ...     abjad.rhythmtreetools.RhythmTreeLeaf(preprolated_duration=3))
             >>> another_container.append(container[1])
             >>> container.append(another_container)
-            >>> f(container)
+            >>> abjad.f(container)
             abjad.rhythmtreetools.RhythmTreeContainer(
                 children=(
                     abjad.rhythmtreetools.RhythmTreeLeaf(
@@ -93,11 +93,11 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
 
             >>> components = container((1, 4))
             >>> tuplet = components[0]
-            >>> show(tuplet) # doctest: +SKIP
+            >>> abjad.show(tuplet) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(tuplet)
+            >>> abjad.f(tuplet)
             \times 2/3 {
                 c'8
                 \times 4/5 {
@@ -155,7 +155,7 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
 
         ::
 
-            >>> f(c)
+            >>> abjad.f(c)
             abjad.rhythmtreetools.RhythmTreeContainer(
                 children=(
                     abjad.rhythmtreetools.RhythmTreeLeaf(
@@ -215,11 +215,11 @@ class RhythmTreeContainer(RhythmTreeMixin, TreeContainer):
             ::
 
                 >>> staff = abjad.Staff(tree((1, 4)))
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \times 4/5 {
                         c'16

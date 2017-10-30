@@ -92,7 +92,7 @@ class CompoundOperator(AbjadValueObject):
 
             ::
 
-                >>> f(operator_3)
+                >>> abjad.f(operator_3)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Transposition(
@@ -132,12 +132,12 @@ class CompoundOperator(AbjadValueObject):
             ::
 
                 >>> segment = abjad.PitchClassSegment([0, 1, 4, 7])
-                >>> show(segment) # doctest: +SKIP
+                >>> abjad.show(segment) # doctest: +SKIP
 
             ::
 
                 >>> transform = operator(segment)
-                >>> show(transform) # doctest: +SKIP
+                >>> abjad.show(transform) # doctest: +SKIP
 
             ::
 
@@ -359,7 +359,7 @@ class CompoundOperator(AbjadValueObject):
 
                 >>> operator = abjad.CompoundOperator()
                 >>> operator = operator.duplicate(counts=1)
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Duplication(
@@ -387,7 +387,7 @@ class CompoundOperator(AbjadValueObject):
 
                 >>> operator = abjad.CompoundOperator()
                 >>> operator = operator.invert(axis=2)
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Inversion(
@@ -411,7 +411,7 @@ class CompoundOperator(AbjadValueObject):
 
                 >>> operator = abjad.CompoundOperator()
                 >>> operator = operator.multiply(n=3)
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Multiplication(
@@ -435,7 +435,7 @@ class CompoundOperator(AbjadValueObject):
 
                 >>> operator = abjad.CompoundOperator()
                 >>> operator = operator.retrograde()
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Retrograde(),
@@ -457,7 +457,7 @@ class CompoundOperator(AbjadValueObject):
 
                 >>> operator = abjad.CompoundOperator()
                 >>> operator = operator.rotate(n=-1)
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Rotation(
@@ -488,7 +488,7 @@ class CompoundOperator(AbjadValueObject):
 
             ::
 
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Transposition(

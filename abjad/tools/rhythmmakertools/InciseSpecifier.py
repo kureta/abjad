@@ -126,7 +126,7 @@ class InciseSpecifier(AbjadValueObject):
 
             ::
 
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.InciseSpecifier(
                     prefix_talea=[-1],
                     prefix_counts=[1],
@@ -149,7 +149,7 @@ class InciseSpecifier(AbjadValueObject):
 
             ::
 
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.InciseSpecifier(
                     prefix_talea=[-1],
                     prefix_counts=[0, 1],
@@ -242,11 +242,11 @@ class InciseSpecifier(AbjadValueObject):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/16

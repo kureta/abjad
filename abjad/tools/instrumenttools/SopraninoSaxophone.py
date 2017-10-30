@@ -11,11 +11,11 @@ class SopraninoSaxophone(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> sopranino_saxophone = abjad.SopraninoSaxophone()
             >>> abjad.attach(sopranino_saxophone, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { "Sopranino saxophone" }
                 \set Staff.shortInstrumentName = \markup { "Sopranino sax." }
@@ -88,7 +88,7 @@ class SopraninoSaxophone(Instrument):
 
             ::
 
-                >>> show(sopranino_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(sopranino_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -124,7 +124,7 @@ class SopraninoSaxophone(Instrument):
 
             ::
 
-                >>> show(sopranino_saxophone.name_markup) # doctest: +SKIP
+                >>> abjad.show(sopranino_saxophone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -144,7 +144,7 @@ class SopraninoSaxophone(Instrument):
 
             ::
 
-                >>> show(sopranino_saxophone.pitch_range) # doctest: +SKIP
+                >>> abjad.show(sopranino_saxophone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -180,7 +180,7 @@ class SopraninoSaxophone(Instrument):
 
             ::
 
-                >>> show(sopranino_saxophone.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(sopranino_saxophone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

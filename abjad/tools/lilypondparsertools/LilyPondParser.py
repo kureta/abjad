@@ -31,11 +31,11 @@ class LilyPondParser(abctools.Parser):
             >>> parser = abjad.lilypondparsertools.LilyPondParser()
             >>> string = r"\new Staff { c'4 ( d'8 e' fs'2) \fermata }"
             >>> staff = parser(string)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 (
                 d'8
@@ -63,11 +63,11 @@ class LilyPondParser(abctools.Parser):
             ... }
             ... '''
             >>> staff = parser(string)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 \f \> (
                 d'8 -\portato [
@@ -100,11 +100,11 @@ class LilyPondParser(abctools.Parser):
             ... >>
             ... '''
             >>> score = parser(string)
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \context Staff = "Treble Staff" {
                     \context Voice = "Treble Voice" {
@@ -150,11 +150,11 @@ class LilyPondParser(abctools.Parser):
             ... }
             ... '''
             >>> blocks = parser(string)
-            >>> show(blocks) # doctest: +SKIP
+            >>> abjad.show(blocks) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(blocks) # doctest: +SKIP
+            >>> abjad.f(blocks) # doctest: +SKIP
             % 2017-07-11 15:13
             <BLANKLINE>
             \version "2.19.63"
@@ -208,11 +208,11 @@ class LilyPondParser(abctools.Parser):
             ... }
             ... '''
             >>> staff = parser(string)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c32
                 d32
@@ -248,11 +248,11 @@ class LilyPondParser(abctools.Parser):
             >>> parser = abjad.lilypondparsertools.LilyPondParser('nederlands')
             >>> string = '{ c des e fis }'
             >>> container = parser(string)
-            >>> show(container) # doctest: +SKIP
+            >>> abjad.show(container) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(container)
+            >>> abjad.f(container)
             {
                 c4
                 df4

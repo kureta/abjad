@@ -13,7 +13,7 @@ class LineSegment(AbjadValueObject):
         ::
 
             >>> line_segment = abjad.LineSegment()
-            >>> f(line_segment)
+            >>> abjad.f(line_segment)
             LineSegment()
 
     .. todo:: Add examples.

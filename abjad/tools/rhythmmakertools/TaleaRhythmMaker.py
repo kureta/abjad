@@ -36,11 +36,11 @@ class TaleaRhythmMaker(RhythmMaker):
             ...     selections,
             ...     divisions,
             ...     )
-            >>> show(lilypond_file) # doctest: +SKIP
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(lilypond_file[abjad.Staff])
+            >>> abjad.f(lilypond_file[abjad.Staff])
             \new RhythmicStaff {
                 {
                     \time 3/8
@@ -84,7 +84,7 @@ class TaleaRhythmMaker(RhythmMaker):
 
         ::
 
-            >>> f(rhythm_maker)
+            >>> abjad.f(rhythm_maker)
             abjad.rhythmmakertools.TaleaRhythmMaker(
                 talea=abjad.rhythmmakertools.Talea(
                     counts=[1, 2, 3, 4],
@@ -289,7 +289,7 @@ class TaleaRhythmMaker(RhythmMaker):
 
             ::
 
-                >>> f(rhythm_maker)
+                >>> abjad.f(rhythm_maker)
                 abjad.rhythmmakertools.TaleaRhythmMaker(
                     talea=abjad.rhythmmakertools.Talea(
                         counts=[1, 2, 3, 4],
@@ -310,7 +310,7 @@ class TaleaRhythmMaker(RhythmMaker):
 
             ::
 
-                >>> f(rhythm_maker)
+                >>> abjad.f(rhythm_maker)
                 abjad.rhythmmakertools.TaleaRhythmMaker(
                     talea=abjad.rhythmmakertools.Talea(
                         counts=[1, 2, 3, 4],
@@ -336,12 +336,12 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...         denominator=16,
                 ...         ),
                 ...     )
-                >>> show(rhythm_maker) # doctest: +SKIP
+                >>> abjad.show(rhythm_maker) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = rhythm_maker.__illustrate__()
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -743,11 +743,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -815,11 +815,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -944,11 +944,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1016,11 +1016,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1089,11 +1089,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1163,11 +1163,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1257,11 +1257,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff]) # doctest: +SKIP
+                >>> abjad.f(lilypond_file[abjad.Staff]) # doctest: +SKIP
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1315,11 +1315,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1379,11 +1379,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1438,11 +1438,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1489,11 +1489,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1543,11 +1543,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1605,11 +1605,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -1680,11 +1680,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/8
@@ -1732,11 +1732,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/8
@@ -1783,11 +1783,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/4
@@ -1830,11 +1830,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/4
@@ -1883,11 +1883,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/4
@@ -1937,11 +1937,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/4
@@ -1987,11 +1987,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/4
@@ -2048,11 +2048,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2103,11 +2103,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2166,11 +2166,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2234,11 +2234,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2321,11 +2321,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2376,11 +2376,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2436,11 +2436,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2532,11 +2532,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2584,11 +2584,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2651,11 +2651,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2719,11 +2719,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2790,11 +2790,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2875,11 +2875,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2918,11 +2918,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -2979,11 +2979,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -3033,11 +3033,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -3091,11 +3091,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -3146,11 +3146,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -3200,11 +3200,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -3276,11 +3276,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -3337,11 +3337,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -3395,11 +3395,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8
@@ -3461,11 +3461,11 @@ class TaleaRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 3/8

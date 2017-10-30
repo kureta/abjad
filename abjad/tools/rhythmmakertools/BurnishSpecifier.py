@@ -180,7 +180,7 @@ class BurnishSpecifier(AbjadValueObject):
 
             ::
 
-                >>> f(burnish_specifier)
+                >>> abjad.f(burnish_specifier)
                 abjad.rhythmmakertools.BurnishSpecifier(
                     left_classes=[
                         abjad.Rest,

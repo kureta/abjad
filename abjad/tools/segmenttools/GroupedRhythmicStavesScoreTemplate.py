@@ -13,11 +13,11 @@ class GroupedRhythmicStavesScoreTemplate(ScoreTemplate):
 
             >>> class_ = abjad.GroupedRhythmicStavesScoreTemplate
             >>> template_1 = class_(staff_count=4)
-            >>> show(template_1) # doctest: +SKIP
+            >>> abjad.show(template_1) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(template_1.__illustrate__()[abjad.Score])
+            >>> abjad.f(template_1.__illustrate__()[abjad.Score])
             \context Score = "Grouped Rhythmic Staves Score" <<
                 \context StaffGroup = "Grouped Rhythmic Staves Staff Group" <<
                     \context RhythmicStaff = "Staff 1" {
@@ -50,11 +50,11 @@ class GroupedRhythmicStavesScoreTemplate(ScoreTemplate):
         ::
 
             >>> score = template_1()
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \context Score = "Grouped Rhythmic Staves Score" <<
                 \context StaffGroup = "Grouped Rhythmic Staves Staff Group" <<
                     \context RhythmicStaff = "Staff 1" {
@@ -83,11 +83,11 @@ class GroupedRhythmicStavesScoreTemplate(ScoreTemplate):
         ::
 
             >>> template_2 = class_(staff_count=[2, 1, 2])
-            >>> show(template_2) # doctest: +SKIP
+            >>> abjad.show(template_2) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(template_2.__illustrate__()[abjad.Score])
+            >>> abjad.f(template_2.__illustrate__()[abjad.Score])
             \context Score = "Grouped Rhythmic Staves Score" <<
                 \context StaffGroup = "Grouped Rhythmic Staves Staff Group" <<
                     \context RhythmicStaff = "Staff 1" <<
@@ -117,11 +117,11 @@ class GroupedRhythmicStavesScoreTemplate(ScoreTemplate):
         ::
 
             >>> score = template_2()
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \context Score = "Grouped Rhythmic Staves Score" <<
                 \context StaffGroup = "Grouped Rhythmic Staves Staff Group" <<
                     \context RhythmicStaff = "Staff 1" <<

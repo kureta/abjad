@@ -11,11 +11,11 @@ def label(client=None):
             >>> abjad.label(staff).with_start_offsets(direction=abjad.Up)
             >>> abjad.override(staff).text_script.staff_padding = 4
             >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TextScript.staff-padding = #4
                 \override TupletBracket.staff-padding = #0
@@ -60,11 +60,11 @@ def label(client=None):
             >>> expression(staff)
             >>> abjad.override(staff).text_script.staff_padding = 4
             >>> abjad.override(staff).tuplet_bracket.staff_padding = 0
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TextScript.staff-padding = #4
                 \override TupletBracket.staff-padding = #0

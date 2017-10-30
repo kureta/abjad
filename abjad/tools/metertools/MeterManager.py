@@ -95,7 +95,7 @@ class MeterManager(abctools.AbjadObject):
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 {
                     \time 2/4

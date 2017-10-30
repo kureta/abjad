@@ -544,7 +544,7 @@ class StorageFormatManager(AbjadValueObject):
             ::
 
                 >>> flute = abjad.Flute()
-                >>> f(flute)
+                >>> abjad.f(flute)
                 abjad.Flute(
                     name='flute',
                     short_name='fl.',

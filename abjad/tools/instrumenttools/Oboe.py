@@ -11,11 +11,11 @@ class Oboe(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> oboe = abjad.Oboe()
             >>> abjad.attach(oboe, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Oboe }
                 \set Staff.shortInstrumentName = \markup { Ob. }
@@ -89,7 +89,7 @@ class Oboe(Instrument):
 
             ::
 
-                >>> show(oboe.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(oboe.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -125,7 +125,7 @@ class Oboe(Instrument):
 
             ::
 
-                >>> show(oboe.name_markup) # doctest: +SKIP
+                >>> abjad.show(oboe.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -145,7 +145,7 @@ class Oboe(Instrument):
 
             ::
 
-                >>> show(oboe.pitch_range) # doctest: +SKIP
+                >>> abjad.show(oboe.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -181,7 +181,7 @@ class Oboe(Instrument):
 
             ::
 
-                >>> show(oboe.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(oboe.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

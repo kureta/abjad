@@ -72,7 +72,7 @@ class Postscript(AbjadValueObject):
             >>> postscript = postscript.setrgbcolor(1, 0, 0)
             >>> postscript = postscript.setlinewidth(1)
             >>> postscript = postscript.stroke()
-            >>> show(postscript) # doctest: +SKIP
+            >>> abjad.show(postscript) # doctest: +SKIP
 
     '''
 

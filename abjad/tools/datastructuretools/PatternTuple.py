@@ -26,7 +26,7 @@ class PatternTuple(TypedTuple):
 
         ::
 
-            >>> f(patterns)
+            >>> abjad.f(patterns)
             abjad.PatternTuple(
                 (
                     abjad.Pattern(
@@ -61,7 +61,7 @@ class PatternTuple(TypedTuple):
 
         ::
 
-            >>> f(patterns)
+            >>> abjad.f(patterns)
             abjad.PatternTuple(
                 (
                     abjad.Pattern(

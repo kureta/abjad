@@ -8,11 +8,11 @@ def mutate(client):
         ::
 
             >>> staff = abjad.Staff("c'4 e'4 d'4 f'4")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 e'4
@@ -23,11 +23,11 @@ def mutate(client):
         ::
 
             >>> abjad.mutate(staff[-2:]).scale(abjad.Multiplier(3, 2))
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 e'4

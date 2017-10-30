@@ -10,11 +10,11 @@ class ComplexBeam(Beam):
 
             >>> staff = abjad.Staff("c'16 e'16 r16 f'16 g'2")
             >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -29,11 +29,11 @@ class ComplexBeam(Beam):
 
             >>> beam = abjad.ComplexBeam()
             >>> abjad.attach(beam, staff[:4])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -288,11 +288,11 @@ class ComplexBeam(Beam):
                 >>> staff = abjad.Staff("c'8 r r d'")
                 >>> beam = abjad.ComplexBeam(beam_rests=False)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -315,11 +315,11 @@ class ComplexBeam(Beam):
                 >>> staff = abjad.Staff("c'8 r r d'")
                 >>> beam = abjad.ComplexBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -344,11 +344,11 @@ class ComplexBeam(Beam):
                 >>> staff = abjad.Staff("c'8 s s d'")
                 >>> beam = abjad.ComplexBeam(beam_rests=False)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -371,11 +371,11 @@ class ComplexBeam(Beam):
                 >>> staff = abjad.Staff("c'8 s s d'")
                 >>> beam = abjad.ComplexBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -412,11 +412,11 @@ class ComplexBeam(Beam):
                 >>> measure = abjad.Measure((1, 16), "c'16")
                 >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Left)
                 >>> abjad.attach(beam, measure[:])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 1/16
                     \set stemLeftBeamCount = #2
@@ -433,11 +433,11 @@ class ComplexBeam(Beam):
                 >>> measure = abjad.Measure((1, 16), "c'16")
                 >>> beam = abjad.ComplexBeam(isolated_nib_direction=abjad.Right)
                 >>> abjad.attach(beam, measure[:])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 1/16
                     \set stemLeftBeamCount = #0
@@ -454,11 +454,11 @@ class ComplexBeam(Beam):
                 >>> measure = abjad.Measure((1, 16), "c'16")
                 >>> beam = abjad.ComplexBeam(isolated_nib_direction=True)
                 >>> abjad.attach(beam, measure[:])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 1/16
                     \set stemLeftBeamCount = #2
@@ -475,11 +475,11 @@ class ComplexBeam(Beam):
                 >>> measure = abjad.Measure((1, 16), "c'16")
                 >>> beam = abjad.ComplexBeam(isolated_nib_direction=False)
                 >>> abjad.attach(beam, measure[:])
-                >>> show(measure) # doctest: +SKIP
+                >>> abjad.show(measure) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(measure)
+                >>> abjad.f(measure)
                 {
                     \time 1/16
                     c'16

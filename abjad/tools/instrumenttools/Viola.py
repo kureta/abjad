@@ -13,11 +13,11 @@ class Viola(Instrument):
             >>> abjad.attach(clef, staff[0])
             >>> viola = abjad.Viola()
             >>> abjad.attach(viola, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Viola }
                 \set Staff.shortInstrumentName = \markup { Va. }
@@ -113,7 +113,7 @@ class Viola(Instrument):
 
             ::
 
-                >>> show(viola.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(viola.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -149,7 +149,7 @@ class Viola(Instrument):
 
             ::
 
-                >>> show(viola.name_markup) # doctest: +SKIP
+                >>> abjad.show(viola.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -169,7 +169,7 @@ class Viola(Instrument):
 
             ::
 
-                >>> show(viola.pitch_range) # doctest: +SKIP
+                >>> abjad.show(viola.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -205,7 +205,7 @@ class Viola(Instrument):
 
             ::
 
-                >>> show(viola.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(viola.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

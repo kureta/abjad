@@ -14,7 +14,7 @@ def offset_happens_before_timespan_starts(
         ::
 
             >>> relation = abjad.timespantools.offset_happens_before_timespan_starts()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -41,7 +41,7 @@ def offset_happens_before_timespan_starts(
 
         ::
 
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -69,7 +69,7 @@ def offset_happens_before_timespan_starts(
 
         ::
 
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -98,7 +98,7 @@ def offset_happens_before_timespan_starts(
 
         ::
 
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

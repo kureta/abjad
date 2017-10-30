@@ -13,11 +13,11 @@ class BreathMark(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> breath_mark = abjad.BreathMark()
             >>> abjad.attach(breath_mark, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 \breathe
 
     ..  container:: example
@@ -31,11 +31,11 @@ class BreathMark(AbjadValueObject):
             >>> abjad.attach(abjad.Beam(), staff[4:])
             >>> abjad.attach(abjad.BreathMark(), staff[3])
             >>> abjad.attach(abjad.BreathMark(), staff[7])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 [
                 d'8

@@ -14,7 +14,7 @@ class BarLine(AbjadValueObject):
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> bar_line = abjad.BarLine('|.')
             >>> abjad.attach(bar_line, staff[-1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -23,7 +23,7 @@ class BarLine(AbjadValueObject):
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4

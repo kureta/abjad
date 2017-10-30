@@ -16,7 +16,7 @@ class ArrowLineSegment(LineSegment):
 
         ::
 
-            >>> f(abjad.ArrowLineSegment())
+            >>> abjad.f(abjad.ArrowLineSegment())
             abjad.ArrowLineSegment(
                 arrow_width=0.25,
                 dash_fraction=1,
@@ -39,11 +39,11 @@ class ArrowLineSegment(LineSegment):
 
             >>> abjad.override(staff).text_script.staff_padding = 1.25
             >>> abjad.override(staff).text_spanner.staff_padding = 2
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TextScript.staff-padding = #1.25
                 \override TextSpanner.staff-padding = #2
@@ -153,11 +153,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -215,11 +215,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -275,11 +275,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -347,11 +347,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -408,11 +408,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -467,11 +467,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -538,11 +538,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -603,11 +603,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -667,11 +667,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -740,7 +740,7 @@ class ArrowLineSegment(LineSegment):
 
                 ::
 
-                    >>> f(arrow)
+                    >>> abjad.f(arrow)
                     abjad.ArrowLineSegment(
                         arrow_width=0.25,
                         dash_fraction=1,
@@ -763,11 +763,11 @@ class ArrowLineSegment(LineSegment):
 
                     >>> abjad.override(staff).text_script.staff_padding = 1.25
                     >>> abjad.override(staff).text_spanner.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #1.25
                         \override TextSpanner.staff-padding = #2
@@ -834,7 +834,7 @@ class ArrowLineSegment(LineSegment):
 
                 ::
 
-                    >>> f(arrow)
+                    >>> abjad.f(arrow)
                     abjad.ArrowLineSegment(
                         arrow_width=0.25,
                         dash_fraction=1,
@@ -864,11 +864,11 @@ class ArrowLineSegment(LineSegment):
 
                     >>> abjad.override(staff).text_script.staff_padding = 1.25
                     >>> abjad.override(staff).text_spanner.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #1.25
                         \override TextSpanner.staff-padding = #2
@@ -941,7 +941,7 @@ class ArrowLineSegment(LineSegment):
 
                 ::
 
-                    >>> f(arrow)
+                    >>> abjad.f(arrow)
                     abjad.ArrowLineSegment(
                         arrow_width=0.25,
                         dash_fraction=1,
@@ -964,11 +964,11 @@ class ArrowLineSegment(LineSegment):
 
                     >>> abjad.override(staff).text_script.staff_padding = 1.25
                     >>> abjad.override(staff).text_spanner.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #1.25
                         \override TextSpanner.staff-padding = #2
@@ -1034,7 +1034,7 @@ class ArrowLineSegment(LineSegment):
 
                 ::
 
-                    >>> f(arrow)
+                    >>> abjad.f(arrow)
                     abjad.ArrowLineSegment(
                         arrow_width=0.25,
                         dash_fraction=1,
@@ -1058,11 +1058,11 @@ class ArrowLineSegment(LineSegment):
 
                     >>> abjad.override(staff).text_script.staff_padding = 1.25
                     >>> abjad.override(staff).text_spanner.staff_padding = 2
-                    >>> show(staff) # doctest: +SKIP
+                    >>> abjad.show(staff) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(staff)
+                    >>> abjad.f(staff)
                     \new Staff \with {
                         \override TextScript.staff-padding = #1.25
                         \override TextSpanner.staff-padding = #2
@@ -1131,11 +1131,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -1193,11 +1193,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -1252,11 +1252,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2
@@ -1311,11 +1311,11 @@ class ArrowLineSegment(LineSegment):
 
                 >>> abjad.override(staff).text_script.staff_padding = 1.25
                 >>> abjad.override(staff).text_spanner.staff_padding = 2
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #1.25
                     \override TextSpanner.staff-padding = #2

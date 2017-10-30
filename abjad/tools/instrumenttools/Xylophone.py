@@ -11,11 +11,11 @@ class Xylophone(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> xylophone = abjad.Xylophone()
             >>> abjad.attach(xylophone, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Xylophone }
                 \set Staff.shortInstrumentName = \markup { Xyl. }
@@ -88,7 +88,7 @@ class Xylophone(Instrument):
 
             ::
 
-                >>> show(xylophone.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(xylophone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -124,7 +124,7 @@ class Xylophone(Instrument):
 
             ::
 
-                >>> show(xylophone.name_markup) # doctest: +SKIP
+                >>> abjad.show(xylophone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -144,7 +144,7 @@ class Xylophone(Instrument):
 
             ::
 
-                >>> show(xylophone.pitch_range) # doctest: +SKIP
+                >>> abjad.show(xylophone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -180,7 +180,7 @@ class Xylophone(Instrument):
 
             ::
 
-                >>> show(xylophone.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(xylophone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

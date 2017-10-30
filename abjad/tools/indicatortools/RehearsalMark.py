@@ -17,11 +17,11 @@ class RehearsalMark(AbjadValueObject):
             >>> abjad.attach(mark, staff[0])
             >>> scheme = abjad.Scheme('format-mark-box-alphabet')
             >>> abjad.setting(score).markFormatter = scheme
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 markFormatter = #format-mark-box-alphabet
             } <<
@@ -46,11 +46,11 @@ class RehearsalMark(AbjadValueObject):
             >>> abjad.attach(mark, staff[0])
             >>> scheme = abjad.Scheme('format-mark-box-alphabet')
             >>> abjad.setting(score).markFormatter = scheme
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 markFormatter = #format-mark-box-alphabet
             } <<
@@ -180,7 +180,7 @@ class RehearsalMark(AbjadValueObject):
 
                 >>> markup = abjad.Markup(r'\bold { \italic { A } }')
                 >>> mark = abjad.RehearsalMark(markup=markup)
-                >>> show(mark.markup) # doctest: +SKIP
+                >>> abjad.show(mark.markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -203,7 +203,7 @@ class RehearsalMark(AbjadValueObject):
 
                 >>> markup = abjad.Markup(r'\bold { \italic { B } }')
                 >>> mark = abjad.RehearsalMark(markup=markup)
-                >>> show(mark.markup) # doctest: +SKIP
+                >>> abjad.show(mark.markup) # doctest: +SKIP
 
             ..  docs::
 

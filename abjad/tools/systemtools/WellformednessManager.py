@@ -172,7 +172,7 @@ class WellformednessManager(AbjadObject):
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     d'4
@@ -213,7 +213,7 @@ class WellformednessManager(AbjadObject):
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 \<
                     d'4
@@ -515,11 +515,11 @@ class WellformednessManager(AbjadObject):
                 >>> abjad.attach(clef, staff[0])
                 >>> violin = abjad.instrumenttools.Violin()
                 >>> abjad.attach(violin, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Violin }
                     \set Staff.shortInstrumentName = \markup { Vn. }
@@ -568,11 +568,11 @@ class WellformednessManager(AbjadObject):
                 >>> abjad.attach(clef, staff[0])
                 >>> violin = abjad.instrumenttools.Violin()
                 >>> abjad.attach(violin, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Violin }
                     \set Staff.shortInstrumentName = \markup { Vn. }
@@ -678,11 +678,11 @@ class WellformednessManager(AbjadObject):
                 >>> staff = abjad.Staff("c'8 r8 <d fs>8 r8")
                 >>> violin = abjad.instrumenttools.Violin()
                 >>> abjad.attach(violin, staff[0])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.instrumentName = \markup { Violin }
                     \set Staff.shortInstrumentName = \markup { Vn. }
@@ -747,7 +747,7 @@ class WellformednessManager(AbjadObject):
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 [
                     d'8
@@ -926,11 +926,11 @@ class WellformednessManager(AbjadObject):
                 >>> staff = abjad.Staff("c'4 d' e' f'")
                 >>> abjad.attach(abjad.TrillSpanner(), staff[:3])
                 >>> abjad.attach(abjad.TrillSpanner(), staff[2:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 \startTrillSpan
                     d'4
@@ -952,11 +952,11 @@ class WellformednessManager(AbjadObject):
                 >>> staff = abjad.Staff("c'4 d' e' f'")
                 >>> abjad.attach(abjad.TrillSpanner(), staff[:])
                 >>> abjad.attach(abjad.TrillSpanner(), staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4 \startTrillSpan \startTrillSpan
                     d'4

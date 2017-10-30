@@ -13,11 +13,11 @@ def new(argument, **keywords):
             >>> markup = abjad.Markup('Andante assai', direction=abjad.Up).italic()
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(markup, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     ^ \markup {
@@ -34,11 +34,11 @@ def new(argument, **keywords):
             >>> markup = abjad.new(markup, direction=abjad.Down)
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(markup, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     _ \markup {

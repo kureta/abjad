@@ -12,11 +12,11 @@ class StaffLinesSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> spanner = abjad.StaffLinesSpanner(lines=1)
             >>> abjad.attach(spanner, staff[1:3])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8
                 \stopStaff
@@ -121,11 +121,11 @@ class StaffLinesSpanner(Spanner):
             ...     forbid_restarting=True,
             ...     )
             >>> abjad.attach(spanner, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \stopStaff
                 \once \override Staff.StaffSymbol.line-count = 1
@@ -152,7 +152,7 @@ class StaffLinesSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> spanner = abjad.StaffLinesSpanner(lines=1)
             >>> abjad.attach(spanner, staff[1:3])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 

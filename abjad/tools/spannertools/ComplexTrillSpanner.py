@@ -10,11 +10,11 @@ class ComplexTrillSpanner(Spanner):
         ::
 
             >>> staff = abjad.Staff("c'4 ~ c'8 d'8 r8 e'8 ~ e'8 r8")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 ~
                 c'8
@@ -31,11 +31,11 @@ class ComplexTrillSpanner(Spanner):
             ...     interval='P4',
             ...     )
             >>> abjad.attach(complex_trill, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \pitchedTrill
                 c'4 ~ \startTrillSpan f'
@@ -155,11 +155,11 @@ class ComplexTrillSpanner(Spanner):
                 >>> interval = abjad.NamedInterval('m3')
                 >>> complex_trill = abjad.ComplexTrillSpanner(interval=interval)
                 >>> abjad.attach(complex_trill, staff[1:-1])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'4
                     \pitchedTrill

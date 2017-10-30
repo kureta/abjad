@@ -14,11 +14,11 @@ class Accordion(Instrument):
             >>> accordion = abjad.Accordion()
             >>> abjad.attach(accordion, staff_group[0][0])
             >>> abjad.attach(abjad.Clef('bass'), staff_group[1][0])
-            >>> show(staff_group) # doctest: +SKIP
+            >>> abjad.show(staff_group) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff_group)
+            >>> abjad.f(staff_group)
             \new PianoStaff <<
                 \new Staff {
                     \set PianoStaff.instrumentName = \markup { Accordion }
@@ -80,7 +80,7 @@ class Accordion(Instrument):
             ::
 
                 >>> accordion = abjad.Accordion()
-                >>> f(accordion)
+                >>> abjad.f(accordion)
                 abjad.Accordion(
                     name='accordion',
                     short_name='acc.',
@@ -149,7 +149,7 @@ class Accordion(Instrument):
 
             ::
 
-                >>> show(accordion.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(accordion.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -185,7 +185,7 @@ class Accordion(Instrument):
 
             ::
 
-                >>> show(accordion.name_markup) # doctest: +SKIP
+                >>> abjad.show(accordion.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -205,7 +205,7 @@ class Accordion(Instrument):
 
             ::
 
-                >>> show(accordion.pitch_range) # doctest: +SKIP
+                >>> abjad.show(accordion.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -241,7 +241,7 @@ class Accordion(Instrument):
 
             ::
 
-                >>> show(accordion.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(accordion.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -21,7 +21,7 @@ class TypedList(TypedCollection):
 
         ::
 
-            >>> f(list_)
+            >>> abjad.f(list_)
             abjad.TypedList(
                 [
                     23,
@@ -48,7 +48,7 @@ class TypedList(TypedCollection):
 
         ::
 
-            >>> f(pitch_list)
+            >>> abjad.f(pitch_list)
             abjad.TypedList(
                 [
                     abjad.NamedPitch("c'"),
@@ -123,7 +123,7 @@ class TypedList(TypedCollection):
 
             ::
 
-                >>> f(dynamic_list)
+                >>> abjad.f(dynamic_list)
                 abjad.TypedList(
                     [
                         abjad.Dynamic('ppp'),
@@ -167,7 +167,7 @@ class TypedList(TypedCollection):
             ::
 
                 >>> pitch_list[-1] = 'gqs,'
-                >>> f(pitch_list)
+                >>> abjad.f(pitch_list)
                 abjad.TypedList(
                     [
                         abjad.NamedPitch("c'"),
@@ -185,7 +185,7 @@ class TypedList(TypedCollection):
             ::
 
                 >>> pitch_list[-1:] = ["f'", "g'", "a'", "b'", "c''"]
-                >>> f(pitch_list)
+                >>> abjad.f(pitch_list)
                 abjad.TypedList(
                     [
                         abjad.NamedPitch("c'"),

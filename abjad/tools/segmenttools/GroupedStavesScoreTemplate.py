@@ -11,11 +11,11 @@ class GroupedStavesScoreTemplate(ScoreTemplate):
 
             >>> class_ = abjad.GroupedStavesScoreTemplate
             >>> template = class_(staff_count=4)
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "Grouped Staves Score" <<
                 \context StaffGroup = "Grouped Staves Staff Group" <<
                     \context Staff = "Staff 1" {
@@ -44,7 +44,7 @@ class GroupedStavesScoreTemplate(ScoreTemplate):
         ::
 
             >>> score = template()
-            >>> f(score)
+            >>> abjad.f(score)
             \context Score = "Grouped Staves Score" <<
                 \context StaffGroup = "Grouped Staves Staff Group" <<
                     \context Staff = "Staff 1" {

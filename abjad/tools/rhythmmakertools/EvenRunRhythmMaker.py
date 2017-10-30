@@ -26,11 +26,11 @@ class EvenRunRhythmMaker(RhythmMaker):
             ...     selections,
             ...     divisions,
             ...     )
-            >>> show(lilypond_file) # doctest: +SKIP
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(lilypond_file[abjad.Staff])
+            >>> abjad.f(lilypond_file[abjad.Staff])
             \new RhythmicStaff {
                 {
                     \time 4/8
@@ -124,7 +124,7 @@ class EvenRunRhythmMaker(RhythmMaker):
             ::
 
                 >>> rhythm_maker = abjad.rhythmmakertools.EvenRunRhythmMaker()
-                >>> f(rhythm_maker)
+                >>> abjad.f(rhythm_maker)
                 abjad.rhythmmakertools.EvenRunRhythmMaker()
 
         Set `format_specification` to `''` or `'storage'`.
@@ -224,11 +224,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -288,11 +288,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -344,11 +344,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -409,11 +409,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 4/8
@@ -506,11 +506,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/8
@@ -569,11 +569,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/8
@@ -633,11 +633,11 @@ class EvenRunRhythmMaker(RhythmMaker):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Staff])
+                >>> abjad.f(lilypond_file[abjad.Staff])
                 \new RhythmicStaff {
                     {
                         \time 5/8

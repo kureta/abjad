@@ -11,11 +11,11 @@ def tweak(argument):
             >>> markup = abjad.Markup('Allegro assai', direction=abjad.Up)
             >>> abjad.tweak(markup).color = 'red'
             >>> abjad.attach(markup, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     - \tweak color #red
@@ -35,11 +35,11 @@ def tweak(argument):
             >>> abjad.tweak(markup_1).color = 'red'
             >>> markup_2 = copy.copy(markup_1)
             >>> abjad.attach(markup_2, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     - \tweak color #red
@@ -58,11 +58,11 @@ def tweak(argument):
             >>> abjad.tweak(markup).color = 'red'
             >>> markup = markup.italic()
             >>> abjad.attach(markup, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     - \tweak color #red
@@ -87,11 +87,11 @@ def tweak(argument):
             >>> abjad.tweak(markup_2).color = 'blue'
             >>> abjad.tweak(markup_2).staff_padding = 4
             >>> abjad.attach(markup_2, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     - \tweak color #red
@@ -116,11 +116,11 @@ def tweak(argument):
             >>> abjad.tweak(markup_2).color = 'blue'
             >>> abjad.tweak(markup_2).staff_padding = 4
             >>> abjad.attach(markup_2, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     ^ \markup {

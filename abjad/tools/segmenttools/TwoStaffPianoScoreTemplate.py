@@ -10,11 +10,11 @@ class TwoStaffPianoScoreTemplate(ScoreTemplate):
         ::
 
             >>> template = abjad.TwoStaffPianoScoreTemplate()
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "Two-Staff Piano Score" <<
                 \context PianoStaff = "Piano Staff" <<
                     \context Staff = "RH Staff" {

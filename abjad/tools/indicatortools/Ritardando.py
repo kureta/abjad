@@ -14,11 +14,11 @@ class Ritardando(AbjadValueObject):
             >>> score = abjad.Score([staff])
             >>> ritardando = abjad.Ritardando()
             >>> abjad.attach(ritardando, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'4
@@ -44,11 +44,11 @@ class Ritardando(AbjadValueObject):
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> score = abjad.Score([staff])
             >>> abjad.attach(ritardando, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'4
@@ -217,7 +217,7 @@ class Ritardando(AbjadValueObject):
 
                 >>> markup = abjad.Markup(r'\bold { \italic { ritardando } }')
                 >>> ritardando = abjad.Ritardando(markup=markup)
-                >>> show(ritardando.markup) # doctest: +SKIP
+                >>> abjad.show(ritardando.markup) # doctest: +SKIP
 
             ..  docs::
 

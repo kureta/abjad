@@ -25,11 +25,11 @@ class ForbidUpdate(ContextManager):
 
         ::
 
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 <c' e'>8
                 <d' fs'>8 ~

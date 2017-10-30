@@ -9,7 +9,7 @@ class QGridContainer(RhythmTreeContainer):
         ::
 
             >>> container = abjad.quantizationtools.QGridContainer()
-            >>> f(container)
+            >>> abjad.f(container)
             abjad.quantizationtools.QGridContainer(
                 preprolated_duration=abjad.Duration(1, 1),
                 )

@@ -57,7 +57,7 @@ class DurationSpecifier(AbjadValueObject):
             ::
 
                 >>> specifier = abjad.rhythmmakertools.DurationSpecifier()
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.DurationSpecifier(
                     decrease_monotonic=True,
                     )

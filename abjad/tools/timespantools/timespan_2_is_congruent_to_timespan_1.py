@@ -11,7 +11,7 @@ def timespan_2_is_congruent_to_timespan_1(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_is_congruent_to_timespan_1()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

@@ -1166,11 +1166,11 @@ class Duration(AbjadObject, Fraction):
                 >>> string = '"{}"'.format(clock_string)
                 >>> markup = abjad.Markup(string, direction=abjad.Up)
                 >>> abjad.attach(markup, note)
-                >>> show(note) # doctest: +SKIP
+                >>> abjad.show(note) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(note)
+                >>> abjad.f(note)
                 c'4 ^ \markup { 1'57'' }
 
         Rounds down to nearest second.
@@ -1192,11 +1192,11 @@ class Duration(AbjadObject, Fraction):
             ::
 
                 >>> markup = abjad.Duration(3, 16).to_score_markup()
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \score
                         {
@@ -1233,11 +1233,11 @@ class Duration(AbjadObject, Fraction):
             ::
 
                 >>> markup = abjad.Duration(5, 16).to_score_markup()
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \score
                         {
@@ -1281,11 +1281,11 @@ class Duration(AbjadObject, Fraction):
                 >>> markup = duration.to_score_markup()
                 >>> markup = markup.scale((0.75, 0.75))
                 >>> abjad.override(tuplet).tuplet_number.text = markup
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new RhythmicStaff {
                     \override TupletNumber.text = \markup {
                         \scale

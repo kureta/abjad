@@ -17,7 +17,7 @@ class TypedCounter(TypedCollection):
 
         ::
 
-            >>> f(counter)
+            >>> abjad.f(counter)
             abjad.TypedCounter(
                 {
                     abjad.NumberedPitch(0): 2,

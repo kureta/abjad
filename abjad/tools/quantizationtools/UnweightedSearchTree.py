@@ -10,7 +10,7 @@ class UnweightedSearchTree(SearchTree):
         ::
 
             >>> search_tree = abjad.quantizationtools.UnweightedSearchTree()
-            >>> f(search_tree)
+            >>> abjad.f(search_tree)
             abjad.quantizationtools.UnweightedSearchTree(
                 definition={
                     2: {

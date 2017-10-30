@@ -40,11 +40,11 @@ class BowContactSpanner(Spanner):
             >>> abjad.override(staff).stem.length = 8
             >>> abjad.override(staff).stem.stem_begin_position = -9
             >>> abjad.override(staff).time_signature.stencil = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override BarLine.transparent = ##t
                 \override Dots.staff-position = #-8
@@ -151,11 +151,11 @@ class BowContactSpanner(Spanner):
             >>> abjad.override(staff).stem.length = 8
             >>> abjad.override(staff).stem.stem_begin_position = -9
             >>> abjad.override(staff).time_signature.stencil = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override BarLine.transparent = ##t
                 \override Dots.staff-position = #-8

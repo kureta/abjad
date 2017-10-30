@@ -22,7 +22,7 @@ class Block(AbjadObject):
 
         ::
 
-            >>> f(block)
+            >>> abjad.f(block)
             \paper {
                 right-margin = 2\cm
                 left-margin = 2\cm
@@ -40,7 +40,7 @@ class Block(AbjadObject):
 
         ::
 
-            >>> f(block)
+            >>> abjad.f(block)
             \score {
                 {
                     \markup { foo }

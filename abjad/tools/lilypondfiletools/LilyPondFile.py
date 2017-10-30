@@ -34,7 +34,7 @@ class LilyPondFile(AbjadObject):
             >>> lilypond_file.header_block.title = abjad.Markup('Missa sexti tonus')
             >>> lilypond_file.layout_block.indent = 0
             >>> lilypond_file.layout_block.left_margin = 15
-            >>> show(lilypond_file) # doctest: +SKIP
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ::
 
@@ -167,7 +167,7 @@ class LilyPondFile(AbjadObject):
 
             ::
 
-                >>> f(score_block)
+                >>> abjad.f(score_block)
                 \score {
                     \new Score <<
                         \new Staff {
@@ -221,11 +221,11 @@ class LilyPondFile(AbjadObject):
                 ...     )
                 >>> score = abjad.Score([staff], name='Custom Score')
                 >>> lilypond_file = abjad.LilyPondFile.new(score)
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \context Score = "Custom Score" <<
                     \context Staff = "Custom Staff" <<
                         \context Voice = "Custom Voice 1" {
@@ -817,11 +817,11 @@ class LilyPondFile(AbjadObject):
                 >>> staff.append(abjad.Measure((4, 8), "fs'4 ( e'8 d'8 )"))
                 >>> score.append(staff)
                 >>> lilypond_file = abjad.LilyPondFile.floating(score)
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ::
 
-                >>> f(lilypond_file) # doctest: +SKIP
+                >>> abjad.f(lilypond_file) # doctest: +SKIP
                 % 2014-01-07 18:22
 
                 \version "2.19.0"
@@ -926,7 +926,7 @@ class LilyPondFile(AbjadObject):
             ..  docs::
 
                 >>> block = lilypond_file.layout_block.items[1]
-                >>> f(block)
+                >>> abjad.f(block)
                 \context {
                     \name GlobalContext
                     \type Engraver_group
@@ -1038,7 +1038,7 @@ class LilyPondFile(AbjadObject):
 
             ::
 
-                >>> f(lilypond_file) # doctest: +SKIP
+                >>> abjad.f(lilypond_file) # doctest: +SKIP
                 \header {
                     composer = \markup { Josquin }
                     title = \markup { Missa sexti tonus }
@@ -1066,7 +1066,7 @@ class LilyPondFile(AbjadObject):
 
             ::
 
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         Wraps `music` in LilyPond ``\score`` block.
 
@@ -1131,12 +1131,12 @@ class LilyPondFile(AbjadObject):
                 ...     selections,
                 ...     divisions,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
                 >>> score = lilypond_file[abjad.Score]
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new GlobalContext {
                         {
@@ -1201,12 +1201,12 @@ class LilyPondFile(AbjadObject):
                 ...     selections,
                 ...     [(6, 8), (4, 8), (2, 8)],
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
                 >>> score = lilypond_file[abjad.Score]
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new GlobalContext {
                         {
@@ -1272,11 +1272,11 @@ class LilyPondFile(AbjadObject):
                 ...     divisions,
                 ...     pitched_staff=True,
                 ...     )
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score <<
                     \new GlobalContext {
                         {
@@ -1362,11 +1362,11 @@ class LilyPondFile(AbjadObject):
                 >>> abjad.attach(abjad.LilyPondCommand('voiceOne'), voice_1)
                 >>> voice_2 = lilypond_file['Voice 2']
                 >>> abjad.attach(abjad.LilyPondCommand('voiceTwo'), voice_2)
-                >>> show(lilypond_file) # doctest: +SKIP
+                >>> abjad.show(lilypond_file) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score <<
                     \new GlobalContext {
                         {

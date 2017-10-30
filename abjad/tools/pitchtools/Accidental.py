@@ -778,11 +778,11 @@ class Accidental(AbjadValueObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 cs'8 d'8 ef'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     cs'8
@@ -795,11 +795,11 @@ class Accidental(AbjadValueObject):
             ::
 
                 >>> abjad.Accidental.respell_with_flats(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     df'8
@@ -831,11 +831,11 @@ class Accidental(AbjadValueObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 cs'8 d'8 ef'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     cs'8
@@ -848,11 +848,11 @@ class Accidental(AbjadValueObject):
             ::
 
                 >>> abjad.Accidental.respell_with_sharps(staff)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     cs'8

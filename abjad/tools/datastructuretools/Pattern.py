@@ -215,7 +215,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -237,7 +237,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -265,7 +265,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -296,7 +296,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -326,13 +326,13 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = abjad.index_first(3)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_first(3)
 
             ::
 
                 >>> pattern = ~pattern
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[0, 1, 2],
                     inverted=True,
@@ -341,7 +341,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = ~pattern
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[0, 1, 2],
                     inverted=False,
@@ -362,7 +362,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -384,7 +384,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = ~pattern
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     inverted=True,
                     operator='or',
@@ -493,7 +493,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -515,7 +515,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -543,7 +543,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -574,7 +574,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -609,7 +609,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='xor',
                     patterns=(
@@ -631,7 +631,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='xor',
                     patterns=(
@@ -659,7 +659,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='xor',
                     patterns=(
@@ -690,7 +690,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='xor',
                     patterns=(
@@ -1092,7 +1092,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -1125,7 +1125,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -1223,7 +1223,7 @@ class Pattern(AbjadValueObject):
 
                 >>> pattern = [1, 0, 0, 1, 1]
                 >>> pattern = abjad.Pattern.from_vector(pattern)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[0, 3, 4],
                     period=5,
@@ -1255,7 +1255,7 @@ class Pattern(AbjadValueObject):
 
                 >>> pattern = [1, 0, 0, 1, 1, 0]
                 >>> pattern = abjad.Pattern.from_vector(pattern)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[0, 3, 4],
                     period=6,
@@ -1481,7 +1481,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -1605,7 +1605,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index([2])
 
         ..  container:: example
@@ -1618,7 +1618,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index([2, 3, 5])
 
         Returns pattern.
@@ -1646,7 +1646,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_all()
 
         Returns pattern.
@@ -1714,7 +1714,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_first(1)
 
         ..  container:: example
@@ -1727,7 +1727,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_first(2)
 
         ..  container:: example
@@ -1740,7 +1740,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_first(0)
 
         Returns pattern.
@@ -1771,7 +1771,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_last(2)
 
         ..  container:: example
@@ -1784,7 +1784,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.index_last(0)
 
         Returns pattern.
@@ -2556,7 +2556,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='or',
                     patterns=(
@@ -2749,7 +2749,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = pattern.reverse()
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[-1, -2, -8],
                     period=8,
@@ -2802,7 +2802,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -2822,7 +2822,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = pattern.reverse()
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -2899,7 +2899,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = pattern.rotate(n=2)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[2, 3, 9],
                     period=8,
@@ -2976,7 +2976,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = pattern.rotate(n=2)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     indices=[-1, 0, 1],
                     period=8,
@@ -3029,7 +3029,7 @@ class Pattern(AbjadValueObject):
 
             ::
 
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(
@@ -3049,7 +3049,7 @@ class Pattern(AbjadValueObject):
             ::
 
                 >>> pattern = pattern.rotate(n=2)
-                >>> f(pattern)
+                >>> abjad.f(pattern)
                 abjad.Pattern(
                     operator='and',
                     patterns=(

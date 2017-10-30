@@ -96,12 +96,12 @@ class PitchClassSet(Set):
             ::
 
                 >>> setting = abjad.PitchClassSet([-2, -1.5, 6, 7, -1.5, 7])
-                >>> show(setting) # doctest: +SKIP
+                >>> abjad.show(setting) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = setting.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     <fs' g' bf' bqf'>1
                 }
@@ -117,12 +117,12 @@ class PitchClassSet(Set):
                 ...     items=items,
                 ...     item_class=abjad.NamedPitchClass,
                 ...     )
-                >>> show(setting) # doctest: +SKIP
+                >>> abjad.show(setting) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = setting.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     <c' d' ef' bqs'>1
                 }

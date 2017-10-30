@@ -41,7 +41,7 @@ class Retrograde(AbjadValueObject):
 
                 >>> items = [0, 2, 4, 5]
                 >>> segment = abjad.PitchClassSegment(items=items)
-                >>> show(segment) # doctest: +SKIP
+                >>> abjad.show(segment) # doctest: +SKIP
 
             Example operators:
 
@@ -63,12 +63,12 @@ class Retrograde(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     af'8
                     g'8
@@ -91,12 +91,12 @@ class Retrograde(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     af'8
                     g'8
@@ -112,7 +112,7 @@ class Retrograde(AbjadValueObject):
 
             ::
 
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Retrograde(),

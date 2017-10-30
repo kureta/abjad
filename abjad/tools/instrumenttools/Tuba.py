@@ -13,11 +13,11 @@ class Tuba(Instrument):
             >>> abjad.attach(clef, staff[0])
             >>> tuba = abjad.Tuba()
             >>> abjad.attach(tuba, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Tuba }
                 \set Staff.shortInstrumentName = \markup { Tb. }
@@ -92,7 +92,7 @@ class Tuba(Instrument):
 
             ::
 
-                >>> show(tuba.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(tuba.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -128,7 +128,7 @@ class Tuba(Instrument):
 
             ::
 
-                >>> show(tuba.name_markup) # doctest: +SKIP
+                >>> abjad.show(tuba.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -148,7 +148,7 @@ class Tuba(Instrument):
 
             ::
 
-                >>> show(tuba.pitch_range) # doctest: +SKIP
+                >>> abjad.show(tuba.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -184,7 +184,7 @@ class Tuba(Instrument):
 
             ::
 
-                >>> show(tuba.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(tuba.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

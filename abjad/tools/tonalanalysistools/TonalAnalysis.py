@@ -13,11 +13,11 @@ class TonalAnalysis(abctools.AbjadObject):
         ::
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4
@@ -36,11 +36,11 @@ class TonalAnalysis(abctools.AbjadObject):
         ::
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4
@@ -279,11 +279,11 @@ class TonalAnalysis(abctools.AbjadObject):
                 ...     abjad.Chord([7, 12, 16], (1, 4)),
                 ...     ]
                 >>> staff = abjad.Staff(chords)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <c' e' g'>4
                     <e' g' c''>4
@@ -311,11 +311,11 @@ class TonalAnalysis(abctools.AbjadObject):
                 ...     abjad.Chord([16, 21, 24], (1, 4)),
                 ...     ]
                 >>> staff = abjad.Staff(chords)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <a' c'' e''>4
                     <c'' e'' a''>4
@@ -344,11 +344,11 @@ class TonalAnalysis(abctools.AbjadObject):
                 ...     abjad.Chord([10, 12, 16, 19], (1, 4)),
                 ...     ]
                 >>> staff = abjad.Staff(chords)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <c' e' g' bf'>4
                     <e' g' bf' c''>4
@@ -380,11 +380,11 @@ class TonalAnalysis(abctools.AbjadObject):
                 ...     abjad.Chord([2, 10, 12, 16, 19], (1, 4)),
                 ...     ]
                 >>> staff = abjad.Staff(chords)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     <c' e' g' bf' d''>4
                     <e' g' bf' c'' d''>4
@@ -520,11 +520,11 @@ class TonalAnalysis(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     d'8
@@ -555,11 +555,11 @@ class TonalAnalysis(abctools.AbjadObject):
             ::
 
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     d'8

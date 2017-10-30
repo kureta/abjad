@@ -9,7 +9,7 @@ class DurationInequality(Inequality):
         ::
 
             >>> inequality = abjad.DurationInequality('<', (3, 4))
-            >>> f(inequality)
+            >>> abjad.f(inequality)
             abjad.DurationInequality(
                 operator_string='<',
                 duration=abjad.Duration(3, 4),

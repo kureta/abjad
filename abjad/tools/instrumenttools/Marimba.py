@@ -11,11 +11,11 @@ class Marimba(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> marimba = abjad.Marimba()
             >>> abjad.attach(marimba, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Marimba }
                 \set Staff.shortInstrumentName = \markup { Mb. }
@@ -88,7 +88,7 @@ class Marimba(Instrument):
 
             ::
 
-                >>> show(marimba.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(marimba.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -124,7 +124,7 @@ class Marimba(Instrument):
 
             ::
 
-                >>> show(marimba.name_markup) # doctest: +SKIP
+                >>> abjad.show(marimba.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -144,7 +144,7 @@ class Marimba(Instrument):
 
             ::
 
-                >>> show(marimba.pitch_range) # doctest: +SKIP
+                >>> abjad.show(marimba.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -180,7 +180,7 @@ class Marimba(Instrument):
 
             ::
 
-                >>> show(marimba.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(marimba.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

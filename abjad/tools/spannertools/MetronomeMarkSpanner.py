@@ -31,11 +31,11 @@ class MetronomeMarkSpanner(Spanner):
         ::
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
             } <<
@@ -142,11 +142,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -278,11 +278,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -416,11 +416,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -574,11 +574,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -697,11 +697,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -822,11 +822,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -964,11 +964,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -1104,11 +1104,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -1211,11 +1211,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -1316,11 +1316,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -1467,11 +1467,11 @@ class MetronomeMarkSpanner(Spanner):
 
             >>> abjad.override(score).text_script.staff_padding = 2.25
             >>> abjad.override(score).text_spanner.staff_padding = 3
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score \with {
                 \override TextScript.staff-padding = #2.25
                 \override TextSpanner.staff-padding = #3
@@ -2020,11 +2020,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2131,11 +2131,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2246,11 +2246,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2359,11 +2359,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2471,11 +2471,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2596,11 +2596,11 @@ class MetronomeMarkSpanner(Spanner):
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
                 >>> abjad.override(score).text_spanner.staff_padding = 3
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                     \override TextSpanner.staff-padding = #3
@@ -2743,11 +2743,11 @@ class MetronomeMarkSpanner(Spanner):
             ::
 
                 >>> abjad.override(score).text_script.staff_padding = 2.25
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     \override TextScript.staff-padding = #2.25
                 } <<

@@ -12,7 +12,7 @@ class SpacingVector(SchemeVector):
 
         ::
 
-            >>> f(vector)
+            >>> abjad.f(vector)
             abjad.SpacingVector(
                 abjad.SchemePair(('basic-distance', 0)),
                 abjad.SchemePair(('minimum-distance', 0)),
@@ -31,7 +31,7 @@ class SpacingVector(SchemeVector):
 
         ..  docs::
 
-            >>> f(lilypond_file.paper_block)
+            >>> abjad.f(lilypond_file.paper_block)
             \paper {
                 system-system-spacing = #'((basic-distance . 0) (minimum-distance . 0) (padding . 12) (stretchability . 0))
             }

@@ -11,7 +11,7 @@ def timespan_2_starts_during_timespan_1(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_starts_during_timespan_1()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -29,7 +29,7 @@ def timespan_2_starts_during_timespan_1(
             >>> staff_1 = abjad.Staff("c'4 d'4 e'4 f'4 g'2 c''2")
             >>> staff_2 = abjad.Staff("c'2 b'2 a'2 g'2")
             >>> score = abjad.Score([staff_1, staff_2])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ::
 
@@ -63,7 +63,7 @@ def timespan_2_starts_during_timespan_1(
 
         ::
 
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
     Returns time relation or boolean.
     '''

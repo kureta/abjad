@@ -336,11 +336,11 @@ class RomanNumeral(AbjadValueObject):
             ::
 
                 >>> markup = abjad.tonalanalysistools.RomanNumeral('bII').markup
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 _ \markup { bII }
 
         Returns markup.

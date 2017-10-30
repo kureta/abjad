@@ -24,11 +24,11 @@ class MetronomeMark(AbjadValueObject):
             >>> score.append(staff)
             >>> mark = abjad.MetronomeMark((1, 4), 90)
             >>> abjad.attach(mark, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \tempo 4=90
@@ -50,11 +50,11 @@ class MetronomeMark(AbjadValueObject):
             >>> score.append(staff)
             >>> mark = abjad.MetronomeMark((1, 4), 90.1)
             >>> abjad.attach(mark, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \tempo \markup {
@@ -110,11 +110,11 @@ class MetronomeMark(AbjadValueObject):
             >>> score.append(staff)
             >>> mark = abjad.MetronomeMark((1, 4), abjad.Fraction(181, 2))
             >>> abjad.attach(mark, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \tempo \markup {
@@ -175,11 +175,11 @@ class MetronomeMark(AbjadValueObject):
             >>> score.append(staff)
             >>> mark = abjad.MetronomeMark((1, 4), (120, 133), 'Quick')
             >>> abjad.attach(mark, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \tempo Quick 4=120-133
@@ -909,11 +909,11 @@ class MetronomeMark(AbjadValueObject):
                 >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
                 >>> score = abjad.Score([staff])
                 >>> abjad.attach(mark, staff[0])
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         \tempo \markup {
@@ -1347,7 +1347,7 @@ class MetronomeMark(AbjadValueObject):
                 ...     (1, 4),
                 ...     90,
                 ...     )
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -1398,7 +1398,7 @@ class MetronomeMark(AbjadValueObject):
                 ...     (1, 4),
                 ...     90.1,
                 ...     )
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -1449,7 +1449,7 @@ class MetronomeMark(AbjadValueObject):
                 ...     abjad.Duration(1, 4),
                 ...     abjad.Fraction(181, 2),
                 ...     )
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -1505,7 +1505,7 @@ class MetronomeMark(AbjadValueObject):
                 ...     (5, 16),
                 ...     90,
                 ...     )
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -1554,7 +1554,7 @@ class MetronomeMark(AbjadValueObject):
             ::
 
                 >>> markup = abjad.MetronomeMark.make_tempo_equation_markup((1, 6), 90)
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
@@ -1610,7 +1610,7 @@ class MetronomeMark(AbjadValueObject):
                 >>> abjad.attach(abjad.Tie(), selection)
                 >>> abjad.attach(abjad.Beam(), selection)
                 >>> markup = abjad.MetronomeMark.make_tempo_equation_markup(selection, 90)
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 

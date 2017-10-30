@@ -16,11 +16,11 @@ class TimeSignature(AbjadValueObject):
             >>> staff = abjad.Staff("c'8 d'8 e'8")
             >>> time_signature = abjad.TimeSignature((3, 8))
             >>> abjad.attach(time_signature, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \time 3/8
                 c'8
@@ -37,11 +37,11 @@ class TimeSignature(AbjadValueObject):
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> time_signature = abjad.TimeSignature((4, 4))
             >>> abjad.attach(time_signature, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \time 4/4
                 c'4
@@ -64,7 +64,7 @@ class TimeSignature(AbjadValueObject):
 
         ::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 %%% \time 3/8 %%%
                 c'8
@@ -79,14 +79,14 @@ class TimeSignature(AbjadValueObject):
 
         ::
 
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         Formats normally when score is present:
 
         ::
 
             >>> score = abjad.Score([staff])
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \time 3/8
@@ -101,7 +101,7 @@ class TimeSignature(AbjadValueObject):
 
         ::
 
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
     '''
 

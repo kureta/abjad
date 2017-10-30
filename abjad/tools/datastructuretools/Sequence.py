@@ -141,11 +141,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -188,11 +188,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -239,11 +239,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -293,11 +293,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -363,7 +363,7 @@ class Sequence(abctools.AbjadValueObject):
 
             ::
 
-                >>> f(abjad.sequence([1, 2, 3, 4, 5, 6]))
+                >>> abjad.f(abjad.sequence([1, 2, 3, 4, 5, 6]))
                 Sequence([1, 2, 3, 4, 5, 6])
 
         ..  container:: example expression
@@ -374,7 +374,7 @@ class Sequence(abctools.AbjadValueObject):
 
                 >>> expression = abjad.Expression(name='J')
                 >>> expression = expression.sequence()
-                >>> f(expression)
+                >>> abjad.f(expression)
                 abjad.Expression(
                     callbacks=[
                         abjad.Expression(
@@ -435,11 +435,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -486,11 +486,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -538,11 +538,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -591,11 +591,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -645,11 +645,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -747,11 +747,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -794,11 +794,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -843,11 +843,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -1355,11 +1355,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1407,11 +1407,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1459,11 +1459,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1511,11 +1511,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1563,11 +1563,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1615,11 +1615,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -1976,11 +1976,11 @@ class Sequence(abctools.AbjadValueObject):
             ::
 
                 >>> markup = expression.get_markup()
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \concat
                         {
@@ -2056,11 +2056,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -2381,11 +2381,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2445,11 +2445,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2515,11 +2515,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2583,11 +2583,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2647,11 +2647,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2713,11 +2713,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2785,11 +2785,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2855,11 +2855,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2919,11 +2919,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -2985,11 +2985,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3057,11 +3057,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3127,11 +3127,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3193,11 +3193,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3261,11 +3261,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3335,11 +3335,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3407,11 +3407,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3474,11 +3474,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3546,11 +3546,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3610,11 +3610,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3732,11 +3732,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -3791,11 +3791,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -4337,11 +4337,11 @@ class Sequence(abctools.AbjadValueObject):
             ::
 
                 >>> markup = expression.get_markup()
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \concat
                         {
@@ -4530,11 +4530,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -4575,11 +4575,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -4620,11 +4620,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5084,11 +5084,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5145,11 +5145,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5219,11 +5219,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5271,11 +5271,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5323,11 +5323,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5447,11 +5447,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5578,11 +5578,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5629,11 +5629,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {
@@ -5683,11 +5683,11 @@ class Sequence(abctools.AbjadValueObject):
                 ::
 
                     >>> markup = expression.get_markup()
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \concat
                             {

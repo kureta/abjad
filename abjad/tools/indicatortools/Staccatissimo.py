@@ -14,11 +14,11 @@ class Staccatissimo(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> staccatissimo = abjad.Staccatissimo()
             >>> abjad.attach(staccatissimo, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 \staccatissimo
 
     ..  container:: example
@@ -32,11 +32,11 @@ class Staccatissimo(AbjadValueObject):
             >>> abjad.attach(abjad.Beam(), staff[4:])
             >>> abjad.attach(abjad.Staccatissimo(), staff[3])
             >>> abjad.attach(abjad.Staccatissimo(), staff[7])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 [
                 d'8

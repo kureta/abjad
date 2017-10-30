@@ -18,11 +18,11 @@ class ClefSpanner(Spanner):
             >>> abjad.attach(clef, staff[0])
             >>> clef_spanner = abjad.ClefSpanner('percussion')
             >>> abjad.attach(clef_spanner, staff[2:-2])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \clef "treble"
                 c'4
@@ -51,11 +51,11 @@ class ClefSpanner(Spanner):
             >>> abjad.attach(clef_spanner, staff[1:3])
             >>> clef_spanner = abjad.ClefSpanner('percussion')
             >>> abjad.attach(clef_spanner, staff[4:6])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \clef "treble"
                 r4

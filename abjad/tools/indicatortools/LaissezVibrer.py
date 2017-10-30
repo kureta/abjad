@@ -11,11 +11,11 @@ class LaissezVibrer(AbjadValueObject):
             >>> chord = abjad.Chord("<c' e' g' c''>4")
             >>> laissez_vibrer = abjad.LaissezVibrer()
             >>> abjad.attach(laissez_vibrer, chord)
-            >>> show(chord) # doctest: +SKIP
+            >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(chord)
+            >>> abjad.f(chord)
             <c' e' g' c''>4 \laissezVibrer
 
     '''

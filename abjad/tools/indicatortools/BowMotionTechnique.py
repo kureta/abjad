@@ -11,7 +11,7 @@ class BowMotionTechnique(AbjadValueObject):
         ::
 
             >>> bow_motion_technique = abjad.BowMotionTechnique('jete')
-            >>> f(bow_motion_technique)
+            >>> abjad.f(bow_motion_technique)
             abjad.BowMotionTechnique(
                 technique_name='jete',
                 )
@@ -23,7 +23,7 @@ class BowMotionTechnique(AbjadValueObject):
         ::
 
             >>> bow_motion_technique = abjad.BowMotionTechnique('ordinario')
-            >>> f(bow_motion_technique)
+            >>> abjad.f(bow_motion_technique)
             abjad.BowMotionTechnique(
                 technique_name='ordinario',
                 )

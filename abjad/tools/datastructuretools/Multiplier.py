@@ -124,14 +124,14 @@ class Multiplier(Duration):
         ::
 
             >>> note = abjad.Note("c'1")
-            >>> f(note)
+            >>> abjad.f(note)
             c'1
 
         ::
 
             >>> multiplier = abjad.Multiplier(3, 8)
             >>> abjad.attach(multiplier, note)
-            >>> f(note)
+            >>> abjad.f(note)
             c'1 * 3/8
 
     '''

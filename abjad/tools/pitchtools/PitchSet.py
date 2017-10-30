@@ -21,7 +21,7 @@ class PitchSet(Set):
 
         ::
 
-            >>> f(set_)
+            >>> abjad.f(set_)
             abjad.PitchSet(
                 [-2, -1.5, 6, 7]
                 )
@@ -41,7 +41,7 @@ class PitchSet(Set):
 
         ::
 
-            >>> f(set_)
+            >>> abjad.f(set_)
             abjad.PitchSet(
                 ['bf,', 'aqs', 'bqf', "fs'", "g'"]
                 )
@@ -131,12 +131,12 @@ class PitchSet(Set):
 
             ::
 
-                >>> show(set_) # doctest: +SKIP
+                >>> abjad.show(set_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = set_.__illustrate__()
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score <<
                     \new PianoStaff <<
                         \new Staff {
@@ -165,12 +165,12 @@ class PitchSet(Set):
 
             ::
 
-                >>> show(set_) # doctest: +SKIP
+                >>> abjad.show(set_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = set_.__illustrate__()
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score <<
                     \new PianoStaff <<
                         \new Staff {

@@ -12,11 +12,11 @@ class Accelerando(AbjadValueObject):
             >>> score = abjad.Score([staff])
             >>> accelerando = abjad.Accelerando()
             >>> abjad.attach(accelerando, staff[0])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     c'4

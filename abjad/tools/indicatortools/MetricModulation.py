@@ -20,7 +20,7 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(metric_modulation) # doctest: +SKIP
+            >>> abjad.show(metric_modulation) # doctest: +SKIP
 
         ..  docs::
 
@@ -100,7 +100,7 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(metric_modulation) # doctest: +SKIP
+            >>> abjad.show(metric_modulation) # doctest: +SKIP
 
         ..  docs::
 
@@ -183,7 +183,7 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(metric_modulation) # doctest: +SKIP
+            >>> abjad.show(metric_modulation) # doctest: +SKIP
 
         ..  docs::
 
@@ -268,7 +268,7 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(metric_modulation) # doctest: +SKIP
+            >>> abjad.show(metric_modulation) # doctest: +SKIP
 
         ..  docs::
 
@@ -352,7 +352,7 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(metric_modulation) # doctest: +SKIP
+            >>> abjad.show(metric_modulation) # doctest: +SKIP
 
         ..  docs::
 
@@ -445,11 +445,11 @@ class MetricModulation(AbjadValueObject):
 
         ::
 
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff \with {
                     \override TextScript.staff-padding = #2.5
@@ -648,7 +648,7 @@ class MetricModulation(AbjadValueObject):
 
             ::
 
-                >>> f(metric_modulation)
+                >>> abjad.f(metric_modulation)
                 abjad.MetricModulation(
                     left_rhythm=abjad.Selection(
                         [
@@ -690,7 +690,7 @@ class MetricModulation(AbjadValueObject):
                 ...     left_rhythm=abjad.Tuplet((2, 3), "c'4"),
                 ...     right_rhythm=abjad.Note("c'4."),
                 ...     )
-                >>> show(metric_modulation) # doctest: +SKIP
+                >>> abjad.show(metric_modulation) # doctest: +SKIP
 
             ..  docs::
 

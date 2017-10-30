@@ -13,7 +13,7 @@ class MeasuredComplexBeam(ComplexBeam):
             >>> staff.append(abjad.Measure((2, 16), "c'16 d'16"))
             >>> staff.append(abjad.Measure((2, 16), "e'16 f'16"))
             >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -21,11 +21,11 @@ class MeasuredComplexBeam(ComplexBeam):
             >>> selector = abjad.select().leaves()
             >>> leaves = selector(staff)
             >>> abjad.attach(beam, leaves)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -134,7 +134,7 @@ class MeasuredComplexBeam(ComplexBeam):
                 >>> leaves = selector(staff)
                 >>> beam = abjad.MeasuredComplexBeam(span_beam_count=1)
                 >>> abjad.attach(beam, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -154,7 +154,7 @@ class MeasuredComplexBeam(ComplexBeam):
                 >>> selector = abjad.select().leaves()
                 >>> leaves = selector(staff)
                 >>> abjad.attach(beam, leaves)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 

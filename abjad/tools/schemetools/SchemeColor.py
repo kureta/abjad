@@ -19,11 +19,11 @@ class SchemeColor(Scheme):
             >>> note = abjad.Note("c'4")
             >>> scheme_color = abjad.SchemeColor('ForestGreen')
             >>> abjad.override(note).note_head.color = scheme_color
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             \once \override NoteHead.color = #(x11-color 'ForestGreen)
             c'4
 

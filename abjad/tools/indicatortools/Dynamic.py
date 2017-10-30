@@ -17,7 +17,7 @@ class Dynamic(AbjadValueObject):
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 \f
                 d'8
@@ -27,7 +27,7 @@ class Dynamic(AbjadValueObject):
 
         ::
 
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
     ..  container:: example
 

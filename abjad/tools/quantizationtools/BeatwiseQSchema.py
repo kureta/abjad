@@ -16,7 +16,7 @@ class BeatwiseQSchema(QSchema):
 
         ::
 
-            >>> f(q_schema)
+            >>> abjad.f(q_schema)
             abjad.quantizationtools.BeatwiseQSchema(
                 beatspan=abjad.Duration(1, 4),
                 search_tree=abjad.quantizationtools.UnweightedSearchTree(
@@ -167,7 +167,7 @@ class BeatwiseQSchema(QSchema):
 
         ::
 
-            >>> f(q_schema[0]['search_tree'])
+            >>> abjad.f(q_schema[0]['search_tree'])
             abjad.quantizationtools.UnweightedSearchTree(
                 definition={
                     2: {

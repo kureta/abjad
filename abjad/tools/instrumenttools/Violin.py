@@ -11,11 +11,11 @@ class Violin(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> violin = abjad.Violin()
             >>> abjad.attach(violin, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Violin }
                 \set Staff.shortInstrumentName = \markup { Vn. }
@@ -110,7 +110,7 @@ class Violin(Instrument):
 
             ::
 
-                >>> show(violin.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(violin.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -146,7 +146,7 @@ class Violin(Instrument):
 
             ::
 
-                >>> show(violin.name_markup) # doctest: +SKIP
+                >>> abjad.show(violin.name_markup) # doctest: +SKIP
 
         ..  container:: example
 
@@ -158,7 +158,7 @@ class Violin(Instrument):
                 >>> violin_1 = abjad.Violin(
                 ...     name_markup=markup,
                 ...     )
-                >>> f(violin_1.name_markup)
+                >>> abjad.f(violin_1.name_markup)
                 \markup {
                     \hcenter-in
                         #12
@@ -169,7 +169,7 @@ class Violin(Instrument):
             ::
 
                 >>> violin_2 = abjad.new(violin_1)
-                >>> f(violin_2.name_markup)
+                >>> abjad.f(violin_2.name_markup)
                 \markup {
                     \hcenter-in
                         #12
@@ -202,7 +202,7 @@ class Violin(Instrument):
 
             ::
 
-                >>> show(violin.pitch_range) # doctest: +SKIP
+                >>> abjad.show(violin.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -238,7 +238,7 @@ class Violin(Instrument):
 
             ::
 
-                >>> show(violin.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(violin.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

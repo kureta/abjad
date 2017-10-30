@@ -14,11 +14,11 @@ class TextSpanner(Spanner):
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> text_spanner = abjad.TextSpanner()
             >>> abjad.attach(text_spanner, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 \startTextSpan
                 d'4
@@ -40,11 +40,11 @@ class TextSpanner(Spanner):
             >>> abjad.override(text_spanner).text_spanner.bound_details__left__text = markup
             >>> abjad.override(text_spanner).text_spanner.bound_details__left__stencil_align_dir_y = 0
             >>> abjad.attach(text_spanner, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \override TextSpanner.bound-details.left.stencil-align-dir-y = #0
                 \override TextSpanner.bound-details.left.text = \markup {
@@ -70,11 +70,11 @@ class TextSpanner(Spanner):
             >>> spanner = abjad.TextSpanner()
             >>> abjad.attach(spanner, staff[:])
             >>> spanner.attach(abjad.Markup('pont.'), staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 ^ \markup { pont. }
                 d'4
@@ -94,11 +94,11 @@ class TextSpanner(Spanner):
             >>> spanner = abjad.TextSpanner()
             >>> abjad.attach(spanner, staff[:])
             >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4
@@ -120,11 +120,11 @@ class TextSpanner(Spanner):
             >>> abjad.attach(spanner, staff[:])
             >>> spanner.attach(abjad.Markup('pont.'), staff[0])
             >>> spanner.attach(abjad.Markup('tasto'), staff[-1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 ^ \markup { pont. }
                 d'4
@@ -148,11 +148,11 @@ class TextSpanner(Spanner):
             >>> spanner.attach(abjad.Markup('two'), staff[1])
             >>> spanner.attach(abjad.ArrowLineSegment(), staff[1])
             >>> spanner.attach(abjad.Markup('three'), staff[-1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \once \override TextSpanner.bound-details.left.text = \markup { one }
                 c'4 \startTextSpan
@@ -195,11 +195,11 @@ class TextSpanner(Spanner):
 
             >>> abjad.override(staff).text_spanner.staff_padding = 2.5
             >>> abjad.override(staff).text_script.staff_padding = 2
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                     \override TextScript.staff-padding = #2
                     \override TextSpanner.staff-padding = #2.5
@@ -411,11 +411,11 @@ class TextSpanner(Spanner):
                 >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__text = markup
                 >>> abjad.override(text_spanner_2).text_spanner.bound_details__left__stencil_align_dir_y = 0
                 >>> abjad.attach(text_spanner_2, staff[-5:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \override TextSpanner.bound-details.left.stencil-align-dir-y = #0
                     \override TextSpanner.bound-details.left.text = \markup {

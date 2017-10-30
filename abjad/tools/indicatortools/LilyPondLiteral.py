@@ -16,11 +16,11 @@ class LilyPondLiteral(AbjadValueObject):
             >>> abjad.attach(slur, staff[:])
             >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
             >>> abjad.attach(literal, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \slurDotted
                 c'8 (

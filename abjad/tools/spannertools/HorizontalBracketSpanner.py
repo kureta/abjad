@@ -13,11 +13,11 @@ class HorizontalBracketSpanner(Spanner):
             >>> voice.consists_commands.append('Horizontal_bracket_engraver')
             >>> spanner = abjad.HorizontalBracketSpanner()
             >>> abjad.attach(spanner, voice[:])
-            >>> show(voice) # doctest: +SKIP
+            >>> abjad.show(voice) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(voice)
+            >>> abjad.f(voice)
             \new Voice \with {
                 \consists Horizontal_bracket_engraver
             } {

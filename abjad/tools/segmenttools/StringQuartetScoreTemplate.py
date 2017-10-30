@@ -10,11 +10,11 @@ class StringQuartetScoreTemplate(ScoreTemplate):
         ::
 
             >>> template = abjad.StringQuartetScoreTemplate()
-            >>> show(template) # doctest: +SKIP
+            >>> abjad.show(template) # doctest: +SKIP
 
         ::
 
-            >>> f(template.__illustrate__()[abjad.Score])
+            >>> abjad.f(template.__illustrate__()[abjad.Score])
             \context Score = "String Quartet Score" <<
                 \context StaffGroup = "String Quartet Staff Group" <<
                     \tag #'first-violin

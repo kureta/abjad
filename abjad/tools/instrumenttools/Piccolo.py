@@ -11,11 +11,11 @@ class Piccolo(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> piccolo = abjad.Piccolo()
             >>> abjad.attach(piccolo, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Piccolo }
                 \set Staff.shortInstrumentName = \markup { Picc. }
@@ -88,7 +88,7 @@ class Piccolo(Instrument):
 
             ::
 
-                >>> show(piccolo.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(piccolo.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -124,7 +124,7 @@ class Piccolo(Instrument):
 
             ::
 
-                >>> show(piccolo.name_markup) # doctest: +SKIP
+                >>> abjad.show(piccolo.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -144,7 +144,7 @@ class Piccolo(Instrument):
 
             ::
 
-                >>> show(piccolo.pitch_range) # doctest: +SKIP
+                >>> abjad.show(piccolo.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -180,7 +180,7 @@ class Piccolo(Instrument):
 
             ::
 
-                >>> show(piccolo.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(piccolo.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -13,7 +13,7 @@ class BowPressure(AbjadValueObject):
             ::
 
                 >>> bow_pressure = abjad.BowPressure('overpressure')
-                >>> f(bow_pressure)
+                >>> abjad.f(bow_pressure)
                 abjad.BowPressure(
                     pressure='overpressure',
                     )
@@ -27,7 +27,7 @@ class BowPressure(AbjadValueObject):
             ::
 
                 >>> bow_pressure = abjad.BowPressure('underpressure')
-                >>> f(bow_pressure)
+                >>> abjad.f(bow_pressure)
                 abjad.BowPressure(
                     pressure='underpressure',
                     )

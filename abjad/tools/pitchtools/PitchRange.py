@@ -18,11 +18,11 @@ class PitchRange(AbjadValueObject):
         ::
 
             >>> pitch_range = abjad.PitchRange('[C3, C7]')
-            >>> show(pitch_range) # doctest: +SKIP
+            >>> abjad.show(pitch_range) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(pitch_range)
+            >>> abjad.f(pitch_range)
             abjad.PitchRange('[C3, C7]')
 
     Initalizes from pitch numbers, pitch names, pitch instances,
@@ -462,12 +462,12 @@ class PitchRange(AbjadValueObject):
             ::
 
                 >>> pitch_range = abjad.PitchRange('[C3, C7]')
-                >>> show(pitch_range) # doctest: +SKIP
+                >>> abjad.show(pitch_range) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = pitch_range.__illustrate__()
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score \with {
                     \override BarLine.stencil = ##f
                     \override Glissando.thickness = #2

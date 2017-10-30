@@ -14,7 +14,7 @@ class MarkupList(TypedList):
 
                 >>> markups = ['Allegro', 'assai']
                 >>> markup_list = abjad.MarkupList(markups)
-                >>> f(markup_list)
+                >>> abjad.f(markup_list)
                 abjad.MarkupList(
                     items=[
                         abjad.Markup(
@@ -28,11 +28,11 @@ class MarkupList(TypedList):
 
             ::
 
-                >>> show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup_list.__illustrate__().items[-1])
+                >>> abjad.f(markup_list.__illustrate__().items[-1])
                 \markup {
                     \column
                         {
@@ -106,7 +106,7 @@ class MarkupList(TypedList):
 
                     >>> markups = ['Allegro', 'assai']
                     >>> markup_list = abjad.MarkupList(markups)
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -135,7 +135,7 @@ class MarkupList(TypedList):
                     >>> markup_list = abjad.MarkupList()
                     >>> markup_list.extend(['Allegro', 'assai'])
                     >>> markup_list += ['ma', 'non', 'troppo']
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -158,11 +158,11 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup_list.__illustrate__().items[-1])
+                    >>> abjad.f(markup_list.__illustrate__().items[-1])
                     \markup {
                         \column
                             {
@@ -190,7 +190,7 @@ class MarkupList(TypedList):
 
                     >>> markups = ['Allegro', 'assai']
                     >>> markup_list = abjad.MarkupList(markups)
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -204,11 +204,11 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup_list.__illustrate__().items[-1])
+                    >>> abjad.f(markup_list.__illustrate__().items[-1])
                     \markup {
                         \column
                             {
@@ -241,7 +241,7 @@ class MarkupList(TypedList):
                     >>> markup_list = abjad.MarkupList()
                     >>> markup_list.extend(['Allegro', 'assai'])
                     >>> markup_list[-1] = 'non troppo'
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -255,11 +255,11 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup_list.__illustrate__().items[-1])
+                    >>> abjad.f(markup_list.__illustrate__().items[-1])
                     \markup {
                         \column
                             {
@@ -364,11 +364,11 @@ class MarkupList(TypedList):
                 >>> markup_list = abjad.MarkupList(keep_sorted=True)
                 >>> markup_list.append('assai')
                 >>> markup_list.append('Allegro')
-                >>> show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup_list.__illustrate__().items[-1])
+                >>> abjad.f(markup_list.__illustrate__().items[-1])
                 \markup {
                     \column
                         {
@@ -387,11 +387,11 @@ class MarkupList(TypedList):
                 >>> markup_list = abjad.MarkupList()
                 >>> markup_list.append('assai')
                 >>> markup_list.append('Allegro')
-                >>> show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup_list.__illustrate__().items[-1])
+                >>> abjad.f(markup_list.__illustrate__().items[-1])
                 \markup {
                     \column
                         {
@@ -422,7 +422,7 @@ class MarkupList(TypedList):
 
                     >>> markup_list = abjad.MarkupList(['Allegro'])
                     >>> markup_list.append('assai')
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -436,7 +436,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns none.
         '''
@@ -457,7 +457,7 @@ class MarkupList(TypedList):
                     >>> markups = [city, date]
                     >>> markup_list = abjad.MarkupList(markups)
                     >>> markup = markup_list.center_column(direction=abjad.Up)
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     ^ \markup {
                         \center-column
                             {
@@ -468,7 +468,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -493,7 +493,7 @@ class MarkupList(TypedList):
                     >>> date = abjad.Markup('May - August 2014')
                     >>> markup_list = abjad.MarkupList([city, date])
                     >>> markup = markup_list.column()
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \column
                             {
@@ -504,7 +504,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -529,7 +529,7 @@ class MarkupList(TypedList):
                     >>> markup_list = [markup_one, markup_two]
                     >>> markup_list = abjad.MarkupList(markup_list)
                     >>> markup = markup_list.combine(direction=abjad.Up)
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     ^ \markup {
                         \combine
                             "Allegro assai"
@@ -539,7 +539,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -570,7 +570,7 @@ class MarkupList(TypedList):
                     >>> markups = [downbow, hspace, upbow]
                     >>> markup_list = abjad.MarkupList(markups)
                     >>> markup = markup_list.concat(direction=abjad.Up)
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     ^ \markup {
                         \concat
                             {
@@ -585,7 +585,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -610,7 +610,7 @@ class MarkupList(TypedList):
 
             ::
 
-                >>> show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
             ::
 
@@ -637,7 +637,7 @@ class MarkupList(TypedList):
 
                     >>> markup_list = abjad.MarkupList()
                     >>> markup_list.extend(['Allegro', 'assai'])
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -651,11 +651,11 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup_list.__illustrate__().items[-1])
+                    >>> abjad.f(markup_list.__illustrate__().items[-1])
                     \markup {
                         \column
                             {
@@ -678,7 +678,7 @@ class MarkupList(TypedList):
 
                 >>> markup_list = abjad.MarkupList()
                 >>> markup_list.extend(['Allegro', 'assai'])
-                >>> f(markup_list)
+                >>> abjad.f(markup_list)
                 abjad.MarkupList(
                     items=[
                         abjad.Markup(
@@ -692,11 +692,11 @@ class MarkupList(TypedList):
 
             ::
 
-                >>> show(markup_list) # doctest: +SKIP
+                >>> abjad.show(markup_list) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup_list.__illustrate__().items[-1])
+                >>> abjad.f(markup_list.__illustrate__().items[-1])
                 \markup {
                     \column
                         {
@@ -728,7 +728,7 @@ class MarkupList(TypedList):
 
                     >>> markup_list = abjad.MarkupList(['assai'])
                     >>> markup_list.insert(0, 'Allegro')
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -742,7 +742,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns markup class.
         '''
@@ -762,7 +762,7 @@ class MarkupList(TypedList):
                     >>> date = abjad.Markup('May - August 2014')
                     >>> markup_list = abjad.MarkupList([city, date])
                     >>> markup = markup_list.left_column()
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \left-column
                             {
@@ -773,7 +773,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -796,7 +796,7 @@ class MarkupList(TypedList):
                     >>> markups = ['Allegro', 'assai']
                     >>> markup_list = abjad.MarkupList(markups)
                     >>> markup = markup_list.line()
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \line
                             {
@@ -808,7 +808,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -832,7 +832,7 @@ class MarkupList(TypedList):
                     >>> date = abjad.Markup('May - August 2014')
                     >>> markup_list = abjad.MarkupList([city, date])
                     >>> markup = markup_list.overlay(direction=abjad.Up)
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     ^ \markup {
                         \overlay
                             {
@@ -843,7 +843,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''
@@ -870,7 +870,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -881,7 +881,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
         Returns none.
         '''
@@ -900,7 +900,7 @@ class MarkupList(TypedList):
                     >>> markup_list = abjad.MarkupList()
                     >>> markup_list.extend(['Allegro', 'assai'])
                     >>> markup_list.remove('assai')
-                    >>> f(markup_list)
+                    >>> abjad.f(markup_list)
                     abjad.MarkupList(
                         items=[
                             abjad.Markup(
@@ -911,11 +911,11 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup_list) # doctest: +SKIP
+                    >>> abjad.show(markup_list) # doctest: +SKIP
 
                 ..  docs::
 
-                    >>> f(markup_list.__illustrate__().items[-1])
+                    >>> abjad.f(markup_list.__illustrate__().items[-1])
                     \markup {
                         \column
                             {
@@ -941,7 +941,7 @@ class MarkupList(TypedList):
                     >>> date = abjad.Markup('May - August 2014')
                     >>> markup_list = abjad.MarkupList([city, date])
                     >>> markup = markup_list.right_column()
-                    >>> f(markup)
+                    >>> abjad.f(markup)
                     \markup {
                         \right-column
                             {
@@ -952,7 +952,7 @@ class MarkupList(TypedList):
 
                 ::
 
-                    >>> show(markup) # doctest: +SKIP
+                    >>> abjad.show(markup) # doctest: +SKIP
 
         Returns new markup.
         '''

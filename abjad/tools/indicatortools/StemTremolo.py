@@ -15,11 +15,11 @@ class StemTremolo(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> stem_tremolo = abjad.StemTremolo(16)
             >>> abjad.attach(stem_tremolo, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 :16
 
     ..  container:: example
@@ -31,11 +31,11 @@ class StemTremolo(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> stem_tremolo = abjad.StemTremolo(32)
             >>> abjad.attach(stem_tremolo, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 :32
 
     '''

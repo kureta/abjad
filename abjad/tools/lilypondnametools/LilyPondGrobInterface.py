@@ -7,7 +7,7 @@ class LilyPondGrobInterface(abctools.AbjadValueObject):
     ::
 
         >>> interface = abjad.lilypondnametools.LilyPondGrobInterface('beam-interface')
-        >>> f(interface)
+        >>> abjad.f(interface)
         LilyPondGrobInterface(name='beam-interface')
 
     '''

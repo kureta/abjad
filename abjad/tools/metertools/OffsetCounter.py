@@ -20,7 +20,7 @@ class OffsetCounter(TypedCounter):
 
         ::
 
-            >>> f(offset_counter)
+            >>> abjad.f(offset_counter)
             abjad.OffsetCounter(
                 {
                     abjad.Offset(-2, 1): 1,
@@ -35,7 +35,7 @@ class OffsetCounter(TypedCounter):
 
         ::
 
-            >>> show(offset_counter, scale=0.5) # doctest: +SKIP
+            >>> abjad.show(offset_counter, scale=0.5) # doctest: +SKIP
 
     '''
 
@@ -78,7 +78,7 @@ class OffsetCounter(TypedCounter):
                 >>> timespan_operand = abjad.Timespan(6, 10)
                 >>> timespans = timespans - timespan_operand
                 >>> offset_counter = abjad.OffsetCounter(timespans)
-                >>> show(offset_counter, scale=0.5) # doctest: +SKIP
+                >>> abjad.show(offset_counter, scale=0.5) # doctest: +SKIP
 
         Returns LilyPond file.
         '''

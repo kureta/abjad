@@ -14,11 +14,11 @@ class TrillSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> trill = abjad.TrillSpanner()
             >>> abjad.attach(trill, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 \startTrillSpan
                 d'8
@@ -35,11 +35,11 @@ class TrillSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> trill = abjad.TrillSpanner(pitch=abjad.NamedPitch("cs'"))
             >>> abjad.attach(trill, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \pitchedTrill
                 c'8 \startTrillSpan cs'
@@ -159,11 +159,11 @@ class TrillSpanner(Spanner):
                 ...     interval=abjad.NamedInterval('m2'),
                 ...     )
                 >>> abjad.attach(trill, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \pitchedTrill
                     c'8 \startTrillSpan df'
@@ -183,11 +183,11 @@ class TrillSpanner(Spanner):
                 ...     interval=abjad.NamedInterval('M2'),
                 ...     )
                 >>> abjad.attach(trill, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \pitchedTrill
                     c'8 \startTrillSpan d'
@@ -221,11 +221,11 @@ class TrillSpanner(Spanner):
                 ...     pitch=abjad.NamedPitch("d'"),
                 ...     )
                 >>> abjad.attach(trill, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \once \override TrillPitchHead.stencil = #(lambda (grob) (grob-interpret-markup grob #{ \markup \musicglyph #"noteheads.s0harmonic" #}))
                     \pitchedTrill
@@ -257,11 +257,11 @@ class TrillSpanner(Spanner):
                 >>> pitch = abjad.NamedPitch('C#4')
                 >>> trill = abjad.TrillSpanner(pitch=pitch)
                 >>> abjad.attach(trill, staff[:2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \pitchedTrill c'8 \startTrillSpan cs'
                     d'8 \stopTrillSpan
@@ -283,11 +283,11 @@ class TrillSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> trill = abjad.TrillSpanner()
                 >>> abjad.attach(trill, staff[:2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 \startTrillSpan
                     d'8 \stopTrillSpan
@@ -324,11 +324,11 @@ class TrillSpanner(Spanner):
                 >>> pitch = abjad.NamedPitch('C#4')
                 >>> trill = abjad.TrillSpanner(pitch=pitch)
                 >>> abjad.attach(trill, staff[:2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \pitchedTrill c'8 \startTrillSpan cs'
                     d'8 \stopTrillSpan
@@ -350,11 +350,11 @@ class TrillSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> trill = abjad.TrillSpanner()
                 >>> abjad.attach(trill, staff[:2])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 \startTrillSpan
                     d'8 \stopTrillSpan

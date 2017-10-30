@@ -11,11 +11,11 @@ class PianoPedalSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> spanner = abjad.PianoPedalSpanner()
             >>> abjad.attach(spanner, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.pedalSustainStyle = #'mixed
                 c'8 \sustainOn
@@ -121,11 +121,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(kind='sustain')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'mixed
                     c'8 \sustainOn
@@ -148,11 +148,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(kind='sostenuto')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'mixed
                     c'8 \sostenutoOn
@@ -175,11 +175,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(kind='corda')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'mixed
                     c'8 \unaCorda
@@ -210,11 +210,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(style='mixed')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'mixed
                     c'8 \sustainOn
@@ -237,11 +237,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(style='bracket')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'bracket
                     c'8 \sustainOn
@@ -264,11 +264,11 @@ class PianoPedalSpanner(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> spanner = abjad.PianoPedalSpanner(style='text')
                 >>> abjad.attach(spanner, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set Staff.pedalSustainStyle = #'text
                     c'8 \sustainOn

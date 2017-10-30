@@ -14,7 +14,7 @@ class BowContactPoint(AbjadValueObject):
         ::
 
             >>> point = abjad.BowContactPoint((1, 2))
-            >>> f(point)
+            >>> abjad.f(point)
             abjad.BowContactPoint(
                 contact_point=abjad.Multiplier(1, 2),
                 )
@@ -26,7 +26,7 @@ class BowContactPoint(AbjadValueObject):
         ::
 
             >>> point = abjad.BowContactPoint((3, 5))
-            >>> f(point)
+            >>> abjad.f(point)
             abjad.BowContactPoint(
                 contact_point=abjad.Multiplier(3, 5),
                 )
@@ -151,7 +151,7 @@ class BowContactPoint(AbjadValueObject):
                                 1
                                 4
                     }
-                >>> show(indicator.markup) # doctest: +SKIP
+                >>> abjad.show(indicator.markup) # doctest: +SKIP
 
         ..  container:: example
 
@@ -168,7 +168,7 @@ class BowContactPoint(AbjadValueObject):
                                 3
                                 5
                     }
-                >>> show(indicator.markup) # doctest: +SKIP
+                >>> abjad.show(indicator.markup) # doctest: +SKIP
 
         Returns markup.
         '''

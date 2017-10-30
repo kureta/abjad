@@ -13,12 +13,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch("cs''")
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -31,12 +31,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch("aqs")
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -51,12 +51,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch('C#5')
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -69,12 +69,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch('A+3')
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -85,12 +85,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch('Aqs3')
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -105,12 +105,12 @@ class NamedPitch(Pitch):
         ::
 
             >>> pitch = abjad.NamedPitch('C#5', arrow=abjad.Up)
-            >>> show(pitch) # doctest: +SKIP
+            >>> abjad.show(pitch) # doctest: +SKIP
 
         ..  docs::
 
             >>> staff = pitch.__illustrate__()[abjad.Staff]
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -1007,11 +1007,11 @@ class NamedPitch(Pitch):
                 ...     abjad.attach(markup, note)
                 ...
                 >>> abjad.override(staff).text_script.staff_padding = 5
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #5
                 } {
@@ -1049,11 +1049,11 @@ class NamedPitch(Pitch):
                 ...     abjad.attach(markup, note)
                 ...
                 >>> abjad.override(staff).text_script.staff_padding = 5
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #5
                 } {
@@ -1092,11 +1092,11 @@ class NamedPitch(Pitch):
                 ...     abjad.attach(markup, note)
                 ...
                 >>> abjad.override(staff).text_script.staff_padding = 5
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     \override TextScript.staff-padding = #5
                 } {

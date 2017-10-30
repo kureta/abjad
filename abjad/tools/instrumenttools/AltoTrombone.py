@@ -13,11 +13,11 @@ class AltoTrombone(Instrument):
             >>> abjad.attach(clef, staff[0])
             >>> alto_trombone = abjad.AltoTrombone()
             >>> abjad.attach(alto_trombone, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { "Alto trombone" }
                 \set Staff.shortInstrumentName = \markup { "Alt. trb." }
@@ -72,7 +72,7 @@ class AltoTrombone(Instrument):
             ::
 
                 >>> alto_trombone = abjad.AltoTrombone()
-                >>> f(alto_trombone)
+                >>> abjad.f(alto_trombone)
                 abjad.AltoTrombone(
                     name='alto trombone',
                     short_name='alt. trb.',
@@ -125,7 +125,7 @@ class AltoTrombone(Instrument):
 
             ::
 
-                >>> show(alto_trombone.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(alto_trombone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -161,7 +161,7 @@ class AltoTrombone(Instrument):
 
             ::
 
-                >>> show(alto_trombone.name_markup) # doctest: +SKIP
+                >>> abjad.show(alto_trombone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -181,7 +181,7 @@ class AltoTrombone(Instrument):
 
             ::
 
-                >>> show(alto_trombone.pitch_range) # doctest: +SKIP
+                >>> abjad.show(alto_trombone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -217,7 +217,7 @@ class AltoTrombone(Instrument):
 
             ::
 
-                >>> show(alto_trombone.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(alto_trombone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

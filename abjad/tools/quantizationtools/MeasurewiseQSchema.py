@@ -18,7 +18,7 @@ class MeasurewiseQSchema(QSchema):
 
         ::
 
-            >>> f(q_schema)
+            >>> abjad.f(q_schema)
             abjad.quantizationtools.MeasurewiseQSchema(
                 search_tree=abjad.quantizationtools.UnweightedSearchTree(
                     definition={

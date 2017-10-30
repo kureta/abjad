@@ -19,7 +19,7 @@ class TypedOrderedDict(TypedCollection):
 
         ::
 
-            >>> f(dictionary)
+            >>> abjad.f(dictionary)
             abjad.TypedOrderedDict(
                 [
                     ('color', 'red'),
@@ -53,7 +53,7 @@ class TypedOrderedDict(TypedCollection):
 
         ::
 
-            >>> f(dictionary)
+            >>> abjad.f(dictionary)
             abjad.TypedOrderedDict(
                 [
                     ('color', 'red'),
@@ -87,7 +87,7 @@ class TypedOrderedDict(TypedCollection):
 
         ::
 
-            >>> f(dictionary_2)
+            >>> abjad.f(dictionary_2)
             abjad.TypedOrderedDict(
                 [
                     ('color', 'red'),

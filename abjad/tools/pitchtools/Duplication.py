@@ -13,7 +13,7 @@ class Duplication(abctools.AbjadValueObject):
 
         ::
 
-            >>> f(operator_)
+            >>> abjad.f(operator_)
             abjad.Duplication(
                 counts=2,
                 period=4,

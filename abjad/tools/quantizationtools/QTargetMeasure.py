@@ -26,7 +26,7 @@ class QTargetMeasure(AbjadObject):
 
         ::
 
-            >>> f(q_target_measure)
+            >>> abjad.f(q_target_measure)
             abjad.quantizationtools.QTargetMeasure(
                 offset_in_ms=abjad.Offset(1000, 1),
                 search_tree=abjad.quantizationtools.UnweightedSearchTree(
@@ -196,7 +196,7 @@ class QTargetMeasure(AbjadObject):
             ::
 
                 >>> for q_target_beat in q_target_measure.beats:
-                ...     f(q_target_beat)
+                ...     abjad.f(q_target_beat)
                 ...
                 abjad.quantizationtools.QTargetBeat(
                     beatspan=abjad.Duration(1, 4),

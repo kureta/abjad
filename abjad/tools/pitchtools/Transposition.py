@@ -46,7 +46,7 @@ class Transposition(AbjadValueObject):
 
                 >>> items = [0, 2, 4, 5]
                 >>> segment = abjad.PitchClassSegment(items=items)
-                >>> show(segment) # doctest: +SKIP
+                >>> abjad.show(segment) # doctest: +SKIP
 
             Example operators:
 
@@ -68,12 +68,12 @@ class Transposition(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     e'8
                     fs'8
@@ -96,12 +96,12 @@ class Transposition(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     e'8
                     fs'8

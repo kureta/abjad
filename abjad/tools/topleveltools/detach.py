@@ -9,11 +9,11 @@ def detach(prototype, component_expression=None):
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(abjad.Articulation('>'), staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 -\accent
                 d'4
@@ -25,11 +25,11 @@ def detach(prototype, component_expression=None):
 
             >>> abjad.detach(abjad.Articulation, staff[0])
             (Articulation('>'),)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4

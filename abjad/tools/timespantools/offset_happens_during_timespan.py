@@ -6,7 +6,7 @@ def offset_happens_during_timespan(timespan=None, offset=None, hold=False):
         ::
 
             >>> relation = abjad.timespantools.offset_happens_during_timespan()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

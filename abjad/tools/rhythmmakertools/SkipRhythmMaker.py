@@ -20,11 +20,11 @@ class SkipRhythmMaker(RhythmMaker):
             ...     selections,
             ...     divisions,
             ...     )
-            >>> show(lilypond_file) # doctest: +SKIP
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(lilypond_file[abjad.Staff])
+            >>> abjad.f(lilypond_file[abjad.Staff])
             \new RhythmicStaff {
                 {
                     \time 1/4
@@ -73,7 +73,7 @@ class SkipRhythmMaker(RhythmMaker):
             ::
 
                 >>> rhythm_maker = abjad.rhythmmakertools.SkipRhythmMaker()
-                >>> f(rhythm_maker)
+                >>> abjad.f(rhythm_maker)
                 abjad.rhythmmakertools.SkipRhythmMaker()
 
         Returns string.

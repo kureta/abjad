@@ -14,11 +14,11 @@ class Cello(Instrument):
             >>> abjad.attach(clef, staff[0])
             >>> cello = abjad.Cello()
             >>> abjad.attach(cello, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Cello }
                 \set Staff.shortInstrumentName = \markup { Vc. }
@@ -114,7 +114,7 @@ class Cello(Instrument):
 
             ::
 
-                >>> show(cello.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(cello.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -150,7 +150,7 @@ class Cello(Instrument):
 
             ::
 
-                >>> show(cello.name_markup) # doctest: +SKIP
+                >>> abjad.show(cello.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -170,7 +170,7 @@ class Cello(Instrument):
 
             ::
 
-                >>> show(cello.pitch_range) # doctest: +SKIP
+                >>> abjad.show(cello.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -206,7 +206,7 @@ class Cello(Instrument):
 
             ::
 
-                >>> show(cello.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(cello.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -33,7 +33,7 @@ class QEventSequence(AbjadObject):
         ::
 
             >>> for q_event in sequence:
-            ...     f(q_event)
+            ...     abjad.f(q_event)
             ...
             abjad.quantizationtools.PitchedQEvent(
                 offset=abjad.Offset(0, 1),

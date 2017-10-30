@@ -22,7 +22,7 @@ class CompoundInequality(TypedList):
 
         ::
 
-            >>> f(compound_inequality)
+            >>> abjad.f(compound_inequality)
             abjad.timespantools.CompoundInequality(
                 [
                     abjad.timespantools.CompoundInequality(

@@ -13,7 +13,7 @@ class PitchedQEvent(QEvent):
 
             >>> pitches = [0, 1, 4]
             >>> q_event = abjad.quantizationtools.PitchedQEvent(1000, pitches)
-            >>> f(q_event)
+            >>> abjad.f(q_event)
             abjad.quantizationtools.PitchedQEvent(
                 offset=abjad.Offset(1000, 1),
                 pitches=(

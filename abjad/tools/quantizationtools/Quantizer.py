@@ -28,11 +28,11 @@ class Quantizer(AbjadObject):
             >>> result = quantizer(q_event_sequence)
             >>> staff = abjad.Staff([result])
             >>> score = abjad.Score([staff])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \new Voice {
@@ -79,11 +79,11 @@ class Quantizer(AbjadObject):
             ...     )
             >>> staff = abjad.Staff([result])
             >>> score = abjad.Score([staff])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \new Voice {
@@ -162,11 +162,11 @@ class Quantizer(AbjadObject):
             ...     )
             >>> staff = abjad.Staff([result])
             >>> score = abjad.Score([staff])
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \new Voice {

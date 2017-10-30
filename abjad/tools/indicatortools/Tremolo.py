@@ -13,11 +13,11 @@ class Tremolo(AbjadValueObject):
             >>> chord = abjad.Chord("<cs' e'>4")
             >>> tremolo = abjad.Tremolo(beam_count=2)
             >>> abjad.attach(tremolo, chord)
-            >>> show(chord) # doctest: +SKIP
+            >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(chord)
+            >>> abjad.f(chord)
             \repeat tremolo 2
             {
             cs'16 e'16
@@ -32,11 +32,11 @@ class Tremolo(AbjadValueObject):
             >>> chord = abjad.Chord("<cs' e'>4")
             >>> tremolo = abjad.Tremolo(beam_count=3)
             >>> abjad.attach(tremolo, chord)
-            >>> show(chord) # doctest: +SKIP
+            >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(chord)
+            >>> abjad.f(chord)
             \repeat tremolo 4
             {
             cs'32 e'32
@@ -178,11 +178,11 @@ class Tremolo(AbjadValueObject):
                 >>> chord = abjad.Chord("<cs' e'>4")
                 >>> tremolo = abjad.Tremolo(beam_count=2)
                 >>> abjad.attach(tremolo, chord)
-                >>> show(chord) # doctest: +SKIP
+                >>> abjad.show(chord) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(chord)
+                >>> abjad.f(chord)
                 \repeat tremolo 2
                 {
                 cs'16 e'16
@@ -197,11 +197,11 @@ class Tremolo(AbjadValueObject):
                 >>> chord = abjad.Chord("<cs' e'>4")
                 >>> tremolo = abjad.Tremolo()
                 >>> abjad.attach(tremolo, chord)
-                >>> show(chord) # doctest: +SKIP
+                >>> abjad.show(chord) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(chord)
+                >>> abjad.f(chord)
                 \repeat tremolo 4
                 {
                 cs'32 e'32
@@ -228,11 +228,11 @@ class Tremolo(AbjadValueObject):
                 >>> chord = abjad.Chord("<cs' e'>4")
                 >>> tremolo = abjad.Tremolo()
                 >>> abjad.attach(tremolo, chord)
-                >>> show(chord) # doctest: +SKIP
+                >>> abjad.show(chord) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(chord)
+                >>> abjad.f(chord)
                 \repeat tremolo 4
                 {
                 cs'32 e'32
@@ -247,11 +247,11 @@ class Tremolo(AbjadValueObject):
                 >>> chord = abjad.Chord("<cs' e'>4")
                 >>> tremolo = abjad.Tremolo(is_slurred=True)
                 >>> abjad.attach(tremolo, chord)
-                >>> show(chord) # doctest: +SKIP
+                >>> abjad.show(chord) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(chord)
+                >>> abjad.f(chord)
                 \repeat tremolo 4
                 {
                 cs'32 \( e'32 \)

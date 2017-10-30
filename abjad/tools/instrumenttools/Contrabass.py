@@ -14,11 +14,11 @@ class Contrabass(Instrument):
             >>> abjad.attach(clef, staff[0])
             >>> contrabass = abjad.Contrabass()
             >>> abjad.attach(contrabass, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Contrabass }
                 \set Staff.shortInstrumentName = \markup { Cb. }
@@ -113,7 +113,7 @@ class Contrabass(Instrument):
 
             ::
 
-                >>> show(contrabass.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(contrabass.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -149,7 +149,7 @@ class Contrabass(Instrument):
 
             ::
 
-                >>> show(contrabass.name_markup) # doctest: +SKIP
+                >>> abjad.show(contrabass.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -169,7 +169,7 @@ class Contrabass(Instrument):
 
             ::
 
-                >>> show(contrabass.pitch_range) # doctest: +SKIP
+                >>> abjad.show(contrabass.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -205,7 +205,7 @@ class Contrabass(Instrument):
 
             ::
 
-                >>> show(contrabass.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(contrabass.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

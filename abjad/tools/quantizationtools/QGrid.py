@@ -20,7 +20,7 @@ class QGrid(AbjadObject):
 
         ::
 
-            >>> f(q_grid)
+            >>> abjad.f(q_grid)
             abjad.quantizationtools.QGrid(
                 root_node=abjad.quantizationtools.QGridLeaf(
                     preprolated_duration=abjad.Duration(1, 1),
@@ -56,7 +56,7 @@ class QGrid(AbjadObject):
         ::
 
             >>> for q_event_proxy in q_grid.root_node.q_event_proxies:
-            ...     f(q_event_proxy)
+            ...     abjad.f(q_event_proxy)
             ...
             abjad.quantizationtools.QEventProxy(
                 abjad.quantizationtools.PitchedQEvent(
@@ -71,7 +71,7 @@ class QGrid(AbjadObject):
         ::
 
             >>> for q_event_proxy in q_grid.next_downbeat.q_event_proxies:
-            ...     f(q_event_proxy)
+            ...     abjad.f(q_event_proxy)
             ...
             abjad.quantizationtools.QEventProxy(
                 abjad.quantizationtools.PitchedQEvent(

@@ -11,7 +11,7 @@ def parse(string, language='english'):
         ::
 
             >>> container = abjad.parse("{c'4 d'4 e'4 f'4}")
-            >>> show(container) # doctest: +SKIP
+            >>> abjad.show(container) # doctest: +SKIP
 
     ..  container:: example
 
@@ -23,7 +23,7 @@ def parse(string, language='english'):
             ...     "{c'8 des' e' fis'}",
             ...     language='nederlands',
             ...     )
-            >>> show(container) # doctest: +SKIP
+            >>> abjad.show(container) # doctest: +SKIP
 
     Returns Abjad component.
     '''

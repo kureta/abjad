@@ -10,7 +10,7 @@ class PitchInequality(AbjadValueObject):
         ::
 
             >>> inequality = abjad.PitchInequality('&', 'C4 E4')
-            >>> f(inequality)
+            >>> abjad.f(inequality)
             abjad.PitchInequality(
                 operator_string='&',
                 pitches=abjad.PitchSet(

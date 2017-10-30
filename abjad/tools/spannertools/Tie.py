@@ -13,11 +13,11 @@ class Tie(Spanner):
 
             >>> staff = abjad.Staff("c'4 c' c' c'")
             >>> abjad.attach(abjad.Tie(), staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 ~
                 c'4 ~
@@ -46,11 +46,11 @@ class Tie(Spanner):
 
             >>> staff = abjad.Staff("<c'>4 <c' d'>4 <d'>4")
             >>> abjad.attach(abjad.Tie(), staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 <c'>4 ~
                 <c' d'>4 ~
@@ -170,11 +170,11 @@ class Tie(Spanner):
                 >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
                 >>> tie = abjad.Tie(direction=abjad.Up)
                 >>> abjad.attach(tie, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 ^ ~
                     c'8 ^ ~
@@ -196,11 +196,11 @@ class Tie(Spanner):
                 >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
                 >>> tie = abjad.Tie(direction=abjad.Down)
                 >>> abjad.attach(tie, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 _ ~
                     c'8 _ ~
@@ -222,11 +222,11 @@ class Tie(Spanner):
                 >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
                 >>> tie = abjad.Tie(direction=None)
                 >>> abjad.attach(tie, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 ~
                     c'8 ~
@@ -261,11 +261,11 @@ class Tie(Spanner):
                 >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
                 >>> tie = abjad.Tie(direction=abjad.Up, use_messiaen_style_ties=True)
                 >>> abjad.attach(tie, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     c'8 ^ \repeatTie

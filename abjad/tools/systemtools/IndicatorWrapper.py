@@ -17,7 +17,7 @@ class IndicatorWrapper(AbjadValueObject):
 
         ::
 
-            >>> f(wrapper)
+            >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
                 component=abjad.Note("c'4 ^\\accent"),
                 indicator=abjad.Articulation('accent', Up),
@@ -99,7 +99,7 @@ class IndicatorWrapper(AbjadValueObject):
 
                 >>> old_staff = abjad.Staff("c'4 d'4 e'4 f'4")
                 >>> abjad.annotate(old_staff[0], 'bow_direction', abjad.Down)
-                >>> f(old_staff)
+                >>> abjad.f(old_staff)
                 \new Staff {
                     c'4
                     d'4
@@ -116,7 +116,7 @@ class IndicatorWrapper(AbjadValueObject):
             ::
 
                 >>> new_staff = abjad.mutate(old_staff).copy()
-                >>> f(new_staff)
+                >>> abjad.f(new_staff)
                 \new Staff {
                     c'4
                     d'4
@@ -140,7 +140,7 @@ class IndicatorWrapper(AbjadValueObject):
                 >>> spanner = abjad.TextSpanner()
                 >>> abjad.attach(spanner, old_staff[:])
                 >>> spanner.attach(abjad.Markup('pont.'), old_staff[0])
-                >>> f(old_staff)
+                >>> abjad.f(old_staff)
                 \new Staff {
                     c'4 ^ \markup { pont. }
                     d'4
@@ -152,7 +152,7 @@ class IndicatorWrapper(AbjadValueObject):
 
                 >>> leaf = old_staff[0]
                 >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
-                >>> f(wrapper)
+                >>> abjad.f(wrapper)
                 abjad.IndicatorWrapper(
                     component=abjad.Note("c'4 ^ \\markup { pont. }"),
                     indicator=abjad.Markup(
@@ -165,7 +165,7 @@ class IndicatorWrapper(AbjadValueObject):
             ::
 
                 >>> new_staff = abjad.mutate(old_staff).copy()
-                >>> f(new_staff)
+                >>> abjad.f(new_staff)
                 \new Staff {
                     c'4 ^ \markup { pont. }
                     d'4
@@ -177,7 +177,7 @@ class IndicatorWrapper(AbjadValueObject):
 
                 >>> leaf = new_staff[0]
                 >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
-                >>> f(wrapper)
+                >>> abjad.f(wrapper)
                 abjad.IndicatorWrapper(
                     component=abjad.Note("c'4 ^ \\markup { pont. }"),
                     indicator=abjad.Markup(

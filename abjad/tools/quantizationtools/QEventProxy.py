@@ -13,7 +13,7 @@ class QEventProxy(AbjadObject):
 
             >>> q_event = abjad.quantizationtools.PitchedQEvent(130, [0, 1, 4])
             >>> proxy = abjad.quantizationtools.QEventProxy(q_event, 0.5)
-            >>> f(proxy)
+            >>> abjad.f(proxy)
             abjad.quantizationtools.QEventProxy(
                 abjad.quantizationtools.PitchedQEvent(
                     offset=abjad.Offset(130, 1),

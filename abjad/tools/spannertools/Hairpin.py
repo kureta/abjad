@@ -18,11 +18,11 @@ class Hairpin(Spanner):
             ...     include_rests=False,
             ...     )
             >>> abjad.attach(hairpin, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 r4
                 c'8 \< \p
@@ -42,11 +42,11 @@ class Hairpin(Spanner):
             ...     include_rests=False,
             ...     )
             >>> abjad.attach(hairpin, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 r4
                 c'8 \> \f
@@ -68,11 +68,11 @@ class Hairpin(Spanner):
             ...     include_rests=False,
             ...     )
             >>> abjad.attach(hairpin, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \once \override Hairpin.circled-tip = ##t
                 c'4 \<
@@ -91,11 +91,11 @@ class Hairpin(Spanner):
             ...     include_rests=False,
             ...     )
             >>> abjad.attach(hairpin, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \once \override Hairpin.circled-tip = ##t
                 c'4 \> \f
@@ -453,7 +453,7 @@ class Hairpin(Spanner):
                 >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -480,11 +480,11 @@ class Hairpin(Spanner):
                 ...     direction=abjad.Up,
                 ...     )
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 r4
                 c'8 ^ \< ^ \p
@@ -523,11 +523,11 @@ class Hairpin(Spanner):
                 ...     include_rests=True,
                 ...     )
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 r4 \< \p
                 c'8
@@ -549,11 +549,11 @@ class Hairpin(Spanner):
                 >>> staff = abjad.Staff(abjad.Rest((1, 8)) * 4 + [abjad.Note(n, (1, 8)) for n in range(4, 8)])
                 >>> crescendo = abjad.Hairpin('<', include_rests=False)
                 >>> abjad.attach(crescendo, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     r8
                     r8
@@ -575,7 +575,7 @@ class Hairpin(Spanner):
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 \<
                     cs'8
@@ -604,7 +604,7 @@ class Hairpin(Spanner):
                 >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -628,7 +628,7 @@ class Hairpin(Spanner):
                 >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -652,7 +652,7 @@ class Hairpin(Spanner):
                 >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
                 >>> hairpin = abjad.Hairpin(descriptor='p < f')
                 >>> abjad.attach(hairpin, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -680,11 +680,11 @@ class Hairpin(Spanner):
                 >>> hairpin.attach(abjad.Dynamic('p'), hairpin[4])
                 >>> hairpin.attach(abjad.Dynamic('f'), hairpin[6])
                 >>> hairpin.attach(abjad.Dynamic('p'), hairpin[8])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 \< \p
                     d'8

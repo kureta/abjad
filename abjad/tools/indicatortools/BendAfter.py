@@ -13,11 +13,11 @@ class BendAfter(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> bend = abjad.BendAfter(-4)
             >>> abjad.attach(bend, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 - \bendAfter #'-4.0
 
     ..  container:: example
@@ -29,11 +29,11 @@ class BendAfter(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> bend = abjad.BendAfter(2)
             >>> abjad.attach(bend, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4 - \bendAfter #'2.0
 
     ..  container:: example

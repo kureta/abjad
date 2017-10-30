@@ -6,7 +6,7 @@ def timespan_2_delays_timespan_1(timespan_1=None, timespan_2=None, hold=False):
         ::
 
             >>> relation = abjad.timespantools.timespan_2_delays_timespan_1()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

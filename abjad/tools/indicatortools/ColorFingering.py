@@ -20,11 +20,11 @@ class ColorFingering(AbjadValueObject):
 
         ::
 
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4
                 ^ \markup {
                     \override
@@ -46,11 +46,11 @@ class ColorFingering(AbjadValueObject):
 
         ::
 
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4
                 ^ \markup {
                     \override
@@ -95,7 +95,7 @@ class ColorFingering(AbjadValueObject):
         ::
 
             >>> fingering = abjad.ColorFingering(1)
-            >>> f(fingering)
+            >>> abjad.f(fingering)
             abjad.ColorFingering(
                 number=1,
                 )
@@ -193,7 +193,7 @@ class ColorFingering(AbjadValueObject):
                             \finger
                                 1
                     }
-                >>> show(fingering.markup) # doctest: +SKIP
+                >>> abjad.show(fingering.markup) # doctest: +SKIP
 
         ..  container:: example
 
@@ -210,7 +210,7 @@ class ColorFingering(AbjadValueObject):
                             \finger
                                 2
                     }
-                >>> show(fingering.markup) # doctest: +SKIP
+                >>> abjad.show(fingering.markup) # doctest: +SKIP
 
         Returns markup.
         '''

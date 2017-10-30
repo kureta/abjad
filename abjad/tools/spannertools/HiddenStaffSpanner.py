@@ -11,11 +11,11 @@ class HiddenStaffSpanner(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> spanner = abjad.HiddenStaffSpanner()
             >>> abjad.attach(spanner, staff[1:3])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8
                 \stopStaff

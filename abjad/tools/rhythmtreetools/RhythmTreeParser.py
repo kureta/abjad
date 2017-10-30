@@ -26,7 +26,7 @@ class RhythmTreeParser(Parser):
 
         ::
 
-            >>> f(rhythm_tree_container)
+            >>> abjad.f(rhythm_tree_container)
             abjad.rhythmtreetools.RhythmTreeContainer(
                 children=(
                     abjad.rhythmtreetools.RhythmTreeLeaf(
@@ -76,11 +76,11 @@ class RhythmTreeParser(Parser):
             >>> base_duration = (1, 4)
             >>> component_list = rhythm_tree_container(base_duration)
             >>> tuplet = component_list[0]
-            >>> show(tuplet) # doctest: +SKIP
+            >>> abjad.show(tuplet) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(tuplet)
+            >>> abjad.f(tuplet)
             \tweak text #tuplet-number::calc-fraction-text
             \times 3/4 {
                 c'2

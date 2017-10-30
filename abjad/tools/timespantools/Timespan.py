@@ -131,7 +131,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> timespan = abjad.Timespan(0, 10)
-            >>> f(timespan)
+            >>> abjad.f(timespan)
             abjad.Timespan(
                 start_offset=abjad.Offset(0, 1),
                 stop_offset=abjad.Offset(10, 1),
@@ -333,7 +333,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 | timespan_2
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -346,7 +346,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 | timespan_3
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -359,7 +359,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 | timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -372,7 +372,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_2 | timespan_3
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -389,7 +389,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_2 | timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -402,7 +402,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_3 | timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -603,7 +603,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 ^ timespan_2
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -620,7 +620,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 ^ timespan_3
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -637,7 +637,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_1 ^ timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -654,7 +654,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_2 ^ timespan_3
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -671,7 +671,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_2 ^ timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -688,7 +688,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> new_timespan = timespan_3 ^ timespan_4
-            >>> f(new_timespan)
+            >>> abjad.f(new_timespan)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -1562,7 +1562,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> result = timespan.split_at_offsets((1, 3, 7))
-            >>> f(result)
+            >>> abjad.f(result)
             abjad.TimespanList(
                 [
                     abjad.Timespan(
@@ -1589,7 +1589,7 @@ class Timespan(BoundedObject):
         ::
 
             >>> result = timespan.split_at_offsets((-100,))
-            >>> f(result)
+            >>> abjad.f(result)
             abjad.TimespanList(
                 [
                     abjad.Timespan(

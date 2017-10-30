@@ -11,7 +11,7 @@ def timespan_2_contains_timespan_1_improperly(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_contains_timespan_1_improperly()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -30,7 +30,7 @@ def timespan_2_contains_timespan_1_improperly(
             ...     r"c'8. \p \< fs'16 a'4 af'8 \f \> g'8 ~ g'16 f' e' ef' \p",
             ...     )
             >>> timespan_1 = abjad.Timespan((1, 4), (3, 8))
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ::
 
@@ -44,7 +44,7 @@ def timespan_2_contains_timespan_1_improperly(
         ::
 
             >>> abjad.label(selected_notes).color_leaves('red')
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
     Returns time relation or boolean.
     '''

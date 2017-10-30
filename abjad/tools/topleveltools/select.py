@@ -14,11 +14,11 @@ def select(items=None):
 
         ::
 
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \once \override NoteHead.color = #red
                 c'4

@@ -299,11 +299,11 @@ class Scale(PitchClassSegment):
                 >>> scale = abjad.tonalanalysistools.Scale(('c', 'major'))
                 >>> notes = scale.make_notes(8)
                 >>> staff = abjad.Staff(notes)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8
                     d'8
@@ -333,11 +333,11 @@ class Scale(PitchClassSegment):
 
                 >>> scale = abjad.tonalanalysistools.Scale(('E', 'major'))
                 >>> score = scale.make_score()
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score \with {
                     tempoWholesPerMinute = #(ly:make-moment 30 1)
                 } <<

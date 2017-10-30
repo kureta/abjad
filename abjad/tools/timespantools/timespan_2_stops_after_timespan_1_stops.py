@@ -11,7 +11,7 @@ def timespan_2_stops_after_timespan_1_stops(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_stops_after_timespan_1_stops()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

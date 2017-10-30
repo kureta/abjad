@@ -78,7 +78,7 @@ class Scheme(AbjadValueObject):
             >>> function_2 = 'tuplet-number::calc-denominator-text'
             >>> string = abjad.Scheme('4', force_quotes=True)
             >>> scheme = abjad.Scheme([function_1, function_2, string])
-            >>> f(scheme)
+            >>> abjad.f(scheme)
             abjad.Scheme(
                 [
                     'tuplet-number::append-note-wrapper',
@@ -107,7 +107,7 @@ class Scheme(AbjadValueObject):
             >>> string = '(lambda (grob) (grob-interpret-markup grob'
             >>> string += r' #{ \markup \musicglyph #"noteheads.s0harmonic" #}))'
             >>> scheme = abjad.Scheme(string, verbatim=True)
-            >>> f(scheme)
+            >>> abjad.f(scheme)
             abjad.Scheme(
                 '(lambda (grob) (grob-interpret-markup grob #{ \\markup \\musicglyph #"noteheads.s0harmonic" #}))',
                 verbatim=True,
@@ -286,7 +286,7 @@ class Scheme(AbjadValueObject):
 
             ::
 
-                >>> f(scheme)
+                >>> abjad.f(scheme)
                 abjad.Scheme(
                     'foo'
                     )

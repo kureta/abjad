@@ -13,11 +13,11 @@ class LilyPondComment(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> comment = abjad.LilyPondComment('a comment')
             >>> abjad.attach(comment, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             % a comment
             c'4
 
@@ -30,11 +30,11 @@ class LilyPondComment(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> comment = abjad.LilyPondComment('yet another comment')
             >>> abjad.attach(comment, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             % yet another comment
             c'4
 

@@ -290,11 +290,11 @@ class RootedChordClass(PitchClassSet):
             ::
 
                 >>> markup = abjad.tonalanalysistools.RootedChordClass('g', 'dominant', 7).markup
-                >>> show(markup) # doctest: +SKIP
+                >>> abjad.show(markup) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 _ \markup {
                     \fontsize
                         #1

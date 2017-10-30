@@ -11,11 +11,11 @@ class ClarinetInA(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> clarinet = abjad.ClarinetInA()
             >>> abjad.attach(clarinet, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { "Clarinet in A" }
                 \set Staff.shortInstrumentName = \markup {
@@ -92,7 +92,7 @@ class ClarinetInA(Instrument):
 
             ::
 
-                >>> show(clarinet.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(clarinet.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -128,7 +128,7 @@ class ClarinetInA(Instrument):
 
             ::
 
-                >>> show(clarinet.name_markup) # doctest: +SKIP
+                >>> abjad.show(clarinet.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -148,7 +148,7 @@ class ClarinetInA(Instrument):
 
             ::
 
-                >>> show(clarinet.pitch_range) # doctest: +SKIP
+                >>> abjad.show(clarinet.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -184,7 +184,7 @@ class ClarinetInA(Instrument):
 
             ::
 
-                >>> show(clarinet.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(clarinet.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

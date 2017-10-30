@@ -11,7 +11,7 @@ def timespan_2_starts_before_timespan_1_starts(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_starts_before_timespan_1_starts()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

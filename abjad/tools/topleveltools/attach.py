@@ -17,11 +17,11 @@ def attach(
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(abjad.Clef('alto'), staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \clef "alto"
                 c'4
@@ -38,11 +38,11 @@ def attach(
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(abjad.Articulation('>'), staff[-1])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                 d'4

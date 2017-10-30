@@ -64,7 +64,7 @@ class SchemePair(Scheme):
 
             ::
 
-                >>> f(scheme_pair)
+                >>> abjad.f(scheme_pair)
                 abjad.SchemePair((-1, 1))
 
         Set `format_specification` to `''`, `'lilypond'` or `'storage'`.

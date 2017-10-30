@@ -11,11 +11,11 @@ class SopranoVoice(Instrument):
             >>> staff = abjad.Staff("c''4 d''4 e''4 fs''4")
             >>> soprano = abjad.SopranoVoice()
             >>> abjad.attach(soprano, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Soprano }
                 \set Staff.shortInstrumentName = \markup { Sop. }
@@ -91,7 +91,7 @@ class SopranoVoice(Instrument):
 
             ::
 
-                >>> show(soprano.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(soprano.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -127,7 +127,7 @@ class SopranoVoice(Instrument):
 
             ::
 
-                >>> show(soprano.name_markup) # doctest: +SKIP
+                >>> abjad.show(soprano.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -147,7 +147,7 @@ class SopranoVoice(Instrument):
 
             ::
 
-                >>> show(soprano.pitch_range) # doctest: +SKIP
+                >>> abjad.show(soprano.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -183,7 +183,7 @@ class SopranoVoice(Instrument):
 
             ::
 
-                >>> show(soprano.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(soprano.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

@@ -12,11 +12,11 @@ class Glissando(Spanner):
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
             >>> glissando = abjad.Glissando()
             >>> abjad.attach(glissando, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 \glissando
                 d'8 \glissando
@@ -35,11 +35,11 @@ class Glissando(Spanner):
             >>> abjad.attach(bend_after, staff[1])
             >>> glissando = abjad.Glissando()
             >>> abjad.attach(glissando, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'8 \glissando
                 d'8 - \bendAfter #'-4.0
@@ -180,11 +180,11 @@ class Glissando(Spanner):
                 ...     allow_repeat_pitches=False,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8
                     a8 \glissando
@@ -209,11 +209,11 @@ class Glissando(Spanner):
                 ...     allow_repeat_pitches=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8 \glissando
                     a8 \glissando
@@ -237,11 +237,11 @@ class Glissando(Spanner):
                 ...     allow_ties=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8 \glissando
                     a8 \glissando
@@ -275,11 +275,11 @@ class Glissando(Spanner):
                 ...     allow_repeat_pitches=False,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8
                     a8 \glissando
@@ -304,11 +304,11 @@ class Glissando(Spanner):
                 ...     allow_repeat_pitches=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8 \glissando
                     a8 \glissando
@@ -332,11 +332,11 @@ class Glissando(Spanner):
                 ...     allow_ties=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8 \glissando
                     a8 \glissando
@@ -369,11 +369,11 @@ class Glissando(Spanner):
                 >>> staff = abjad.Staff("a8 a8 b8 ~ b8 c'8 c'8 d'8 ~ d'8")
                 >>> glissando = abjad.Glissando()
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8
                     a8 \glissando
@@ -399,11 +399,11 @@ class Glissando(Spanner):
                 ...     parenthesize_repeated_pitches=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8 \glissando
                     \parenthesize
@@ -430,11 +430,11 @@ class Glissando(Spanner):
                 ...     parenthesize_repeated_pitches=True,
                 ...     )
                 >>> abjad.attach(glissando, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     a8
                     \parenthesize

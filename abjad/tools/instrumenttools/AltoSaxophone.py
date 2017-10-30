@@ -11,11 +11,11 @@ class AltoSaxophone(Instrument):
             >>> staff = abjad.Staff("c'4 d'4 e'4 fs'4")
             >>> alto_saxophone = abjad.AltoSaxophone()
             >>> abjad.attach(alto_saxophone, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { "Alto saxophone" }
                 \set Staff.shortInstrumentName = \markup { "Alt. sax." }
@@ -70,7 +70,7 @@ class AltoSaxophone(Instrument):
             ::
 
                 >>> alto_sax = abjad.AltoSaxophone()
-                >>> f(alto_sax)
+                >>> abjad.f(alto_sax)
                 abjad.AltoSaxophone(
                     name='alto saxophone',
                     short_name='alt. sax.',
@@ -123,7 +123,7 @@ class AltoSaxophone(Instrument):
 
             ::
 
-                >>> show(alto_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(alto_saxophone.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -159,7 +159,7 @@ class AltoSaxophone(Instrument):
 
             ::
 
-                >>> show(alto_saxophone.name_markup) # doctest: +SKIP
+                >>> abjad.show(alto_saxophone.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -179,7 +179,7 @@ class AltoSaxophone(Instrument):
 
             ::
 
-                >>> show(alto_saxophone.pitch_range) # doctest: +SKIP
+                >>> abjad.show(alto_saxophone.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -215,7 +215,7 @@ class AltoSaxophone(Instrument):
 
             ::
 
-                >>> show(alto_saxophone.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(alto_saxophone.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

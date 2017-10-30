@@ -11,7 +11,7 @@ def timespan_2_overlaps_start_of_timespan_1(
         ::
 
             >>> relation = abjad.timespantools.timespan_2_overlaps_start_of_timespan_1()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.TimespanTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

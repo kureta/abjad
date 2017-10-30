@@ -11,7 +11,7 @@ class Tuning(AbjadValueObject):
         ::
 
             >>> indicator = abjad.Tuning(pitches=('G3', 'D4', 'A4', 'E5'))
-            >>> f(indicator)
+            >>> abjad.f(indicator)
             abjad.Tuning(
                 pitches=abjad.PitchSegment(
                     (
@@ -257,7 +257,7 @@ class Tuning(AbjadValueObject):
 
                 >>> indicator = abjad.Tuning(pitches=('G3', 'D4', 'A4', 'E5'))
                 >>> pitches = indicator.pitches
-                >>> f(pitches)
+                >>> abjad.f(pitches)
                 abjad.PitchSegment(
                     (
                         abjad.NamedPitch('g'),

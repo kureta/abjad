@@ -27,7 +27,7 @@ class QTargetBeat(AbjadObject):
 
         ::
 
-            >>> f(q_target_beat)
+            >>> abjad.f(q_target_beat)
             abjad.quantizationtools.QTargetBeat(
                 beatspan=abjad.Duration(1, 8),
                 offset_in_ms=abjad.Offset(1500, 1),

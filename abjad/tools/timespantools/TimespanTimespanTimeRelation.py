@@ -17,7 +17,7 @@ class TimespanTimespanTimeRelation(TimeRelation):
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \times 2/3 {
@@ -44,7 +44,7 @@ class TimespanTimespanTimeRelation(TimeRelation):
 
         ::
 
-            >>> show(score) # doctest: +SKIP
+            >>> abjad.show(score) # doctest: +SKIP
 
     ..  container:: example
 
@@ -172,7 +172,7 @@ class TimespanTimespanTimeRelation(TimeRelation):
 
             ::
 
-                >>> f(time_relation)
+                >>> abjad.f(time_relation)
                 abjad.timespantools.TimespanTimespanTimeRelation(
                     inequality=abjad.timespantools.CompoundInequality(
                         [

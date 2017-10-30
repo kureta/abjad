@@ -22,7 +22,7 @@ class ColorMap(AbjadValueObject):
 
         ::
 
-            >>> f(color_map)
+            >>> abjad.f(color_map)
             abjad.ColorMap(
                 colors=['red', 'green', 'blue'],
                 pitch_iterables=[
@@ -76,7 +76,7 @@ class ColorMap(AbjadValueObject):
 
             ::
 
-                >>> f(color_map)
+                >>> abjad.f(color_map)
                 abjad.ColorMap(
                     colors=['red', 'green', 'blue'],
                     pitch_iterables=[

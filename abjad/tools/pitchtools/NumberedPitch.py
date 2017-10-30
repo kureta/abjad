@@ -13,11 +13,11 @@ class NumberedPitch(Pitch):
         ::
 
             >>> numbered_pitch = abjad.NumberedPitch(13)
-            >>> show(numbered_pitch) # doctest: +SKIP
+            >>> abjad.show(numbered_pitch) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(numbered_pitch.__illustrate__()[abjad.Staff])
+            >>> abjad.f(numbered_pitch.__illustrate__()[abjad.Staff])
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -32,11 +32,11 @@ class NumberedPitch(Pitch):
         ::
 
             >>> numbered_pitch = abjad.NumberedPitch(abjad.NumberedPitch(13))
-            >>> show(numbered_pitch) # doctest: +SKIP
+            >>> abjad.show(numbered_pitch) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(numbered_pitch.__illustrate__()[abjad.Staff])
+            >>> abjad.f(numbered_pitch.__illustrate__()[abjad.Staff])
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {
@@ -51,11 +51,11 @@ class NumberedPitch(Pitch):
         ::
 
             >>> numbered_pitch = abjad.NumberedPitch((1, 5))
-            >>> show(numbered_pitch) # doctest: +SKIP
+            >>> abjad.show(numbered_pitch) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(numbered_pitch.__illustrate__()[abjad.Staff])
+            >>> abjad.f(numbered_pitch.__illustrate__()[abjad.Staff])
             \new Staff \with {
                 \override TimeSignature.stencil = ##f
             } {

@@ -13,11 +13,11 @@ class BassVoice(Instrument):
             >>> abjad.attach(bass, staff[0])
             >>> clef = abjad.Clef('bass')
             >>> abjad.attach(clef, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 \set Staff.instrumentName = \markup { Bass }
                 \set Staff.shortInstrumentName = \markup { Bass }
@@ -92,7 +92,7 @@ class BassVoice(Instrument):
 
             ::
 
-                >>> show(bass.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(bass.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -128,7 +128,7 @@ class BassVoice(Instrument):
 
             ::
 
-                >>> show(bass.name_markup) # doctest: +SKIP
+                >>> abjad.show(bass.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -148,7 +148,7 @@ class BassVoice(Instrument):
 
             ::
 
-                >>> show(bass.pitch_range) # doctest: +SKIP
+                >>> abjad.show(bass.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -184,7 +184,7 @@ class BassVoice(Instrument):
 
             ::
 
-                >>> show(bass.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(bass.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

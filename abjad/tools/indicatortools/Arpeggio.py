@@ -13,11 +13,11 @@ class Arpeggio(AbjadValueObject):
             >>> chord = abjad.Chord("<c' e' g' c''>4")
             >>> arpeggio = abjad.Arpeggio()
             >>> abjad.attach(arpeggio, chord)
-            >>> show(chord) # doctest: +SKIP
+            >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(chord)
+            >>> abjad.f(chord)
             <c' e' g' c''>4 \arpeggio
 
     ..  container:: example
@@ -29,11 +29,11 @@ class Arpeggio(AbjadValueObject):
             >>> chord = abjad.Chord("<c' e' g' c''>4")
             >>> arpeggio = abjad.Arpeggio(direction=abjad.Down)
             >>> abjad.attach(arpeggio, chord)
-            >>> show(chord) # doctest: +SKIP
+            >>> abjad.show(chord) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(chord)
+            >>> abjad.f(chord)
             \arpeggioArrowDown
             <c' e' g' c''>4 \arpeggio
 

@@ -11,7 +11,7 @@ def offset_happens_after_timespan_stops(
         ::
 
             >>> relation = abjad.timespantools.offset_happens_after_timespan_stops()
-            >>> f(relation)
+            >>> abjad.f(relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

@@ -10,7 +10,7 @@ class BeatwiseQSchemaItem(QSchemaItem):
     ::
 
         >>> q_schema_item = abjad.quantizationtools.BeatwiseQSchemaItem()
-        >>> f(q_schema_item)
+        >>> abjad.f(q_schema_item)
         abjad.quantizationtools.BeatwiseQSchemaItem()
 
     ..  container:: example
@@ -22,7 +22,7 @@ class BeatwiseQSchemaItem(QSchemaItem):
             >>> q_schema_item = abjad.quantizationtools.BeatwiseQSchemaItem(
             ...     tempo=((1, 4), 60),
             ...     )
-            >>> f(q_schema_item)
+            >>> abjad.f(q_schema_item)
             abjad.quantizationtools.BeatwiseQSchemaItem(
                 tempo=abjad.MetronomeMark(
                     reference_duration=abjad.Duration(1, 4),
@@ -39,7 +39,7 @@ class BeatwiseQSchemaItem(QSchemaItem):
             >>> q_schema_item = abjad.quantizationtools.BeatwiseQSchemaItem(
             ...     beatspan=(1, 8),
             ...     )
-            >>> f(q_schema_item)
+            >>> abjad.f(q_schema_item)
             abjad.quantizationtools.BeatwiseQSchemaItem(
                 beatspan=abjad.Duration(1, 8),
                 )

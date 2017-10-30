@@ -87,12 +87,12 @@ class MetronomeMarkDictionary(TypedOrderedDict):
 
             ::
 
-                >>> show(marks) # doctest: +SKIP
+                >>> abjad.show(marks) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = marks.__illustrate__()
-                >>> f(lilypond_file[abjad.Score])
+                >>> abjad.f(lilypond_file[abjad.Score])
                 \new Score \with {
                     \override BarLine.transparent = ##t
                     \override BarNumber.stencil = ##f

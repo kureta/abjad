@@ -47,7 +47,7 @@ class InterpolationSpecifier(AbjadValueObject):
                 ...     written_duration=(1, 16),
                 ...     )
                 >>> specifier = specifier.reverse()
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.InterpolationSpecifier(
                     start_duration=abjad.Duration(1, 16),
                     stop_duration=abjad.Duration(1, 4),
@@ -66,7 +66,7 @@ class InterpolationSpecifier(AbjadValueObject):
                 ...     written_duration=(1, 16),
                 ...     )
                 >>> specifier = specifier.reverse()
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.InterpolationSpecifier(
                     start_duration=abjad.Duration(1, 4),
                     stop_duration=abjad.Duration(1, 16),

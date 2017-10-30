@@ -14,7 +14,7 @@ class MeterList(TypedList):
 
         ::
 
-            >>> f(meters)
+            >>> abjad.f(meters)
             abjad.MeterList(
                 [
                     abjad.Meter(
@@ -31,7 +31,7 @@ class MeterList(TypedList):
 
         ::
 
-            >>> show(meters, scale=0.5) # doctest: +SKIP
+            >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
 
     '''
 
@@ -51,12 +51,12 @@ class MeterList(TypedList):
                 >>> meters = abjad.MeterList([
                 ...     (3, 4), (5, 16), (7, 8),
                 ...     ])
-                >>> show(meters, scale=0.5) # doctest: +SKIP
+                >>> abjad.show(meters, scale=0.5) # doctest: +SKIP
 
             ..  doctest
 
                 >>> lilypond_file = meters.__illustrate__()
-                >>> f(lilypond_file)
+                >>> abjad.f(lilypond_file)
                 \version "..."
                 \language "english"
                 <BLANKLINE>

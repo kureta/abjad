@@ -14,11 +14,11 @@ class MultipartBeam(Beam):
             >>> beam = abjad.MultipartBeam()
             >>> abjad.attach(beam, staff[:])
             >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -38,11 +38,11 @@ class MultipartBeam(Beam):
             >>> beam = abjad.MultipartBeam()
             >>> abjad.attach(beam, staff[:])
             >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -168,11 +168,11 @@ class MultipartBeam(Beam):
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> beam = abjad.MultipartBeam()
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -198,11 +198,11 @@ class MultipartBeam(Beam):
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> beam = abjad.MultipartBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -228,11 +228,11 @@ class MultipartBeam(Beam):
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> beam = abjad.MultipartBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -258,11 +258,11 @@ class MultipartBeam(Beam):
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> beam = abjad.MultipartBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {

@@ -17,11 +17,11 @@ class Harpsichord(Instrument):
             >>> harpsichord = abjad.Harpsichord()
             >>> abjad.attach(harpsichord, staff_group[0][0])
             >>> abjad.attach(abjad.Clef('bass'), lower_staff[0])
-            >>> show(staff_group) # doctest: +SKIP
+            >>> abjad.show(staff_group) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff_group)
+            >>> abjad.f(staff_group)
             \new PianoStaff <<
                 \new Staff {
                     \set PianoStaff.instrumentName = \markup { Harpsichord }
@@ -119,7 +119,7 @@ class Harpsichord(Instrument):
 
             ::
 
-                >>> show(harpsichord.middle_c_sounding_pitch) # doctest: +SKIP
+                >>> abjad.show(harpsichord.middle_c_sounding_pitch) # doctest: +SKIP
 
         Returns named pitch.
         '''
@@ -155,7 +155,7 @@ class Harpsichord(Instrument):
 
             ::
 
-                >>> show(harpsichord.name_markup) # doctest: +SKIP
+                >>> abjad.show(harpsichord.name_markup) # doctest: +SKIP
 
         Returns markup.
         '''
@@ -175,7 +175,7 @@ class Harpsichord(Instrument):
 
             ::
 
-                >>> show(harpsichord.pitch_range) # doctest: +SKIP
+                >>> abjad.show(harpsichord.pitch_range) # doctest: +SKIP
 
         Returns pitch range.
         '''
@@ -211,7 +211,7 @@ class Harpsichord(Instrument):
 
             ::
 
-                >>> show(harpsichord.short_name_markup) # doctest: +SKIP
+                >>> abjad.show(harpsichord.short_name_markup) # doctest: +SKIP
 
         Returns markup.
         '''

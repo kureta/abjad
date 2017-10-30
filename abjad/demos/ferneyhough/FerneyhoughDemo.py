@@ -26,11 +26,11 @@ class FerneyhoughDemo(object):
 
         ::
 
-            >>> show(lilypond_file) # doctest: +SKIP
+            >>> abjad.show(lilypond_file) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(lilypond_file[abjad.Score])
+            >>> abjad.f(lilypond_file[abjad.Score])
             \new Score \with {
                 \override BarLine.stencil = ##f
                 \override BarNumber.transparent = ##t

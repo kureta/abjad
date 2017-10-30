@@ -18,7 +18,7 @@ class OffsetTimespanTimeRelation(TimeRelation):
 
         ::
 
-            >>> f(time_relation)
+            >>> abjad.f(time_relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [
@@ -129,7 +129,7 @@ class OffsetTimespanTimeRelation(TimeRelation):
             ...     timespan=timespan,
             ...     hold=True,
             ...     )
-            >>> f(time_relation)
+            >>> abjad.f(time_relation)
             abjad.timespantools.OffsetTimespanTimeRelation(
                 inequality=abjad.timespantools.CompoundInequality(
                     [

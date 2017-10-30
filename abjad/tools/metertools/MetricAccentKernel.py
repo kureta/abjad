@@ -130,7 +130,7 @@ class MetricAccentKernel(AbjadValueObject):
 
             ..  docs::
 
-                >>> f(score)
+                >>> abjad.f(score)
                 \new Score <<
                     \new Staff {
                         c'8
@@ -148,7 +148,7 @@ class MetricAccentKernel(AbjadValueObject):
 
             ::
 
-                >>> show(score) # doctest: +SKIP
+                >>> abjad.show(score) # doctest: +SKIP
 
             ::
 

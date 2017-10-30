@@ -16,11 +16,11 @@ class BeamSpecifier(AbjadValueObject):
             >>> selections = [staff[:4], staff[4:]]
             >>> specifier = abjad.rhythmmakertools.BeamSpecifier()
             >>> specifier(selections)
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \context Staff = "RhythmicStaff" \with {
                 autoBeaming = ##f
             } {
@@ -134,7 +134,7 @@ class BeamSpecifier(AbjadValueObject):
             ::
 
                 >>> specifier = abjad.rhythmmakertools.BeamSpecifier()
-                >>> f(specifier)
+                >>> abjad.f(specifier)
                 abjad.rhythmmakertools.BeamSpecifier(
                     beam_each_division=True,
                     )
@@ -185,11 +185,11 @@ class BeamSpecifier(AbjadValueObject):
                 >>> selections = [staff[:4], staff[4:]]
                 >>> specifier = abjad.rhythmmakertools.BeamSpecifier()
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -220,11 +220,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=False,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -273,11 +273,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -345,11 +345,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_each_division=False,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -380,11 +380,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=False,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -415,11 +415,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -467,11 +467,11 @@ class BeamSpecifier(AbjadValueObject):
                 >>> selections = [staff[:4], staff[4:]]
                 >>> specifier = abjad.rhythmmakertools.BeamSpecifier()
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -501,11 +501,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -535,11 +535,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -590,11 +590,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=False,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -642,11 +642,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     hide_nibs=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -688,11 +688,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     beam_rests=True,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {
@@ -723,11 +723,11 @@ class BeamSpecifier(AbjadValueObject):
                 ...     stemlet_length=2,
                 ...     )
                 >>> specifier(selections)
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \context Staff = "RhythmicStaff" \with {
                     autoBeaming = ##f
                 } {

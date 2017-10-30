@@ -40,11 +40,11 @@ class MarkupCommand(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> markup = abjad.Markup(combine)
             >>> abjad.attach(markup, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(note)
+            >>> abjad.f(note)
             c'4
                 - \markup {
                     \combine
@@ -82,7 +82,7 @@ class MarkupCommand(AbjadValueObject):
 
         ::
 
-            >>> f(command)
+            >>> abjad.f(command)
             \score
                 {
                     \new Staff \with {
@@ -106,11 +106,11 @@ class MarkupCommand(AbjadValueObject):
             >>> markup = abjad.Markup(contents=command, direction=abjad.Up)
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
             >>> abjad.attach(markup, staff[0])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4
                     ^ \markup {
@@ -445,7 +445,7 @@ class MarkupCommand(AbjadValueObject):
 
             ::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \column
                         {
@@ -469,7 +469,7 @@ class MarkupCommand(AbjadValueObject):
 
             ::
 
-                >>> f(markup)
+                >>> abjad.f(markup)
                 \markup {
                     \column
                         {

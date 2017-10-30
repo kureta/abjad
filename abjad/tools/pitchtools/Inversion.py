@@ -48,7 +48,7 @@ class Inversion(AbjadValueObject):
 
                 >>> items = [0, 2, 4, 5]
                 >>> segment = abjad.PitchClassSegment(items=items)
-                >>> show(segment) # doctest: +SKIP
+                >>> abjad.show(segment) # doctest: +SKIP
 
             Example operators:
 
@@ -70,12 +70,12 @@ class Inversion(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     a'8
                     g'8
@@ -98,12 +98,12 @@ class Inversion(AbjadValueObject):
             ::
 
                 >>> segment_ = operator(segment)
-                >>> show(segment_) # doctest: +SKIP
+                >>> abjad.show(segment_) # doctest: +SKIP
 
             ..  docs::
 
                 >>> lilypond_file = segment_.__illustrate__()
-                >>> f(lilypond_file[abjad.Voice])
+                >>> abjad.f(lilypond_file[abjad.Voice])
                 \new Voice {
                     ef'8
                     cs'8
@@ -119,7 +119,7 @@ class Inversion(AbjadValueObject):
 
             ::
 
-                >>> f(operator)
+                >>> abjad.f(operator)
                 abjad.CompoundOperator(
                     operators=[
                         abjad.Inversion(),

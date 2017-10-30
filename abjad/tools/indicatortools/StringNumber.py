@@ -12,7 +12,7 @@ class StringNumber(AbjadValueObject):
         ::
 
             >>> indicator = abjad.StringNumber(1)
-            >>> f(indicator)
+            >>> abjad.f(indicator)
             abjad.StringNumber(
                 numbers=(1,),
                 )
@@ -24,7 +24,7 @@ class StringNumber(AbjadValueObject):
         ::
 
             >>> indicator = abjad.StringNumber((2, 3))
-            >>> f(indicator)
+            >>> abjad.f(indicator)
             abjad.StringNumber(
                 numbers=(2, 3),
                 )

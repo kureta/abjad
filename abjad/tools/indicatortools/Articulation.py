@@ -53,7 +53,7 @@ class Articulation(AbjadValueObject):
             >>> note = abjad.Note("c'4")
             >>> articulation = abjad.Articulation('staccato')
             >>> abjad.attach(articulation, note)
-            >>> show(note) # doctest: +SKIP
+            >>> abjad.show(note) # doctest: +SKIP
 
     ..  todo:: Simplify initializer. Allow only initialization from name.
         Implement new ``from_abbreviation()`` and ``from_articulation()``

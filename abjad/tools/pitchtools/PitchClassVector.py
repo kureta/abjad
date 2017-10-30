@@ -52,7 +52,7 @@ class PitchClassVector(Vector):
 
             ::
 
-                >>> f(vector)
+                >>> abjad.f(vector)
                 abjad.PitchClassVector(
                     {
                         abjad.NumberedPitchClass(0): 1,

@@ -11,11 +11,11 @@ class Beam(Spanner):
 
             >>> staff = abjad.Staff("c'8 d'8 e'8 f'8 g'2")
             >>> abjad.setting(staff).auto_beaming = False
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -32,11 +32,11 @@ class Beam(Spanner):
             >>> abjad.attach(beam, staff[:2])
             >>> beam = abjad.Beam()
             >>> abjad.attach(beam, staff[2:4])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -106,7 +106,7 @@ class Beam(Spanner):
 
                 >>> staff = abjad.Staff(r"r32 a'32 ( [ gs'32 fs''32 \staccato f''8 ) ]")
                 >>> staff.extend(r"r8 e''8 ( ef'2 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 
@@ -131,7 +131,7 @@ class Beam(Spanner):
 
                 >>> staff = abjad.Staff(r"r32 a'32 ( [ gs'32 fs''32 \staccato f''8 ) ]")
                 >>> staff.extend(r"r8 e''8 ( ef'2 )")
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ::
 

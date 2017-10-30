@@ -21,7 +21,7 @@ class PartitionTable(TypedOrderedDict):
 
         ::
 
-            >>> f(table)
+            >>> abjad.f(table)
             abjad.rhythmmakertools.PartitionTable(
                 [
                     (
@@ -59,7 +59,7 @@ class PartitionTable(TypedOrderedDict):
 
         ::
 
-            >>> f(table)
+            >>> abjad.f(table)
             abjad.rhythmmakertools.PartitionTable(
                 [
                     (

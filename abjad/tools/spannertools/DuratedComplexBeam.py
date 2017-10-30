@@ -20,11 +20,11 @@ class DuratedComplexBeam(ComplexBeam):
             ...     span_beam_count=1,
             ...     )
             >>> abjad.attach(beam, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -59,11 +59,11 @@ class DuratedComplexBeam(ComplexBeam):
             ...     span_beam_count=1,
             ...     )
             >>> abjad.attach(beam, staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff \with {
                 autoBeaming = ##f
             } {
@@ -270,11 +270,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> staff = abjad.Staff("c'8 r r d'")
                 >>> beam = abjad.DuratedComplexBeam(beam_rests=False)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -297,11 +297,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> staff = abjad.Staff("c'8 r r d'")
                 >>> beam = abjad.DuratedComplexBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -322,11 +322,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> staff = abjad.Staff("c'8 s s d'")
                 >>> beam = abjad.DuratedComplexBeam(beam_rests=False)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -349,11 +349,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> staff = abjad.Staff("c'8 s s d'")
                 >>> beam = abjad.DuratedComplexBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -375,11 +375,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> staff = abjad.Staff(string)
                 >>> beam = abjad.DuratedComplexBeam(beam_rests=True)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #1
@@ -414,11 +414,11 @@ class DuratedComplexBeam(ComplexBeam):
                 >>> durations = [(1, 8), (1, 8)]
                 >>> beam = abjad.DuratedComplexBeam(durations=durations)
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #2
@@ -453,11 +453,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     span_beam_count=1,
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
@@ -508,11 +508,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     nibs_towards_nonbeamable_components=False
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #2
@@ -542,11 +542,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     nibs_towards_nonbeamable_components=True
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #2
@@ -588,11 +588,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     span_beam_count=1,
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #3
@@ -626,11 +626,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     span_beam_count=2,
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #3
@@ -664,11 +664,11 @@ class DuratedComplexBeam(ComplexBeam):
                 ...     span_beam_count=0,
                 ...     )
                 >>> abjad.attach(beam, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     \set stemLeftBeamCount = #0
                     \set stemRightBeamCount = #3

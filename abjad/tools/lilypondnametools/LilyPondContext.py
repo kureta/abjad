@@ -7,7 +7,7 @@ class LilyPondContext(abctools.AbjadValueObject):
     ::
 
         >>> context = abjad.LilyPondContext('MensuralStaff')
-        >>> f(context)
+        >>> abjad.f(context)
         abjad.LilyPondContext(
             name='MensuralStaff',
             )

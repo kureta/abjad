@@ -13,11 +13,11 @@ class Slur(Spanner):
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
             >>> abjad.attach(abjad.Slur(), staff[:])
-            >>> show(staff) # doctest: +SKIP
+            >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff)
+            >>> abjad.f(staff)
             \new Staff {
                 c'4 (
                 d'4
@@ -101,11 +101,11 @@ class Slur(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> slur = abjad.Slur(direction=abjad.Up)
                 >>> abjad.attach(slur, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 ^ (
                     d'8
@@ -122,11 +122,11 @@ class Slur(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> slur = abjad.Slur(direction=abjad.Down)
                 >>> abjad.attach(slur, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 _ (
                     d'8
@@ -143,11 +143,11 @@ class Slur(Spanner):
                 >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
                 >>> slur = abjad.Slur(direction=None)
                 >>> abjad.attach(slur, staff[:])
-                >>> show(staff) # doctest: +SKIP
+                >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
-                >>> f(staff)
+                >>> abjad.f(staff)
                 \new Staff {
                     c'8 (
                     d'8

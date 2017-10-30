@@ -17,11 +17,11 @@ class StaffChange(AbjadValueObject):
             >>> staff_group.extend([rh_staff, lh_staff])
             >>> staff_change = abjad.StaffChange(lh_staff)
             >>> abjad.attach(staff_change, rh_staff[2])
-            >>> show(staff_group) # doctest: +SKIP
+            >>> abjad.show(staff_group) # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(staff_group)
+            >>> abjad.f(staff_group)
             \new PianoStaff <<
                 \context Staff = "RHStaff" {
                     c'8

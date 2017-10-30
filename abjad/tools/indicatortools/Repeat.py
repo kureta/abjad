@@ -15,11 +15,11 @@ class Repeat(AbjadValueObject):
             >>> abjad.attach(repeat, container)
             >>> staff = abjad.Staff([container])
             >>> score = abjad.Score([staff])
-            >>> show(score)  # doctest: +SKIP
+            >>> abjad.show(score)  # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \repeat volta 2
@@ -43,11 +43,11 @@ class Repeat(AbjadValueObject):
             >>> abjad.attach(repeat, container)
             >>> staff = abjad.Staff([container])
             >>> score = abjad.Score([staff])
-            >>> show(score)  # doctest: +SKIP
+            >>> abjad.show(score)  # doctest: +SKIP
 
         ..  docs::
 
-            >>> f(score)
+            >>> abjad.f(score)
             \new Score <<
                 \new Staff {
                     \repeat unfold 2
