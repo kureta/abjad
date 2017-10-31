@@ -2780,6 +2780,140 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return self.filter(abjad.PitchInequality(operator, pitches))
 
+    def filter_preprolated(self, operator, duration):
+        r'''Filters selection by `operator` and preprolated `duration`.
+
+        ..  container:: example
+
+            Selects runs with duration equal to 2/8:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).runs()
+                >>> result = result.filter_preprolated('==', (2, 8))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Run([Note("d'8"), Note("e'8")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().runs()
+                >>> selector = selector.filter_preprolated('==', (2, 8))
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Run([Note("d'8"), Note("e'8")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+        ..  container:: example
+
+            Selects runs with duration less than 3/8:
+
+            ..  container:: example
+            
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).runs()
+                >>> result = result.filter_preprolated('<', (3, 8))
+
+                >>> for item in result:
+                ...     item
+                ...
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
+
+            ..  container:: example expresison
+
+                >>> selector = abjad.select().runs()
+                >>> selector = selector.filter_preprolated('<', (3, 8))
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Run([Note("c'8")])
+                Run([Note("d'8"), Note("e'8")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    r8
+                    f'8
+                    g'8
+                    a'8
+                }
+
+        Returns new selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        inequality = abjad.DurationInequality(
+            operator,
+            duration,
+            preprolated=True,
+            )
+        return self.filter(inequality)
+
     def flatten(self, depth=-1):
         r'''Flattens selection to `depth`.
 
@@ -2789,24 +2923,6 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(inspect.currentframe())
         return type(self)(abjad.sequence(self).flatten(depth=depth))
-
-#    def get_duration(self, in_seconds=False):
-#        r'''DEPRECATED.
-#        '''
-#        import abjad
-#       return abjad.inspect(self).get_duration(in_seconds=in_seconds)
-
-#    def get_pitches(self):
-#        r'''DEPRECATED.
-#        '''
-#        import abjad
-#       return abjad.inspect(self).get_pitches()
-
-#    def get_timespan(self, in_seconds=False):
-#        r'''DEPRECATED.
-#        '''
-#        import abjad
-#        return abjad.inspect(self).get_timespan(in_seconds=in_seconds)
 
     def group(self, predicate=None):
         r'''Groups items in selection by `predicate`.
