@@ -488,7 +488,7 @@ class TaleaRhythmMaker(RhythmMaker):
         decrease_monotonic=True,
         forbidden_duration=None,
         spell_metrically=None,
-        use_messiaen_style_ties=False,
+        repeat_ties=False,
         ):
         import abjad
         assert all(x != 0 for x in talea), repr(talea)
@@ -496,7 +496,7 @@ class TaleaRhythmMaker(RhythmMaker):
         leaf_maker = abjad.LeafMaker(
             decrease_monotonic=decrease_monotonic,
             forbidden_duration=forbidden_duration,
-            use_messiaen_style_ties=use_messiaen_style_ties,
+            repeat_ties=repeat_ties,
             )
         for note_value in talea:
             if 0 < note_value:
@@ -523,7 +523,7 @@ class TaleaRhythmMaker(RhythmMaker):
                 not isinstance(leaves[0], abjad.Rest)
                 ):
                 tie = abjad.Tie(
-                    use_messiaen_style_ties=use_messiaen_style_ties,
+                    repeat_ties=repeat_ties,
                     )
                 attach(tie, leaves[:])
             result.extend(leaves)
@@ -2968,7 +2968,7 @@ class TaleaRhythmMaker(RhythmMaker):
             ...         ),
             ...     tie_specifier=abjad.rhythmmakertools.TieSpecifier(
             ...         tie_across_divisions=True,
-            ...         use_messiaen_style_ties=True,
+            ...         repeat_ties=True,
             ...         ),
             ...     )
 

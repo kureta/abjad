@@ -1,4 +1,3 @@
-from abjad.tools import datastructuretools
 from abjad.tools.spannertools.Spanner import Spanner
 
 
@@ -58,7 +57,7 @@ class Tie(Spanner):
 
     __slots__ = (
         '_direction',
-        '_use_messiaen_style_ties',
+        '_repeat_ties',
         )
 
     ### INITIALIZER ###
@@ -67,16 +66,13 @@ class Tie(Spanner):
         self,
         direction=None,
         overrides=None,
-        use_messiaen_style_ties=None,
+        repeat_ties=None,
         ):
-        Spanner.__init__(
-            self,
-            overrides=overrides,
-            )
-        direction = datastructuretools.String.to_tridirectional_lilypond_symbol(
-            direction)
+        import abjad
+        Spanner.__init__(self, overrides=overrides)
+        direction = abjad.String.to_tridirectional_lilypond_symbol(direction)
         self._direction = direction
-        self._use_messiaen_style_ties = use_messiaen_style_ties
+        self._repeat_ties = repeat_ties
 
     ### PRIVATE METHODS ###
 
@@ -114,7 +110,7 @@ class Tie(Spanner):
 
     def _copy_keyword_args(self, new):
         new._direction = self.direction
-        new._use_messiaen_style_ties = self.use_messiaen_style_ties
+        new._repeat_ties = self.repeat_ties
 
     def _get_lilypond_format_bundle(self, leaf):
         import abjad
@@ -125,7 +121,7 @@ class Tie(Spanner):
             abjad.Skip,
             abjad.MultimeasureRest,
             )
-        if not self.use_messiaen_style_ties:
+        if not self.repeat_ties:
             if self._is_my_last_leaf(leaf):
                 return bundle
             elif isinstance(leaf, prototype):
@@ -230,16 +226,13 @@ class Tie(Spanner):
         return self._direction
 
     @property
-    def use_messiaen_style_ties(self):
-        r'''Is true when tie should use Messiaen-style ties with
-        the LilyPond ``\repeatTie`` command.
+    def repeat_ties(self):
+        r'''Is true when tie should use the LilyPond ``\repeatTie`` command.
 
         ..  container:: example
 
-            Default values for Messiaen-style ties:
-
             >>> staff = abjad.Staff("c'8 c'8 c'8 c'8")
-            >>> tie = abjad.Tie(direction=abjad.Up, use_messiaen_style_ties=True)
+            >>> tie = abjad.Tie(direction=abjad.Up, repeat_ties=True)
             >>> abjad.attach(tie, staff[:])
             >>> abjad.show(staff) # doctest: +SKIP
 
@@ -253,8 +246,6 @@ class Tie(Spanner):
                     c'8 ^ \repeatTie
                 }
 
-            LilyPond's repeat ties are shorter Messiaen-style ties.
-
         Returns true, false or none.
         '''
-        return self._use_messiaen_style_ties
+        return self._repeat_ties

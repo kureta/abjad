@@ -114,7 +114,7 @@ class RhythmMaker(AbjadValueObject):
         leaf_maker = abjad.LeafMaker(
             decrease_monotonic=decrease_monotonic,
             forbidden_duration=forbidden_duration,
-            use_messiaen_style_ties=tie_specifier.use_messiaen_style_ties,
+            repeat_ties=tie_specifier.repeat_ties,
             )
         for i, selection in enumerate(selections):
             matching_division_mask = division_masks.get_matching_pattern(

@@ -812,7 +812,7 @@ class Meter(AbjadValueObject):
         initial_offset=None,
         maximum_dot_count=None,
         rewrite_tuplets=True,
-        use_messiaen_style_ties=False,
+        repeat_ties=False,
         ):
         import abjad
         assert isinstance(components, abjad.Selection), repr(components)
@@ -863,7 +863,7 @@ class Meter(AbjadValueObject):
                     #print()
                     shards = abjad.mutate(logical_tie[:]).split(
                         [split_offset],
-                        use_messiaen_style_ties=use_messiaen_style_ties,
+                        repeat_ties=repeat_ties,
                         )
                     logical_ties = [abjad.LogicalTie(_) for _ in shards]
                     for logical_tie in logical_ties:
@@ -903,7 +903,7 @@ class Meter(AbjadValueObject):
                 #print()
                 shards = abjad.mutate(logical_tie[:]).split(
                     [split_offset],
-                    use_messiaen_style_ties=use_messiaen_style_ties,
+                    repeat_ties=repeat_ties,
                     )
                 logical_ties = [abjad.LogicalTie(shard) for shard in shards]
                 for logical_tie in logical_ties:

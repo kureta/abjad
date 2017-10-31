@@ -466,7 +466,7 @@ class Selection(AbjadValueObject):
 
     ### PRIVATE METHODS ###
 
-    def _attach_tie_spanner_to_leaf_pair(self, use_messiaen_style_ties=False):
+    def _attach_tie_spanner_to_leaf_pair(self, repeat_ties=False):
         import abjad
         assert len(self) == 2
         left_leaf, right_leaf = self
@@ -492,18 +492,18 @@ class Selection(AbjadValueObject):
             right_tie_spanner._append_left(left_leaf)
         elif left_tie_spanner is None and right_tie_spanner is None:
             tie = abjad.Tie(
-                use_messiaen_style_ties=use_messiaen_style_ties,
+                repeat_ties=repeat_ties,
                 )
             leaves = abjad.select([left_leaf, right_leaf])
             abjad.attach(tie, leaves)
 
-    def _attach_tie_spanner_to_leaves(self, use_messiaen_style_ties=False):
+    def _attach_tie_spanner_to_leaves(self, repeat_ties=False):
         import abjad
         pairs = abjad.sequence(self).nwise()
         for leaf_pair in pairs:
             selection = abjad.select(leaf_pair)
             selection._attach_tie_spanner_to_leaf_pair(
-                use_messiaen_style_ties=use_messiaen_style_ties,
+                repeat_ties=repeat_ties,
                 )
 
     @staticmethod

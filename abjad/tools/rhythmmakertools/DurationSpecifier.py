@@ -87,7 +87,7 @@ class DurationSpecifier(AbjadValueObject):
         meters,
         reference_meters=None,
         rewrite_tuplets=False,
-        use_messiaen_style_ties=False,
+        repeat_ties=False,
         ):
         import abjad
         from abjad.tools.topleveltools import mutate
@@ -97,7 +97,7 @@ class DurationSpecifier(AbjadValueObject):
         selections = DurationSpecifier._split_at_measure_boundaries(
             selections,
             meters,
-            use_messiaen_style_ties=use_messiaen_style_ties,
+            repeat_ties=repeat_ties,
             )
         maker = abjad.MeasureMaker()
         measures = maker(durations)
@@ -111,7 +111,7 @@ class DurationSpecifier(AbjadValueObject):
             mutate(measure[:]).rewrite_meter(
                 meter,
                 rewrite_tuplets=rewrite_tuplets,
-                use_messiaen_style_ties=use_messiaen_style_ties,
+                repeat_ties=repeat_ties,
                 )
         selections = []
         for measure in staff:
@@ -125,7 +125,7 @@ class DurationSpecifier(AbjadValueObject):
     def _split_at_measure_boundaries(
         selections,
         meters,
-        use_messiaen_style_ties=False,
+        repeat_ties=False,
         ):
         import abjad
         meters = [abjad.Meter(_) for _ in meters]
@@ -145,7 +145,7 @@ class DurationSpecifier(AbjadValueObject):
         abjad.mutate(voice[:]).split(
             durations=durations,
             tie_split_notes=True,
-            use_messiaen_style_ties=use_messiaen_style_ties,
+            repeat_ties=repeat_ties,
             )
         components = abjad.mutate(voice).eject_contents()
         component_durations = [
