@@ -5671,6 +5671,7 @@ class Selection(AbjadValueObject):
         self,
         counts,
         cyclic=False,
+        enchain=False,
         fuse_overhang=False,
         nonempty=False,
         overhang=False,
@@ -6131,6 +6132,7 @@ class Selection(AbjadValueObject):
         groups = abjad.sequence(self).partition_by_counts(
             [abs(_) for _ in counts],
             cyclic=cyclic,
+            enchain=enchain,
             overhang=overhang,
             )
         groups = list(groups)
