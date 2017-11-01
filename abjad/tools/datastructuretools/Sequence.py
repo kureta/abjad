@@ -805,7 +805,13 @@ class Sequence(abctools.AbjadValueObject):
             return 'unknown string template'
 
     @staticmethod
-    def _make_partition_indicator(counts, cyclic, overhang, reversed_):
+    def _make_partition_indicator(
+        counts,
+        cyclic,
+        enchain,
+        overhang,
+        reversed_,
+        ):
         import abjad
         indicator = [str(_) for _ in counts]
         indicator = ', '.join(indicator)
@@ -813,6 +819,8 @@ class Sequence(abctools.AbjadValueObject):
             indicator = '<{}>'.format(indicator)
         else:
             indicator = '[{}]'.format(indicator)
+        if enchain:
+            indicator = 'E' + indicator
         if reversed_:
             indicator = 'R' + indicator
         if overhang is True:
@@ -1977,6 +1985,7 @@ class Sequence(abctools.AbjadValueObject):
         self,
         counts,
         cyclic=False,
+        enchain=False,
         overhang=False,
         reversed_=False,
         ):
@@ -3048,52 +3057,228 @@ class Sequence(abctools.AbjadValueObject):
                             }
                         }
 
+        ..  container:: example
+
+            Partitions sequence cyclically into enchained parts by counts;
+            truncates overhang:
+
+            ..  container:: example
+
+                >>> sequence = abjad.sequence(range(16))
+                >>> parts = sequence.partition_by_counts(
+                ...     [2, 6],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for part in parts:
+                ...     part
+                Sequence([0, 1])
+                Sequence([1, 2, 3, 4, 5, 6])
+                Sequence([6, 7])
+                Sequence([7, 8, 9, 10, 11, 12])
+                Sequence([12, 13])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.Expression(name='J')
+                >>> expression = expression.sequence()
+                >>> expression = expression.partition_by_counts(
+                ...     [2, 6],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=False,
+                ...     )
+
+                >>> for part in expression(range(16)):
+                ...     part
+                Sequence([0, 1])
+                Sequence([1, 2, 3, 4, 5, 6])
+                Sequence([6, 7])
+                Sequence([7, 8, 9, 10, 11, 12])
+                Sequence([12, 13])
+
+                >>> expression.get_string()
+                'partition(J, E<2, 6>)'
+
+                >>> markup = expression.get_markup()
+                >>> abjad.show(markup) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(markup)
+                    \markup {
+                        \concat
+                            {
+                                partition(
+                                \bold
+                                    J
+                                ", E<2, 6>)"
+                            }
+                        }
+
+        ..  container:: example
+
+            Partitions sequence cyclically into enchained parts by counts;
+            returns overhang at end:
+
+            ..  container:: example
+
+                >>> sequence = abjad.sequence(range(16))
+                >>> parts = sequence.partition_by_counts(
+                ...     [2, 6],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for part in parts:
+                ...     part
+                Sequence([0, 1])
+                Sequence([1, 2, 3, 4, 5, 6])
+                Sequence([6, 7])
+                Sequence([7, 8, 9, 10, 11, 12])
+                Sequence([12, 13])
+                Sequence([13, 14, 15])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.Expression(name='J')
+                >>> expression = expression.sequence()
+                >>> expression = expression.partition_by_counts(
+                ...     [2, 6],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for part in expression(range(16)):
+                ...     part
+                Sequence([0, 1])
+                Sequence([1, 2, 3, 4, 5, 6])
+                Sequence([6, 7])
+                Sequence([7, 8, 9, 10, 11, 12])
+                Sequence([12, 13])
+                Sequence([13, 14, 15])
+
+                >>> expression.get_string()
+                'partition(J, E<2, 6>+)'
+
+                >>> markup = expression.get_markup()
+                >>> abjad.show(markup) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(markup)
+                    \markup {
+                        \concat
+                            {
+                                partition(
+                                \bold
+                                    J
+                                ", E<2, 6>+)"
+                            }
+                        }
+
+        ..  container:: example
+
+            Regression: partitions sequence cyclically into enchained parts by
+            counts; does not return false 1-element part at end:
+
+            ..  container:: example
+
+                >>> sequence = abjad.sequence(range(16))
+                >>> parts = sequence.partition_by_counts(
+                ...     [5],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for part in parts:
+                ...     part
+                Sequence([0, 1, 2, 3, 4])
+                Sequence([4, 5, 6, 7, 8])
+                Sequence([8, 9, 10, 11, 12])
+                Sequence([12, 13, 14, 15])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.Expression(name='J')
+                >>> expression = expression.sequence()
+                >>> expression = expression.partition_by_counts(
+                ...     [5],
+                ...     cyclic=True,
+                ...     enchain=True,
+                ...     overhang=True,
+                ...     )
+
+                >>> for part in expression(range(16)):
+                ...     part
+                Sequence([0, 1, 2, 3, 4])
+                Sequence([4, 5, 6, 7, 8])
+                Sequence([8, 9, 10, 11, 12])
+                Sequence([12, 13, 14, 15])
+
+                >>> expression.get_string()
+                'partition(J, E<5>+)'
+
+                >>> markup = expression.get_markup()
+                >>> abjad.show(markup) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(markup)
+                    \markup {
+                        \concat
+                            {
+                                partition(
+                                \bold
+                                    J
+                                ", E<5>+)"
+                            }
+                        }
+
         Returns nested sequence.
         '''
         import abjad
         if self._expression:
             return self._update_expression(inspect.currentframe())
         if not all(isinstance(_, int) and 0 <= _ for _ in counts):
-            message = 'invalid counts: {!r}.'
+            message = 'must be nonnegative integers: {!r}.'
             message = message.format(counts)
             raise Exception(counts)
         sequence = self
         if reversed_:
             sequence = type(self)(reversed(sequence))
-        if overhang == abjad.Exact:
-            result_with_overhang = sequence.partition_by_counts(
-                counts,
-                cyclic=cyclic,
-                overhang=True,
-                )
-            result_without_overhang = sequence.partition_by_counts(
-                counts,
-                cyclic=cyclic,
-                overhang=False,
-                )
-            if result_with_overhang == result_without_overhang:
-                return result_without_overhang
-            else:
+        counts = abjad.CyclicTuple(counts)
+        result = []
+        i, start = 0, 0
+        while True:
+            count = counts[i]
+            stop = start + count
+            part = sequence[start:stop]
+            if len(sequence) < stop:
+                if enchain and len(part) == 1:
+                    part = None
+                break
+            result.append(part)
+            start = stop
+            i += 1
+            if not cyclic and len(counts) <= i:
+                part = sequence[start:]
+                break
+            if enchain:
+                start -= 1
+        if part:
+            if overhang is True:
+                result.append(part)
+            elif overhang == abjad.Exact and len(part) == count:
+                result.append(part)
+            elif overhang == abjad.Exact and len(part) != count:
                 message = 'sequence does not partition exactly.'
                 raise Exception(message)
-        result = []
-        if cyclic:
-            if overhang:
-                counts = Sequence(counts).repeat_to_weight(len(sequence))
-            else:
-                counts = Sequence(counts).repeat_to_weight(
-                    len(sequence),
-                    allow_total=abjad.Less,
-                    )
-        elif overhang:
-            weight_counts = abjad.mathtools.weight(counts)
-            length = len(sequence)
-            if weight_counts < length:
-                counts = list(counts)
-                counts.append(len(sequence) - weight_counts)
-        for start, stop in abjad.mathtools.cumulative_sums_pairwise(counts):
-            part = sequence[start:stop]
-            result.append(part)
         if reversed_:
             result_ = []
             for part in reversed(result):
