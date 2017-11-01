@@ -6,80 +6,79 @@ class Hairpin(Spanner):
 
     ..  container:: example
 
-        Crescendo:
-
-        >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-        >>> hairpin = abjad.Hairpin(
-        ...     descriptor='p < f',
-        ...     include_rests=False,
-        ...     )
-        >>> abjad.attach(hairpin, staff[:])
+        >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+        >>> hairpin = abjad.Hairpin('p < f')
+        >>> abjad.attach(hairpin, staff[1:-1])
         >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
             >>> abjad.f(staff)
             \new Staff {
-                r4
-                c'8 \< \p
-                d'8
+                r8
+                d'8 \< \p
                 e'8
-                f'8 \f
-                r4
-            }
-
-        Decrescendo:
-
-        >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-        >>> hairpin = abjad.Hairpin(
-        ...     descriptor='f > p',
-        ...     include_rests=False,
-        ...     )
-        >>> abjad.attach(hairpin, staff[:])
-        >>> abjad.show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff {
-                r4
-                c'8 \> \f
-                d'8
-                e'8
-                f'8 \p
-                r4
+                f'8
+                g'8
+                a'8
+                b'8 \f
+                r8
             }
 
     ..  container:: example
 
-        Crescendo dal niente:
-
-        >>> staff = abjad.Staff("c'4 d' e' f'")
-        >>> hairpin = abjad.Hairpin(
-        ...     descriptor='niente < f',
-        ...     include_rests=False,
-        ...     )
-        >>> abjad.attach(hairpin, staff[:])
+        >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+        >>> hairpin = abjad.Hairpin('f > p')
+        >>> abjad.attach(hairpin, staff[1:-1])
         >>> abjad.show(staff) # doctest: +SKIP
 
         ..  docs::
 
             >>> abjad.f(staff)
             \new Staff {
-                \once \override Hairpin.circled-tip = ##t
-                c'4 \<
-                d'4
-                e'4
-                f'4 \f
+                r8
+                d'8 \> \f
+                e'8
+                f'8
+                g'8
+                a'8
+                b'8 \p
+                r8
             }
 
-        Decrescendo al niente:
+    ..  container:: example
 
-        >>> staff = abjad.Staff("c'4 d' e' f'")
-        >>> hairpin = abjad.Hairpin(
-        ...     descriptor='f > niente',
-        ...     include_rests=False,
-        ...     )
+        >>> staff = abjad.Staff("c'8 d' e' f' c' d' e' f' c'")
+        >>> abjad.attach(abjad.Dynamic('p'), staff[0])
+        >>> abjad.attach(abjad.Hairpin('<'), staff[:3])
+        >>> abjad.attach(abjad.Dynamic('f'), staff[2])
+        >>> abjad.attach(abjad.Hairpin('>'), staff[2:5])
+        >>> abjad.attach(abjad.Dynamic('p'), staff[4])
+        >>> abjad.attach(abjad.Hairpin('<'), staff[4:7])
+        >>> abjad.attach(abjad.Dynamic('f'), staff[6])
+        >>> abjad.attach(abjad.Hairpin('>'), staff[6:])
+        >>> abjad.attach(abjad.Dynamic('p'), staff[8])
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff {
+                c'8 \p \<
+                d'8
+                e'8 \f \>
+                f'8
+                c'8 \p \<
+                d'8
+                e'8 \f \>
+                f'8
+                c'8 \p
+            }
+
+    ..  container:: example
+
+        >>> staff = abjad.Staff("c'2. r4")
+        >>> hairpin = abjad.Hairpin('f > niente')
         >>> abjad.attach(hairpin, staff[:])
         >>> abjad.show(staff) # doctest: +SKIP
 
@@ -88,10 +87,8 @@ class Hairpin(Spanner):
             >>> abjad.f(staff)
             \new Staff {
                 \once \override Hairpin.circled-tip = ##t
-                c'4 \> \f
-                d'4
-                e'4
-                f'4 \!
+                c'2. \> \f
+                r4 \!
             }
 
     '''
@@ -106,10 +103,10 @@ class Hairpin(Spanner):
     __slots__ = (
         '_descriptor',
         '_direction',
-        '_include_rests',
         '_shape_string',
         '_start_dynamic',
         '_stop_dynamic',
+        '_trim',
         )
 
     ### INITIALIZER ###
@@ -118,14 +115,14 @@ class Hairpin(Spanner):
         self,
         descriptor=None,
         direction=None,
-        include_rests=None,
         overrides=None,
+        trim=None,
         ):
         import abjad
         Spanner.__init__(self, overrides=overrides)
         direction = abjad.String.to_tridirectional_lilypond_symbol(direction)
         self._direction = direction
-        self._include_rests = include_rests
+        self._trim = trim
         if descriptor is not None:
             assert self._is_valid_descriptor(descriptor), repr(descriptor)
             result = self._parse_descriptor(descriptor)
@@ -144,6 +141,59 @@ class Hairpin(Spanner):
             self._shape_string = None
             self._start_dynamic = None
             self._stop_dynamic = None
+
+    def __eq__(self, argument):
+        r'''Is true when hairpin equals `argument`.
+
+        ..  container:: example
+
+            >>> hairpin_1 = abjad.Hairpin('p < f')
+            >>> hairpin_2 = abjad.Hairpin('p < f')
+            >>> hairpin_3 = abjad.Hairpin('f > p')
+
+            >>> hairpin_1 == hairpin_1
+            True
+
+            >>> hairpin_1 == hairpin_2
+            True
+
+            >>> hairpin_1 == hairpin_3
+            False
+
+            >>> hairpin_2 == hairpin_1
+            True
+
+            >>> hairpin_2 == hairpin_2
+            True
+
+            >>> hairpin_2 == hairpin_3
+            False
+
+            >>> hairpin_3 == hairpin_1
+            False
+
+            >>> hairpin_3 == hairpin_2
+            False
+
+            >>> hairpin_3 == hairpin_3
+            True
+
+        Returns true or false.
+        '''
+        if not isinstance(argument, type(self)):
+            return False
+        if (self.start_dynamic == argument.start_dynamic and
+            self.stop_dynamic == argument.stop_dynamic and
+            self.trim == argument.trim):
+            return True
+        return False
+
+    def __hash__(self):
+        r'''Hashes hairpin.
+
+        Returns integer.
+        '''
+        return super(Hairpin, self).__hash__()
 
     ### PRIVATE METHODS ###
 
@@ -204,7 +254,7 @@ class Hairpin(Spanner):
             return False
         formattable_components = []
         for component in component_expression:
-            if (self.include_rests or
+            if (not self.trim or
                 isinstance(component, (abjad.Note, abjad.Chord))):
                 formattable_components.append(component)
         return 1 < len(formattable_components)
@@ -213,10 +263,10 @@ class Hairpin(Spanner):
         Spanner._copy_keyword_args(self, new)
         new._descriptor = self.descriptor
         new._direction = self.direction
-        new._include_rests = self.include_rests
         new._shape_string = self.shape_string
         new._start_dynamic = self.start_dynamic
         new._stop_dynamic = self.stop_dynamic
+        new._trim = self.trim
 
     def _format_time_test(self, leaf):
         if not 1 < len(self.leaves):
@@ -240,7 +290,7 @@ class Hairpin(Spanner):
             self.stop_dynamic and self.stop_dynamic.name == 'niente')):
             string = r'\once \override Hairpin.circled-tip = ##t'
             bundle.before.commands.append(string)
-        if self.include_rests:
+        if not self.trim:
             if self._is_my_first_leaf(leaf):
                 string = r'{}\{}'.format(direction_string, self.shape_string)
                 bundle.right.spanner_starts.append(string)
@@ -351,6 +401,19 @@ class Hairpin(Spanner):
 
     @staticmethod
     def _is_hairpin_token(argument):
+        r'''
+
+        >>> abjad.Hairpin._is_hairpin_token(('', '<', ''))
+        True
+        >>> abjad.Hairpin._is_hairpin_token(('p', '<', 'f'))
+        True
+
+        >>> abjad.Hairpin._is_hairpin_token(('p', '@', 'f'))
+        False
+        >>> abjad.Hairpin._is_hairpin_token(('p', '>', 'f'))
+        False
+
+        '''
         import abjad
         if (isinstance(argument, tuple) and
             len(argument) == 3 and
@@ -428,16 +491,28 @@ class Hairpin(Spanner):
 
     @property
     def descriptor(self):
-        r'''Gets descriptor of hairpin.
+        r'''Gets descriptor.
 
         ..  container:: example
 
-            Gets descriptor of crescendo:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-            >>> hairpin = abjad.Hairpin(descriptor='p < f')
-            >>> abjad.attach(hairpin, staff[:])
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f')
+            >>> abjad.attach(hairpin, staff[1:-1])
             >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    r8
+                    d'8 \< \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 \f
+                    r8
+                }
 
             >>> hairpin.descriptor
             'p < f'
@@ -452,27 +527,24 @@ class Hairpin(Spanner):
 
         ..  container:: example
 
-            Positions hairpin above staff:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-            >>> hairpin = abjad.Hairpin(
-            ...     descriptor='p < f',
-            ...     direction=abjad.Up,
-            ...     )
-            >>> abjad.attach(hairpin, staff[:])
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f', direction=abjad.Up)
+            >>> abjad.attach(hairpin, staff[1:-1])
             >>> abjad.show(staff) # doctest: +SKIP
 
-        ..  docs::
+            ..  docs::
 
-            >>> abjad.f(staff)
-            \new Staff {
-                r4
-                c'8 ^ \< ^ \p
-                d'8
-                e'8
-                f'8 ^ \f
-                r4
-            }
+                >>> abjad.f(staff)
+                \new Staff {
+                    r8
+                    d'8 ^ \< ^ \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 ^ \f
+                    r8
+                }
 
             >>> hairpin.direction
             '^'
@@ -486,40 +558,13 @@ class Hairpin(Spanner):
         return self._direction
 
     @property
-    def include_rests(self):
-        r'''Is true when hairpin includes rests.
+    def trim(self):
+        r'''Is true when hairpin trims edge-rests.
 
         ..  container:: example
 
-            >>> staff = abjad.Staff("r8 d' e' r g' a' r r")
-            >>> hairpin = abjad.Hairpin(
-            ...     descriptor='p < f',
-            ...     include_rests=False,
-            ...     )
-            >>> abjad.attach(hairpin, staff[:])
-            >>> abjad.show(staff) # doctest: +SKIP
-
-        ..  docs::
-
-            >>> abjad.f(staff)
-            \new Staff {
-                r8
-                d'8 \< \p
-                e'8
-                r8
-                g'8
-                a'8 \f
-                r8
-                r8
-            }
-
-        ..  container:: example
-
-            >>> staff = abjad.Staff("c'2. r4")
-            >>> hairpin = abjad.Hairpin(
-            ...     descriptor='f > niente',
-            ...     include_rests=True,
-            ...     )
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f', trim=True)
             >>> abjad.attach(hairpin, staff[:])
             >>> abjad.show(staff) # doctest: +SKIP
 
@@ -527,27 +572,44 @@ class Hairpin(Spanner):
 
                 >>> abjad.f(staff)
                 \new Staff {
-                    \once \override Hairpin.circled-tip = ##t
-                    c'2. \> \f
-                    r4 \!
+                    r8
+                    d'8 \< \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 \f
+                    r8
                 }
 
         Returns true or false.
         '''
-        return self._include_rests
+        return self._trim
 
     @property
     def shape_string(self):
-        r'''Gets shape string of hairpin.
+        r'''Gets shape string.
 
         ..  container:: example
 
-            Gets shape string of crescendo:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-            >>> hairpin = abjad.Hairpin(descriptor='p < f')
-            >>> abjad.attach(hairpin, staff[:])
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f')
+            >>> abjad.attach(hairpin, staff[1:-1])
             >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    r8
+                    d'8 \< \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 \f
+                    r8
+                }
 
             >>> hairpin.shape_string
             '<'
@@ -558,16 +620,28 @@ class Hairpin(Spanner):
 
     @property
     def start_dynamic(self):
-        r'''Gets start dynamic string of hairpin.
+        r'''Gets start dynamic.
 
         ..  container:: example
 
-            Gets start dynamic of crescendo:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-            >>> hairpin = abjad.Hairpin(descriptor='p < f')
-            >>> abjad.attach(hairpin, staff[:])
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f')
+            >>> abjad.attach(hairpin, staff[1:-1])
             >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    r8
+                    d'8 \< \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 \f
+                    r8
+                }
 
             >>> hairpin.start_dynamic
             Dynamic('p')
@@ -578,16 +652,28 @@ class Hairpin(Spanner):
 
     @property
     def stop_dynamic(self):
-        r'''Gets stop dynamic string of hairpin.
+        r'''Gets stop dynamic.
 
         ..  container:: example
 
-            Gets stop dynamic of crescendo:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
-            >>> hairpin = abjad.Hairpin(descriptor='p < f')
-            >>> abjad.attach(hairpin, staff[:])
+            >>> staff = abjad.Staff("r8 d' e' f' g' a' b' r")
+            >>> hairpin = abjad.Hairpin('p < f')
+            >>> abjad.attach(hairpin, staff[1:-1])
             >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    r8
+                    d'8 \< \p
+                    e'8
+                    f'8
+                    g'8
+                    a'8
+                    b'8 \f
+                    r8
+                }
 
             >>> hairpin.stop_dynamic
             Dynamic('f')

@@ -46,9 +46,9 @@ class WellformednessManager(AbjadObject):
 
     ### PRIVATE METHODS ###
 
-    def _check_overlapping_spanners(self, argument=None, prototype=None):
+    def _check_overlapping_spanners(self, argument, prototype=None):
         import abjad
-        violators, spanners = [], set()
+        violators, spanners = set(), set()
         for leaf in abjad.iterate(argument).leaves():
             spanners_ = list(abjad.inspect(leaf).get_spanners(prototype))
             spanners.update(spanners_)
@@ -58,14 +58,12 @@ class WellformednessManager(AbjadObject):
                     common_leaves &= set(spanners_[1].leaves)
                     if len(common_leaves) == 1:
                         leaf = list(common_leaves)[0]
-                        if ((spanners_[0]._is_my_first_leaf(leaf) and
-                            spanners_[1]._is_my_last_leaf(leaf)) or
-                            (spanners_[1]._is_my_first_leaf(leaf) and
-                            spanners_[0]._is_my_last_leaf(leaf))):
+                        if ((spanners_[0].leaves[0] is leaf and
+                            spanners_[1].leaves[-1] is leaf) or
+                            (spanners_[1].leaves[0] is leaf and
+                            spanners_[0].leaves[-1] is leaf)):
                             break
-                for spanner_ in spanners_:
-                    if spanner_ not in violators:
-                        violators.append(spanner_)
+                violators.update(spanners_)
         return violators, len(spanners)
 
     ### PUBLIC PROPERTIES ###
@@ -269,7 +267,7 @@ class WellformednessManager(AbjadObject):
             0 /	4 beamed long notes
             0 /	2 discontiguous spanners
             0 /	5 duplicate ids
-            0 /     1 empty containers
+            0 / 1 empty containers
             0 /	2 intermarked hairpins
             0 /	0 misdurated measures
             0 /	0 misfilled measures
@@ -278,14 +276,14 @@ class WellformednessManager(AbjadObject):
             0 /	4 misrepresented flags
             0 /	5 missing parents
             0 /	0 nested measures
-            0 /     4 notes on wrong clef
-            0 /     4 out of range notes
+            0 / 4 notes on wrong clef
+            0 / 4 out of range notes
             0 /	0 overlapping beams
             0 /	0 overlapping glissandi
             0 /	2 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners 
+            0 / 0 overlapping trill spanners 
             0 /	2 short hairpins
             0 /	0 tied rests
 
@@ -341,7 +339,7 @@ class WellformednessManager(AbjadObject):
             0 /	2 beamed long notes
             0 /	1 discontiguous spanners
             0 /	3 duplicate ids
-            0 /     1 empty containers
+            0 / 1 empty containers
             0 /	0 intermarked hairpins
             0 /	0 misdurated measures
             0 /	0 misfilled measures
@@ -350,14 +348,14 @@ class WellformednessManager(AbjadObject):
             0 /	2 misrepresented flags
             0 /	3 missing parents
             0 /	0 nested measures
-            0 /     2 notes on wrong clef
-            0 /     2 out of range notes
+            0 / 2 notes on wrong clef
+            0 / 2 out of range notes
             0 /	0 overlapping beams
             0 /	0 overlapping glissandi
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	1 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -373,7 +371,7 @@ class WellformednessManager(AbjadObject):
             0 /	2 beamed long notes
             0 /	1 discontiguous spanners
             0 /	3 duplicate ids
-            0 /     1 empty containers
+            0 / 1 empty containers
             0 /	0 intermarked hairpins
             0 /	0 misdurated measures
             0 /	0 misfilled measures
@@ -382,14 +380,14 @@ class WellformednessManager(AbjadObject):
             0 /	2 misrepresented flags
             0 /	3 missing parents
             0 /	0 nested measures
-            0 /     2 notes on wrong clef
-            0 /     2 out of range notes
+            0 / 2 notes on wrong clef
+            0 / 2 out of range notes
             0 /	0 overlapping beams
             0 /	0 overlapping glissandi
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	1 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -519,7 +517,7 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -570,7 +568,7 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -601,7 +599,7 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -671,7 +669,7 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	2 tied rests
 
@@ -737,10 +735,7 @@ class WellformednessManager(AbjadObject):
         Returns violators and total.
         '''
         import abjad
-        return self._check_overlapping_spanners(
-            argument=argument,
-            prototype=abjad.Glissando,
-            )
+        return self._check_overlapping_spanners(argument, abjad.Glissando)
 
     def check_overlapping_hairpins(self, argument=None):
         r'''Checks overlapping hairpins.
@@ -758,7 +753,7 @@ class WellformednessManager(AbjadObject):
             0 /	4 beamed long notes
             0 /	2 discontiguous spanners
             0 /	5 duplicate ids
-            0 /     1 empty containers
+            0 / 1 empty containers
             0 /	2 intermarked hairpins
             0 /	0 misdurated measures
             0 /	0 misfilled measures
@@ -774,7 +769,7 @@ class WellformednessManager(AbjadObject):
             2 /	2 overlapping hairpins
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	2 short hairpins
             0 /	0 tied rests
 
@@ -783,10 +778,7 @@ class WellformednessManager(AbjadObject):
         Returns violators and total.
         '''
         import abjad
-        return self._check_overlapping_spanners(
-            argument=argument,
-            prototype=abjad.Hairpin,
-            )
+        return self._check_overlapping_spanners(argument, abjad.Hairpin)
 
     def check_overlapping_octavation_spanners(self, argument=None):
         r'''Checks overlapping octavation spanners.
@@ -823,7 +815,7 @@ class WellformednessManager(AbjadObject):
             0 /	4 beamed long notes
             0 /	2 discontiguous spanners
             0 /	5 duplicate ids
-            0 /     1 empty containers
+            0 / 1 empty containers
             0 /	0 intermarked hairpins
             0 /	0 misdurated measures
             0 /	0 misfilled measures
@@ -839,7 +831,7 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping hairpins
             0 /	0 overlapping octavation spanners
             2 /	2 overlapping ties
-            0 /     0 overlapping trill spanners
+            0 / 0 overlapping trill spanners
             0 /	0 short hairpins
             0 /	0 tied rests
 
@@ -930,10 +922,7 @@ class WellformednessManager(AbjadObject):
         Returns violators and total.
         '''
         import abjad
-        return self._check_overlapping_spanners(
-            argument=argument,
-            prototype=abjad.TrillSpanner,
-            )
+        return self._check_overlapping_spanners(argument, abjad.TrillSpanner)
 
     def check_short_hairpins(self, argument=None):
         r'''Checks short hairpins.
