@@ -94,7 +94,6 @@ class Hairpin(Spanner):
                 f'4 \!
             }
 
-    .. todo:: Make niente hairpins work with ``include_rests=True``.
     '''
 
     ### CLASS VARIABLES ###
@@ -488,16 +487,14 @@ class Hairpin(Spanner):
 
     @property
     def include_rests(self):
-        r'''Gets include-rests flag of hairpin.
+        r'''Is true when hairpin includes rests.
 
         ..  container:: example
 
-            Crescendo includes rests:
-
-            >>> staff = abjad.Staff("r4 c'8 d'8 e'8 f'8 r4")
+            >>> staff = abjad.Staff("r8 d' e' r g' a' r r")
             >>> hairpin = abjad.Hairpin(
             ...     descriptor='p < f',
-            ...     include_rests=True,
+            ...     include_rests=False,
             ...     )
             >>> abjad.attach(hairpin, staff[:])
             >>> abjad.show(staff) # doctest: +SKIP
@@ -506,56 +503,33 @@ class Hairpin(Spanner):
 
             >>> abjad.f(staff)
             \new Staff {
-                r4 \< \p
-                c'8
-                d'8
+                r8
+                d'8 \< \p
                 e'8
-                f'8
-                r4 \f
+                r8
+                g'8
+                a'8 \f
+                r8
+                r8
             }
-
-            >>> hairpin.include_rests
-            True
 
         ..  container:: example
 
-            >>> staff = abjad.Staff(abjad.Rest((1, 8)) * 4 + [abjad.Note(n, (1, 8)) for n in range(4, 8)])
-            >>> crescendo = abjad.Hairpin('<', include_rests=False)
-            >>> abjad.attach(crescendo, staff[:])
+            >>> staff = abjad.Staff("c'2. r4")
+            >>> hairpin = abjad.Hairpin(
+            ...     descriptor='f > niente',
+            ...     include_rests=True,
+            ...     )
+            >>> abjad.attach(hairpin, staff[:])
             >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
 
                 >>> abjad.f(staff)
                 \new Staff {
-                    r8
-                    r8
-                    r8
-                    r8
-                    e'8 \<
-                    f'8
-                    fs'8
-                    g'8 \!
-                }
-
-        ..  container:: example
-
-            >>> staff = abjad.Staff([abjad.Note(n, (1, 8)) for n in range(4)] + abjad.Rest((1, 8)) * 4)
-            >>> crescendo = abjad.Hairpin('<', include_rests=False)
-            >>> abjad.attach(crescendo, staff[:])
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff {
-                    c'8 \<
-                    cs'8
-                    d'8
-                    ef'8 \!
-                    r8
-                    r8
-                    r8
-                    r8
+                    \once \override Hairpin.circled-tip = ##t
+                    c'2. \> \f
+                    r4 \!
                 }
 
         Returns true or false.
