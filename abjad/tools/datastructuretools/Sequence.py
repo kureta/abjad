@@ -56,7 +56,7 @@ class Sequence(abctools.AbjadValueObject):
 
             >>> sequence = abjad.sequence([1, 2, 3, [4, 5, [6]]])
             >>> sequence = sequence.reverse()
-            >>> sequence = sequence.flatten()
+            >>> sequence = sequence.flatten(depth=-1)
             >>> sequence
             Sequence([4, 5, 6, 3, 2, 1])
 
@@ -64,7 +64,7 @@ class Sequence(abctools.AbjadValueObject):
 
             >>> expression = abjad.sequence()
             >>> expression = expression.reverse()
-            >>> expression = expression.flatten()
+            >>> expression = expression.flatten(depth=-1)
             >>> expression([1, 2, 3, [4, 5, [6]]])
             Sequence([4, 5, 6, 3, 2, 1])
 
@@ -506,7 +506,7 @@ class Sequence(abctools.AbjadValueObject):
 
                 >>> sequence = abjad.sequence([1, 2, [3, [4]], 5])
                 >>> sequence = sequence[:-1]
-                >>> sequence = sequence.flatten()
+                >>> sequence = sequence.flatten(depth=-1)
 
                 >>> sequence
                 Sequence([1, 2, 3, 4])
@@ -516,13 +516,13 @@ class Sequence(abctools.AbjadValueObject):
                 >>> expression = abjad.Expression(name='J')
                 >>> expression = expression.sequence()
                 >>> expression = expression[:-1]
-                >>> expression = expression.flatten()
+                >>> expression = expression.flatten(depth=-1)
 
                 >>> expression([1, 2, [3, [4]], 5])
                 Sequence([1, 2, 3, 4])
 
                 >>> expression.get_string()
-                'flatten(J[:-1])'
+                'flatten(J[:-1], depth=-1)'
 
                 >>> markup = expression.get_markup()
                 >>> abjad.show(markup) # doctest: +SKIP
@@ -541,7 +541,7 @@ class Sequence(abctools.AbjadValueObject):
                                         \sub
                                             [:-1]
                                     }
-                                )
+                                ", depth=-1)"
                             }
                         }
 
@@ -1129,7 +1129,7 @@ class Sequence(abctools.AbjadValueObject):
 
     # TODO: remove indices=None parameter
     @systemtools.Signature()
-    def flatten(self, classes=None, depth=-1, indices=None):
+    def flatten(self, classes=None, depth=1, indices=None):
         r'''Flattens sequence.
 
         ..  container:: example
@@ -1142,7 +1142,7 @@ class Sequence(abctools.AbjadValueObject):
                 >>> sequence = abjad.sequence(items=items)
 
                 >>> sequence.flatten()
-                Sequence([1, 2, 3, 4, 5, 6, 7, 8])
+                Sequence([1, 2, 3, [4], 5, 6, 7, [8]])
 
             ..  container:: example expression
 
@@ -1151,7 +1151,7 @@ class Sequence(abctools.AbjadValueObject):
                 >>> expression = expression.flatten()
 
                 >>> expression([1, [2, 3, [4]], 5, [6, 7, [8]]])
-                Sequence([1, 2, 3, 4, 5, 6, 7, 8])
+                Sequence([1, 2, 3, [4], 5, 6, 7, [8]])
 
                 >>> expression.get_string()
                 'flatten(J)'
@@ -1169,46 +1169,6 @@ class Sequence(abctools.AbjadValueObject):
                                 \bold
                                     J
                                 )
-                            }
-                        }
-
-        ..  container:: example
-
-            Flattens sequence to depth 1:
-
-            ..  container:: example
-
-                >>> items = [1, [2, 3, [4]], 5, [6, 7, [8]]]
-                >>> sequence = abjad.sequence(items)
-
-                >>> sequence.flatten(depth=1)
-                Sequence([1, 2, 3, [4], 5, 6, 7, [8]])
-
-            ..  container:: example expression
-
-                >>> expression = abjad.Expression(name='J')
-                >>> expression = expression.sequence()
-                >>> expression = expression.flatten(depth=1)
-
-                >>> expression([1, [2, 3, [4]], 5, [6, 7, [8]]])
-                Sequence([1, 2, 3, [4], 5, 6, 7, [8]])
-
-                >>> expression.get_string()
-                'flatten(J, depth=1)'
-
-                >>> markup = expression.get_markup()
-                >>> abjad.show(markup) # doctest: +SKIP
-
-                ..  docs::
-
-                    >>> abjad.f(markup)
-                    \markup {
-                        \concat
-                            {
-                                flatten(
-                                \bold
-                                    J
-                                ", depth=1)"
                             }
                         }
 
@@ -1251,6 +1211,47 @@ class Sequence(abctools.AbjadValueObject):
                                 ", depth=2)"
                             }
                         }
+
+        ..  container:: example
+
+            Flattens sequence to depth -1:
+
+            ..  container:: example
+
+                >>> items = [1, [2, 3, [4]], 5, [6, 7, [8]]]
+                >>> sequence = abjad.sequence(items)
+
+                >>> sequence.flatten(depth=-1)
+                Sequence([1, 2, 3, 4, 5, 6, 7, 8])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.Expression(name='J')
+                >>> expression = expression.sequence()
+                >>> expression = expression.flatten(depth=-1)
+
+                >>> expression([1, [2, 3, [4]], 5, [6, 7, [8]]])
+                Sequence([1, 2, 3, 4, 5, 6, 7, 8])
+
+                >>> expression.get_string()
+                'flatten(J, depth=-1)'
+
+                >>> markup = expression.get_markup()
+                >>> abjad.show(markup) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(markup)
+                    \markup {
+                        \concat
+                            {
+                                flatten(
+                                \bold
+                                    J
+                                ", depth=-1)"
+                            }
+                        }
+
 
         ..  container:: example
 
@@ -3371,7 +3372,7 @@ class Sequence(abctools.AbjadValueObject):
                 raise TypeError(message)
             sublist.append(item)
             while current_cumulative_weight <= abjad.mathtools.weight(
-                type(self)(items).flatten()):
+                type(self)(items).flatten(depth=-1)):
                 try:
                     current_cumulative_weight = cumulative_weights.pop(0)
                     sublist = []
@@ -3607,7 +3608,7 @@ class Sequence(abctools.AbjadValueObject):
                 cyclic=cyclic,
                 overhang=overhang,
                 )
-            flattened_candidate = candidate.flatten()
+            flattened_candidate = candidate.flatten(depth=-1)
             if flattened_candidate == self[:len(flattened_candidate)]:
                 return candidate
             else:

@@ -593,7 +593,7 @@ class Meter(AbjadValueObject):
                     )
                 edge.attach(leaf_two_node, offset_node)
         offsets = abjad.MetricAccentKernel.count_offsets(
-            abjad.sequence(self.depthwise_offset_inventory).flatten())
+            abjad.sequence(self.depthwise_offset_inventory).flatten(depth=-1))
         graph = abjad.graphtools.GraphvizGraph(
             name='G',
             attributes={

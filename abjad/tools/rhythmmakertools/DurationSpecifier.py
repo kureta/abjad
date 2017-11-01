@@ -130,7 +130,7 @@ class DurationSpecifier(AbjadValueObject):
         import abjad
         meters = [abjad.Meter(_) for _ in meters]
         durations = [abjad.Duration(_) for _ in meters]
-        selections = abjad.sequence(selections).flatten()
+        selections = abjad.sequence(selections).flatten(depth=-1)
         meter_duration = sum(durations)
         music_duration = sum(
             abjad.inspect(_).get_duration() for _ in selections)

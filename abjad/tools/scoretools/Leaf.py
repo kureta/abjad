@@ -424,7 +424,7 @@ class Leaf(Component):
                 repeat_ties=repeat_ties,
                 )
             result_selections.append(selection)
-        result_components = abjad.sequence(result_selections).flatten()
+        result_components = abjad.sequence(result_selections).flatten(depth=-1)
         result_components = abjad.select(result_components)
         result_leaves = abjad.select(result_components).leaves()
         assert all(isinstance(_, abjad.Selection) for _ in result_selections)

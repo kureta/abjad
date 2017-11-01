@@ -2691,14 +2691,13 @@ class Mutation(abctools.AbjadObject):
         if len(remaining_components):
             result.append(remaining_components)
         # partition split components according to input durations
-        result = abjad.sequence(result).flatten()
+        result = abjad.sequence(result).flatten(depth=-1)
         result = abjad.select(result).partition_by_durations(
             durations_copy,
             fill=abjad.Exact,
             )
         # return list of shards
-        #return [abjad.select(_) for _ in result]
-        assert all(isinstance(_, abjad.Selection) for _ in result), repr(result)
+        assert all(isinstance(_, abjad.Selection) for _ in result)
         return result
 
     def swap(self, container):

@@ -293,7 +293,7 @@ class RhythmMaker(AbjadValueObject):
             overhang=True,
             )
         secondary_numerators = abjad.sequence(secondary_numerators)
-        secondary_numerators = secondary_numerators.flatten()
+        secondary_numerators = secondary_numerators.flatten(depth=-1)
         denominator = divisions[0].denominator
         secondary_divisions = [
             (n, denominator)

@@ -2004,7 +2004,7 @@ class Selection(AbjadValueObject):
                 >>> result = abjad.select(staff).leaves(pitched=True)
                 >>> result = result.group_pitches()
                 >>> result = result.map(abjad.select().contiguous())
-                >>> result = result.flatten(depth=1)
+                >>> result = result.flatten()
 
                 >>> for item in result:
                 ...     item
@@ -2018,7 +2018,7 @@ class Selection(AbjadValueObject):
                 >>> selector = abjad.select().leaves(pitched=True)
                 >>> selector = selector.group_pitches()
                 >>> selector = selector.map(abjad.select().contiguous())
-                >>> selector = selector.flatten(depth=1)
+                >>> selector = selector.flatten()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2118,7 +2118,7 @@ class Selection(AbjadValueObject):
 
                 >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.contiguous()
-                >>> result = result.map(getter).flatten(depth=1)
+                >>> result = result.map(getter).flatten()
 
                 >>> for item in result:
                 ...     item
@@ -2132,7 +2132,7 @@ class Selection(AbjadValueObject):
 
                 >>> selector = abjad.select().logical_ties(pitched=True)
                 >>> selector = selector.contiguous()
-                >>> selector = selector.map(getter).flatten(depth=1)
+                >>> selector = selector.map(getter).flatten()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -2914,7 +2914,7 @@ class Selection(AbjadValueObject):
             )
         return self.filter(inequality)
 
-    def flatten(self, depth=-1):
+    def flatten(self, depth=1):
         r'''Flattens selection to `depth`.
 
         Returns new selection.
@@ -7237,7 +7237,8 @@ class Selection(AbjadValueObject):
                 break
             component_duration = component._get_duration()
             if in_seconds:
-                component_duration = component._get_duration(in_seconds=True)
+                component_duration = abjad.inspect(component).get_duration(
+                    in_seconds=True)
             candidate_duration = cumulative_duration + component_duration
             if candidate_duration < target_duration:
                 part.append(component)
@@ -7261,12 +7262,12 @@ class Selection(AbjadValueObject):
                     part = [component]
                     if in_seconds:
                         cumulative_duration = sum([
-                            _._get_duration(in_seconds=True)
+                            abjad.inspect(_).get_duration(in_seconds=True)
                             for _ in part
                             ])
                     else:
                         cumulative_duration = sum([
-                            _._get_duration() for _ in part
+                            abjad.inspect(_).get_duration() for _ in part
                             ])
                     current_duration_index += 1
                     try:
