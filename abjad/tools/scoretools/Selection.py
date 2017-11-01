@@ -6118,6 +6118,11 @@ class Selection(AbjadValueObject):
                     c''8
                 }
 
+        Returns nested selection:
+
+            >>> type(result).__name__
+            'Selection'
+
         '''
         import abjad
         if self._expression:
@@ -6150,7 +6155,7 @@ class Selection(AbjadValueObject):
             group = type(self)(groups[0])
             subresult.append(group)
         result.extend(subresult)
-        return result
+        return type(self)(result)
 
     def partition_by_durations(
         self,
@@ -7206,7 +7211,11 @@ class Selection(AbjadValueObject):
         Returns remaining components at end in final part when `overhang`
         is true.
 
-        Returns nested selection.
+        Returns nested selection:
+
+            >>> type(result).__name__
+            'Selection'
+
         '''
         import abjad
         if self._expression:
@@ -7472,7 +7481,11 @@ class Selection(AbjadValueObject):
                     r8
                 }
 
-        Returns new selection.
+        Returns nested selection:
+
+            >>> type(result).__name__
+            'Selection'
+
         '''
         import abjad
         if self._expression:
@@ -7484,7 +7497,7 @@ class Selection(AbjadValueObject):
             )
         parts = abjad.sequence(self).partition_by_counts(counts=counts)
         selections = [type(self)(_) for _ in parts]
-        return selections
+        return type(self)(selections)
 
     def rest(self, n):
         r'''Selects rest `n`.
