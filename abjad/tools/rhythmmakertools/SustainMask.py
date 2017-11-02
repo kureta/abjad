@@ -8,12 +8,12 @@ class SustainMask(AbjadValueObject):
     ..  container:: example
 
         >>> mask = abjad.rhythmmakertools.SustainMask(
-        ...     pattern=abjad.index_every([0, 1, 7], period=16),
+        ...     pattern=abjad.index([0, 1, 7], 16),
         ...     )
 
         >>> abjad.f(mask)
         abjad.SustainMask(
-            pattern=abjad.index_every([0, 1, 7], 16),
+            pattern=abjad.index([0, 1, 7], period=16),
             )
 
     ..  container:: example
@@ -513,7 +513,7 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-        pattern = abjad.index_every(indices, period, inverted=inverted)
+        pattern = abjad.index(indices, period, inverted=inverted)
         template = SustainMask._get_template(inspect.currentframe())
         return SustainMask(pattern=pattern, template=template)
 

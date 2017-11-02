@@ -49,7 +49,6 @@ Bottom = OrdinalConstant('y', -1, 'Bottom')
 
 index = Pattern.index
 index_all = Pattern.index_all
-index_every = Pattern.index_every
 index_first = Pattern.index_first
 index_last = Pattern.index_last
 

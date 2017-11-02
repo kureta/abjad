@@ -590,7 +590,7 @@ class NoteRhythmMaker(RhythmMaker):
             >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
             ...     division_masks=[
             ...         abjad.rhythmmakertools.SilenceMask(
-            ...             pattern=abjad.index_every([0], period=2),
+            ...             pattern=abjad.index([0], 2),
             ...             ),
             ...         ],
             ...     )
@@ -709,7 +709,7 @@ class NoteRhythmMaker(RhythmMaker):
 
             Silences every other output division except for the first and last:
 
-            >>> pattern_1 = abjad.index_every([0], period=2)
+            >>> pattern_1 = abjad.index([0], 2)
             >>> pattern_2 = abjad.index([0, -1])
             >>> pattern = pattern_1 & ~pattern_2
             >>> mask = abjad.rhythmmakertools.SilenceMask(

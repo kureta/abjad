@@ -1730,7 +1730,7 @@ class AccelerandoRhythmMaker(RhythmMaker):
             ...         ),
             ...     division_masks=[
             ...         abjad.rhythmmakertools.SilenceMask(
-            ...             pattern=abjad.index_every([1], period=2),
+            ...             pattern=abjad.index([1], 2),
             ...             ),
             ...         ],
             ...     tuplet_specifier=abjad.rhythmmakertools.TupletSpecifier(

@@ -7,12 +7,12 @@ class SilenceMask(AbjadValueObject):
 
     ..  container:: example
 
-        >>> pattern = abjad.index_every([0, 1, 7], period=16)
+        >>> pattern = abjad.index([0, 1, 7], 16)
         >>> mask = abjad.rhythmmakertools.SilenceMask(pattern)
 
         >>> abjad.f(mask)
         abjad.SilenceMask(
-            pattern=abjad.index_every([0, 1, 7], 16),
+            pattern=abjad.index([0, 1, 7], period=16),
             )
 
     ..  container:: example
@@ -220,7 +220,7 @@ class SilenceMask(AbjadValueObject):
             Without multimeasure rests:
 
             >>> mask = abjad.rhythmmakertools.SilenceMask(
-            ...     abjad.index_every([0, 1, 7], period=16),
+            ...     abjad.index([0, 1, 7], 16),
             ...     use_multimeasure_rests=False,
             ...     )
 
@@ -232,7 +232,7 @@ class SilenceMask(AbjadValueObject):
             With multimeasure rests:
 
             >>> mask = abjad.rhythmmakertools.SilenceMask(
-            ...     abjad.index_every([0, 1, 7], period=16),
+            ...     abjad.index([0, 1, 7], 16),
             ...     use_multimeasure_rests=True,
             ...     )
 
@@ -577,7 +577,7 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-        pattern = abjad.index_every(indices, period, inverted=inverted)
+        pattern = abjad.index(indices, period, inverted=inverted)
         template = SilenceMask._get_template(inspect.currentframe())
         return SilenceMask(
             pattern=pattern,

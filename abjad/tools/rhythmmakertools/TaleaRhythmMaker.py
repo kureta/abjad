@@ -1367,7 +1367,7 @@ class TaleaRhythmMaker(RhythmMaker):
             ...         ),
             ...     division_masks=[
             ...         abjad.rhythmmakertools.SilenceMask(
-            ...             pattern=abjad.index_every([1], period=2),
+            ...             pattern=abjad.index([1], 2),
             ...             ),
             ...         ],
             ...     )
@@ -1464,7 +1464,7 @@ class TaleaRhythmMaker(RhythmMaker):
             ...     split_divisions_by_counts=[9],
             ...     division_masks=[
             ...         abjad.rhythmmakertools.SilenceMask(
-            ...             pattern=abjad.index_every([1], period=2),
+            ...             pattern=abjad.index([1], 2),
             ...             ),
             ...         ],
             ...     )

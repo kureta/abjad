@@ -170,7 +170,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> pattern = abjad.index_every([0], 2)
+                >>> pattern = abjad.index([0], 2)
                 >>> for leaf in abjad.select(staff).leaves()[pattern]:
                 ...     leaf
                 ...
@@ -237,7 +237,7 @@ class Selection(AbjadValueObject):
                 >>> staff = abjad.Staff(string)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> pattern = abjad.index_every([0], 2)
+                >>> pattern = abjad.index([0], 2)
                 >>> selection = abjad.select(staff).logical_ties(pitched=True)
                 >>> for logical_tie in selection[pattern]:
                 ...     logical_tie

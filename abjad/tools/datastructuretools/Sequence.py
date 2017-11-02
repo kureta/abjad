@@ -4469,12 +4469,12 @@ class Sequence(abctools.AbjadValueObject):
 
         ..  container:: example
 
-            >>> sequence.retain_pattern(abjad.index_every([2, 3], 4))
+            >>> sequence.retain_pattern(abjad.index([2, 3], 4))
             Sequence([2, 3, 6, 7])
 
         ..  container:: example
 
-            >>> sequence.retain_pattern(abjad.index_every([-2, -3], 4))
+            >>> sequence.retain_pattern(abjad.index([-2, -3], 4))
             Sequence([0, 3, 4, 7, 8])
 
         ..  container:: example
