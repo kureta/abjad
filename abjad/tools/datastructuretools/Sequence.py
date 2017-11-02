@@ -3240,6 +3240,48 @@ class Sequence(abctools.AbjadValueObject):
                             }
                         }
 
+        ..  container:: example
+
+            Edge case: empty counts nests sequence and ignores keywords:
+
+            ..  container:: example
+
+                >>> sequence = abjad.sequence(range(16))
+                >>> parts = sequence.partition_by_counts([])
+
+                >>> for part in parts:
+                ...     part
+                Sequence([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+
+            ..  container:: example expression
+
+                >>> expression = abjad.Expression(name='J')
+                >>> expression = expression.sequence()
+                >>> expression = expression.partition_by_counts([])
+
+                >>> for part in expression(range(16)):
+                ...     part
+                Sequence([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+
+                >>> expression.get_string()
+                'partition(J, [])'
+
+                >>> markup = expression.get_markup()
+                >>> abjad.show(markup) # doctest: +SKIP
+
+                ..  docs::
+
+                    >>> abjad.f(markup)
+                    \markup {
+                        \concat
+                            {
+                                partition(
+                                \bold
+                                    J
+                                ", [])"
+                            }
+                        }
+
         Returns nested sequence.
         '''
         import abjad
@@ -3252,7 +3294,10 @@ class Sequence(abctools.AbjadValueObject):
         sequence = self
         if reversed_:
             sequence = type(self)(reversed(sequence))
-        counts = abjad.CyclicTuple(counts)
+        if counts:
+            counts = abjad.CyclicTuple(counts)
+        else:
+            return type(self)([sequence])
         result = []
         i, start = 0, 0
         while True:
