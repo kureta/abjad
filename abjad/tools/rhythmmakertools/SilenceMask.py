@@ -258,7 +258,12 @@ class SilenceMask(AbjadValueObject):
     ### PUBLIC METHODS ###
 
     @staticmethod
-    def silence(indices, period=None, inverted=None):
+    def silence(
+        indices,
+        period=None,
+        inverted=None,
+        use_multimeasure_rests=None,
+        ):
         r'''Makes silence mask that matches `indices`.
 
         ..  container:: example
@@ -353,7 +358,11 @@ class SilenceMask(AbjadValueObject):
         import abjad
         pattern = abjad.index(indices, period=period, inverted=inverted)
         template = SilenceMask._get_template(inspect.currentframe())
-        return SilenceMask(pattern=pattern, template=template)
+        return SilenceMask(
+            pattern=pattern,
+            template=template,
+            use_multimeasure_rests=use_multimeasure_rests,
+            )
 
     @staticmethod
     def silence_all(inverted=None, use_multimeasure_rests=None):
