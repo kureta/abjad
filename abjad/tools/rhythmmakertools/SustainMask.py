@@ -40,7 +40,7 @@ class SustainMask(AbjadValueObject):
 
         >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
         ...     division_masks=[
-        ...         abjad.silence_all(),
+        ...         abjad.silence([0], 1),
         ...         mask,
         ...         ],
         ...     )
@@ -100,7 +100,7 @@ class SustainMask(AbjadValueObject):
 
         >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
         ...     division_masks=[
-        ...         abjad.silence_all(),
+        ...         abjad.silence([0], 1),
         ...         mask,
         ...         ],
         ...     )
@@ -238,7 +238,7 @@ class SustainMask(AbjadValueObject):
 
             >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
             ...     division_masks=[
-            ...         abjad.silence_all(),
+            ...         abjad.silence([0], 1),
             ...         mask,
             ...         ],
             ...     )
@@ -283,7 +283,7 @@ class SustainMask(AbjadValueObject):
 
             >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
             ...     division_masks=[
-            ...         abjad.silence_all(),
+            ...         abjad.silence([0], 1),
             ...         mask,
             ...         ],
             ...     )
@@ -322,114 +322,5 @@ class SustainMask(AbjadValueObject):
         '''
         import abjad
         pattern = abjad.index(indices, period=period, inverted=inverted)
-        template = SustainMask._get_template(inspect.currentframe())
-        return SustainMask(pattern=pattern, template=template)
-
-    @staticmethod
-    def sustain_all(inverted=None):
-        r'''Makes sustain mask that matches all indices.
-
-        ..  container:: example
-
-            Without mask:
-
-                >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-                ...     tuplet_ratios=[(3, 1)],
-                ...     )
-                >>> divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]
-
-            >>> selections = rhythm_maker(divisions)
-            >>> lilypond_file = abjad.LilyPondFile.rhythm(
-            ...     selections,
-            ...     divisions,
-            ...     )
-            >>> abjad.show(lilypond_file) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(lilypond_file[abjad.Staff])
-                \new RhythmicStaff {
-                    {
-                        \time 7/16
-                        \tweak text #tuplet-number::calc-fraction-text
-                        \times 7/8 {
-                            c'4.
-                            c'8
-                        }
-                    }
-                    {
-                        \time 3/8
-                        \tweak text #tuplet-number::calc-fraction-text
-                        \times 3/4 {
-                            c'4.
-                            c'8
-                        }
-                    }
-                    {
-                        \time 7/16
-                        \tweak text #tuplet-number::calc-fraction-text
-                        \times 7/8 {
-                            c'4.
-                            c'8
-                        }
-                    }
-                    {
-                        \time 3/8
-                        \tweak text #tuplet-number::calc-fraction-text
-                        \times 3/4 {
-                            c'4.
-                            c'8
-                        }
-                    }
-                }
-
-        ..  container:: example
-
-            With mask:
-
-            >>> mask = abjad.sustain_all()
-
-            >>> mask
-            abjad.sustain_all()
-
-            >>> rhythm_maker = abjad.rhythmmakertools.TupletRhythmMaker(
-            ...     division_masks=[mask],
-            ...     tuplet_ratios=[(3, 1)],
-            ...     )
-            >>> divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]
-
-            >>> selections = rhythm_maker(divisions)
-            >>> lilypond_file = abjad.LilyPondFile.rhythm(
-            ...     selections,
-            ...     divisions,
-            ...     )
-            >>> abjad.show(lilypond_file) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(lilypond_file[abjad.Staff])
-                \new RhythmicStaff {
-                    {
-                        \time 7/16
-                        c'4..
-                    }
-                    {
-                        \time 3/8
-                        c'4.
-                    }
-                    {
-                        \time 7/16
-                        c'4..
-                    }
-                    {
-                        \time 3/8
-                        c'4.
-                    }
-                }
-
-        Returns sustain mask.
-        '''
-        import abjad
-        pattern = abjad.index_all(inverted=inverted) 
         template = SustainMask._get_template(inspect.currentframe())
         return SustainMask(pattern=pattern, template=template)

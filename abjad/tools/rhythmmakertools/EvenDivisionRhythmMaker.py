@@ -994,7 +994,7 @@ class EvenDivisionRhythmMaker(RhythmMaker):
             Silences every output division:
 
             >>> rhythm_maker = abjad.rhythmmakertools.EvenDivisionRhythmMaker(
-            ...     division_masks=abjad.silence_all(),
+            ...     division_masks=abjad.silence([0], 1),
             ...     )
 
             >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]

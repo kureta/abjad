@@ -92,9 +92,7 @@ from abjad.tools.timespantools import TimespanList
 from abjad.tools.rhythmmakertools import SilenceMask
 from abjad.tools.rhythmmakertools import SustainMask
 silence = SilenceMask.silence
-silence_all = SilenceMask.silence_all
 sustain = SustainMask.sustain
-sustain_all = SustainMask.sustain_all
 
 # import custom exceptions into the builtins module
 import os
