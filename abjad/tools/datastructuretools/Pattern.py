@@ -1341,7 +1341,7 @@ class Pattern(AbjadValueObject):
         return abjad.sequence(items=items)
 
     @staticmethod
-    def index(indices, inverted=None):
+    def index(indices, period=None, inverted=None):
         r'''Makes pattern that matches `indices`.
 
         ..  container:: example
@@ -1370,6 +1370,7 @@ class Pattern(AbjadValueObject):
         return Pattern(
             indices=indices,
             inverted=inverted,
+            period=period,
             template=template,
             )
 
