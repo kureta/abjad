@@ -1040,7 +1040,7 @@ class NoteRhythmMaker(RhythmMaker):
             Silences every other logical tie:
 
             >>> rhythm_maker = abjad.rhythmmakertools.NoteRhythmMaker(
-            ...     logical_tie_masks=abjad.silence_every([0], period=2)
+            ...     logical_tie_masks=abjad.silence([0], 2),
             ...     )
 
             >>> divisions = [(4, 8), (3, 8), (4, 8), (3, 8)]

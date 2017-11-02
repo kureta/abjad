@@ -674,7 +674,7 @@ class TupletRhythmMaker(RhythmMaker):
             ...         beam_each_division=False,
             ...         ),
             ...     division_masks=[
-            ...         abjad.silence_every([1], period=2),
+            ...         abjad.silence([1], 2),
             ...         ],
             ...     )
 
