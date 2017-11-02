@@ -161,6 +161,18 @@ class SustainMask(AbjadValueObject):
         self._pattern = pattern
         self._template = template
 
+    ### SPECIAL METHODS ###
+
+    def __invert__(self):
+        r'''Inverts pattern.
+
+        Returns new sustain mask.
+        '''
+        import abjad
+        pattern = ~self.pattern
+        inverted = pattern.inverted or None
+        return abjad.sustain(pattern.indices, pattern.period, inverted)
+
     ### PRIVATE METHODS ###
 
     def _get_format_specification(self):
@@ -212,7 +224,7 @@ class SustainMask(AbjadValueObject):
     ### PUBLIC METHODS ###
 
     @staticmethod
-    def sustain(indices, inverted=None):
+    def sustain(indices, period=None, inverted=None):
         r'''Makes sustain mask that matches `indices`.
 
         ..  container:: example
@@ -309,7 +321,7 @@ class SustainMask(AbjadValueObject):
         Returns sustain mask.
         '''
         import abjad
-        pattern = abjad.index(indices, inverted=inverted)
+        pattern = abjad.index(indices, period=period, inverted=inverted)
         template = SustainMask._get_template(inspect.currentframe())
         return SustainMask(pattern=pattern, template=template)
 

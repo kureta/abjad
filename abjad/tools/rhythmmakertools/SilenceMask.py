@@ -163,6 +163,18 @@ class SilenceMask(AbjadValueObject):
             assert isinstance(use_multimeasure_rests, type(True))
         self._use_multimeasure_rests = use_multimeasure_rests
 
+    ### SPECIAL METHODS ###
+
+    def __invert__(self):
+        r'''Inverts pattern.
+
+        Returns new silence mask.
+        '''
+        import abjad
+        pattern = ~self.pattern
+        inverted = pattern.inverted or None
+        return abjad.silence(pattern.indices, pattern.period, inverted)
+
     ### PRIVATE METHODS ###
 
     def _get_format_specification(self):
@@ -246,7 +258,7 @@ class SilenceMask(AbjadValueObject):
     ### PUBLIC METHODS ###
 
     @staticmethod
-    def silence(indices, inverted=None):
+    def silence(indices, period=None, inverted=None):
         r'''Makes silence mask that matches `indices`.
 
         ..  container:: example
@@ -339,7 +351,7 @@ class SilenceMask(AbjadValueObject):
         Returns silence mask.
         '''
         import abjad
-        pattern = abjad.index(indices, inverted=inverted)
+        pattern = abjad.index(indices, period=period, inverted=inverted)
         template = SilenceMask._get_template(inspect.currentframe())
         return SilenceMask(pattern=pattern, template=template)
 
