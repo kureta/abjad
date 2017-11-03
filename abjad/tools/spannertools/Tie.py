@@ -24,6 +24,24 @@ class Tie(Spanner):
 
     ..  container:: example
 
+        Removes any existing ties before attaching new tie:
+
+        >>> staff = abjad.Staff("c'4 ~ c' ~ c' ~ c'")
+        >>> abjad.attach(abjad.Tie(), staff[:])
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff {
+                c'4 ~
+                c'4 ~
+                c'4 ~
+                c'4
+            }
+
+    ..  container:: example
+
         Fails attachment test when pitches differ:
 
         >>> staff = abjad.Staff("c'4 d' e' f'")
@@ -107,6 +125,13 @@ class Tie(Spanner):
             if abjad.inspect(component).has_spanner(abjad.Tie):
                 return False
         return True
+
+    def _before_attach(self, argument):
+        import abjad
+        if self._ignore_before_attach:
+            return
+        for leaf in abjad.iterate(argument).leaves():
+            abjad.detach(Tie, leaf)
 
     def _copy_keyword_args(self, new):
         new._direction = self.direction

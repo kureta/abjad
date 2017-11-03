@@ -16,6 +16,7 @@ class Spanner(AbjadObject):
     __slots__ = (
         '_contiguity_constraint',
         '_ignore_attachment_test',
+        '_ignore_before_attach',
         '_indicator_wrappers',
         '_leaves',
         '_lilypond_grob_name_manager',
@@ -34,6 +35,7 @@ class Spanner(AbjadObject):
         self._contiguity_constraint = 'logical voice'
         self._apply_overrides(overrides)
         self._ignore_attachment_test = None
+        self._ignore_before_attach = None
         self._indicator_wrappers = []
         self._leaves = []
         self._lilypond_setting_name_manager = None
@@ -193,6 +195,9 @@ class Spanner(AbjadObject):
 
     def _attachment_test_all(self, argument):
         return True
+
+    def _before_attach(self, argument):
+        pass
 
     def _block_all_leaves(self):
         r'''Not composer-safe.

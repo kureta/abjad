@@ -808,6 +808,7 @@ class WellformednessManager(AbjadObject):
             >>> abjad.attach(abjad.Tie(), staff[:2])
             >>> tie = abjad.Tie()
             >>> tie._ignore_attachment_test = True
+            >>> tie._ignore_before_attach = True
             >>> abjad.attach(tie, staff[1:3])
 
             >>> agent = abjad.inspect(staff)
