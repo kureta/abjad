@@ -246,18 +246,16 @@ class Hairpin(Spanner):
             string = '{} {}'.format(direction, string)
         bundle.right.spanner_starts.append(string)
 
-    def _attachment_test_all(self, component_expression):
+    def _attachment_test_all(self, argument):
         import abjad
-        if isinstance(component_expression, abjad.Leaf):
-            return False
-        if not self._at_least_two_leaves(component_expression):
-            return False
-        formattable_components = []
-        for component in component_expression:
-            if (not self.trim or
-                isinstance(component, (abjad.Note, abjad.Chord))):
-                formattable_components.append(component)
-        return 1 < len(formattable_components)
+        if isinstance(argument, (abjad.Chord, abjad.Note)):
+            return True
+        assert all(isinstance(_, abjad.Leaf) for _ in argument)
+        if self.trim:
+            leaves = abjad.select(argument).leaves(trim=True)
+        else:
+            leaves = abjad.select(argument).leaves()
+        return 1 <= len(leaves)
 
     def _copy_keyword_args(self, new):
         Spanner._copy_keyword_args(self, new)
@@ -268,30 +266,27 @@ class Hairpin(Spanner):
         new._stop_dynamic = self.stop_dynamic
         new._trim = self.trim
 
-    def _format_time_test(self, leaf):
-        if not 1 < len(self.leaves):
-            message = '{} fails format-time test.'
-            message = message.format(self)
-            raise Exception(message)
-
     def _get_lilypond_format_bundle(self, leaf):
         import abjad
         if self.descriptor is None:
             return self._get_piecewise_lilypond_format_bundle(leaf)
-        self._format_time_test(leaf)
-        bundle = self._get_basic_lilypond_format_bundle(leaf)
         direction_string = ''
         if self.direction is not None:
             direction_string = abjad.String.to_tridirectional_lilypond_symbol(
                 self.direction)
             direction_string = '{} '.format(direction_string)
-        if (self._is_my_first_leaf(leaf) and
+        bundle = self._get_basic_lilypond_format_bundle(leaf)
+        if len(self) == 1 and isinstance(self[0], (abjad.Chord, abjad.Note)):
+            string = r'{}\{}'.format(direction_string, self.start_dynamic.name)
+            bundle.right.spanner_starts.append(string)
+            return bundle
+        if (leaf is self[0] and
             (self.start_dynamic and self.start_dynamic.name == 'niente' or
             self.stop_dynamic and self.stop_dynamic.name == 'niente')):
             string = r'\once \override Hairpin.circled-tip = ##t'
             bundle.before.commands.append(string)
         if not self.trim:
-            if self._is_my_first_leaf(leaf):
+            if leaf is self[0]:
                 string = r'{}\{}'.format(direction_string, self.shape_string)
                 bundle.right.spanner_starts.append(string)
                 if (self.start_dynamic and
@@ -301,7 +296,7 @@ class Hairpin(Spanner):
                             self.start_dynamic.name,
                             )
                         bundle.right.spanner_starts.append(string)
-            if self._is_my_last_leaf(leaf):
+            if leaf is self[-1]:
                 if (self.stop_dynamic and
                     not self.stop_dynamic.name == 'niente'):
                         string = r'{}\{}'.format(
@@ -310,14 +305,17 @@ class Hairpin(Spanner):
                             )
                         bundle.right.spanner_stops.append(string)
                 else:
-                    effective_dynamic = leaf._get_effective(abjad.Dynamic)
+                    effective_dynamic = abjad.inspect(leaf).get_effective(
+                        abjad.Dynamic)
                     if (effective_dynamic is None or
                         effective_dynamic.name == 'niente'):
                         string = r'\!'
                         bundle.right.spanner_stops.append(string)
-                    elif effective_dynamic not in leaf._indicator_wrappers:
+                    elif (effective_dynamic not in
+                        abjad.inspect(leaf).get_indicators(unwrap=False)):
                         found_match = False
-                        for indicator in leaf._get_indicators(abjad.Dynamic):
+                        for indicator in abjad.inspect(leaf).get_indicators(
+                            abjad.Dynamic):
                             if indicator == effective_dynamic:
                                 found_match = True
                         if not found_match:
@@ -346,20 +344,22 @@ class Hairpin(Spanner):
                             )
                         bundle.right.spanner_stops.append(string)
                 else:
-                    effective_dynamic = leaf._get_effective(abjad.Dynamic)
+                    effective_dynamic = abjad.inspect(leaf).get_effective(
+                        abjad.Dynamic)
                     if (effective_dynamic is None or
                         effective_dynamic.name == 'niente'):
                         string = r'\!'
                         bundle.right.spanner_stops.append(string)
                     elif effective_dynamic not in leaf._indicator_wrappers:
                         found_match = False
-                        for indicator in leaf._get_indicators(abjad.Dynamic):
+                        for indicator in abjad.inspect(leaf).get_indicators(
+                            abjad.Dynamic):
                             if indicator == effective_dynamic:
                                 found_match = True
                         if not found_match:
                             string = r'\!'
                             bundle.right.spanner_stops.append(string)
-        if self._is_my_only_leaf(leaf):
+        if leaf is self[0] and len(self) == 1:
             bundle.right.spanner_starts.extend(bundle.right.spanner_stops)
             bundle.right.spanner_stops[:] = []
         return bundle
@@ -378,7 +378,6 @@ class Hairpin(Spanner):
             return self._get_piecewise_indicator(leaf, abjad.Dynamic)
 
     def _get_piecewise_lilypond_format_bundle(self, leaf):
-        self._format_time_test(leaf)
         bundle = self._get_basic_lilypond_format_bundle(leaf)
         self._add_circled_tip_override(leaf, bundle)
         self._add_hairpin_start(leaf, bundle)
@@ -401,7 +400,7 @@ class Hairpin(Spanner):
 
     @staticmethod
     def _is_hairpin_token(argument):
-        r'''
+        r'''Is true when `argument` is hairpin token.
 
         >>> abjad.Hairpin._is_hairpin_token(('', '<', ''))
         True

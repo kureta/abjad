@@ -5667,6 +5667,86 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return self.components(abjad.Note)
 
+    def nontrivial(self):
+        r'''Filters selection by length greater than 1.
+
+        ..  container:: example
+
+            Selects nontrivial runs:
+            
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 r8 d'8 e'8 r8 f'8 g'8 a'8")
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).runs().nontrivial()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().runs().nontrivial()
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Run([Note("d'8"), Note("e'8")])
+                Run([Note("f'8"), Note("g'8"), Note("a'8")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    c'8
+                    r8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'8
+                    r8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'8
+                }
+
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        return self.filter_length('>', 1)
+
     def partition_by_counts(
         self,
         counts,

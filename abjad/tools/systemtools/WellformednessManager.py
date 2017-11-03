@@ -284,7 +284,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners 
-            0 /	2 short hairpins
             0 /	0 tied rests
 
         Enchained hairpins are fine so long as hairpin ends match.
@@ -356,7 +355,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	1 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         ..  container:: example
@@ -388,7 +386,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	1 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         Does not check tied rests, chords or skips.
@@ -518,7 +515,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         ..  container:: example
@@ -569,7 +565,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         ..  container:: example
@@ -600,7 +595,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         Returns true or false.
@@ -670,7 +664,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	2 tied rests
 
         Returns true or false.
@@ -770,7 +763,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	2 short hairpins
             0 /	0 tied rests
 
         Enchained hairpins are fine so long as hairpin ends match.
@@ -833,7 +825,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             2 /	2 overlapping ties
             0 / 0 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         Returns violators and count of total ties.
@@ -915,7 +906,6 @@ class WellformednessManager(AbjadObject):
             0 /	0 overlapping octavation spanners
             0 /	0 overlapping ties
             2 /	2 overlapping trill spanners
-            0 /	0 short hairpins
             0 /	0 tied rests
 
         Enchained hairpins are fine so long as hairpin ends match.
@@ -924,22 +914,6 @@ class WellformednessManager(AbjadObject):
         '''
         import abjad
         return self._check_overlapping_spanners(argument, abjad.TrillSpanner)
-
-    def check_short_hairpins(self, argument=None):
-        r'''Checks short hairpins.
-
-        Returns violators and total.
-        '''
-        import abjad
-        violators, total = [], set()
-        descendants = abjad.inspect(argument).get_descendants()
-        hairpins = abjad.inspect(descendants).get_spanners(abjad.Hairpin)
-        for hairpin in hairpins:
-            total.add(hairpin)
-            if len(hairpin.leaves) <= 1:
-                if hairpin not in violators:
-                    violators.append(hairpin)
-        return violators, len(total)
 
     def check_tied_rests(self, argument=None):
         r'''Checks tied rests.
