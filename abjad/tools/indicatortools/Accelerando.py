@@ -42,7 +42,7 @@ class Accelerando(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_markup',
         )
 
@@ -51,7 +51,7 @@ class Accelerando(AbjadValueObject):
     def __init__(self, markup=None):
         from abjad.tools import markuptools
         from abjad.tools import scoretools
-        self._default_scope = scoretools.Score
+        self._context = scoretools.Score
         if markup is not None:
             assert isinstance(markup, markuptools.Markup)
         self._markup = markup
@@ -127,18 +127,18 @@ class Accelerando(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of accelerando.
 
         ..  container:: example
 
             >>> accelerando = abjad.Accelerando()
-            >>> accelerando.default_scope
+            >>> accelerando.context
             <class 'abjad.tools.scoretools.Score.Score'>
 
         Returns score.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def markup(self):

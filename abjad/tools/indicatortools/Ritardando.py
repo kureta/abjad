@@ -74,7 +74,7 @@ class Ritardando(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_markup',
         )
 
@@ -83,7 +83,7 @@ class Ritardando(AbjadValueObject):
     def __init__(self, markup=None):
         from abjad.tools import markuptools
         from abjad.tools import scoretools
-        self._default_scope = scoretools.Score
+        self._context = scoretools.Score
         if markup is not None:
             assert isinstance(markup, markuptools.Markup)
         self._markup = markup
@@ -159,7 +159,7 @@ class Ritardando(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of ritardando.
 
         ..  container:: example
@@ -167,7 +167,7 @@ class Ritardando(AbjadValueObject):
             Default ritardando:
 
             >>> ritardando = abjad.Ritardando()
-            >>> ritardando.default_scope
+            >>> ritardando.context
             <class 'abjad.tools.scoretools.Score.Score'>
 
         ..  container:: example
@@ -176,12 +176,12 @@ class Ritardando(AbjadValueObject):
 
             >>> markup = abjad.Markup(r'\bold { \italic { ritardando } }')
             >>> ritardando = abjad.Ritardando(markup=markup)
-            >>> ritardando.default_scope
+            >>> ritardando.context
             <class 'abjad.tools.scoretools.Score.Score'>
 
         Returns score.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def markup(self):

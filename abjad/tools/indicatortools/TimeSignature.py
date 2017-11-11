@@ -92,7 +92,7 @@ class TimeSignature(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_denominator',
         '_has_non_power_of_two_denominator',
         '_multiplier',
@@ -108,7 +108,7 @@ class TimeSignature(AbjadValueObject):
 
     def __init__(self, pair=(4, 4), partial=None, suppress=None):
         import abjad
-        self._default_scope = abjad.Staff
+        self._context = abjad.Staff
         pair = getattr(pair, 'pair', pair)
         assert isinstance(pair, collections.Iterable), repr(pair)
         assert len(pair) == 2, repr(pair)
@@ -366,26 +366,26 @@ class TimeSignature(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of time signature.
 
         ..  container:: example
 
             First time signature:
 
-            >>> abjad.TimeSignature((3, 8)).default_scope
+            >>> abjad.TimeSignature((3, 8)).context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         ..  container:: example
 
             Second time signature:
 
-            >>> abjad.TimeSignature((4, 4)).default_scope
+            >>> abjad.TimeSignature((4, 4)).context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         Returns staff.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def denominator(self):

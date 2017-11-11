@@ -64,7 +64,7 @@ class Clef(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_middle_c_position',
         '_name',
         )
@@ -89,7 +89,7 @@ class Clef(AbjadValueObject):
 
     def __init__(self, name='treble'):
         import abjad
-        self._default_scope = abjad.Staff
+        self._context = abjad.Staff
         if isinstance(name, str):
             self._name = name
         elif isinstance(name, type(self)):
@@ -247,20 +247,20 @@ class Clef(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of clef.
 
         ..  container:: example
 
             >>> clef = abjad.Clef('treble')
-            >>> clef.default_scope
+            >>> clef.context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         Clefs are staff-scoped by default.
 
         Returns staff.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def middle_c_position(self):

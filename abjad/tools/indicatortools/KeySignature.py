@@ -49,7 +49,7 @@ class KeySignature(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_mode',
         '_tonic',
         )
@@ -66,7 +66,7 @@ class KeySignature(AbjadValueObject):
         mode = tonalanalysistools.Mode(mode)
         self._tonic = tonic
         self._mode = mode
-        self._default_scope = scoretools.Staff
+        self._context = scoretools.Staff
 
     ### SPECIAL METHODS ###
 
@@ -121,7 +121,7 @@ class KeySignature(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of key signature.
 
         ..  container:: example
@@ -129,7 +129,7 @@ class KeySignature(AbjadValueObject):
             E major:
 
             >>> key_signature = abjad.KeySignature('e', 'major')
-            >>> key_signature.default_scope
+            >>> key_signature.context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         ..  container:: example
@@ -137,14 +137,14 @@ class KeySignature(AbjadValueObject):
             e minor:
 
             >>> key_signature = abjad.KeySignature('e', 'minor')
-            >>> key_signature.default_scope
+            >>> key_signature.context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         Key signatures are staff-scoped by default.
 
         Returns staff.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def mode(self):

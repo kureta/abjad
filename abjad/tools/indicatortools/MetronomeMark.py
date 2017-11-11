@@ -185,7 +185,7 @@ class MetronomeMark(AbjadValueObject):
 
     __slots__ = (
         '_custom_markup',
-        '_default_scope',
+        '_context',
         '_reference_duration',
         '_textual_indication',
         '_units_per_minute',
@@ -203,7 +203,7 @@ class MetronomeMark(AbjadValueObject):
         custom_markup=None,
         ):
         import abjad
-        self._default_scope = abjad.Score
+        self._context = abjad.Score
         assert isinstance(textual_indication, (str, type(None)))
         arguments = (reference_duration, units_per_minute, textual_indication)
         if all(_ is None for _ in arguments):
@@ -891,7 +891,7 @@ class MetronomeMark(AbjadValueObject):
         return self._custom_markup
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of metronome mark.
 
         ..  container:: example
@@ -899,7 +899,7 @@ class MetronomeMark(AbjadValueObject):
             Fifty-two eighth notes per minute:
 
             >>> mark = abjad.MetronomeMark((1, 8), 52)
-            >>> mark.default_scope
+            >>> mark.context
             <class 'abjad.tools.scoretools.Score.Score'>
 
         ..  container:: example
@@ -907,12 +907,12 @@ class MetronomeMark(AbjadValueObject):
             Ninety quarter notes per minute:
 
             >>> mark = abjad.MetronomeMark((1, 4), 90)
-            >>> mark.default_scope
+            >>> mark.context
             <class 'abjad.tools.scoretools.Score.Score'>
 
         Returns score.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def is_imprecise(self):

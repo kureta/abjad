@@ -137,8 +137,8 @@ def attach(
         indicator._detach()
         indicator = indicator.indicator
 
-    if hasattr(indicator, '_default_scope'):
-        scope = scope or indicator._default_scope
+    if hasattr(indicator, '_context'):
+        scope = scope or indicator._context
 
     wrapper = abjad.IndicatorWrapper(
         component=component,

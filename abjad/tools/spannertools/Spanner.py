@@ -179,7 +179,7 @@ class Spanner(AbjadObject):
             message = 'must be leaf in spanner: {!r}.'
             message = message.format(leaf)
             raise Exception(message)
-        scope = getattr(indicator, '_default_scope', None)
+        scope = getattr(indicator, '_context', None)
         wrapper = abjad.IndicatorWrapper(
             component=leaf,
             indicator=indicator,

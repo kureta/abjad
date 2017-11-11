@@ -51,7 +51,7 @@ class Dynamic(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
-        '_default_scope',
+        '_context',
         '_name',
         )
 
@@ -144,7 +144,7 @@ class Dynamic(AbjadValueObject):
             name = name.name
         assert name in self._dynamic_names, repr(name)
         self._name = name
-        self._default_scope = scoretools.Staff
+        self._context = scoretools.Staff
 
     ### SPECIAL METHODS ###
 
@@ -324,7 +324,7 @@ class Dynamic(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
-    def default_scope(self):
+    def context(self):
         r'''Gets default scope of dynamic.
 
         ..  container:: example
@@ -332,7 +332,7 @@ class Dynamic(AbjadValueObject):
             Forte:
 
             >>> dynamic = abjad.Dynamic('f')
-            >>> dynamic.default_scope
+            >>> dynamic.context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         ..  container:: example
@@ -340,14 +340,14 @@ class Dynamic(AbjadValueObject):
             Piano:
 
             >>> dynamic = abjad.Dynamic('p')
-            >>> dynamic.default_scope
+            >>> dynamic.context
             <class 'abjad.tools.scoretools.Staff.Staff'>
 
         Dynamics are staff-scoped by default.
 
         Returns staff.
         '''
-        return self._default_scope
+        return self._context
 
     @property
     def name(self):
