@@ -129,11 +129,11 @@ class LilyPondFormatManager(AbjadObject):
     def _populate_grob_override_format_contributions(component, bundle):
         import abjad
         result = []
-        is_once = isinstance(component, abjad.Leaf)
+        once = isinstance(component, abjad.Leaf)
         grob = abjad.override(component)
         contributions = grob._list_format_contributions(
             'override',
-            is_once=is_once,
+            once=once,
             )
         for string in result[:]:
             if 'NoteHead' in string and 'pitch' in string:
@@ -376,91 +376,68 @@ class LilyPondFormatManager(AbjadObject):
 
     @staticmethod
     def make_lilypond_override_string(
-        grob_name,
-        grob_attribute,
-        grob_value,
-        context_name=None,
-        is_once=False,
+        grob,
+        attribute,
+        value,
+        context=None,
+        once=False,
         ):
         r'''Makes Lilypond override string.
-
-        Does not include 'once'.
 
         Returns string.
         '''
         import abjad
-        grob_name = abjad.String(grob_name).to_upper_camel_case()
-        grob_attribute = LilyPondFormatManager.format_lilypond_attribute(
-            grob_attribute)
-        grob_value = LilyPondFormatManager.format_lilypond_value(grob_value)
-        if context_name is not None:
-            context_prefix = abjad.String(context_name).to_upper_camel_case()
-            context_prefix += '.'
+        grob = abjad.String(grob).to_upper_camel_case()
+        attribute = LilyPondFormatManager.format_lilypond_attribute(attribute)
+        value = LilyPondFormatManager.format_lilypond_value(value)
+        if context is not None:
+            context = abjad.String(context).to_upper_camel_case()
+            context += '.'
         else:
-            context_prefix = ''
-        if is_once:
-            once_prefix = r'\once '
+            context = ''
+        if once is True:
+            once = r'\once '
         else:
-            once_prefix = ''
+            once = ''
         result = r'{}\override {}{}.{} = {}'
-        result = result.format(
-            once_prefix,
-            context_prefix,
-            grob_name,
-            grob_attribute,
-            grob_value,
-            )
+        result = result.format(once, context, grob, attribute, value)
         return result
 
     @staticmethod
-    def make_lilypond_revert_string(
-        grob_name,
-        grob_attribute,
-        context_name=None,
-        ):
+    def make_lilypond_revert_string(grob, attribute, context=None):
         r'''Makes LilyPond revert string.
 
         Returns string.
         '''
         import abjad
-        grob_name = abjad.String(grob_name).to_upper_camel_case()
-        grob_attribute = LilyPondFormatManager.format_lilypond_attribute(
-            grob_attribute)
-        # change #'bound-details #'left #'text to #'bound-details
-        grob_attribute = grob_attribute.split('.')[0]
-        context_prefix = ''
-        if context_name is not None:
-            context_prefix = abjad.String(context_name).to_upper_camel_case()
-            context_prefix += '.'
+        grob = abjad.String(grob).to_upper_camel_case()
+        attribute = LilyPondFormatManager.format_lilypond_attribute(attribute)
+        attribute = attribute.split('.')[0]
+        if context is not None:
+            context = abjad.String(context).to_upper_camel_case()
+            context += '.'
+        else:
+            context = ''
         result = r'\revert {}{}.{}'
-        result = result.format(context_prefix, grob_name, grob_attribute)
+        result = result.format(context, grob, attribute)
         return result
 
     @staticmethod
-    def make_lilypond_tweak_string(
-        grob_attribute,
-        grob_value,
-        grob_name=None,
-        ):
+    def make_lilypond_tweak_string(attribute, value, grob=None):
         r'''Makes Lilypond \tweak string.
 
         Returns string.
         '''
         import abjad
-        if grob_name is not None:
-            grob_name = abjad.String(grob_name).to_upper_camel_case()
-            grob_string = grob_name + '.'
+        if grob is not None:
+            grob = abjad.String(grob).to_upper_camel_case()
+            grob += '.'
         else:
-            grob_string = ''
-        grob_attribute = LilyPondFormatManager.format_lilypond_attribute(
-            grob_attribute)
-        grob_value = LilyPondFormatManager.format_lilypond_value(grob_value)
+            grob = ''
+        attribute = LilyPondFormatManager.format_lilypond_attribute(attribute)
+        value = LilyPondFormatManager.format_lilypond_value(value)
         result = r'- \tweak {}{} {}'
-        result = result.format(
-            grob_string,
-            grob_attribute,
-            grob_value,
-            )
+        result = result.format(grob, attribute, value)
         return result
 
     @staticmethod

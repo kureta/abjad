@@ -324,7 +324,7 @@ class Spanner(AbjadObject):
         if self._is_my_first_leaf(leaf):
             contributions = abjad.override(self)._list_format_contributions(
                 'override',
-                is_once=False,
+                once=False,
                 )
             bundle.grob_overrides.extend(contributions)
         return bundle
