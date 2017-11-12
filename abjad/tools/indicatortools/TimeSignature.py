@@ -106,9 +106,15 @@ class TimeSignature(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(self, pair=(4, 4), partial=None, suppress=None):
+    def __init__(
+        self,
+        pair=(4, 4),
+        context='Staff',
+        partial=None,
+        suppress=None,
+        ):
         import abjad
-        self._context = abjad.Staff
+        self._context = context
         pair = getattr(pair, 'pair', pair)
         assert isinstance(pair, collections.Iterable), repr(pair)
         assert len(pair) == 2, repr(pair)
@@ -367,21 +373,21 @@ class TimeSignature(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of time signature.
+        r'''Gets time signature context.
 
         ..  container:: example
 
             First time signature:
 
             >>> abjad.TimeSignature((3, 8)).context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
         ..  container:: example
 
             Second time signature:
 
             >>> abjad.TimeSignature((4, 4)).context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
         Returns staff.
         '''
