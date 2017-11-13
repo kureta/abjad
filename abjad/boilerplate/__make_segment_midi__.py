@@ -8,7 +8,7 @@ import traceback
 if __name__ == '__main__':
 
     try:
-        from definition import segment_maker
+        from definition import maker
     except ImportError:
         traceback.print_exc()
         sys.exit(1)
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     try:
         with abjad.Timer() as timer:
-            result = segment_maker.run(
+            result = maker.run(
                 metadata=metadata,
                 midi=True,
                 previous_metadata=previous_metadata,
