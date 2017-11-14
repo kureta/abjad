@@ -358,6 +358,11 @@ class Selection(AbjadValueObject):
                 f'8
             }
 
+        ..  container:: example
+
+            >>> abjad.select().leaves()[:2]
+            abjad.select().leaves()[:2]
+
         Returns a single item when `argument` is an integer.
 
         Returns new selection when `argument` is a slice.
@@ -366,7 +371,13 @@ class Selection(AbjadValueObject):
         '''
         import abjad
         if self._expression:
-            return self._update_expression(inspect.currentframe())
+            method = abjad.Expression._make___getitem___string_template
+            template = method(argument)
+            template = template.format(self._expression.template)
+            return self._update_expression(
+                inspect.currentframe(),
+                template=template,
+                )
         if isinstance(argument, abjad.Pattern):
             items = abjad.sequence(self.items).retain_pattern(argument)
             result = type(self)(items)
@@ -1190,6 +1201,7 @@ class Selection(AbjadValueObject):
         evaluation_template=None,
         lone=None,
         map_operand=None,
+        template=None,
         ):
         import abjad
         callback = abjad.Expression._frame_to_callback(
@@ -1199,7 +1211,8 @@ class Selection(AbjadValueObject):
             )
         callback = abjad.new(callback, lone=lone)
         expression = self._expression.append_callback(callback)
-        template = self._get_template(frame, self._expression)
+        if template is None:
+            template = self._get_template(frame, self._expression)
         return abjad.new(expression, template=template)
 
     def _withdraw_from_crossing_spanners(self):

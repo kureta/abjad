@@ -1066,7 +1066,8 @@ class Expression(AbjadValueObject):
 
     @staticmethod
     def _make_subscript_string(i, markup=False):
-        if isinstance(i, int):
+        import abjad
+        if isinstance(i, (int, abjad.Pattern)):
             if markup:
                 subscript_string = '{i}'
             else:
