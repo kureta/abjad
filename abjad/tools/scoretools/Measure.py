@@ -13,13 +13,13 @@ class Measure(Container):
     ..  docs::
 
         >>> abjad.f(measure)
-        {
+        { % measure
             \time 4/8
             c'8
             d'8
             e'8
             f'8
-        }
+        } % measure
 
     '''
 
@@ -31,6 +31,8 @@ class Measure(Container):
         '_measure_number',
         '_implicit_scaling',
         )
+
+    _bracket_comment = ' % measure'
 
     _is_counttime_component = True
 
@@ -220,8 +222,8 @@ class Measure(Container):
 
     def _check_duration(self):
         effective_time_signature = self.time_signature
-        if effective_time_signature.has_non_power_of_two_denominator and \
-            effective_time_signature.suppress:
+        if (effective_time_signature.has_non_power_of_two_denominator and
+            effective_time_signature.suppress):
             message = 'can not suppress time signature'
             message += ' with non-power-of-two denominator.'
             raise Exception(message)
@@ -308,7 +310,7 @@ class Measure(Container):
                 )
             result.append(string)
             pieces = Container._format_content_pieces(self)
-            pieces = [indent + x for x in pieces]
+            pieces = [indent + _ for _ in pieces]
             result.extend(pieces)
             result.append(indent + '}')
         else:
@@ -665,17 +667,17 @@ class Measure(Container):
 
                 >>> abjad.f(staff)
                 \new Staff {
-                    {
+                    { % measure
                         \time 3/4
                         c'4
                         d'4
                         e'4
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \time 2/4
                         f'4
                         g'4
-                    }
+                    } % measure
                 }
 
             >>> staff[0].measure_number
@@ -759,12 +761,12 @@ class Measure(Container):
             ..  docs::
 
                 >>> abjad.f(measure)
-                {
+                { % measure
                     \time 3/8
                     c'8
                     d'8
                     e'8
-                }
+                } % measure
 
             >>> measure.scale_and_adjust_time_signature(abjad.Multiplier(2, 3))
             >>> abjad.show(measure) # doctest: +SKIP
@@ -772,14 +774,14 @@ class Measure(Container):
             ..  docs::
 
                 >>> abjad.f(measure)
-                {
+                { % measure
                     \time 3/12
                     \scaleDurations #'(2 . 3) {
                         c'8
                         d'8
                         e'8
                     }
-                }
+                } % measure
 
         Returns none.
         '''

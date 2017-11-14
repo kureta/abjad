@@ -1496,7 +1496,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -1529,7 +1529,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #green
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -1601,7 +1601,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -1674,7 +1674,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #red
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -3869,7 +3869,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -3902,7 +3902,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #green
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -5550,7 +5550,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -5583,7 +5583,7 @@ class Selection(AbjadValueObject):
                             <fs' gs'>4 ~
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -5649,7 +5649,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -5707,7 +5707,7 @@ class Selection(AbjadValueObject):
                             <fs' gs'>4 ~
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -6352,7 +6352,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -6366,8 +6366,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6380,8 +6380,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
                         \once \override Dots.color = #blue
@@ -6394,8 +6394,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6408,7 +6408,7 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6463,7 +6463,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -6477,8 +6477,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6486,15 +6486,15 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         e'8
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         g'8
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6557,7 +6557,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -6571,8 +6571,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
                         \once \override Dots.color = #blue
@@ -6585,8 +6585,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6599,8 +6599,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6613,7 +6613,7 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6680,7 +6680,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -6694,8 +6694,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6708,8 +6708,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6722,8 +6722,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6731,7 +6731,7 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6786,7 +6786,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -6795,19 +6795,19 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         c'8
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         e'8
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         g'8
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6867,7 +6867,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \tempo 4=60
                         \once \override Accidental.color = #red
@@ -6882,8 +6882,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -6896,8 +6896,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
                         \once \override Dots.color = #blue
@@ -6910,11 +6910,11 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -6975,7 +6975,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \tempo 4=60
                         \once \override Accidental.color = #red
@@ -6990,8 +6990,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7004,8 +7004,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #blue
                         \once \override Beam.color = #blue
                         \once \override Dots.color = #blue
@@ -7018,8 +7018,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7032,7 +7032,7 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -7090,7 +7090,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \tempo 4=60
                         \once \override Accidental.color = #red
@@ -7105,8 +7105,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #red
                         \once \override Stem.color = #red
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7114,15 +7114,15 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         e'8
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         g'8
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -7192,7 +7192,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \tempo 4=60
                         \once \override Accidental.color = #red
@@ -7207,8 +7207,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7221,8 +7221,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7235,8 +7235,8 @@ class Selection(AbjadValueObject):
                         \once \override NoteHead.color = #blue
                         \once \override Stem.color = #blue
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
                         \once \override Dots.color = #red
@@ -7244,7 +7244,7 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         ..  container:: example
@@ -7302,7 +7302,7 @@ class Selection(AbjadValueObject):
                 \new Staff \with {
                     autoBeaming = ##f
                 } {
-                    {
+                    { % measure
                         \time 2/8
                         \tempo 4=60
                         \once \override Accidental.color = #red
@@ -7312,19 +7312,19 @@ class Selection(AbjadValueObject):
                         \once \override Stem.color = #red
                         c'8
                         d'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         e'8
                         f'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         g'8
                         a'8
-                    }
-                    {
+                    } % measure
+                    { % measure
                         b'8
                         c''8
-                    }
+                    } % measure
                 }
 
         Interprets `fill` as `Exact` when `fill` is none.
@@ -7677,7 +7677,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -7707,7 +7707,7 @@ class Selection(AbjadValueObject):
                             <fs' gs'>4 ~
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -7767,7 +7767,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -7801,7 +7801,7 @@ class Selection(AbjadValueObject):
                             <fs' gs'>4 ~
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -7856,7 +7856,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -7909,7 +7909,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #green
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -7969,7 +7969,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -8072,7 +8072,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #red
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -8245,7 +8245,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -8300,7 +8300,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #green
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -8360,7 +8360,7 @@ class Selection(AbjadValueObject):
                     \override TupletBracket.direction = #up
                     \override TupletBracket.staff-padding = #3
                 } {
-                    {
+                    { % measure
                         \time 7/4
                         \tweak text #tuplet-number::calc-fraction-text
                         \times 10/9 {
@@ -8469,7 +8469,7 @@ class Selection(AbjadValueObject):
                             \once \override Stem.color = #red
                             <fs' gs'>16
                         }
-                    }
+                    } % measure
                 }
 
         '''
@@ -8939,55 +8939,3 @@ class Selection(AbjadValueObject):
 
 
 collections.Sequence.register(Selection)
-
-
-r"""
-    @staticmethod
-    def run_selectors(argument, selectors):
-
-        Returns a dictionary of selector/selection pairs.
-        '''
-        import abjad
-        prototype = (abjad.Component, abjad.Selection)
-        if not isinstance(argument, prototype):
-            argument = abjad.select(argument)
-        argument = (argument,)
-        assert all(isinstance(_, prototype) for _ in argument), repr(argument)
-        maximum_length = 0
-        for selector in selectors:
-            if selector.callbacks:
-                maximum_length = max(maximum_length, len(selector.callbacks))
-        #print('MAX LENGTH', maximum_length)
-        selectors = list(selectors)
-        results_by_prefix = {(): argument}
-        results_by_selector = collections.OrderedDict()
-        for index in range(1, maximum_length + 2):
-            #print('INDEX', index)
-            #print('PRUNING')
-            for selector in selectors[:]:
-                callbacks = selector.callbacks or ()
-                callback_length = index - 1
-                if len(callbacks) == callback_length:
-                    prefix = callbacks[:callback_length]
-                    results_by_selector[selector] = results_by_prefix[prefix]
-                    selectors.remove(selector)
-                    #print('\tREMOVED:', selector)
-                    #print('\tREMAINING:', len(selectors))
-            if not selectors:
-                #print('BREAKING')
-                break
-            #print('ADDING')
-            for selector in selectors:
-                callbacks = selector.callbacks or ()
-                this_prefix = callbacks[:index]
-                if this_prefix in results_by_prefix:
-                    #print('\tSKIPPING', repr(selector))
-                    continue
-                #print('\tADDING', repr(selector))
-                previous_prefix = callbacks[:index - 1]
-                previous_expr = results_by_prefix[previous_prefix]
-                callback = this_prefix[-1]
-                argument = callback(previous_expr)
-                results_by_prefix[this_prefix] = argument
-        return results_by_selector
-"""

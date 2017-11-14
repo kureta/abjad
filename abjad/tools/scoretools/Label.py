@@ -268,7 +268,7 @@ class Label(abctools.AbjadObject):
                 ..  docs::
 
                     >>> abjad.f(measure)
-                    {
+                    { % measure
                         \override Accidental.color = #red
                         \override Beam.color = #red
                         \override Dots.color = #red
@@ -288,7 +288,7 @@ class Label(abctools.AbjadObject):
                         \revert Stem.color
                         \revert TupletBracket.color
                         \revert TupletNumber.color
-                    }
+                    } % measure
 
             ..  container:: example expression
 
@@ -300,7 +300,7 @@ class Label(abctools.AbjadObject):
                 ..  docs::
 
                     >>> abjad.f(measure)
-                    {
+                    { % measure
                         \override Accidental.color = #red
                         \override Beam.color = #red
                         \override Dots.color = #red
@@ -320,7 +320,7 @@ class Label(abctools.AbjadObject):
                         \revert Stem.color
                         \revert TupletBracket.color
                         \revert TupletNumber.color
-                    }
+                    } % measure
 
         Returns none.
         '''
