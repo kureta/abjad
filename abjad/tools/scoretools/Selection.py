@@ -2015,7 +2015,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves(pitched=True)
-                >>> result = result.group_pitches()
+                >>> result = result.group_by_pitch()
                 >>> result = result.map(abjad.select().contiguous())
                 >>> result = result.flatten()
 
@@ -2029,7 +2029,7 @@ class Selection(AbjadValueObject):
             ..  container:: example expression
 
                 >>> selector = abjad.select().leaves(pitched=True)
-                >>> selector = selector.group_pitches()
+                >>> selector = selector.group_by_pitch()
                 >>> selector = selector.map(abjad.select().contiguous())
                 >>> selector = selector.flatten()
                 >>> result = selector(staff)
@@ -2127,7 +2127,7 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> getter = abjad.select().group_pitches()
+                >>> getter = abjad.select().group_by_pitch()
 
                 >>> result = abjad.select(staff).logical_ties(pitched=True)
                 >>> result = result.contiguous()
@@ -2937,7 +2937,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         return type(self)(abjad.sequence(self).flatten(depth=depth))
 
-    def group(self, predicate=None):
+    def group_by(self, predicate=None):
         r'''Groups items in selection by `predicate`.
 
         ..  container:: example
@@ -2952,7 +2952,8 @@ class Selection(AbjadValueObject):
                 ...     """)
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).leaves(pitched=True).group()
+                >>> result = abjad.select(staff).leaves(pitched=True)
+                >>> result = result.group_by()
 
                 >>> for item in result:
                 ...     item
@@ -2961,7 +2962,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().leaves(pitched=True).group()
+                >>> selector = abjad.select().leaves(pitched=True).group_by()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -3046,7 +3047,7 @@ class Selection(AbjadValueObject):
         if self._expression:
             return self._update_expression(
                 inspect.currentframe(),
-                evaluation_template='group',
+                evaluation_template='group_by',
                 map_operand=predicate,
                 )
         items = []
@@ -3059,8 +3060,245 @@ class Selection(AbjadValueObject):
             items.append(item)
         return type(self)(items)
 
+    def group_by_duration(self):
+        r'''Groups items in selection by duration.
+
+        ..  container:: example
+
+            Groups logical ties by duration:
+
+            ..  container:: example
+
+                >>> string = "c'4 ~ c'16 d' ~ d' d' e'4 ~ e'16 f' ~ f' f'"
+                >>> staff = abjad.Staff(string)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).logical_ties()
+                >>> result = result.group_by_duration()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("c'4"), Note("c'16")])])
+                Selection([LogicalTie([Note("d'16"), Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("e'4"), Note("e'16")])])
+                Selection([LogicalTie([Note("f'16"), Note("f'16")])])
+                Selection([LogicalTie([Note("f'16")])])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().logical_ties().group_by_duration()
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Selection([LogicalTie([Note("c'4"), Note("c'16")])])
+                Selection([LogicalTie([Note("d'16"), Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("e'4"), Note("e'16")])])
+                Selection([LogicalTie([Note("f'16"), Note("f'16")])])
+                Selection([LogicalTie([Note("f'16")])])
+
+                >>> selector.color(result)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'4 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'16 ~
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'4 ~
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'16
+                }
+
+        Returns nested selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        def predicate(argument):
+            return abjad.inspect(argument).get_duration()
+        return self.group_by(predicate)
+
+    def group_by_length(self):
+        r'''Groups items in selection by length.
+
+        ..  container:: example
+
+            Groups logical ties by length:
+
+            ..  container:: example
+
+                >>> string = "c'4 ~ c'16 d' ~ d' d' e'4 ~ e'16 f' ~ f' f'"
+                >>> staff = abjad.Staff(string)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).logical_ties().group_by_length()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([LogicalTie([Note("c'4"), Note("c'16")]), LogicalTie([Note("d'16"), Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("e'4"), Note("e'16")]), LogicalTie([Note("f'16"), Note("f'16")])])
+                Selection([LogicalTie([Note("f'16")])])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().logical_ties().group_by_length()
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Selection([LogicalTie([Note("c'4"), Note("c'16")]), LogicalTie([Note("d'16"), Note("d'16")])])
+                Selection([LogicalTie([Note("d'16")])])
+                Selection([LogicalTie([Note("e'4"), Note("e'16")]), LogicalTie([Note("f'16"), Note("f'16")])])
+                Selection([LogicalTie([Note("f'16")])])
+
+                >>> selector.color(result)
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'4 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    d'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'4 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'16
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16 ~
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'16
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'16
+                }
+
+        Returns nested selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        def predicate(argument):
+            if isinstance(argument, abjad.Leaf):
+                return 1
+            return len(argument)
+        return self.group_by(predicate)
+
     def group_by_measure(self):
-        r'''Selects logical measures.
+        r'''Groups items in selection by measure.
 
         ..  container:: example
 
@@ -3435,244 +3673,7 @@ class Selection(AbjadValueObject):
             selections.append(selection)
         return type(self)(selections)
 
-    def group_duration(self):
-        r'''Groups items in selection by duration.
-
-        ..  container:: example
-
-            Groups logical ties by duration:
-
-            ..  container:: example
-
-                >>> string = "c'4 ~ c'16 d' ~ d' d' e'4 ~ e'16 f' ~ f' f'"
-                >>> staff = abjad.Staff(string)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> result = abjad.select(staff).logical_ties()
-                >>> result = result.group_duration()
-
-                >>> for item in result:
-                ...     item
-                ...
-                Selection([LogicalTie([Note("c'4"), Note("c'16")])])
-                Selection([LogicalTie([Note("d'16"), Note("d'16")])])
-                Selection([LogicalTie([Note("d'16")])])
-                Selection([LogicalTie([Note("e'4"), Note("e'16")])])
-                Selection([LogicalTie([Note("f'16"), Note("f'16")])])
-                Selection([LogicalTie([Note("f'16")])])
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().logical_ties().group_duration()
-                >>> result = selector(staff)
-
-                >>> selector.print(result)
-                Selection([LogicalTie([Note("c'4"), Note("c'16")])])
-                Selection([LogicalTie([Note("d'16"), Note("d'16")])])
-                Selection([LogicalTie([Note("d'16")])])
-                Selection([LogicalTie([Note("e'4"), Note("e'16")])])
-                Selection([LogicalTie([Note("f'16"), Note("f'16")])])
-                Selection([LogicalTie([Note("f'16")])])
-
-                >>> selector.color(result)
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'4 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'16 ~
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'4 ~
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                }
-
-        Returns nested selection.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def predicate(argument):
-            return abjad.inspect(argument).get_duration()
-        return self.group(predicate)
-
-    def group_length(self):
-        r'''Groups items in selection by length.
-
-        ..  container:: example
-
-            Groups logical ties by length:
-
-            ..  container:: example
-
-                >>> string = "c'4 ~ c'16 d' ~ d' d' e'4 ~ e'16 f' ~ f' f'"
-                >>> staff = abjad.Staff(string)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> result = abjad.select(staff).logical_ties().group_length()
-
-                >>> for item in result:
-                ...     item
-                ...
-                Selection([LogicalTie([Note("c'4"), Note("c'16")]), LogicalTie([Note("d'16"), Note("d'16")])])
-                Selection([LogicalTie([Note("d'16")])])
-                Selection([LogicalTie([Note("e'4"), Note("e'16")]), LogicalTie([Note("f'16"), Note("f'16")])])
-                Selection([LogicalTie([Note("f'16")])])
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().logical_ties().group_length()
-                >>> result = selector(staff)
-
-                >>> selector.print(result)
-                Selection([LogicalTie([Note("c'4"), Note("c'16")]), LogicalTie([Note("d'16"), Note("d'16")])])
-                Selection([LogicalTie([Note("d'16")])])
-                Selection([LogicalTie([Note("e'4"), Note("e'16")]), LogicalTie([Note("f'16"), Note("f'16")])])
-                Selection([LogicalTie([Note("f'16")])])
-
-                >>> selector.color(result)
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'4 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    d'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    e'4 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    e'16
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16 ~
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'16
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'16
-                }
-
-        Returns nested selection.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def predicate(argument):
-            if isinstance(argument, abjad.Leaf):
-                return 1
-            return len(argument)
-        return self.group(predicate)
-
-    def group_pitches(self):
+    def group_by_pitch(self):
         r'''Groups items in selection by pitches.
 
         ..  container:: example
@@ -3686,7 +3687,7 @@ class Selection(AbjadValueObject):
                 >>> abjad.setting(staff).auto_beaming = False
                 >>> abjad.show(staff) # doctest: +SKIP
 
-                >>> result = abjad.select(staff).logical_ties().group_pitches()
+                >>> result = abjad.select(staff).logical_ties().group_by_pitch()
 
                 >>> for item in result:
                 ...     item
@@ -3698,7 +3699,7 @@ class Selection(AbjadValueObject):
 
             ..  container:: example expression
 
-                >>> selector = abjad.select().logical_ties().group_pitches()
+                >>> selector = abjad.select().logical_ties().group_by_pitch()
                 >>> result = selector(staff)
 
                 >>> selector.print(result)
@@ -3785,7 +3786,7 @@ class Selection(AbjadValueObject):
             return self._update_expression(inspect.currentframe())
         def predicate(argument):
             return abjad.PitchSet.from_selection(argument)
-        return self.group(predicate)
+        return self.group_by(predicate)
 
     def leaf(self, n):
         r'''Selects leaf `n`.
