@@ -3422,14 +3422,14 @@ class Selection(AbjadValueObject):
                 component = argument[0]
                 assert isinstance(component, abjad.Component)
                 return component
-        def _get_logical_measure_number(argument):
+        def _get_measure_number(argument):
             first_component = _get_first_component(argument)
-            assert first_component._logical_measure_number is not None
-            return first_component._logical_measure_number
+            assert first_component._measure_number is not None
+            return first_component._measure_number
         selections = []
         first_component = _get_first_component(self)
-        first_component._update_logical_measure_numbers()
-        pairs = itertools.groupby(self, _get_logical_measure_number)
+        first_component._update_measure_numbers()
+        pairs = itertools.groupby(self, _get_measure_number)
         for value, group in pairs:
             selection = type(self)(group)
             selections.append(selection)
