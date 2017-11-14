@@ -3059,6 +3059,382 @@ class Selection(AbjadValueObject):
             items.append(item)
         return type(self)(items)
 
+    def group_by_measure(self):
+        r'''Selects logical measures.
+
+        ..  container:: example
+
+            Groups leaves by logical measure:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
+                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
+                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).leaves()
+                >>> result = result.group_by_measure()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8"), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8"), Note("b'8")])
+                Selection([Note("c''8")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().leaves()
+                >>> selector = selector.group_by_measure()
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Selection([Note("c'8"), Note("d'8")])
+                Selection([Note("e'8"), Note("f'8")])
+                Selection([Note("g'8"), Note("a'8"), Note("b'8")])
+                Selection([Note("c''8")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 2/8
+                    c'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 3/8
+                    g'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    a'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
+
+        ..  container:: example
+
+            Groups leaves by logical measure; then gets item 0 in each group:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
+                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
+                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).leaves()
+                >>> result = result.group_by_measure()
+                >>> result = result.map(abjad.select()[0])
+
+                >>> for item in result:
+                ...     item
+                Note("c'8")
+                Note("e'8")
+                Note("g'8")
+                Note("c''8")
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().leaves()
+                >>> selector = selector.group_by_measure()
+                >>> selector = selector.map(abjad.select()[0])
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Note("c'8")
+                Note("e'8")
+                Note("g'8")
+                Note("c''8")
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 2/8
+                    c'8
+                    d'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    e'8
+                    f'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \time 3/8
+                    g'8
+                    a'8
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
+
+        ..  container:: example
+
+            Groups leaves by logical measure; then gets item -1 in each group:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
+                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
+                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
+                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
+                >>> abjad.show(staff) # doctest: +SKIP
+
+                >>> result = abjad.select(staff).leaves()
+                >>> result = result.group_by_measure()
+                >>> result = result.map(abjad.select()[-1])
+
+                >>> for item in result:
+                ...     item
+                ...
+                Note("d'8")
+                Note("f'8")
+                Note("b'8")
+                Note("c''8")
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().leaves()
+                >>> selector = selector.group_by_measure()
+                >>> selector = selector.map(abjad.select()[-1])
+                >>> result = selector(staff)
+
+                >>> selector.print(result)
+                Note("d'8")
+                Note("f'8")
+                Note("b'8")
+                Note("c''8")
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \time 2/8
+                    c'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'8
+                    e'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    f'8
+                    \time 3/8
+                    g'8
+                    a'8
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    b'8
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    \time 1/8
+                    c''8
+                }
+
+        ..  container:: example
+
+            Works with implicit time signatures:
+
+            ..  container:: example
+
+                >>> staff = abjad.Staff("c'4 d' e' f' g' a' b' c''")
+                >>> score = abjad.Score([staff])
+                >>> scheme = abjad.SchemeMoment((1, 16))
+                >>> abjad.setting(score).proportional_notation_duration = scheme
+                >>> abjad.show(score) # doctest: +SKIP
+
+                >>> result = abjad.select(score).leaves()
+                >>> result = result.group_by_measure()
+
+                >>> for item in result:
+                ...     item
+                ...
+                Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
+                Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
+
+            ..  container:: example expression
+
+                >>> selector = abjad.select().leaves()
+                >>> selector = selector.group_by_measure()
+                >>> result = selector(score)
+
+                >>> selector.print(result)
+                Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
+                Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
+
+                >>> selector.color(result)
+                >>> abjad.setting(staff).auto_beaming = False
+                >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff \with {
+                    autoBeaming = ##f
+                } {
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    c'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    d'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    e'4
+                    \once \override Accidental.color = #red
+                    \once \override Beam.color = #red
+                    \once \override Dots.color = #red
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    f'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    g'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    a'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    b'4
+                    \once \override Accidental.color = #blue
+                    \once \override Beam.color = #blue
+                    \once \override Dots.color = #blue
+                    \once \override NoteHead.color = #blue
+                    \once \override Stem.color = #blue
+                    c''4
+                }
+
+        Returns new selection.
+        '''
+        import abjad
+        if self._expression:
+            return self._update_expression(inspect.currentframe())
+        def _get_first_component(argument):
+            if isinstance(argument, abjad.Component):
+                return argument
+            else:
+                component = argument[0]
+                assert isinstance(component, abjad.Component)
+                return component
+        def _get_logical_measure_number(argument):
+            first_component = _get_first_component(argument)
+            assert first_component._logical_measure_number is not None
+            return first_component._logical_measure_number
+        selections = []
+        first_component = _get_first_component(self)
+        first_component._update_logical_measure_numbers()
+        pairs = itertools.groupby(self, _get_logical_measure_number)
+        for value, group in pairs:
+            selection = type(self)(group)
+            selections.append(selection)
+        return type(self)(selections)
+
     def group_duration(self):
         r'''Groups items in selection by duration.
 
@@ -4358,382 +4734,6 @@ class Selection(AbjadValueObject):
             trim=trim,
             grace_notes=grace_notes,
             )
-
-    def logical_measures(self):
-        r'''Selects logical measures.
-
-        ..  container:: example
-
-            Groups leaves by logical measure:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
-                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> result = abjad.select(staff).leaves()
-                >>> result = result.logical_measures()
-
-                >>> for item in result:
-                ...     item
-                ...
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("e'8"), Note("f'8")])
-                Selection([Note("g'8"), Note("a'8"), Note("b'8")])
-                Selection([Note("c''8")])
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().leaves()
-                >>> selector = selector.logical_measures()
-                >>> result = selector(staff)
-
-                >>> selector.print(result)
-                Selection([Note("c'8"), Note("d'8")])
-                Selection([Note("e'8"), Note("f'8")])
-                Selection([Note("g'8"), Note("a'8"), Note("b'8")])
-                Selection([Note("c''8")])
-
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    \time 2/8
-                    c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    \time 3/8
-                    g'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    a'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    b'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    \time 1/8
-                    c''8
-                }
-
-        ..  container:: example
-
-            Groups leaves by logical measure; then gets item 0 in each group:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
-                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> result = abjad.select(staff).leaves()
-                >>> result = result.logical_measures()
-                >>> result = result.map(abjad.select()[0])
-
-                >>> for item in result:
-                ...     item
-                Note("c'8")
-                Note("e'8")
-                Note("g'8")
-                Note("c''8")
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().leaves()
-                >>> selector = selector.logical_measures()
-                >>> selector = selector.map(abjad.select()[0])
-                >>> result = selector(staff)
-
-                >>> selector.print(result)
-                Note("c'8")
-                Note("e'8")
-                Note("g'8")
-                Note("c''8")
-
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    \time 2/8
-                    c'8
-                    d'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    e'8
-                    f'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    \time 3/8
-                    g'8
-                    a'8
-                    b'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    \time 1/8
-                    c''8
-                }
-
-        ..  container:: example
-
-            Groups leaves by logical measure; then gets item -1 in each group:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("c'8 d' e' f' g' a' b' c''")
-                >>> abjad.attach(abjad.TimeSignature((2, 8)), staff[0])
-                >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[4])
-                >>> abjad.attach(abjad.TimeSignature((1, 8)), staff[7])
-                >>> abjad.show(staff) # doctest: +SKIP
-
-                >>> result = abjad.select(staff).leaves()
-                >>> result = result.logical_measures()
-                >>> result = result.map(abjad.select()[-1])
-
-                >>> for item in result:
-                ...     item
-                ...
-                Note("d'8")
-                Note("f'8")
-                Note("b'8")
-                Note("c''8")
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().leaves()
-                >>> selector = selector.logical_measures()
-                >>> selector = selector.map(abjad.select()[-1])
-                >>> result = selector(staff)
-
-                >>> selector.print(result)
-                Note("d'8")
-                Note("f'8")
-                Note("b'8")
-                Note("c''8")
-
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \time 2/8
-                    c'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'8
-                    e'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    f'8
-                    \time 3/8
-                    g'8
-                    a'8
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    b'8
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    \time 1/8
-                    c''8
-                }
-
-        ..  container:: example
-
-            Works with implicit time signatures:
-
-            ..  container:: example
-
-                >>> staff = abjad.Staff("c'4 d' e' f' g' a' b' c''")
-                >>> score = abjad.Score([staff])
-                >>> scheme = abjad.SchemeMoment((1, 16))
-                >>> abjad.setting(score).proportional_notation_duration = scheme
-                >>> abjad.show(score) # doctest: +SKIP
-
-                >>> result = abjad.select(score).leaves()
-                >>> result = result.logical_measures()
-
-                >>> for item in result:
-                ...     item
-                ...
-                Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
-                Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
-
-            ..  container:: example expression
-
-                >>> selector = abjad.select().leaves()
-                >>> selector = selector.logical_measures()
-                >>> result = selector(score)
-
-                >>> selector.print(result)
-                Selection([Note("c'4"), Note("d'4"), Note("e'4"), Note("f'4")])
-                Selection([Note("g'4"), Note("a'4"), Note("b'4"), Note("c''4")])
-
-                >>> selector.color(result)
-                >>> abjad.setting(staff).auto_beaming = False
-                >>> abjad.show(staff) # doctest: +SKIP
-
-            ..  docs::
-
-                >>> abjad.f(staff)
-                \new Staff \with {
-                    autoBeaming = ##f
-                } {
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    c'4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    d'4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    e'4
-                    \once \override Accidental.color = #red
-                    \once \override Beam.color = #red
-                    \once \override Dots.color = #red
-                    \once \override NoteHead.color = #red
-                    \once \override Stem.color = #red
-                    f'4
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    g'4
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    a'4
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    b'4
-                    \once \override Accidental.color = #blue
-                    \once \override Beam.color = #blue
-                    \once \override Dots.color = #blue
-                    \once \override NoteHead.color = #blue
-                    \once \override Stem.color = #blue
-                    c''4
-                }
-
-        Returns new selection.
-        '''
-        import abjad
-        if self._expression:
-            return self._update_expression(inspect.currentframe())
-        def _get_first_component(argument):
-            if isinstance(argument, abjad.Component):
-                return argument
-            else:
-                component = argument[0]
-                assert isinstance(component, abjad.Component)
-                return component
-        def _get_logical_measure_number(argument):
-            first_component = _get_first_component(argument)
-            assert first_component._logical_measure_number is not None
-            return first_component._logical_measure_number
-        selections = []
-        first_component = _get_first_component(self)
-        first_component._update_logical_measure_numbers()
-        pairs = itertools.groupby(self, _get_logical_measure_number)
-        for value, group in pairs:
-            selection = type(self)(group)
-            selections.append(selection)
-        return type(self)(selections)
 
     def logical_ties(
         self,
