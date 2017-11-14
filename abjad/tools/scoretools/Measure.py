@@ -1,13 +1,4 @@
 import copy
-from abjad.tools import graphtools
-from abjad.tools import indicatortools
-from abjad.tools import mathtools
-from abjad.tools import systemtools
-from abjad.tools.topleveltools import attach
-from abjad.tools.topleveltools import detach
-from abjad.tools.topleveltools import iterate
-from abjad.tools.topleveltools import override
-from abjad.tools.topleveltools import setting
 from .Container import Container
 
 
@@ -34,14 +25,11 @@ class Measure(Container):
 
     ### CLASS VARIABLES ###
 
-    __documentation_section__ = 'Containers'
-
     __slots__ = (
         '_always_format_time_signature',
         '_automatically_adjust_time_signature',
         '_measure_number',
         '_implicit_scaling',
-        #'_target_duration',
         )
 
     _is_counttime_component = True
@@ -63,8 +51,8 @@ class Measure(Container):
         Container.__init__(self, components)
         self._always_format_time_signature = False
         self._measure_number = None
-        time_signature = indicatortools.TimeSignature(time_signature)
-        attach(time_signature, self)
+        time_signature = abjad.TimeSignature(time_signature)
+        abjad.attach(time_signature, self)
 
     ### SPECIAL METHODS ###
 
@@ -117,8 +105,9 @@ class Measure(Container):
 
         Returns string.
         '''
+        import abjad
         class_name = type(self).__name__
-        indicator = self._get_indicator(indicatortools.TimeSignature)
+        indicator = self._get_indicator(abjad.TimeSignature)
         forced_time_signature = indicator
         forced_time_signature = forced_time_signature.pair
         summary = self._get_contents_summary()
@@ -193,35 +182,35 @@ class Measure(Container):
         return True
 
     def _append_spacer_skip(self):
-        from abjad.tools import scoretools
+        import abjad
         if not self.is_underfull:
             return
         target_duration = self.time_signature.duration
         duration = self._get_duration()
-        skip = scoretools.Skip((1, 1))
+        skip = abjad.Skip((1, 1))
         time_signature_multiplier = self.time_signature.implied_prolation
         new_duration = target_duration - duration
         new_multiplier = new_duration.__div__(time_signature_multiplier)
-        attach(new_multiplier, skip)
+        abjad.attach(new_multiplier, skip)
         self.append(skip)
 
     def _as_graphviz_node(self):
-        from abjad.tools import scoretools
-        node = scoretools.Component._as_graphviz_node(self)
-        fraction = mathtools.NonreducedFraction(
+        import abjad
+        node = abjad.Component._as_graphviz_node(self)
+        fraction = abjad.NonreducedFraction(
             self.time_signature.numerator,
             self.time_signature.denominator,
             )
         node[0].extend([
-            graphtools.GraphvizTableRow([
-                graphtools.GraphvizTableCell(
+            abjad.graphtools.GraphvizTableRow([
+                abjad.graphtools.GraphvizTableCell(
                     label=type(self).__name__,
                     attributes={'border': 0},
                     ),
                 ]),
-            graphtools.GraphvizTableHorizontalRule(),
-            graphtools.GraphvizTableRow([
-                graphtools.GraphvizTableCell(
+            abjad.graphtools.GraphvizTableHorizontalRule(),
+            abjad.graphtools.GraphvizTableRow([
+                abjad.graphtools.GraphvizTableCell(
                     label=str(fraction),
                     attributes={'border': 0},
                     ),
@@ -242,33 +231,33 @@ class Measure(Container):
             raise UnderfullContainerError
 
     def _conditionally_adjust_time_signature(self, old_denominator):
+        import abjad
         if self.automatically_adjust_time_signature:
             naive_time_signature = self._get_preprolated_duration()
             better_time_signature = \
-                mathtools.NonreducedFraction(naive_time_signature)
+                abjad.NonreducedFraction(naive_time_signature)
             better_time_signature = \
                 better_time_signature.with_denominator(old_denominator)
-            better_time_signature = \
-                indicatortools.TimeSignature(better_time_signature)
-            detach(indicatortools.TimeSignature, self)
-            attach(better_time_signature, self)
+            better_time_signature = abjad.TimeSignature(better_time_signature)
+            abjad.detach(abjad.TimeSignature, self)
+            abjad.attach(better_time_signature, self)
 
     # essentially the same as container version of method;
     # the definition given here adds one line to remove
     # time signature immediately after instantiation
     # because the indicator-copying code will then provide time signature.
     def _copy_with_indicators_but_without_children_or_spanners(self):
-        from abjad.tools import indicatortools
+        import abjad
         new = type(self)(*self.__getnewargs__())
         # only the following line differs from Container
-        detach(indicatortools.TimeSignature, new)
+        abjad.detach(abjad.TimeSignature, new)
         if getattr(self, '_lilypond_grob_name_manager', None) is not None:
-            new._lilypond_grob_name_manager = copy.copy(override(self))
+            new._lilypond_grob_name_manager = copy.copy(abjad.override(self))
         if getattr(self, '_lilypond_setting_name_manager', None) is not None:
-            new._lilypond_setting_name_manager = copy.copy(setting(self))
+            new._lilypond_setting_name_manager = copy.copy(abjad.setting(self))
         for indicator in self._get_indicators():
             new_indicator = copy.copy(indicator)
-            attach(new_indicator, new)
+            abjad.attach(new_indicator, new)
         new.is_simultaneous = self.is_simultaneous
         new.implicit_scaling = self.implicit_scaling
         return new
@@ -285,32 +274,32 @@ class Measure(Container):
             if factor is not None:
                 denominators = [
                     d for d in denominators
-                    if factor in mathtools.factors(d)
+                    if factor in abjad.mathtools.factors(d)
                     ]
             for desired_denominator in sorted(denominators):
-                nonreduced_fraction = mathtools.NonreducedFraction(duration)
+                nonreduced_fraction = abjad.NonreducedFraction(duration)
                 candidate_pair = \
                     nonreduced_fraction.with_denominator(desired_denominator)
                 if candidate_pair.denominator == desired_denominator:
-                    return indicatortools.TimeSignature(candidate_pair)
+                    return abjad.TimeSignature(candidate_pair)
         if factor is not None:
-            if factor in mathtools.factors(duration.denominator):
-                return indicatortools.TimeSignature(duration)
+            if factor in abjad.mathtools.factors(duration.denominator):
+                return abjad.TimeSignature(duration)
             else:
                 time_signature_numerator = factor * duration.numerator
                 time_signature_denominator = factor * duration.denominator
-                return indicatortools.TimeSignature(
+                return abjad.TimeSignature(
                     (time_signature_numerator, time_signature_denominator))
         else:
-            return indicatortools.TimeSignature(duration)
+            return abjad.TimeSignature(duration)
 
     def _format_content_pieces(self):
-        from abjad.tools import systemtools
+        import abjad
         result = []
         if (self.has_non_power_of_two_denominator and
             type(self) is Measure and
             self.implicit_scaling):
-            indent = systemtools.LilyPondFormatManager.indent
+            indent = abjad.LilyPondFormatManager.indent
             string = "{}\\scaleDurations #'({} . {}) {{"
             string = string.format(
                 indent,
@@ -346,7 +335,7 @@ class Measure(Container):
         names = []
         if self.implicit_scaling:
             names.append('implicit_scaling')
-        return systemtools.FormatSpecification(
+        return abjad.FormatSpecification(
             client=self,
             repr_args_values=[
                 self.time_signature.pair,
@@ -729,8 +718,8 @@ class Measure(Container):
 
         Returns time signature or none.
         '''
-        from abjad.tools import indicatortools
-        return self._get_effective(indicatortools.TimeSignature)
+        import abjad
+        return self._get_effective(abjad.TimeSignature)
 
     ### PUBLIC METHODS ###
 
@@ -811,7 +800,7 @@ class Measure(Container):
             new_pair = abjad.NonreducedFraction(old_pair)
             new_pair = new_pair.multiply(multiplier, preserve_numerator=True)
             new_time_signature = abjad.TimeSignature(new_pair)
-            abjad.detach(indicatortools.TimeSignature, self)
+            abjad.detach(abjad.TimeSignature, self)
             abjad.attach(new_time_signature, self)
             remaining_multiplier = abjad.Multiplier(reduced_pair)
             if remaining_multiplier != abjad.Multiplier(1):
@@ -819,7 +808,8 @@ class Measure(Container):
         elif self._all_contents_are_scalable_by_multiplier(multiplier):
             self._scale_contents(multiplier)
             if (old_time_signature.has_non_power_of_two_denominator or
-                not mathtools.is_nonnegative_integer_power_of_two(multiplier)):
+                not abjad.mathtools.is_nonnegative_integer_power_of_two(
+                    multiplier)):
                 new_pair = abjad.NonreducedFraction(old_pair)
                 new_pair = new_pair.multiply_with_cross_cancelation(multiplier)
                 new_pair = new_pair.pair
