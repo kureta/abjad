@@ -510,10 +510,10 @@ class Mutation(abctools.AbjadObject):
             donors = self._client
         else:
             donors = abjad.select(self._client)
-        assert donors.are_same_parent()
+        assert donors.are_contiguous_same_parent()
         if not isinstance(recipients, abjad.Selection):
             recipients = abjad.select(recipients)
-        assert recipients.are_same_parent()
+        assert recipients.are_contiguous_same_parent()
         if donors:
             parent, start, stop = donors._get_parent_and_start_stop_indices()
             assert parent is not None, repr(donors)
@@ -2762,7 +2762,7 @@ class Mutation(abctools.AbjadObject):
             donors = self._client
         else:
             donors = abjad.select(self._client)
-        assert donors.are_same_parent()
+        assert donors.are_contiguous_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container, repr(container)
         donors._give_components_to_empty_container(container)

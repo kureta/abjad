@@ -801,7 +801,7 @@ class Selection(AbjadValueObject):
 
     def _fuse_measures(self):
         import abjad
-        assert self.are_same_parent(prototype=abjad.Measure)
+        assert self.are_contiguous_same_parent(prototype=abjad.Measure)
         if len(self) == 0:
             return None
         # TODO: instantiate a new measure
@@ -844,7 +844,7 @@ class Selection(AbjadValueObject):
 
     def _fuse_tuplets(self):
         import abjad
-        assert self.are_same_parent(prototype=abjad.Tuplet)
+        assert self.are_contiguous_same_parent(prototype=abjad.Tuplet)
         if len(self) == 0:
             return None
         first = self[0]
@@ -962,7 +962,7 @@ class Selection(AbjadValueObject):
         return start_offsets, stop_offsets
 
     def _get_parent_and_start_stop_indices(self):
-        assert self.are_same_parent()
+        assert self.are_contiguous_same_parent()
         if self:
             first, last = self[0], self[-1]
             parent = first._parent
@@ -1014,7 +1014,7 @@ class Selection(AbjadValueObject):
         r'''Not composer-safe.
         '''
         import abjad
-        assert self.are_same_parent()
+        assert self.are_contiguous_same_parent()
         assert isinstance(container, abjad.Container)
         assert not container
         components = []
@@ -1044,7 +1044,7 @@ class Selection(AbjadValueObject):
         r'''Not composer-safe.
         '''
         import abjad
-        assert self.are_same_parent()
+        assert self.are_contiguous_same_parent()
         assert isinstance(container, abjad.Container)
         parent, start, stop = self._get_parent_and_start_stop_indices()
         if parent is not None:
@@ -1247,7 +1247,18 @@ class Selection(AbjadValueObject):
     ### PUBLIC METHODS ###
 
     def are_contiguous_logical_voice(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are in contiguous logical voice.
+        r'''Is true when items in selection are contiguous components in the
+        same logical voice.
+
+        ..  container:: example
+
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> staff[:].are_contiguous_logical_voice()
+            True
+
+            >>> selection = staff[:1] + staff[-1:]
+            >>> selection.are_contiguous_logical_voice()
+            False
 
         Returns true or false.
         '''
@@ -1315,7 +1326,18 @@ class Selection(AbjadValueObject):
         return all(isinstance(_, abjad.Leaf) for _ in self)
 
     def are_logical_voice(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are in same logical voice.
+        r'''Is true when items in selection are all components in the same
+        logical voice.
+
+        ..  container:: example
+
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> staff[:].are_logical_voice()
+            True
+
+            >>> selection = staff[:1] + staff[-1:]
+            >>> selection.are_logical_voice()
+            True
 
         Returns true or false.
         '''
@@ -1364,8 +1386,19 @@ class Selection(AbjadValueObject):
                 return False
         return True
 
-    def are_same_parent(self, prototype=None, allow_orphans=True):
-        r'''Is true when items in selection are all in same parent.
+    def are_contiguous_same_parent(self, prototype=None, allow_orphans=True):
+        r'''Is true when items in selection are all contiguous components in
+        the same parent.
+
+        ..  container:: example
+
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> staff[:].are_contiguous_same_parent()
+            True
+
+            >>> selection = staff[:1] + staff[-1:]
+            >>> selection.are_contiguous_same_parent()
+            False
 
         Returns true or false.
         '''
