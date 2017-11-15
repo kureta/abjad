@@ -203,7 +203,7 @@ class MetronomeMark(AbjadValueObject):
         custom_markup=None,
         ):
         import abjad
-        self._context = abjad.Score
+        self._context = 'Score'
         assert isinstance(textual_indication, (str, type(None)))
         arguments = (reference_duration, units_per_minute, textual_indication)
         if all(_ is None for _ in arguments):
@@ -892,7 +892,7 @@ class MetronomeMark(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of metronome mark.
+        r'''Gets default context of metronome mark.
 
         ..  container:: example
 
@@ -900,7 +900,7 @@ class MetronomeMark(AbjadValueObject):
 
             >>> mark = abjad.MetronomeMark((1, 8), 52)
             >>> mark.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
         ..  container:: example
 
@@ -908,9 +908,9 @@ class MetronomeMark(AbjadValueObject):
 
             >>> mark = abjad.MetronomeMark((1, 4), 90)
             >>> mark.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context
 

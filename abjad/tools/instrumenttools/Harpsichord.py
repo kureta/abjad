@@ -87,7 +87,7 @@ class Harpsichord(Instrument):
 
     @property
     def context(self):
-        r'''Gets default scope of harpsichord.
+        r'''Gets default context of harpsichord.
 
         ..  container:: example
 

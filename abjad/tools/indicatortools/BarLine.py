@@ -41,10 +41,9 @@ class BarLine(AbjadValueObject):
     ### INITIALIZER ##
 
     def __init__(self, abbreviation='|'):
-        from abjad.tools import scoretools
         assert isinstance(abbreviation, str), repr(abbreviation)
         self._abbreviation = abbreviation
-        self._context = scoretools.Staff
+        self._context = 'Staff'
 
     ### PRIVATE PROPERTIES ###
 
@@ -89,14 +88,14 @@ class BarLine(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of bar line.
+        r'''Gets default context of bar line.
 
         ..  container:: example
 
             >>> bar_line = abjad.BarLine('|.')
             >>> bar_line.context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
-        Returns staff.
+        Returns context or string.
         '''
         return self._context

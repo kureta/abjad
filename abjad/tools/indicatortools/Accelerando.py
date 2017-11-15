@@ -49,11 +49,10 @@ class Accelerando(AbjadValueObject):
     ### INITIALIZER ###
 
     def __init__(self, markup=None):
-        from abjad.tools import markuptools
-        from abjad.tools import scoretools
-        self._context = scoretools.Score
+        import abjad
+        self._context = 'Score'
         if markup is not None:
-            assert isinstance(markup, markuptools.Markup)
+            assert isinstance(markup, abjad.Markup)
         self._markup = markup
 
     ### SPECIAL METHODS ###
@@ -128,15 +127,15 @@ class Accelerando(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of accelerando.
+        r'''Gets default context of accelerando.
 
         ..  container:: example
 
             >>> accelerando = abjad.Accelerando()
             >>> accelerando.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context
 

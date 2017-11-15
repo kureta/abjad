@@ -179,13 +179,13 @@ class Spanner(AbjadObject):
             message = 'must be leaf in spanner: {!r}.'
             message = message.format(leaf)
             raise Exception(message)
-        scope = getattr(indicator, '_context', None)
+        context = getattr(indicator, '_context', None)
         wrapper = abjad.IndicatorWrapper(
             component=leaf,
             indicator=indicator,
             is_piecewise=True,
             piecewise_spanner=self,
-            scope=scope,
+            scope=context,
             )
         wrapper._bind_to_component(leaf)
 

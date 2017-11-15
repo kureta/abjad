@@ -115,7 +115,7 @@ class Accordion(Instrument):
 
     @property
     def context(self):
-        r'''Gets default scope of accordion.
+        r'''Gets default context of accordion.
 
         ..  container:: example
 

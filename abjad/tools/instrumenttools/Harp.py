@@ -84,7 +84,7 @@ class Harp(Instrument):
 
     @property
     def context(self):
-        r'''Gets default scope of harp.
+        r'''Gets default context of harp.
 
         ..  container:: example
 
@@ -92,7 +92,7 @@ class Harp(Instrument):
             >>> harp.context
             'StaffGroup'
 
-        Returns piano staff.
+        Returns staff group.
         '''
         return self._context
 

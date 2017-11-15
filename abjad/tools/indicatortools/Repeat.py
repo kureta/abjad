@@ -75,8 +75,7 @@ class Repeat(AbjadValueObject):
     ### INITIALIZER ###
 
     def __init__(self, repeat_count=2, repeat_type='volta'):
-        from abjad.tools import scoretools
-        self._context = scoretools.Score
+        self._context = 'Score'
         repeat_count = int(repeat_count)
         assert 1 < repeat_count
         self._repeat_count = repeat_count
@@ -124,7 +123,7 @@ class Repeat(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of repeat.
+        r'''Gets default context of repeat.
 
         ..  container:: example
 
@@ -132,7 +131,7 @@ class Repeat(AbjadValueObject):
 
             >>> repeat = abjad.Repeat()
             >>> repeat.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
         ..  container:: example
 
@@ -140,9 +139,9 @@ class Repeat(AbjadValueObject):
 
             >>> repeat = abjad.Repeat(repeat_type='unfold')
             >>> repeat.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context
 

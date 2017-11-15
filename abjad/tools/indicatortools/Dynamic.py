@@ -139,12 +139,11 @@ class Dynamic(AbjadValueObject):
     ### INITIALIZER ###
 
     def __init__(self, name='f'):
-        from abjad.tools import scoretools
         if isinstance(name, type(self)):
             name = name.name
         assert name in self._dynamic_names, repr(name)
         self._name = name
-        self._context = scoretools.Staff
+        self._context = 'Staff'
 
     ### SPECIAL METHODS ###
 
@@ -325,7 +324,7 @@ class Dynamic(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of dynamic.
+        r'''Gets default context of dynamic.
 
         ..  container:: example
 
@@ -333,7 +332,7 @@ class Dynamic(AbjadValueObject):
 
             >>> dynamic = abjad.Dynamic('f')
             >>> dynamic.context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
         ..  container:: example
 
@@ -341,11 +340,9 @@ class Dynamic(AbjadValueObject):
 
             >>> dynamic = abjad.Dynamic('p')
             >>> dynamic.context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
-        Dynamics are staff-scoped by default.
-
-        Returns staff.
+        Returns context or string.
         '''
         return self._context
 

@@ -42,8 +42,7 @@ class PageBreak(AbjadValueObject):
     ### INITIALIZER ##
 
     def __init__(self):
-        from abjad.tools import scoretools
-        self._context = scoretools.Score
+        self._context = 'Score'
 
     ### PRIVATE METHODS ###
 
@@ -60,7 +59,7 @@ class PageBreak(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of page break.
+        r'''Gets default context of page break.
 
         ..  container:: example
 
@@ -68,8 +67,8 @@ class PageBreak(AbjadValueObject):
 
             >>> page_break = abjad.PageBreak()
             >>> page_break.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context

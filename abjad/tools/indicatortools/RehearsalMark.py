@@ -72,7 +72,7 @@ class RehearsalMark(AbjadValueObject):
 
     def __init__(self, number=None, markup=None):
         import abjad
-        self._context = abjad.Score
+        self._context = 'Score'
         if markup is not None:
             assert isinstance(markup, abjad.Markup)
         self._markup = markup
@@ -132,7 +132,7 @@ class RehearsalMark(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of rehearsal mark.
+        r'''Gets default context of rehearsal mark.
 
         ..  container:: example
 
@@ -140,7 +140,7 @@ class RehearsalMark(AbjadValueObject):
 
             >>> mark = abjad.RehearsalMark(number=1)
             >>> mark.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
         ..  container:: example
 
@@ -148,9 +148,9 @@ class RehearsalMark(AbjadValueObject):
 
             >>> mark = abjad.RehearsalMark(number=2)
             >>> mark.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context
 

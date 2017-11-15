@@ -39,8 +39,7 @@ class SystemBreak(AbjadValueObject):
     ### INITIALIZER ##
 
     def __init__(self):
-        from abjad.tools import scoretools
-        self._context = scoretools.Staff
+        self._context = 'Staff'
 
     ### PRIVATE METHODS ###
 
@@ -57,7 +56,7 @@ class SystemBreak(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of system break indicator.
+        r'''Gets default context of system break indicator.
 
         ..  container:: example
 
@@ -65,10 +64,12 @@ class SystemBreak(AbjadValueObject):
 
             >>> break_ = abjad.SystemBreak()
             >>> break_.context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
-        ..  todo:: Make system breaks score-scoped.
+        ..  todo:: Make system breaks score-contexted.
 
         Returns staff (but should return score).
+
+        Returns context or string.
         '''
         return self._context

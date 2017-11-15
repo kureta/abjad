@@ -173,7 +173,7 @@ class Instrument(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope.
+        r'''Gets default context of instrument.
 
         Defaults to staff.
 

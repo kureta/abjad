@@ -13,7 +13,7 @@ def test_scoretools_Inspection_get_duration_01():
         )
     leaves = abjad.select(voice).leaves()
     mark = abjad.MetronomeMark(abjad.Duration(1, 8), 42)
-    abjad.attach(mark, leaves[0], scope=abjad.Voice)
+    abjad.attach(mark, leaves[0], scope='Voice')
     beam = abjad.Beam()
     abjad.attach(beam, leaves)
     crescendo = abjad.Hairpin('<')

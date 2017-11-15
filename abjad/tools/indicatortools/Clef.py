@@ -89,7 +89,7 @@ class Clef(AbjadValueObject):
 
     def __init__(self, name='treble'):
         import abjad
-        self._context = abjad.Staff
+        self._context = 'Staff'
         if isinstance(name, str):
             self._name = name
         elif isinstance(name, type(self)):
@@ -248,17 +248,15 @@ class Clef(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of clef.
+        r'''Gets default context of clef.
 
         ..  container:: example
 
             >>> clef = abjad.Clef('treble')
             >>> clef.context
-            <class 'abjad.tools.scoretools.Staff.Staff'>
+            'Staff'
 
-        Clefs are staff-scoped by default.
-
-        Returns staff.
+        Returns context or string.
         '''
         return self._context
 

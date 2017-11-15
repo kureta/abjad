@@ -306,7 +306,7 @@ class Component(AbjadObject):
 
     def _get_effective(self, prototype=None, unwrap=True, n=0):
         import abjad
-        # return time signature attached to measure regardless of scope
+        # return time signature attached to measure regardless of context
         if (prototype == abjad.TimeSignature or
             prototype == (abjad.TimeSignature,)):
             if isinstance(self, abjad.Measure):

@@ -97,10 +97,9 @@ class Fermata(AbjadValueObject):
     ### INITIALIZER ###
 
     def __init__(self, command='fermata'):
-        from abjad.tools import scoretools
         assert command in self._allowable_commands, repr(command)
         self._command = command
-        self._context = scoretools.Score
+        self._context = 'Score'
 
     ### SPECIAL METHODS ###
 
@@ -192,7 +191,7 @@ class Fermata(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default scope of fermata.
+        r'''Gets default context of fermata.
 
         ..  container:: example
 
@@ -200,7 +199,7 @@ class Fermata(AbjadValueObject):
 
             >>> fermata = abjad.Fermata()
             >>> fermata.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
         ..  container:: example
 
@@ -208,8 +207,8 @@ class Fermata(AbjadValueObject):
 
             >>> fermata = abjad.Fermata('longfermata')
             >>> fermata.context
-            <class 'abjad.tools.scoretools.Score.Score'>
+            'Score'
 
-        Returns score.
+        Returns context or string.
         '''
         return self._context
