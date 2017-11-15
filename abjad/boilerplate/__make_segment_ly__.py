@@ -27,11 +27,10 @@ if __name__ == '__main__':
 
     try:
         with abjad.Timer() as timer:
-            result = maker.run(
+            lilypond_file = maker.run(
                 metadata=metadata,
                 previous_metadata=previous_metadata,
                 )
-            lilypond_file, metadata = result
         total_time = int(timer.elapsed_time)
         identifier = abjad.String('second').pluralize(total_time)
         message = f'Abjad runtime {{total_time}} {{identifier}} ...'
@@ -43,7 +42,7 @@ if __name__ == '__main__':
     try:
         directory = pathlib.Path(__file__).parent
         directory = ide.Path(directory)
-        directory._write_metadata_py(metadata)
+        directory.write_metadata_py(maker.metadata)
     except:
         traceback.print_exc()
         sys.exit(1)
