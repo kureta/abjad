@@ -80,7 +80,7 @@ class Instrument(AbjadValueObject):
     ### PRIVATE PROPERTIES ###
 
     @property
-    def _scope_name(self):
+    def _context_name(self):
         if isinstance(self.context, type):
             return self.context.__name__
         elif isinstance(self.context, str):
@@ -119,7 +119,7 @@ class Instrument(AbjadValueObject):
         if context is not None:
             context = context.context_name
         else:
-            context = self._scope_name
+            context = self._context_name
         line = r'\set {!s}.instrumentName = {!s}'
         line = line.format(
             context,

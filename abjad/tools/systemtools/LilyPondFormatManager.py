@@ -51,8 +51,8 @@ class LilyPondFormatManager(AbjadObject):
         up_markup = []
         down_markup = []
         neutral_markup = []
-        scoped_wrappers = []
-        nonscoped_wrappers = []
+        context_wrappers = []
+        noncontext_wrappers = []
         # classify wrappers attached to component
         for wrapper in wrappers:
             # skip nonprinting indicators like annotation
@@ -64,7 +64,7 @@ class LilyPondFormatManager(AbjadObject):
             elif wrapper.is_annotation or wrapper.is_piecewise:
                 continue
             # skip comments and commands unless attached directly to us
-            elif (wrapper.scope is None and
+            elif (wrapper.context is None and
                 hasattr(wrapper.indicator, '_format_leaf_children') and
                 not getattr(wrapper.indicator, '_format_leaf_children') and
                 wrapper.component is not component):
@@ -77,19 +77,19 @@ class LilyPondFormatManager(AbjadObject):
                     down_markup.append(wrapper.indicator)
                 elif wrapper.indicator.direction in (abjad.Center, None):
                     neutral_markup.append(wrapper.indicator)
-            # store scoped wrappers
-            elif wrapper.scope is not None:
+            # store context wrappers
+            elif wrapper.context is not None:
                 if wrapper._is_formattable_for_component(component):
-                    scoped_wrappers.append(wrapper)
-            # store nonscoped wrappers
+                    context_wrappers.append(wrapper)
+            # store noncontext wrappers
             else:
-                nonscoped_wrappers.append(wrapper)
+                noncontext_wrappers.append(wrapper)
         indicators = (
             up_markup,
             down_markup,
             neutral_markup,
-            scoped_wrappers,
-            nonscoped_wrappers,
+            context_wrappers,
+            noncontext_wrappers,
             )
         return indicators
 
@@ -163,8 +163,8 @@ class LilyPondFormatManager(AbjadObject):
             up_markup,
             down_markup,
             neutral_markup,
-            scoped_wrappers,
-            nonscoped_wrappers,
+            context_wrappers,
+            noncontext_wrappers,
             ) = LilyPondFormatManager._collect_indicators(component)
         manager._populate_markup_format_contributions(
             component,
@@ -173,15 +173,15 @@ class LilyPondFormatManager(AbjadObject):
             down_markup,
             neutral_markup,
             )
-        manager._populate_scoped_wrapper_format_contributions(
+        manager._populate_context_wrapper_format_contributions(
             component,
             bundle,
-            scoped_wrappers,
+            context_wrappers,
             )
-        manager._populate_nonscoped_wrapper_format_contributions(
+        manager._populate_noncontext_wrapper_format_contributions(
             component,
             bundle,
-            nonscoped_wrappers,
+            noncontext_wrappers,
             )
 
     @staticmethod
@@ -220,30 +220,30 @@ class LilyPondFormatManager(AbjadObject):
                     bundle.right.markup.extend(format_pieces)
 
     @staticmethod
-    def _populate_nonscoped_wrapper_format_contributions(
+    def _populate_noncontext_wrapper_format_contributions(
         component,
         bundle,
-        nonscoped_wrappers,
+        noncontext_wrappers,
         ):
-        for nonscoped_wrapper in nonscoped_wrappers:
-            indicator = nonscoped_wrapper.indicator
+        for noncontext_wrapper in noncontext_wrappers:
+            indicator = noncontext_wrapper.indicator
             if hasattr(indicator, '_get_lilypond_format_bundle'):
                 indicator_bundle = indicator._get_lilypond_format_bundle()
                 if indicator_bundle is not None:
                     bundle.update(indicator_bundle)
 
     @staticmethod
-    def _populate_scoped_wrapper_format_contributions(
+    def _populate_context_wrapper_format_contributions(
         component,
         bundle,
-        scoped_wrappers,
+        context_wrappers,
         ):
-        for scoped_wrapper in scoped_wrappers:
-            format_pieces = scoped_wrapper._get_format_pieces()
+        for context_wrapper in context_wrappers:
+            format_pieces = context_wrapper._get_format_pieces()
             if isinstance(format_pieces, type(bundle)):
                 bundle.update(format_pieces)
             else:
-                format_slot = scoped_wrapper.indicator._format_slot
+                format_slot = context_wrapper.indicator._format_slot
                 bundle.get(format_slot).indicators.extend(format_pieces)
 
     @staticmethod

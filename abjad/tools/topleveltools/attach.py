@@ -46,7 +46,7 @@ def attach(
                 f'4 -\accent
             }
 
-    Derives scope from the default scope of `indicator` when `scope` is none.
+    Derives scope from the default `indicator` context when `scope` is none.
 
     Returns none.
     '''
@@ -132,21 +132,22 @@ def attach(
         is_annotation = is_annotation or indicator.is_annotation
         is_piecewise = indicator.is_piecewise
         name = name or indicator.name
-        scope = scope or indicator.scope
+        scope = scope or indicator.context
         synthetic_offset = synthetic_offset or indicator.synthetic_offset
         indicator._detach()
         indicator = indicator.indicator
 
+    # TODO: change _context to public context
     if hasattr(indicator, '_context'):
         scope = scope or indicator._context
 
     wrapper = abjad.IndicatorWrapper(
         component=component,
+        context=scope,
         indicator=indicator,
         is_annotation=is_annotation,
         is_piecewise=is_piecewise,
         name=name,
-        scope=scope,
         synthetic_offset=synthetic_offset,
         )
     wrapper._bind_to_component(component)

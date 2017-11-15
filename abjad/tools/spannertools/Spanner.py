@@ -182,10 +182,10 @@ class Spanner(AbjadObject):
         context = getattr(indicator, '_context', None)
         wrapper = abjad.IndicatorWrapper(
             component=leaf,
+            context=context,
             indicator=indicator,
             is_piecewise=True,
             piecewise_spanner=self,
-            scope=context,
             )
         wrapper._bind_to_component(leaf)
 

@@ -326,7 +326,7 @@ class Component(AbjadObject):
                     offset = wrapper.start_offset
                     candidate_wrappers.setdefault(offset, []).append(wrapper)
             for wrapper in parent._indicator_wrappers:
-                if wrapper.scope is not None:
+                if wrapper.context is not None:
                     continue
                 if isinstance(wrapper.indicator, prototype):
                     offset = wrapper.start_offset
