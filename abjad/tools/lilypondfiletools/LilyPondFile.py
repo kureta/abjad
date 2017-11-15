@@ -411,7 +411,7 @@ class LilyPondFile(AbjadObject):
         return '\n\n'.join(self._get_format_pieces())
 
     @staticmethod
-    def _make_time_signature_context_block(
+    def _make_global_context_block(
         font_size=3,
         minimum_distance=10,
         padding=4,
@@ -717,14 +717,14 @@ class LilyPondFile(AbjadObject):
         ..  container:: example
 
             >>> score = abjad.Score()
-            >>> time_signature_context = abjad.Context(
+            >>> global_context = abjad.Context(
             ...     context_name='GlobalContext',
             ...     )
             >>> durations = [(2, 8), (3, 8), (4, 8)]
             >>> maker = abjad.MeasureMaker()
             >>> measures = maker(durations)
-            >>> time_signature_context.extend(measures)
-            >>> score.append(time_signature_context)
+            >>> global_context.extend(measures)
+            >>> score.append(global_context)
             >>> staff = abjad.Staff()
             >>> staff.append(abjad.Measure((2, 8), "c'8 ( d'8 )"))
             >>> staff.append(abjad.Measure((3, 8), "e'8 ( f'8  g'8 )"))
@@ -886,7 +886,7 @@ class LilyPondFile(AbjadObject):
         lilypond_file.layout_block.ragged_right = True
         command = abjad.LilyPondCommand('accidentalStyle forget')
         lilypond_file.layout_block.items.append(command)
-        block = LilyPondFile._make_time_signature_context_block(
+        block = LilyPondFile._make_global_context_block(
             font_size=1,
             padding=6,
             )
