@@ -2461,6 +2461,7 @@ class Selection(AbjadValueObject):
             )
         return self.filter(inequality)
 
+    # TODO: examples
     def flatten(self, depth=1):
         r'''Flattens selection to `depth`.
 
