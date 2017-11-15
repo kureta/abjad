@@ -50,7 +50,7 @@ class TimeSignature(AbjadValueObject):
 
         >>> staff = abjad.Staff("c'8 d'8 e'8 c'8 d'8 e'8")
         >>> time_signature = abjad.TimeSignature((3, 8))
-        >>> abjad.attach(time_signature, staff[0], scope='Score')
+        >>> abjad.attach(time_signature, staff[0], context='Score')
 
         Formats behind comments when no score is present:
 

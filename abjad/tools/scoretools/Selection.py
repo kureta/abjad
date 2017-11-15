@@ -6823,7 +6823,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> mark = abjad.MetronomeMark((1, 4), 60)
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(mark, leaf, scope='Staff')
+                >>> abjad.attach(mark, leaf, context='Staff')
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
@@ -6930,7 +6930,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> mark = abjad.MetronomeMark((1, 4), 60)
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(mark, leaf, scope='Staff')
+                >>> abjad.attach(mark, leaf, context='Staff')
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
@@ -7048,7 +7048,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> mark = abjad.MetronomeMark((1, 4), 60)
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(mark, leaf, scope='Staff')
+                >>> abjad.attach(mark, leaf, context='Staff')
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
@@ -7138,7 +7138,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> mark = abjad.MetronomeMark((1, 4), 60)
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(mark, leaf, scope='Staff')
+                >>> abjad.attach(mark, leaf, context='Staff')
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
@@ -7260,7 +7260,7 @@ class Selection(AbjadValueObject):
                 ...     )
                 >>> mark = abjad.MetronomeMark((1, 4), 60)
                 >>> leaf = abjad.inspect(staff).get_leaf(0)
-                >>> abjad.attach(mark, leaf, scope='Staff')
+                >>> abjad.attach(mark, leaf, context='Staff')
                 >>> abjad.show(staff) # doctest: +SKIP
 
                 >>> result = abjad.select(staff).leaves()
