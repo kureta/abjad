@@ -230,9 +230,12 @@ class Label(abctools.AbjadObject):
             abjad.override(leaf).dots.color = color
             abjad.override(leaf).note_head.color = color
             abjad.override(leaf).stem.color = color
-        elif isinstance(leaf, abjad.Rest):
+        elif isinstance(leaf, (abjad.MultimeasureRest, abjad.Rest)):
             abjad.override(leaf).dots.color = color
             abjad.override(leaf).rest.color = color
+        elif isinstance(leaf, abjad.Skip):
+            comment = abjad.LilyPondComment(color)
+            abjad.attach(comment, leaf)
         return leaf
 
     def _update_expression(self, frame):
@@ -362,6 +365,7 @@ class Label(abctools.AbjadObject):
                         \once \override Dots.color = #red
                         \once \override Rest.color = #red
                         r8.
+                        % red
                         s8.
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
@@ -391,6 +395,7 @@ class Label(abctools.AbjadObject):
                         \once \override Dots.color = #red
                         \once \override Rest.color = #red
                         r8.
+                        % red
                         s8.
                         \once \override Accidental.color = #red
                         \once \override Beam.color = #red
