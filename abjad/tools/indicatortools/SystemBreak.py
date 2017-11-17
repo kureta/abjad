@@ -30,6 +30,7 @@ class SystemBreak(AbjadValueObject):
 
     __slots__ = (
         '_context',
+        '_tag',
         )
 
     _format_slot = 'closing'
@@ -38,13 +39,19 @@ class SystemBreak(AbjadValueObject):
 
     ### INITIALIZER ##
 
-    def __init__(self):
+    def __init__(self, tag=None):
         self._context = 'Staff'
+        if tag is not None:
+            assert isinstance(tag, str), repr(tag)
+        self._tag = tag
 
     ### PRIVATE METHODS ###
 
     def _get_lilypond_format(self):
-        return r'\break'
+        string = r'\break'
+        if self.tag is not None:
+            string += f' % {self.tag}'
+        return string
 
     def _get_lilypond_format_bundle(self, component=None):
         import abjad
@@ -73,3 +80,9 @@ class SystemBreak(AbjadValueObject):
         Returns context or string.
         '''
         return self._context
+
+    @property
+    def tag(self):
+        r'''Gets tag.
+        '''
+        return self._tag
