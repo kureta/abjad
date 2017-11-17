@@ -50,7 +50,8 @@ class SystemBreak(AbjadValueObject):
     def _get_lilypond_format(self):
         string = r'\break'
         if self.tag is not None:
-            string += f' % {self.tag}'
+            string += ' % '
+            string += self.tag
         return string
 
     def _get_lilypond_format_bundle(self, component=None):
