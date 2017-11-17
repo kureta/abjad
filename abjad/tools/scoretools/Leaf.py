@@ -1,16 +1,10 @@
 import abc
 import copy
-from abjad.tools import mathtools
-from abjad.tools import systemtools
-from abjad.tools.topleveltools import attach
-from abjad.tools.topleveltools import detach
-from abjad.tools.topleveltools import override
-from abjad.tools.topleveltools import setting
 from .Component import Component
 
 
 class Leaf(Component):
-    r'''Abstract leaf.
+    r'''Leaf baseclass.
 
     Leaves include notes, rests, chords and skips.
     '''
@@ -24,6 +18,7 @@ class Leaf(Component):
         '_written_duration',
         )
 
+    # TODO: remove?
     _is_counttime_component = True
 
     ### INITIALIZER ###
@@ -56,21 +51,21 @@ class Leaf(Component):
     ### PRIVATE METHODS ###
 
     def _as_graphviz_node(self):
-        from abjad.tools import graphtools
+        import abjad
         lilypond_format = self._get_compact_representation()
         lilypond_format = lilypond_format.replace('<', '&lt;')
         lilypond_format = lilypond_format.replace('>', '&gt;')
         node = Component._as_graphviz_node(self)
         node[0].extend([
-            graphtools.GraphvizTableRow([
-                graphtools.GraphvizTableCell(
+            abjad.graphtools.GraphvizTableRow([
+                abjad.graphtools.GraphvizTableCell(
                     label=type(self).__name__,
                     attributes={'border': 0},
                     ),
                 ]),
-            graphtools.GraphvizTableHorizontalRule(),
-            graphtools.GraphvizTableRow([
-                graphtools.GraphvizTableCell(
+            abjad.graphtools.GraphvizTableHorizontalRule(),
+            abjad.graphtools.GraphvizTableRow([
+                abjad.graphtools.GraphvizTableCell(
                     label=lilypond_format,
                     attributes={'border': 0},
                     ),
@@ -79,40 +74,44 @@ class Leaf(Component):
         return node
 
     def _copy_override_and_set_from_leaf(self, leaf):
+        import abjad
         if getattr(leaf, '_lilypond_grob_name_manager', None) is not None:
-            self._lilypond_grob_name_manager = copy.copy(override(leaf))
+            self._lilypond_grob_name_manager = copy.copy(abjad.override(leaf))
         if getattr(leaf, '_lilypond_setting_name_manager', None) is not None:
             self._lilypond_setting_name_manager = copy.copy(
-                setting(leaf))
+                abjad.setting(leaf))
         new_indicators = []
         for indicator in leaf._indicator_wrappers:
             new_indicator = copy.copy(indicator)
             new_indicators.append(new_indicator)
         for new_indicator in new_indicators:
-            attach(new_indicator, self)
+            abjad.attach(new_indicator, self)
 
     def _copy_with_indicators_but_without_children_or_spanners(self):
+        import abjad
         new = Component._copy_with_indicators_but_without_children_or_spanners(
             self)
         grace_container = self._grace_container
         if grace_container is not None:
             new_grace_container = \
                 grace_container._copy_with_children_and_indicators_but_without_spanners()
-            attach(new_grace_container, new)
+            abjad.attach(new_grace_container, new)
         after_grace_container = self._after_grace_container
         if after_grace_container is not None:
             new_after_grace_container = \
                 after_grace_container._copy_with_children_and_indicators_but_without_spanners()
-            attach(new_after_grace_container, new)
+            abjad.attach(new_after_grace_container, new)
         return new
 
     def _detach_after_grace_container(self):
+        import abjad
         if self._after_grace_container is not None:
-            return detach(self._after_grace_container, self)
+            return abjad.detach(self._after_grace_container, self)
 
     def _detach_grace_container(self):
+        import abjad
         if self._grace_container is not None:
-            return detach(self._grace_container, self)
+            return abjad.detach(self._grace_container, self)
 
     def _format_after_grace_body(self):
         result = []
@@ -128,6 +127,16 @@ class Leaf(Component):
             if len(self._after_grace_container):
                 result.append(r'\afterGrace')
         return ['after grace opening', result]
+
+    def _format_absolute_after_slot(self, bundle):
+        result = []
+        result.append(('literals', bundle.absolute_after.commands))
+        return result
+
+    def _format_absolute_before_slot(self, bundle):
+        result = []
+        result.append(('literals', bundle.absolute_before.commands))
+        return result
 
     def _format_after_slot(self, bundle):
         result = []
@@ -221,8 +230,9 @@ class Leaf(Component):
         return self._get_lilypond_format().split('\n')
 
     def _get_format_specification(self):
+        import abjad
         summary = self._get_compact_representation()
-        return systemtools.FormatSpecification(
+        return abjad.FormatSpecification(
             client=self,
             repr_is_indented=False,
             repr_args_values=[summary],
@@ -289,7 +299,8 @@ class Leaf(Component):
             return abjad.LogicalTie(items=self)
 
     def _process_contribution_packet(self, contribution_packet):
-        manager = systemtools.LilyPondFormatManager
+        import abjad
+        manager = abjad.LilyPondFormatManager
         indent = manager.indent
         result = ''
         for contributor, contributions in contribution_packet:
@@ -305,10 +316,14 @@ class Leaf(Component):
         return result
 
     def _report_format_contributors(self):
-        manager = systemtools.LilyPondFormatManager
+        import abjad
+        manager = abjad.LilyPondFormatManager
         indent = manager.indent
         bundle = manager.bundle_format_contributions(self)
         report = ''
+        report += 'slot absolute before:\n'
+        packet = self._format_absolute_before_slot(bundle)
+        report += self._process_contribution_packet(packet)
         report += 'slot 1:\n'
         packet = self._format_before_slot(bundle)
         report += self._process_contribution_packet(packet)
@@ -325,6 +340,9 @@ class Leaf(Component):
         report += 'slot 7:\n'
         packet = self._format_after_slot(bundle)
         report += self._process_contribution_packet(packet)
+        report += 'slot absolute after:\n'
+        packet = self._format_absolute_after_slot(bundle)
+        report += self._process_contribution_packet(packet)
         while report[-1] == '\n':
             report = report[:-1]
         return report
@@ -338,9 +356,9 @@ class Leaf(Component):
         new_duration = abjad.Duration(new_duration)
         # change LilyPond multiplier if leaf already has LilyPond multiplier
         if self._get_indicators(abjad.Multiplier):
-            detach(abjad.Multiplier, self)
+            abjad.detach(abjad.Multiplier, self)
             multiplier = new_duration.__div__(self.written_duration)
-            attach(multiplier, self)
+            abjad.attach(multiplier, self)
             return abjad.select(self)
         # change written duration if new duration is assignable
         try:

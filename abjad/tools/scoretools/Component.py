@@ -210,6 +210,12 @@ class Component(AbjadObject):
         parent.__setitem__(slice(start, stop + 1), components)
         return self
 
+    def _format_absolute_after_slot(self, bundle):
+        return []
+
+    def _format_absolute_before_slot(self, bundle):
+        return []
+
     def _format_after_slot(self, bundle):
         pass
 
@@ -227,6 +233,7 @@ class Component(AbjadObject):
         result = []
         manager = abjad.LilyPondFormatManager
         bundle = manager.bundle_format_contributions(self)
+        result.extend(self._format_absolute_before_slot(bundle))
         result.extend(self._format_before_slot(bundle))
         result.extend(self._format_open_brackets_slot(bundle))
         result.extend(self._format_opening_slot(bundle))
@@ -234,6 +241,7 @@ class Component(AbjadObject):
         result.extend(self._format_closing_slot(bundle))
         result.extend(self._format_close_brackets_slot(bundle))
         result.extend(self._format_after_slot(bundle))
+        result.extend(self._format_absolute_after_slot(bundle))
         contributions = []
         for contributor, contribution in result:
             contributions.extend(contribution)

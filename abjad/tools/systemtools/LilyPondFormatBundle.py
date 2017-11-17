@@ -13,20 +13,24 @@ class LilyPondFormatBundle(AbjadObject):
     __documentation_section__ = 'LilyPond formatting'
 
     __slots__ = (
-        '_before',
+        '_absolute_after',
+        '_absolute_before',
         '_after',
-        '_opening',
+        '_before',
         '_closing',
-        '_right',
         '_context_settings',
         '_grob_overrides',
         '_grob_reverts',
+        '_opening',
+        '_right',
         )
 
     ### INITIALIZER ###
 
     def __init__(self):
         from abjad.tools import systemtools
+        self._absolute_after = systemtools.SlotContributions()
+        self._absolute_before = systemtools.SlotContributions()
         self._before = systemtools.SlotContributions()
         self._after = systemtools.SlotContributions()
         self._opening = systemtools.SlotContributions()
@@ -41,6 +45,8 @@ class LilyPondFormatBundle(AbjadObject):
     def _get_format_specification(self):
         from abjad.tools import systemtools
         slot_contribution_names = (
+            'absolute_before',
+            'absolute_after',
             'before',
             'after',
             'opening',
@@ -68,6 +74,7 @@ class LilyPondFormatBundle(AbjadObject):
 
         Returns none.
         '''
+        # do not alphabetize self.absolute_before, self.absolute_after
         self.before.alphabetize()
         self.after.alphabetize()
         self.opening.alphabetize()
@@ -89,6 +96,8 @@ class LilyPondFormatBundle(AbjadObject):
 
         Returns none.
         '''
+        self.absolute_after.make_immutable()
+        self.absolute_before.make_immutable()
         self.before.make_immutable()
         self.after.make_immutable()
         self.opening.make_immutable()
@@ -107,6 +116,8 @@ class LilyPondFormatBundle(AbjadObject):
         if hasattr(format_bundle, '_get_lilypond_format_bundle'):
             format_bundle = format_bundle._get_lilypond_format_bundle()
         assert isinstance(format_bundle, type(self))
+        self.absolute_before.update(format_bundle.absolute_before)
+        self.absolute_after.update(format_bundle.absolute_after)
         self.before.update(format_bundle.before)
         self.after.update(format_bundle.after)
         self.opening.update(format_bundle.opening)
@@ -117,6 +128,22 @@ class LilyPondFormatBundle(AbjadObject):
         self.grob_reverts.extend(format_bundle.grob_reverts)
 
     ### PUBLIC PROPERTIES ###
+
+    @property
+    def absolute_after(self):
+        r'''Aboslute after slot contributions.
+
+        Returns slot contributions object.
+        '''
+        return self._absolute_after
+
+    @property
+    def absolute_before(self):
+        r'''Absolute before slot contributions.
+
+        Returns slot contributions object.
+        '''
+        return self._absolute_before
 
     @property
     def after(self):

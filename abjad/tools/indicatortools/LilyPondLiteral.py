@@ -26,6 +26,39 @@ class LilyPondLiteral(AbjadValueObject):
                 f'8 )
             }
 
+    ..  container:: example
+
+        Use the absolute before and absolute after format slots like this:
+
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> abjad.attach(abjad.Slur(), staff[:])
+        >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
+        >>> abjad.attach(literal, staff[0])
+        >>> literal = abjad.LilyPondLiteral('', format_slot='absolute_before')
+        >>> abjad.attach(literal, staff[0])
+        >>> literal = abjad.LilyPondLiteral(
+        ...     '% before all formatting',
+        ...     format_slot='absolute_before',
+        ...     )
+        >>> abjad.attach(literal, staff[0])
+        >>> literal = abjad.LilyPondLiteral('', format_slot='absolute_after')
+        >>> abjad.attach(literal, staff[-1])
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        ..  docs::
+
+            >>> abjad.f(staff)
+            \new Staff {
+            <BLANKLINE>
+                % before all formatting
+                \slurDotted
+                c'8 (
+                d'8
+                e'8
+                f'8 )
+            <BLANKLINE>
+            }
+
     '''
 
     ### CLASS VARIABLES ###
@@ -36,6 +69,8 @@ class LilyPondLiteral(AbjadValueObject):
         )
 
     _allowable_format_slots = (
+        'absolute_after',
+        'absolute_before',
         'after',
         'before',
         'closing',
@@ -49,12 +84,10 @@ class LilyPondLiteral(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(self, name=None, format_slot=None):
-        name = name or 'foo'
-        format_slot = format_slot or 'opening'
+    def __init__(self, string='', format_slot='opening'):
         assert format_slot in self._allowable_format_slots, repr(format_slot)
-        assert isinstance(name, str), repr(name)
-        self._name = name
+        assert isinstance(string, str), repr(string)
+        self._name = string
         self._format_slot = format_slot
 
     ### SPECIAL METHODS ###
@@ -75,7 +108,7 @@ class LilyPondLiteral(AbjadValueObject):
 
     @property
     def _contents_repr_string(self):
-        return repr(self.name)
+        return repr(self.string)
 
     ### PRIVATE METHODS ###
 
@@ -86,13 +119,13 @@ class LilyPondLiteral(AbjadValueObject):
             names.append('format_slot')
         return abjad.FormatSpecification(
             client=self,
-            storage_format_args_values=[self.name],
+            storage_format_args_values=[self.string],
             storage_format_kwargs_names=names,
             storage_format_is_indented=False,
             )
 
     def _get_lilypond_format(self):
-        return self.name
+        return self.string
 
     def _get_lilypond_format_bundle(self, component=None):
         import abjad
@@ -112,6 +145,8 @@ class LilyPondLiteral(AbjadValueObject):
                 >>> for slot in abjad.LilyPondLiteral.list_allowable_format_slots():
                 ...     slot
                 ...
+                'absolute_after'
+                'absolute_before'
                 'after'
                 'before'
                 'closing'
@@ -141,13 +176,13 @@ class LilyPondLiteral(AbjadValueObject):
         return self._format_slot
 
     @property
-    def name(self):
-        r'''Gets name of LilyPond literal.
+    def string(self):
+        r'''Gets string of LilyPond literal.
 
         ..  container:: example
 
             >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
-            >>> literal.name
+            >>> literal.string
             '\\slurDotted'
 
         Returns string.

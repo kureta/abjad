@@ -451,6 +451,7 @@ class LilyPondFormatManager(AbjadObject):
 
             >>> manager = abjad.LilyPondFormatManager
             >>> print(manager.report_component_format_contributions(staff[0]))
+            slot absolute before:
             slot 1:
                 grob overrides:
                     \once \override NoteHead.color = #red
@@ -460,6 +461,7 @@ class LilyPondFormatManager(AbjadObject):
                     c'4 [ (
             slot 5:
             slot 7:
+            slot absolute after:
 
         Returns string.
         '''
