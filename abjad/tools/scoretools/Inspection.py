@@ -114,22 +114,56 @@ class Inspection(abctools.AbjadObject):
 
         ..  container:: example
 
-            >>> note = abjad.Note("c'4")
-            >>> abjad.annotate(note, 'bow_direction', abjad.Down)
-            >>> abjad.inspect(note).get_annotation('bow_direction')
-            Down
+            >>> staff = abjad.Staff("c'4 e' e' f'")
+            >>> abjad.annotate(staff[0], 'default_instrument', abjad.Cello())
+            >>> abjad.show(staff) # doctest: +SKIP
 
-            Returns none when no annotation is found:
+            ..  docs::
 
-            >>> abjad.inspect(note).get_annotation('bow_fraction') is None
+                >>> abjad.f(staff)
+                \new Staff {
+                    c'4
+                    e'4
+                    e'4
+                    f'4
+                }
+
+            >>> string = 'default_instrument'
+            >>> abjad.inspect(staff[0]).get_annotation(string)
+            Cello()
+
+            >>> abjad.inspect(staff[1]).get_annotation(string) is None
+            True
+
+            >>> abjad.inspect(staff[2]).get_annotation(string) is None
+            True
+
+            >>> abjad.inspect(staff[3]).get_annotation(string) is None
             True
 
             Returns default when no annotation is found:
 
-            >>> abjad.inspect(note).get_annotation('bow_fraction', 2)
-            2
+            >>> abjad.inspect(staff[3]).get_annotation(string, abjad.Violin())
+            Violin()
 
-        Returns annotation or default.
+            Regression: annotation is not picked up as effective indicator:
+
+            FIXME: first case should return none:
+
+            >>> prototype = abjad.Instrument
+            >>> abjad.inspect(staff[0]).get_effective(prototype)
+            Cello()
+
+            >>> abjad.inspect(staff[1]).get_effective(prototype) is None
+            True
+
+            >>> abjad.inspect(staff[2]).get_effective(prototype) is None
+            True
+
+            >>> abjad.inspect(staff[3]).get_effective(prototype) is None
+            True
+
+        Returns annotation (or default).
         '''
         if hasattr(self.client, '_get_annotation'):
             annotation = self.client._get_annotation(name)
