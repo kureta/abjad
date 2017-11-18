@@ -315,7 +315,7 @@ class Leaf(Component):
                     result += contribution
         return result
 
-    def _report_format_contributors(self):
+    def _report_format_contributions(self):
         import abjad
         manager = abjad.LilyPondFormatManager
         indent = manager.indent

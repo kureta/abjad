@@ -1495,6 +1495,8 @@ class Inspection(abctools.AbjadObject):
 
         ..  container:: example
 
+            Reports container modifications:
+
             >>> container = abjad.Container("c'8 d'8 e'8 f'8")
             >>> abjad.override(container).note_head.color = 'red'
             >>> abjad.override(container).note_head.style = 'harmonic'
@@ -1524,28 +1526,77 @@ class Inspection(abctools.AbjadObject):
                 \revert NoteHead.style
             }
 
+        ..  container:: example
+
+            Reports leaf modifications:
+
+            >>> container = abjad.Container("c'8 d'8 e'8 f'8")
+            >>> abjad.attach(abjad.Clef('alto'), container[0])
+            >>> abjad.override(container[0]).note_head.color = 'red'
+            >>> abjad.override(container[0]).stem.color = 'red'
+            >>> abjad.show(container) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(container)
+                {
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+                    \clef "alto"
+                    c'8
+                    d'8
+                    e'8
+                    f'8
+                }
+
+            >>> report = abjad.inspect(container[0]).report_modifications()
+            >>> print(report)
+            slot absolute before:
+            slot 1:
+                grob overrides:
+                    \once \override NoteHead.color = #red
+                    \once \override Stem.color = #red
+            slot 3:
+                commands:
+                    \clef "alto"
+            slot 4:
+                leaf body:
+                    c'8
+            slot 5:
+            slot 7:
+            slot absolute after:
+
         Returns string.
         '''
         import abjad
-        manager = abjad.LilyPondFormatManager
-        client = self.client
-        bundle = manager.bundle_format_contributions(client)
-        result = []
-        result.extend(client._get_format_contributions_for_slot(
-            'before', bundle))
-        result.extend(client._get_format_contributions_for_slot(
-            'open brackets', bundle))
-        result.extend(client._get_format_contributions_for_slot(
-            'opening', bundle))
-        result.append('    %%%%%% %s components omitted %%%%%%' % len(client))
-        result.extend(client._get_format_contributions_for_slot(
-            'closing', bundle))
-        result.extend(client._get_format_contributions_for_slot(
-            'close brackets', bundle))
-        result.extend(client._get_format_contributions_for_slot(
-            'after', bundle))
-        result = '\n'.join(result)
-        return result
+        if isinstance(self.client, abjad.Container):
+            bundle = abjad.LilyPondFormatManager.bundle_format_contributions(
+                self.client
+                )
+            result = []
+            for slot in ('before', 'open brackets', 'opening'):
+                lines = self.client._get_format_contributions_for_slot(
+                    slot,
+                    bundle,
+                    )
+                result.extend(lines)
+            line = '    %%% {} components omitted %%%'
+            line = line.format(len(self.client))
+            result.append(line)
+            for slot in ('closing', 'close brackets', 'after'):
+                lines = self.client._get_format_contributions_for_slot(
+                    slot,
+                    bundle,
+                    )
+                result.extend(lines)
+            result = '\n'.join(result)
+            return result
+        elif isinstance(self.client, abjad.Leaf):
+            return self.client._report_format_contributions()
+        else:
+            message = 'only defined for components: {}.'
+            message = message.format(self.client)
+            return message
 
     def tabulate_wellformedness(
         self,

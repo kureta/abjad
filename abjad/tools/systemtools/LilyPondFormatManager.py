@@ -441,33 +441,6 @@ class LilyPondFormatManager(AbjadObject):
         return result
 
     @staticmethod
-    def report_component_format_contributions(component, verbose=False):
-        r'''Reports `component` format contributions.
-
-        ..  container:: example
-
-            >>> staff = abjad.Staff("c'4 [ ( d'4 e'4 f'4 ] )")
-            >>> abjad.override(staff[0]).note_head.color = 'red'
-
-            >>> manager = abjad.LilyPondFormatManager
-            >>> print(manager.report_component_format_contributions(staff[0]))
-            slot absolute before:
-            slot 1:
-                grob overrides:
-                    \once \override NoteHead.color = #red
-            slot 3:
-            slot 4:
-                leaf body:
-                    c'4 [ (
-            slot 5:
-            slot 7:
-            slot absolute after:
-
-        Returns string.
-        '''
-        return component._report_format_contributors()
-
-    @staticmethod
     def report_spanner_format_contributions(spanner):
         r'''Reports spanner format contributions for every leaf in `spanner`.
 
