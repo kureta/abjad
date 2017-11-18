@@ -35,6 +35,7 @@ class IndicatorWrapper(AbjadValueObject):
         '_name',
         '_piecewise_spanner',
         '_synthetic_offset',
+        '_tag',
         )
 
     _publish_storage_format = True
@@ -51,6 +52,7 @@ class IndicatorWrapper(AbjadValueObject):
         name=None,
         piecewise_spanner=None,
         synthetic_offset=None,
+        tag=None,
         ):
         import abjad
         assert not isinstance(indicator, type(self)), repr(indicator)
@@ -81,6 +83,9 @@ class IndicatorWrapper(AbjadValueObject):
         if synthetic_offset is not None:
             synthetic_offset = abjad.Offset(synthetic_offset)
         self._synthetic_offset = synthetic_offset
+        if tag is not None:
+            assert isinstance(tag, str), repr(tag)
+        self._tag = tag
 
     ### SPECIAL METHODS ###
 
@@ -166,6 +171,51 @@ class IndicatorWrapper(AbjadValueObject):
                 is_piecewise=True,
                 )
 
+        ..  container:: example
+
+            Preserves tag:
+
+            >>> old_staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> abjad.attach(abjad.Clef('alto'), old_staff[0], tag='SEGMENT')
+            >>> abjad.f(old_staff)
+            \new Staff {
+                \clef "alto"
+                c'4
+                d'4
+                e'4
+                f'4
+            }
+
+            >>> leaf = old_staff[0]
+            >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
+            >>> abjad.f(wrapper)
+            abjad.IndicatorWrapper(
+                component=abjad.Note('\\clef "alto"\nc\'4'),
+                context='Staff',
+                indicator=abjad.Clef('alto'),
+                tag='SEGMENT',
+                )
+
+            >>> new_staff = abjad.mutate(old_staff).copy()
+            >>> abjad.f(new_staff)
+            \new Staff {
+                \clef "alto"
+                c'4
+                d'4
+                e'4
+                f'4
+            }
+
+            >>> leaf = new_staff[0]
+            >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
+            >>> abjad.f(wrapper)
+            abjad.IndicatorWrapper(
+                component=abjad.Note('\\clef "alto"\nc\'4'),
+                context='Staff',
+                indicator=abjad.Clef('alto'),
+                tag='SEGMENT',
+                )
+
         Copies indicator and context.
 
         Does not copy start component.
@@ -184,6 +234,7 @@ class IndicatorWrapper(AbjadValueObject):
             is_piecewise=self.is_piecewise,
             name=self.name,
             synthetic_offset=self.synthetic_offset,
+            tag=self.tag,
             )
         return new
 
@@ -447,3 +498,13 @@ class IndicatorWrapper(AbjadValueObject):
         Returns offset or none.
         '''
         return self._synthetic_offset
+
+    @property
+    def tag(self):
+        r'''Gets tag.
+
+        Tag is optional.
+
+        Returns string or none.
+        '''
+        return self._tag

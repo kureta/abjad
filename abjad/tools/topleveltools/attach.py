@@ -6,6 +6,7 @@ def attach(
     is_annotation=None,
     name=None,
     synthetic_offset=None,
+    tag=None,
     ):
     r'''Attaches `indicator` to component, selection or spanner `argument`.
 
@@ -109,11 +110,11 @@ def attach(
             indicator._name = name
             leaves = []
             try:
-                for x in argument:
-                    if isinstance(x, abjad.Leaf):
-                        leaves.append(x)
+                for item in argument:
+                    if isinstance(item, abjad.Leaf):
+                        leaves.append(item)
                     else:
-                        leaves.extend(abjad.iterate(x).leaves())
+                        leaves.extend(abjad.iterate(item).leaves())
             except TypeError:
                 leaves.append(argument)
             indicator._attach(leaves)
@@ -134,6 +135,7 @@ def attach(
         name = name or indicator.name
         context = context or indicator.context
         synthetic_offset = synthetic_offset or indicator.synthetic_offset
+        tag = tag or indicator.tag
         indicator._detach()
         indicator = indicator.indicator
 
@@ -148,5 +150,6 @@ def attach(
         is_piecewise=is_piecewise,
         name=name,
         synthetic_offset=synthetic_offset,
+        tag=tag,
         )
     wrapper._bind_to_component(component)
