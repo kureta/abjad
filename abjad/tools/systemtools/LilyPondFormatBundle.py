@@ -28,14 +28,14 @@ class LilyPondFormatBundle(AbjadObject):
     ### INITIALIZER ###
 
     def __init__(self):
-        from abjad.tools import systemtools
-        self._absolute_after = systemtools.SlotContributions()
-        self._absolute_before = systemtools.SlotContributions()
-        self._before = systemtools.SlotContributions()
-        self._after = systemtools.SlotContributions()
-        self._opening = systemtools.SlotContributions()
-        self._closing = systemtools.SlotContributions()
-        self._right = systemtools.SlotContributions()
+        import abjad
+        self._absolute_after = abjad.SlotContributions()
+        self._absolute_before = abjad.SlotContributions()
+        self._before = abjad.SlotContributions()
+        self._after = abjad.SlotContributions()
+        self._opening = abjad.SlotContributions()
+        self._closing = abjad.SlotContributions()
+        self._right = abjad.SlotContributions()
         self._context_settings = []
         self._grob_overrides = []
         self._grob_reverts = []
@@ -43,7 +43,7 @@ class LilyPondFormatBundle(AbjadObject):
     ### PRIVATE METHODS ###
 
     def _get_format_specification(self):
-        from abjad.tools import systemtools
+        import abjad
         slot_contribution_names = (
             'absolute_before',
             'absolute_after',
@@ -62,7 +62,7 @@ class LilyPondFormatBundle(AbjadObject):
             if getattr(self, x).has_contributions]
         names.extend(x for x in grob_contribution_names
             if getattr(self, x))
-        return systemtools.FormatSpecification(
+        return abjad.FormatSpecification(
             client=self,
             storage_format_kwargs_names=names,
             )
@@ -106,6 +106,23 @@ class LilyPondFormatBundle(AbjadObject):
         self._context_settings = tuple(sorted(set(self.context_settings)))
         self._grob_overrides = tuple(sorted(set(self.grob_overrides)))
         self._grob_reverts = tuple(sorted(set(self.grob_reverts)))
+
+    def tag_format_contributions(self, tag):
+        r'''Tags format contributions with string `tag`.
+
+        Returns none.
+        '''
+        self.absolute_before.tag(tag)
+        self.absolute_after.tag(tag)
+        self.before.tag(tag)
+        self.after.tag(tag)
+        self.opening.tag(tag)
+        self.closing.tag(tag)
+        self.right.tag(tag)
+        tag = ' % ' + tag
+        self._context_settings = [_ + tag for _ in self.context_settings]
+        self._grob_overrides = [_ + tag for _ in self.grob_overrides]
+        self._grob_reverts = [_ + tag for _ in self.grob_reverts]
 
     def update(self, format_bundle):
         r'''Updates format bundle with all format contributions in

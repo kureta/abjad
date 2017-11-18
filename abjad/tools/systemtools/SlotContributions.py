@@ -163,6 +163,21 @@ class SlotContributions(AbjadObject):
         self._stem_tremolos = tuple(self.stem_tremolos)
         self._trill_pitches = tuple(self.trill_pitches)
 
+    def tag(self, tag):
+        r'''Tags contributions.
+        '''
+        tag = ' % ' + tag
+        self._articulations = [_ + tag for _ in self.articulations]
+        self._commands = [_ + tag for _ in self.commands]
+        self._comments = [_ + tag for _ in self.comments]
+        self._indicators = [_ + tag for _ in self.indicators]
+        self._markup = [_ + tag for _ in self.markup]
+        self._spanners = [_ + tag for _ in self.spanners]
+        self._spanner_starts = [_ + tag for _ in self.spanner_starts]
+        self._spanner_stops = [_ + tag for _ in self.spanner_stops]
+        self._stem_tremolos = [_ + tag for _ in self.stem_tremolos]
+        self._trill_pitches = [_ + tag for _ in self.trill_pitches]
+
     def update(self, slot_contributions):
         r'''Updates contributions.
         '''

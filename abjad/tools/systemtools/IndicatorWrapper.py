@@ -179,7 +179,7 @@ class IndicatorWrapper(AbjadValueObject):
             >>> abjad.attach(abjad.Clef('alto'), old_staff[0], tag='SEGMENT')
             >>> abjad.f(old_staff)
             \new Staff {
-                \clef "alto"
+                \clef "alto" % SEGMENT
                 c'4
                 d'4
                 e'4
@@ -190,7 +190,7 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto"\nc\'4'),
+                component=abjad.Note('\\clef "alto" % SEGMENT\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
                 tag='SEGMENT',
@@ -199,7 +199,7 @@ class IndicatorWrapper(AbjadValueObject):
             >>> new_staff = abjad.mutate(old_staff).copy()
             >>> abjad.f(new_staff)
             \new Staff {
-                \clef "alto"
+                \clef "alto" % SEGMENT
                 c'4
                 d'4
                 e'4
@@ -210,7 +210,7 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto"\nc\'4'),
+                component=abjad.Note('\\clef "alto" % SEGMENT\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
                 tag='SEGMENT',
@@ -299,7 +299,10 @@ class IndicatorWrapper(AbjadValueObject):
         if self.is_annotation:
             return result
         if hasattr(self.indicator, '_get_lilypond_format_bundle'):
-            return self.indicator._get_lilypond_format_bundle(self.component)
+            bundle = self.indicator._get_lilypond_format_bundle(self.component)
+            if self.tag:
+                bundle.tag_format_contributions(self.tag)
+            return bundle
         try:
             context = self._get_effective_context()
             lilypond_format = self.indicator._get_lilypond_format(

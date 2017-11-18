@@ -95,17 +95,16 @@ class LilyPondFormatManager(AbjadObject):
 
     @staticmethod
     def _populate_context_setting_format_contributions(component, bundle):
+        import abjad
         result = []
-        from abjad.tools.topleveltools import setting
-        from abjad.tools import scoretools
         manager = LilyPondFormatManager
-        if isinstance(component, scoretools.Context):
-            for name, value in vars(setting(component)).items():
+        if isinstance(component, abjad.Context):
+            for name, value in vars(abjad.setting(component)).items():
                 string = manager.format_lilypond_context_setting_in_with_block(
                     name, value)
                 result.append(string)
         else:
-            contextualizer = setting(component)
+            contextualizer = abjad.setting(component)
             variables = vars(contextualizer)
             for name, value in variables.items():
                 # if we've found a leaf context namespace
@@ -166,6 +165,7 @@ class LilyPondFormatManager(AbjadObject):
             context_wrappers,
             noncontext_wrappers,
             ) = LilyPondFormatManager._collect_indicators(component)
+        # HERE: TODO:
         manager._populate_markup_format_contributions(
             component,
             bundle,
@@ -192,7 +192,7 @@ class LilyPondFormatManager(AbjadObject):
         down_markup,
         neutral_markup,
         ):
-        from abjad.tools import markuptools
+        import abjad
         for markup_list in (up_markup, down_markup, neutral_markup):
             if not markup_list:
                 continue
@@ -202,9 +202,8 @@ class LilyPondFormatManager(AbjadObject):
                     direction = '-'
                 markup_list = markup_list[:]
                 markup_list.sort(key=lambda x: -x.stack_priority)
-                markup_list = [
-                    markuptools.Markup.line([_]) for _ in markup_list]
-                markup = markuptools.Markup.column(
+                markup_list = [abjad.Markup.line([_]) for _ in markup_list]
+                markup = abjad.Markup.column(
                     markup_list,
                     direction=direction,
                     )
@@ -212,7 +211,7 @@ class LilyPondFormatManager(AbjadObject):
                 bundle.right.markup.extend(format_pieces)
             else:
                 if markup_list[0].direction is None:
-                    markup = markuptools.Markup(markup_list[0], direction='-')
+                    markup = abjad.Markup(markup_list[0], direction='-')
                     format_pieces = markup._get_format_pieces()
                     bundle.right.markup.extend(format_pieces)
                 else:
@@ -270,9 +269,9 @@ class LilyPondFormatManager(AbjadObject):
 
         Returns LilyPond format bundle.
         '''
-        from abjad.tools import systemtools
+        import abjad
         manager = LilyPondFormatManager
-        bundle = systemtools.LilyPondFormatBundle()
+        bundle = abjad.LilyPondFormatBundle()
         manager._populate_indicator_format_contributions(component, bundle)
         manager._populate_spanner_format_contributions(component, bundle)
         manager._populate_context_setting_format_contributions(
