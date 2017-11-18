@@ -146,6 +146,8 @@ class Inspection(abctools.AbjadObject):
             >>> abjad.inspect(staff[3]).get_annotation(string, abjad.Violin())
             Violin()
 
+        ..  container:: example
+
             Regression: annotation is not picked up as effective indicator:
 
             FIXME: first case should return none:
@@ -355,11 +357,8 @@ class Inspection(abctools.AbjadObject):
             Gets effective clef:
 
             >>> staff = abjad.Staff("c'4 d' e' f'")
-            >>> clef = abjad.Clef('alto')
-            >>> abjad.attach(clef, staff[0])
-            >>> note = abjad.Note("fs'16")
-            >>> container = abjad.AcciaccaturaContainer([note])
-            >>> abjad.attach(container, staff[-1])
+            >>> abjad.attach(abjad.Clef('alto'), staff[0])
+            >>> abjad.attach(abjad.AcciaccaturaContainer("fs'16"), staff[-1])
             >>> abjad.show(staff) # doctest: +SKIP
 
             ..  docs::
@@ -377,8 +376,7 @@ class Inspection(abctools.AbjadObject):
                 }
 
             >>> for component in abjad.iterate(staff).components():
-            ...     agent = abjad.inspect(component)
-            ...     clef = agent.get_effective(abjad.Clef)
+            ...     clef = abjad.inspect(component).get_effective(abjad.Clef)
             ...     print(component, clef)
             ...
             Staff("c'4 d'4 e'4 f'4") Clef('alto')
@@ -387,6 +385,129 @@ class Inspection(abctools.AbjadObject):
             e'4 Clef('alto')
             fs'16 Clef('alto')
             f'4 Clef('alto')
+
+        ..  container:: example
+
+            Arbitrary objects (like strings) can be contexted:
+
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+            >>> abjad.attach('color', staff[1], context='Staff')
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    c'8
+                    d'8
+                    e'8
+                    f'8
+                }
+
+            >>> for component in abjad.iterate(staff).components():
+            ...     string = abjad.inspect(component).get_effective(str)
+            ...     print(component, repr(string))
+            ...
+            Staff("c'8 d'8 e'8 f'8") None
+            c'8 None
+            d'8 'color'
+            e'8 'color'
+            f'8 'color'
+
+        ..  container:: example
+
+            Scans forwards or backwards when `n` is set: 
+
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8 g'8")
+            >>> abjad.attach('red', staff[0], context='Staff')
+            >>> abjad.attach('blue', staff[2], context='Staff')
+            >>> abjad.attach('yellow', staff[4], context='Staff')
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    c'8
+                    d'8
+                    e'8
+                    f'8
+                    g'8
+                }
+                
+            >>> for n in (-1, 0, 1):
+            ...     color = abjad.inspect(staff[0]).get_effective(str, n=n)
+            ...     print(n, repr(color))
+            ...
+            -1 None
+            0 'red'
+            1 'blue'
+
+            >>> for n in (-1, 0, 1):
+            ...     color = abjad.inspect(staff[1]).get_effective(str, n=n)
+            ...     print(n, repr(color))
+            ...
+            -1 None
+            0 'red'
+            1 'blue'
+
+            >>> for n in (-1, 0, 1):
+            ...     color = abjad.inspect(staff[2]).get_effective(str, n=n)
+            ...     print(n, repr(color))
+            ...
+            -1 'red'
+            0 'blue'
+            1 'yellow'
+
+            >>> for n in (-1, 0, 1):
+            ...     color = abjad.inspect(staff[3]).get_effective(str, n=n)
+            ...     print(n, repr(color))
+            ...
+            -1 'red'
+            0 'blue'
+            1 'yellow'
+
+            >>> for n in (-1, 0, 1):
+            ...     color = abjad.inspect(staff[4]).get_effective(str, n=n)
+            ...     print(n, repr(color))
+            ...
+            -1 'blue'
+            0 'yellow'
+            1 None
+
+        ..  container:: example
+
+            Synthetic offsets works this way:
+
+            >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+            >>> abjad.attach(
+            ...     'red',
+            ...     staff[-1],
+            ...     context='Staff',
+            ...     synthetic_offset=-1,
+            ...     )
+            >>> abjad.attach('blue', staff[0], context='Staff')
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    c'8
+                    d'8
+                    e'8
+                    f'8
+                }
+
+            Entire staff is effectively blue:
+
+            >>> abjad.inspect(staff).get_effective(str)
+            'blue'
+
+            The (synthetic) offset just prior to (start of) staff is red:
+
+            >>> abjad.inspect(staff).get_effective(str, n=-1)
+            'red'
 
         Returns indicator or none.
         '''
