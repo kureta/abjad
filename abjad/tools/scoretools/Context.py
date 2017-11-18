@@ -168,9 +168,9 @@ class Context(Container):
     def _get_format_pieces(self):
         return self._format_component(pieces=True)
 
-    def _get_lilypond_format(self):
+    def _get_lilypond_format(self, strict=False):
         self._update_now(indicators=True)
-        return self._format_component()
+        return self._format_component(strict=strict)
 
     def _get_repr_kwargs_names(self):
         if self.context_name == type(self).__name__:

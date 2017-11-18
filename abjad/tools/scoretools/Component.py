@@ -77,6 +77,8 @@ class Component(AbjadObject):
         import abjad
         if format_specification in ('', 'lilypond'):
             return self._get_lilypond_format()
+        elif format_specification == 'lilypond:strict':
+            return self._get_lilypond_format(strict=True)
         elif format_specification == 'storage':
             return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
@@ -228,16 +230,15 @@ class Component(AbjadObject):
     def _format_closing_slot(self, bundle):
         pass
 
-    def _format_component(self, pieces=False):
+    def _format_component(self, pieces=False, strict=False):
         import abjad
         result = []
-        manager = abjad.LilyPondFormatManager
-        bundle = manager.bundle_format_contributions(self)
+        bundle = abjad.LilyPondFormatManager.bundle_format_contributions(self)
         result.extend(self._format_absolute_before_slot(bundle))
         result.extend(self._format_before_slot(bundle))
         result.extend(self._format_open_brackets_slot(bundle))
         result.extend(self._format_opening_slot(bundle))
-        result.extend(self._format_contents_slot(bundle))
+        result.extend(self._format_contents_slot(bundle, strict=strict))
         result.extend(self._format_closing_slot(bundle))
         result.extend(self._format_close_brackets_slot(bundle))
         result.extend(self._format_after_slot(bundle))
@@ -250,7 +251,7 @@ class Component(AbjadObject):
         else:
             return '\n'.join(contributions)
 
-    def _format_contents_slot(self, bundle):
+    def _format_contents_slot(self, bundle, strict=False):
         pass
 
     def _format_open_brackets_slot(self, bundle):
@@ -475,9 +476,9 @@ class Component(AbjadObject):
         result = tuple(result)
         return result
 
-    def _get_lilypond_format(self):
+    def _get_lilypond_format(self, strict=False):
         self._update_now(indicators=True)
-        return self._format_component()
+        return self._format_component(strict=strict)
 
     def _get_lineage(self):
         import abjad

@@ -295,7 +295,7 @@ class Measure(Container):
         else:
             return abjad.TimeSignature(duration)
 
-    def _format_content_pieces(self):
+    def _format_content_pieces(self, strict=False):
         import abjad
         result = []
         if (self.has_non_power_of_two_denominator and
@@ -309,12 +309,13 @@ class Measure(Container):
                 self.implied_prolation.denominator,
                 )
             result.append(string)
-            pieces = Container._format_content_pieces(self)
+            pieces = Container._format_content_pieces(self, strict=strict)
             pieces = [indent + _ for _ in pieces]
             result.extend(pieces)
             result.append(indent + '}')
         else:
-            result.extend(Container._format_content_pieces(self))
+            result.extend(
+                Container._format_content_pieces(self, strict=strict))
         return result
 
     def _format_opening_slot(self, bundle):
@@ -350,9 +351,9 @@ class Measure(Container):
             storage_format_kwargs_names=names,
             )
 
-    def _get_lilypond_format(self):
+    def _get_lilypond_format(self, strict=False):
         self._check_duration()
-        return self._format_component()
+        return self._format_component(strict=strict)
 
     def _get_preprolated_duration(self):
         time_signature_prolation = 1
