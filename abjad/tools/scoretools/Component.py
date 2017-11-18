@@ -323,17 +323,22 @@ class Component(AbjadObject):
                     return indicator
                 else:
                     return
-        # update indicators of entire score tree if necessary
-        self._update_now(indicators=True)
         # gather candidate wrappers
+        self._update_now(indicators=True)
         candidate_wrappers = {}
         for parent in abjad.inspect(self).get_parentage(
-            include_self=True, grace_notes=True):
+            include_self=True,
+            grace_notes=True,
+            ):
             for wrapper in parent._dependent_wrappers:
+                if wrapper.is_annotation:
+                    continue
                 if isinstance(wrapper.indicator, prototype):
                     offset = wrapper.start_offset
                     candidate_wrappers.setdefault(offset, []).append(wrapper)
             for wrapper in parent._indicator_wrappers:
+                if wrapper.is_annotation:
+                    continue
                 if wrapper.context is not None:
                     continue
                 if isinstance(wrapper.indicator, prototype):

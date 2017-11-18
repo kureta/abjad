@@ -150,11 +150,9 @@ class Inspection(abctools.AbjadObject):
 
             Regression: annotation is not picked up as effective indicator:
 
-            FIXME: first case should return none:
-
             >>> prototype = abjad.Instrument
-            >>> abjad.inspect(staff[0]).get_effective(prototype)
-            Cello()
+            >>> abjad.inspect(staff[0]).get_effective(prototype) is None
+            True
 
             >>> abjad.inspect(staff[1]).get_effective(prototype) is None
             True
