@@ -131,8 +131,9 @@ class MarkupCommand(AbjadValueObject):
 
     __slots__ = (
         '_arguments',
-        '_name',
         '_force_quotes',
+        '_name',
+        '_tag',
         )
 
     ### INITIALIZER ###
@@ -142,10 +143,11 @@ class MarkupCommand(AbjadValueObject):
             # TODO: Generalize these arbitrary default arguments away.
             name = 'draw-circle'
             assert len(arguments) == 0
-        assert isinstance(name, str) and len(name) and name.find(' ') == -1
-        self._name = name
         self._arguments = tuple(arguments)
+        assert isinstance(name, str) and len(name) and name.find(' ') == -1
         self._force_quotes = False
+        self._name = name
+        self._tag = None
 
     ### SPECIAL METHODS ###
 
@@ -334,35 +336,38 @@ class MarkupCommand(AbjadValueObject):
         return string
 
     def _get_format_pieces(self):
-        from abjad.tools import systemtools
+        import abjad
         def recurse(iterable):
             result = []
-            for x in iterable:
-                if isinstance(x, (list, tuple)):
+            for item in iterable:
+                if isinstance(item, (list, tuple)):
                     result.append('{')
-                    result.extend(recurse(x))
+                    result.extend(recurse(item))
                     result.append('}')
-                elif isinstance(x, schemetools.Scheme):
-                    result.append(format(x))
-                elif hasattr(x, '_get_format_pieces'):
-                    result.extend(x._get_format_pieces())
-                elif isinstance(x, str) and '\n' in x:
+                elif isinstance(item, abjad.Scheme):
+                    result.append(format(item))
+                elif hasattr(item, '_get_format_pieces'):
+                    result.extend(item._get_format_pieces())
+                elif isinstance(item, str) and '\n' in item:
                     result.append('#"')
-                    result.extend(x.splitlines())
+                    result.extend(item.splitlines())
                     result.append('"')
                 else:
-                    formatted = schemetools.Scheme.format_scheme_value(
-                        x,
+                    formatted = abjad.Scheme.format_scheme_value(
+                        item,
                         force_quotes=self.force_quotes,
                         )
-                    if isinstance(x, str):
+                    if isinstance(item, str):
                         result.append(formatted)
                     else:
                         result.append('#{}'.format(formatted))
-            return ['{}{}'.format(indent, x) for x in result]
-        indent = systemtools.LilyPondFormatManager.indent
+            return ['{}{}'.format(indent, item) for item in result]
+        indent = abjad.LilyPondFormatManager.indent
         parts = [r'\{}'.format(self.name)]
         parts.extend(recurse(self.arguments))
+        if self.tag:
+            tag = ' % ' + self.tag
+            parts = [_ + tag for _ in parts]
         return parts
 
     def _get_format_specification(self):
@@ -375,6 +380,63 @@ class MarkupCommand(AbjadValueObject):
 
     def _get_lilypond_format(self):
         return '\n'.join(self._get_format_pieces())
+
+    ### PUBLIC METHODS ###
+
+    @staticmethod
+    def combine_markup_commands(*commands):
+        r'''Combines markup command and / or strings.
+
+        LilyPond's '\combine' markup command can only take two arguments, so in
+        order to combine more than two stencils, a cascade of '\combine'
+        commands must be employed.  `combine_markup_commands` simplifies this
+        process.
+
+        ..  container:: example
+
+            >>> markup_a = abjad.MarkupCommand(
+            ...     'draw-circle',
+            ...     4,
+            ...     0.4,
+            ...     False,
+            ...     )
+            >>> markup_b = abjad.MarkupCommand(
+            ...     'filled-box',
+            ...     abjad.SchemePair((-4, 4)),
+            ...     abjad.SchemePair((-0.5, 0.5)),
+            ...     1,
+            ...     )
+            >>> markup_c = "some text"
+
+            >>> markup = abjad.MarkupCommand.combine_markup_commands(
+            ...     markup_a,
+            ...     markup_b,
+            ...     markup_c,
+            ...     )
+            >>> result = format(markup, 'lilypond')
+
+            >>> print(result)
+            \combine \combine \draw-circle #4 #0.4 ##f
+                \filled-box #'(-4 . 4) #'(-0.5 . 0.5) #1 "some text"
+
+        Returns a markup command instance, or a string if that was the only
+        argument.
+        '''
+        from abjad.tools import markuptools
+
+        assert len(commands)
+        assert all(
+            isinstance(command, (markuptools.MarkupCommand, str))
+            for command in commands
+            )
+
+        if 1 == len(commands):
+            return commands[0]
+
+        combined = MarkupCommand('combine', commands[0], commands[1])
+        for command in commands[2:]:
+            combined = MarkupCommand('combine', combined, command)
+        return combined
 
     ### PUBLIC PROPERTIES ###
 
@@ -469,59 +531,15 @@ class MarkupCommand(AbjadValueObject):
         '''
         return self._name
 
-    ### PUBLIC METHODS ###
+    @property
+    def tag(self):
+        r'''Gets tag.
 
-    @staticmethod
-    def combine_markup_commands(*commands):
-        r'''Combines markup command and / or strings.
-
-        LilyPond's '\combine' markup command can only take two arguments, so in
-        order to combine more than two stencils, a cascade of '\combine'
-        commands must be employed.  `combine_markup_commands` simplifies this
-        process.
-
-        ..  container:: example
-
-            >>> markup_a = abjad.MarkupCommand(
-            ...     'draw-circle',
-            ...     4,
-            ...     0.4,
-            ...     False,
-            ...     )
-            >>> markup_b = abjad.MarkupCommand(
-            ...     'filled-box',
-            ...     abjad.SchemePair((-4, 4)),
-            ...     abjad.SchemePair((-0.5, 0.5)),
-            ...     1,
-            ...     )
-            >>> markup_c = "some text"
-
-            >>> markup = abjad.MarkupCommand.combine_markup_commands(
-            ...     markup_a,
-            ...     markup_b,
-            ...     markup_c,
-            ...     )
-            >>> result = format(markup, 'lilypond')
-
-            >>> print(result)
-            \combine \combine \draw-circle #4 #0.4 ##f
-                \filled-box #'(-4 . 4) #'(-0.5 . 0.5) #1 "some text"
-
-        Returns a markup command instance, or a string if that was the only
-        argument.
+        Returns string or none.
         '''
-        from abjad.tools import markuptools
+        return self._tag
 
-        assert len(commands)
-        assert all(
-            isinstance(command, (markuptools.MarkupCommand, str))
-            for command in commands
-            )
-
-        if 1 == len(commands):
-            return commands[0]
-
-        combined = MarkupCommand('combine', commands[0], commands[1])
-        for command in commands[2:]:
-            combined = MarkupCommand('combine', combined, command)
-        return combined
+    @tag.setter
+    def tag(self, argument):
+        assert isinstance(argument, (str, type(None))), repr(argument)
+        self._tag = argument

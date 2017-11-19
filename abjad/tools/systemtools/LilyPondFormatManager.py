@@ -34,7 +34,7 @@ class LilyPondFormatManager(AbjadObject):
         'yellow',
         )
 
-    indent = '    '
+    indent = 4 * ' '
 
     ### PRIVATE METHODS ###
 
@@ -48,9 +48,9 @@ class LilyPondFormatManager(AbjadObject):
             wrappers.extend(wrappers_)
             wrappers_ = parent._get_spanner_indicators(unwrap=False)
             wrappers.extend(wrappers_)
-        up_markup = []
-        down_markup = []
-        neutral_markup = []
+        up_markup_wrappers = []
+        down_markup_wrappers = []
+        neutral_markup_wrappers = []
         context_wrappers = []
         noncontext_wrappers = []
         # classify wrappers attached to component
@@ -69,14 +69,14 @@ class LilyPondFormatManager(AbjadObject):
                 not getattr(wrapper.indicator, '_format_leaf_children') and
                 wrapper.component is not component):
                 continue
-            # store markup
+            # store markup wrappers
             elif isinstance(wrapper.indicator, abjad.Markup):
                 if wrapper.indicator.direction == abjad.Up:
-                    up_markup.append(wrapper.indicator)
+                    up_markup_wrappers.append(wrapper)
                 elif wrapper.indicator.direction == abjad.Down:
-                    down_markup.append(wrapper.indicator)
+                    down_markup_wrappers.append(wrapper)
                 elif wrapper.indicator.direction in (abjad.Center, None):
-                    neutral_markup.append(wrapper.indicator)
+                    neutral_markup_wrappers.append(wrapper)
             # store context wrappers
             elif wrapper.context is not None:
                 if wrapper._is_formattable_for_component(component):
@@ -85,9 +85,9 @@ class LilyPondFormatManager(AbjadObject):
             else:
                 noncontext_wrappers.append(wrapper)
         indicators = (
-            up_markup,
-            down_markup,
-            neutral_markup,
+            up_markup_wrappers,
+            down_markup_wrappers,
+            neutral_markup_wrappers,
             context_wrappers,
             noncontext_wrappers,
             )
@@ -159,9 +159,9 @@ class LilyPondFormatManager(AbjadObject):
     def _populate_indicator_format_contributions(component, bundle):
         manager = LilyPondFormatManager
         (
-            up_markup,
-            down_markup,
-            neutral_markup,
+            up_markup_wrappers,
+            down_markup_wrappers,
+            neutral_markup_wrappers,
             context_wrappers,
             noncontext_wrappers,
             ) = LilyPondFormatManager._collect_indicators(component)
@@ -169,9 +169,9 @@ class LilyPondFormatManager(AbjadObject):
         manager._populate_markup_format_contributions(
             component,
             bundle,
-            up_markup,
-            down_markup,
-            neutral_markup,
+            up_markup_wrappers,
+            down_markup_wrappers,
+            neutral_markup_wrappers,
             )
         manager._populate_context_wrapper_format_contributions(
             component,
@@ -188,35 +188,42 @@ class LilyPondFormatManager(AbjadObject):
     def _populate_markup_format_contributions(
         component,
         bundle,
-        up_markup,
-        down_markup,
-        neutral_markup,
+        up_markup_wrappers,
+        down_markup_wrappers,
+        neutral_markup_wrappers,
         ):
         import abjad
-        for markup_list in (up_markup, down_markup, neutral_markup):
-            if not markup_list:
+        for wrappers in (
+            up_markup_wrappers,
+            down_markup_wrappers,
+            neutral_markup_wrappers,
+            ):
+            if not wrappers:
                 continue
-            elif 1 < len(markup_list):
-                direction = markup_list[0].direction
+            elif 1 < len(wrappers):
+                direction = wrappers[0].indicator.direction
                 if direction is None:
                     direction = '-'
-                markup_list = markup_list[:]
-                markup_list.sort(key=lambda x: -x.stack_priority)
-                markup_list = [abjad.Markup.line([_]) for _ in markup_list]
-                markup = abjad.Markup.column(
-                    markup_list,
-                    direction=direction,
-                    )
+                wrappers = wrappers[:]
+                wrappers.sort(key=lambda _: -_.indicator.stack_priority)
+                lines = [
+                    abjad.Markup.line([_.indicator], tag=_.tag)
+                    for _ in wrappers
+                    ]
+                markup = abjad.Markup.column(lines, direction=direction)
                 format_pieces = markup._get_format_pieces()
                 bundle.right.markup.extend(format_pieces)
             else:
-                if markup_list[0].direction is None:
-                    markup = abjad.Markup(markup_list[0], direction='-')
-                    format_pieces = markup._get_format_pieces()
-                    bundle.right.markup.extend(format_pieces)
+                wrapper = wrappers[0]
+                if wrapper.indicator.direction is None:
+                    markup = abjad.Markup(wrappers[0].indicator, direction='-')
                 else:
-                    format_pieces = markup_list[0]._get_format_pieces()
-                    bundle.right.markup.extend(format_pieces)
+                    markup = wrapper.indicator
+                format_pieces = markup._get_format_pieces()
+                if wrapper.tag:
+                    tag = ' % ' + wrapper.tag
+                    format_pieces = [_ + tag for _ in format_pieces]
+                bundle.right.markup.extend(format_pieces)
 
     @staticmethod
     def _populate_noncontext_wrapper_format_contributions(

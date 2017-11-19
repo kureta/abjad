@@ -18,7 +18,6 @@ class Markup(AbjadValueObject):
 
         Initializes from string:
 
-
         >>> string = r'\italic { "Allegro assai" }'
         >>> markup = abjad.Markup(string)
         >>> abjad.f(markup)
@@ -81,7 +80,80 @@ class Markup(AbjadValueObject):
     Set `direction` to ``Up``, ``Down``, ``'neutral'``, ``'^'``, ``'_'``,
     ``'-'`` or None.
 
-    Markup objects are immutable.
+    ..  container:: example
+
+        Markup can be tagged:
+
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup = abjad.Markup('Allegro', abjad.Up).italic()
+        >>> abjad.attach(markup, staff[0], tag='SEGMENT')
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(staff)
+        \new Staff {
+            c'4
+                ^ \markup { % SEGMENT
+                    \italic % SEGMENT
+                        Allegro % SEGMENT
+                    } % SEGMENT
+            d'4
+            e'4
+            f'4
+        }
+
+        Markup can even be tagged inside automatically generated markup
+        columns:
+
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> abjad.attach(abjad.Markup('Allegro'), staff[0])
+        >>> abjad.attach(abjad.Markup('non troppo'), staff[0], tag='SEGMENT')
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(staff)
+        \new Staff {
+            c'4
+                - \markup {
+                    \column
+                        {
+                            \line
+                                {
+                                    Allegro
+                                }
+                            \line % SEGMENT
+                                { % SEGMENT
+                                    "non troppo" % SEGMENT
+                                } % SEGMENT
+                        }
+                    }
+            d'4
+            e'4
+            f'4
+        }
+
+    ..  container:: example
+
+        TODO: REGRESSION: make sure the first italic markup doesn't disappear
+        after the second italic markup is attached:
+
+        >>> staff = abjad.Staff("c'4 d' e' f'")
+        >>> markup_1 = abjad.Markup('Allegro', abjad.Up).italic()
+        >>> markup_2 = abjad.Markup('non troppo', abjad.Up).italic()
+        >>> abjad.attach(markup_1, staff[0])
+        >>> abjad.attach(markup_2, staff[0])
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(staff)
+        \new Staff {
+            c'4
+                ^ \markup {
+                    \italic
+                        "non troppo"
+                    }
+            d'4
+            e'4
+            f'4
+        }
+
     '''
 
     ### CLASS VARIABLES ###
@@ -1394,7 +1466,7 @@ class Markup(AbjadValueObject):
         return Markup(contents=command, direction=direction)
 
     @staticmethod
-    def line(markup_list, direction=None):
+    def line(markup_list, direction=None, tag=None):
         r'''LilyPond ``\line`` markup command.
 
         ..  container:: example
@@ -1420,6 +1492,7 @@ class Markup(AbjadValueObject):
         for markup in markup_list:
             contents.extend(markup.contents)
         command = MarkupCommand('line', contents)
+        command.tag = tag
         return Markup(contents=command, direction=direction)
 
     @staticmethod
