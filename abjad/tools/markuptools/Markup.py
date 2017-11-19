@@ -132,8 +132,8 @@ class Markup(AbjadValueObject):
 
     ..  container:: example
 
-        TODO: REGRESSION: make sure the first italic markup doesn't disappear
-        after the second italic markup is attached:
+        REGRESSION: make sure the first italic markup doesn't disappear after
+        the second italic markup is attached:
 
         >>> staff = abjad.Staff("c'4 d' e' f'")
         >>> markup_1 = abjad.Markup('Allegro', abjad.Up).italic()
@@ -146,8 +146,19 @@ class Markup(AbjadValueObject):
         \new Staff {
             c'4
                 ^ \markup {
-                    \italic
-                        "non troppo"
+                    \column
+                        {
+                            \line
+                                {
+                                    \italic
+                                        Allegro
+                                }
+                            \line
+                                {
+                                    \italic
+                                        "non troppo"
+                                }
+                        }
                     }
             d'4
             e'4
