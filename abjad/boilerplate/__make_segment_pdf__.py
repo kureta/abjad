@@ -52,8 +52,7 @@ if __name__ == '__main__':
     try:
         segment = ide.Path(__file__).parent
         pdf = segment('illustration.pdf')
-        #result = abjad.persist(lilypond_file).as_pdf(pdf, strict=True)
-        result = abjad.persist(lilypond_file).as_pdf(pdf)
+        result = abjad.persist(lilypond_file).as_pdf(pdf, strict=True)
         abjad_runtime = int(result[1])
         lilypond_runtime = int(result[2])
         count = abjad_runtime
