@@ -3,8 +3,6 @@ import numbers
 from abjad import Fraction
 from abjad.tools import mathtools
 from abjad.tools import schemetools
-from abjad.tools import datastructuretools
-from abjad.tools import systemtools
 from abjad.tools.topleveltools import new
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 from abjad.tools.markuptools.MarkupCommand import MarkupCommand
@@ -191,18 +189,18 @@ class Markup(AbjadValueObject):
         literal=None,
         stack_priority=0,
         ):
-        from abjad.tools.topleveltools import parse
+        import abjad
         self._annotation = None
         if contents is None:
             new_contents = ('',)
         elif isinstance(contents, str):
             to_parse = r'\markup {{ {} }}'.format(contents)
-            parsed = parse(to_parse)
-            if all(isinstance(x, str) for x in parsed.contents):
+            parsed = abjad.parse(to_parse)
+            if all(isinstance(_, str) for _ in parsed.contents):
                 new_contents = (' '.join(parsed.contents),)
             else:
                 new_contents = tuple(parsed.contents)
-        elif isinstance(contents, MarkupCommand):
+        elif isinstance(contents, abjad.MarkupCommand):
             new_contents = (contents,)
         elif isinstance(contents, type(self)):
             direction = direction or contents._direction
@@ -221,8 +219,7 @@ class Markup(AbjadValueObject):
             new_contents = (str(contents),)
         self._contents = new_contents
         self._format_slot = 'right'
-        direction = datastructuretools.String.to_tridirectional_ordinal_constant(
-            direction)
+        direction = abjad.String.to_tridirectional_ordinal_constant(direction)
         self._direction = direction
         self._lilypond_tweak_manager = None
         assert isinstance(stack_priority, int), repr(stack_priority)
@@ -373,11 +370,11 @@ class Markup(AbjadValueObject):
 
         Returns string.
         '''
-        from abjad.tools import systemtools
+        import abjad
         if format_specification in ('', 'lilypond'):
             return self._get_lilypond_format()
         elif format_specification == 'storage':
-            return systemtools.StorageFormatManager(self).get_storage_format()
+            return abjad.StorageFormatManager(self).get_storage_format()
         return str(self)
 
     def __hash__(self):
@@ -563,19 +560,19 @@ class Markup(AbjadValueObject):
     ### PRIVATE METHODS ###
 
     def _get_format_pieces(self):
-        from abjad.tools import systemtools
+        import abjad
         if self._lilypond_tweak_manager is None:
             tweaks = []
         else:
             tweaks = self._lilypond_tweak_manager._list_format_contributions()
-        indent = systemtools.LilyPondFormatManager.indent
+        indent = abjad.LilyPondFormatManager.indent
         direction = ''
         if self.direction is not None:
-            direction = datastructuretools.String.to_tridirectional_lilypond_symbol(
+            direction = abjad.String.to_tridirectional_lilypond_symbol(
                 self.direction)
         if len(self.contents) == 1 and isinstance(self.contents[0], str):
             content = self.contents[0]
-            content = schemetools.Scheme.format_scheme_value(content)
+            content = abjad.Scheme.format_scheme_value(content)
             if content:
                 content = '{{ {} }}'.format(content)
             else:
@@ -589,7 +586,7 @@ class Markup(AbjadValueObject):
             pieces = [r'\markup {']
         for content in self.contents:
             if isinstance(content, str):
-                content = schemetools.Scheme.format_scheme_value(content)
+                content = abjad.Scheme.format_scheme_value(content)
                 pieces.append('{}{}'.format(indent, content))
             else:
                 pieces.extend(['{}{}'.format(indent, x) for x in
@@ -598,10 +595,11 @@ class Markup(AbjadValueObject):
         return tweaks + pieces
 
     def _get_format_specification(self):
-        agent = systemtools.StorageFormatManager(self)
+        import abjad
+        agent = abjad.StorageFormatManager(self)
         names = list(agent.signature_keyword_names)
         names.remove('stack_priority')
-        return systemtools.FormatSpecification(
+        return abjad.FormatSpecification(
             client=self,
             repr_is_indented=False,
             storage_format_kwargs_names=names,
@@ -1542,7 +1540,6 @@ class Markup(AbjadValueObject):
             >>> abjad.show(markup) # doctest: +SKIP
 
         '''
-        from abjad.tools import mathtools
         if mathtools.is_integer_equivalent_number(rational):
             number = int(rational)
             markup = Markup(number, direction=direction)

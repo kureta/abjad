@@ -398,8 +398,8 @@ class Component(AbjadObject):
             result.extend(contributions)
         return result
 
-    def _get_format_pieces(self):
-        return self._format_component(pieces=True)
+    def _get_format_pieces(self, strict=False):
+        return self._format_component(pieces=True, strict=strict)
 
     def _get_format_specification(self):
         import abjad

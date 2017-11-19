@@ -230,8 +230,8 @@ class Leaf(Component):
     def _get_compact_representation(self):
         return '({})'.format(self._get_formatted_duration())
 
-    def _get_format_pieces(self):
-        return self._get_lilypond_format().split('\n')
+    def _get_format_pieces(self, strict=False):
+        return self._get_lilypond_format(strict=strict).split('\n')
 
     def _get_format_specification(self):
         import abjad
