@@ -69,6 +69,7 @@ class LilyPondFormatBundle(AbjadObject):
 
     ### PUBLIC METHODS ###
 
+    # TODO: maybe do not alphabetize at all?
     def alphabetize(self):
         r'''Alphabetizes format contributions in each slot.
 
@@ -77,7 +78,8 @@ class LilyPondFormatBundle(AbjadObject):
         # do not alphabetize self.absolute_before, self.absolute_after
         self.before.alphabetize()
         self.after.alphabetize()
-        self.opening.alphabetize()
+        # alphabetizing breaks multiline contributions:
+        #self.opening.alphabetize()
         self.closing.alphabetize()
         self.right.alphabetize()
         self._context_settings.sort()

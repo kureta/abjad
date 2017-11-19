@@ -310,10 +310,17 @@ class IndicatorWrapper(AbjadValueObject):
                 )
         except TypeError:
             lilypond_format = self.indicator._get_lilypond_format()
+        if self.tag:
+            tag = ' % ' + self.tag
         if isinstance(lilypond_format, (tuple, list)):
+            if self.tag:
+                lilypond_format = [_ + tag for _ in lilypond_format]
             result.extend(lilypond_format)
         else:
+            if self.tag:
+                lilypond_format += tag
             result.append(lilypond_format)
+
         if self._get_effective_context() is not None:
             return result
         if isinstance(self.indicator, abjad.TimeSignature):

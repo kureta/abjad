@@ -165,7 +165,6 @@ class LilyPondFormatManager(AbjadObject):
             context_wrappers,
             noncontext_wrappers,
             ) = LilyPondFormatManager._collect_indicators(component)
-        # HERE: TODO:
         manager._populate_markup_format_contributions(
             component,
             bundle,

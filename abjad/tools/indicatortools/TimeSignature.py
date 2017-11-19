@@ -87,6 +87,29 @@ class TimeSignature(AbjadValueObject):
 
         >>> abjad.show(score) # doctest: +SKIP
 
+    ..  container:: example
+
+        Time signatures can be tagged:
+
+        >>> staff = abjad.Staff("c'8 d'8 e'8 c'8 d'8 e'8")
+        >>> time_signature = abjad.TimeSignature((3, 8))
+        >>> abjad.attach(time_signature, staff[0], context='Score', tag='RED')
+        >>> score = abjad.Score([staff])
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(score)
+        \new Score <<
+            \new Staff {
+                \time 3/8 % RED
+                c'8
+                d'8
+                e'8
+                c'8
+                d'8
+                e'8
+            }
+        >>
+
     '''
 
     ### CLASS VARIABLES ###
