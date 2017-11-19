@@ -844,7 +844,7 @@ class Inspection(abctools.AbjadObject):
             grace_notes=grace_notes,
             )
 
-    def get_piecewise(self, prototype=None, default=None):
+    def get_piecewise(self, prototype=None, default=None, unwrap=True):
         r'''Gets piecewise indicators.
 
         ..  container:: example
@@ -904,7 +904,10 @@ class Inspection(abctools.AbjadObject):
         if not wrappers:
             return default
         if len(wrappers) == 1:
-            return wrappers[0].indicator
+            if unwrap:
+                return wrappers[0].indicator
+            else:
+                return wrappers[0]
         if 1 < len(wrappers):
             message = 'multiple indicators attached to client.'
             raise Exception(message)

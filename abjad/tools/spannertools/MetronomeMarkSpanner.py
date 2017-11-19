@@ -1594,18 +1594,46 @@ class MetronomeMarkSpanner(Spanner):
     def _get_lilypond_format_bundle(self, leaf):
         import abjad
         bundle = self._get_basic_lilypond_format_bundle(leaf)
-        current_indicators = self._get_piecewise(leaf)
-        current_tempo = current_indicators[0]
-        current_tempo_trend = current_indicators[1]
-        current_metric_modulation = current_indicators[2]
+        current_wrappers = self._get_piecewise_wrappers(leaf)
+
+        current_tempo_wrapper = current_wrappers[0]
+        if current_tempo_wrapper is not None:
+            current_tempo = current_tempo_wrapper.indicator
+        else:
+            current_tempo = None
+
+        current_tempo_trend_wrapper = current_wrappers[1]
+        if current_tempo_trend_wrapper is not None:
+            current_tempo_trend = current_tempo_trend_wrapper.indicator
+        else:
+            current_tempo_trend = None
+
+        current_metric_modulation_wrapper = current_wrappers[2]
+        if current_metric_modulation_wrapper is not None:
+            current_metric_modulation = \
+                current_metric_modulation_wrapper.indicator
+        else:
+            current_metric_modulation = None
+
         if current_tempo is None and current_tempo_trend is None:
             return bundle
-        previous_indicators = self._get_previous_piecewise(leaf)
-        previous_tempo = previous_indicators[0]
-        previous_tempo_trend = previous_indicators[1]
+        previous_wrappers = self._get_previous_piecewise_wrappers(leaf)
+        previous_tempo_wrapper = previous_wrappers[0]
+        if previous_tempo_wrapper is not None:
+            previous_tempo = previous_tempo_wrapper.indicator
+        else:
+            previous_tempo = None
+        previous_tempo_trend_wrapper = previous_wrappers[1]
+        if previous_tempo_trend_wrapper is not None:
+            previous_tempo_trend = previous_tempo_trend_wrapper.indicator
+        else:
+            previous_tempo_trend = None
         # stop any previous tempo trend
         if previous_tempo_trend:
             spanner_stop = r'\stopTextSpan'
+            #if previous_tempo_trend_wrapper.tag:
+            #    tag = ' % ' + previous_tempo_trend_wrapper.tag
+            #    spanner_stop += tag
             bundle.right.spanner_stops.append(spanner_stop)
         # use markup if no tempo trend starts now
         if current_tempo_trend is None:
@@ -1614,7 +1642,12 @@ class MetronomeMarkSpanner(Spanner):
                 current_metric_modulation,
                 )
             markup = abjad.new(markup, direction=abjad.Up)
-            string = format(markup, 'lilypond')
+            #string = format(markup, 'lilypond')
+            pieces = markup._get_format_pieces()
+            if current_tempo_wrapper.tag:
+                tag = ' % ' + current_tempo_wrapper.tag
+                pieces = [_ + tag for _ in pieces]
+            string = '\n'.join(pieces)
             bundle.right.markup.append(string)
             return bundle
         # use spanner if tempo trend starts now
@@ -1658,19 +1691,22 @@ class MetronomeMarkSpanner(Spanner):
         self._make_other_text_spanner_overrides(bundle)
         return bundle
 
-    def _get_piecewise(self, leaf):
+    def _get_piecewise_wrappers(self, leaf):
         import abjad
         tempo = abjad.inspect(leaf).get_piecewise(
             abjad.MetronomeMark,
-            None,
+            default=None,
+            unwrap=False,
             )
         tempo_trend = abjad.inspect(leaf).get_piecewise(
             (abjad.Accelerando, abjad.Ritardando),
-            None,
+            default=None,
+            unwrap=False,
             )
         metric_modulation = abjad.inspect(leaf).get_piecewise(
             abjad.MetricModulation,
-            None,
+            default=None,
+            unwrap=False,
             )
         return (
             tempo,
@@ -1678,13 +1714,14 @@ class MetronomeMarkSpanner(Spanner):
             metric_modulation,
             )
 
-    def _get_previous_piecewise(self, leaf):
+    def _get_previous_piecewise_wrappers(self, leaf):
         index = self._index(leaf)
         for index in reversed(range(index)):
             previous_leaf = self[index]
-            indicators = self._get_piecewise(previous_leaf)
+            wrappers = self._get_piecewise_wrappers(previous_leaf)
+            indicators = [getattr(_, 'indicator', None) for _ in wrappers]
             if any(_ is not None for _ in indicators):
-                return indicators
+                return wrappers
         return None, None, None
 
     def _make_other_text_spanner_overrides(self, bundle):
@@ -2573,12 +2610,13 @@ class MetronomeMarkSpanner(Spanner):
 
     ### PUBLIC METHODS ###
 
-    def attach(self, indicator, leaf):
+    def attach(self, indicator, leaf, tag=None):
         r'''Attaches `indicator` to `leaf` in spanner.
 
         ..  container:: example
 
-            REGRESSION: effective metronome marks still work:
+            REGRESSION. Inspection detects effective piecewise metronome marks
+            correctly:
 
             >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
             >>> score = abjad.Score([staff])
@@ -2679,6 +2717,108 @@ class MetronomeMarkSpanner(Spanner):
             >>> abjad.inspect(staff[-1]).get_effective(prototype)
             MetronomeMark(reference_duration=Duration(1, 4), units_per_minute=60)
 
+        ..  container:: example
+
+            Metronome marks can be tagged:
+
+            >>> staff = abjad.Staff("c'8. d' e'4. g'8. f' ef'4.")
+            >>> score = abjad.Score([staff])
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), staff[0])
+            >>> spanner = abjad.MetronomeMarkSpanner()
+            >>> abjad.attach(spanner, staff[:])
+
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[0], tag='RED')
+            >>> mark = abjad.MetronomeMark((1, 4), 90)
+            >>> spanner.attach(mark, staff[2], tag='BLUE')
+            >>> mark = abjad.MetronomeMark((1, 4), 72)
+            >>> spanner.attach(mark, staff[3], tag='YELLOW')
+            >>> mark = abjad.MetronomeMark((1, 4), 60)
+            >>> spanner.attach(mark, staff[5])
+
+            >>> abjad.override(score).text_script.staff_padding = 2.25
+            >>> abjad.show(score) # doctest: +SKIP
+
+            >>> abjad.f(score, strict=True)
+            \new Score \with {
+                \override TextScript.staff-padding = #2.25
+            } <<
+                \new Staff {
+                    \time 3/8
+                    c'8.
+                    ^ \markup { % RED
+                        \fontsize % RED
+                            #-6 % RED
+                            \general-align % RED
+                                #Y % RED
+                                #DOWN % RED
+                                \note-by-number % RED
+                                    #2 % RED
+                                    #0 % RED
+                                    #1 % RED
+                        \upright % RED
+                            { % RED
+                                = % RED
+                                60 % RED
+                            } % RED
+                        } % RED
+                    d'8.
+                    e'4.
+                    ^ \markup { % BLUE
+                        \fontsize % BLUE
+                            #-6 % BLUE
+                            \general-align % BLUE
+                                #Y % BLUE
+                                #DOWN % BLUE
+                                \note-by-number % BLUE
+                                    #2 % BLUE
+                                    #0 % BLUE
+                                    #1 % BLUE
+                        \upright % BLUE
+                            { % BLUE
+                                = % BLUE
+                                90 % BLUE
+                            } % BLUE
+                        } % BLUE
+                    g'8.
+                    ^ \markup { % YELLOW
+                        \fontsize % YELLOW
+                            #-6 % YELLOW
+                            \general-align % YELLOW
+                                #Y % YELLOW
+                                #DOWN % YELLOW
+                                \note-by-number % YELLOW
+                                    #2 % YELLOW
+                                    #0 % YELLOW
+                                    #1 % YELLOW
+                        \upright % YELLOW
+                            { % YELLOW
+                                = % YELLOW
+                                72 % YELLOW
+                            } % YELLOW
+                        } % YELLOW
+                    f'8.
+                    ef'4.
+                    ^ \markup {
+                        \fontsize
+                            #-6
+                            \general-align
+                                #Y
+                                #DOWN
+                                \note-by-number
+                                    #2
+                                    #0
+                                    #1
+                        \upright
+                            {
+                                =
+                                60
+                            }
+                        }
+                }
+            >>
+
         Returns none.
         '''
-        super(MetronomeMarkSpanner, self)._attach_piecewise(indicator, leaf)
+        superclass = super(MetronomeMarkSpanner, self)
+        superclass._attach_piecewise(indicator, leaf, tag=tag)

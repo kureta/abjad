@@ -589,7 +589,7 @@ class Markup(AbjadValueObject):
                 content = abjad.Scheme.format_scheme_value(content)
                 pieces.append('{}{}'.format(indent, content))
             else:
-                pieces.extend(['{}{}'.format(indent, x) for x in
+                pieces.extend(['{}{}'.format(indent, _) for _ in
                     content._get_format_pieces()])
         pieces.append('{}}}'.format(indent))
         return tweaks + pieces
