@@ -59,6 +59,25 @@ class LilyPondLiteral(AbjadValueObject):
             <BLANKLINE>
             }
 
+    ..  container:: example
+
+        LilyPond literals can be tagged:
+
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> abjad.attach(abjad.Slur(), staff[:])
+        >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
+        >>> abjad.attach(literal, staff[0], tag='RED')
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(staff)
+        \new Staff {
+            \slurDotted % RED
+            c'8 (
+            d'8
+            e'8
+            f'8 )
+        }
+
     '''
 
     ### CLASS VARIABLES ###

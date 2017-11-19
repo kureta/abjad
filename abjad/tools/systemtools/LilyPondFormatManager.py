@@ -231,12 +231,14 @@ class LilyPondFormatManager(AbjadObject):
         bundle,
         noncontext_wrappers,
         ):
-        for noncontext_wrapper in noncontext_wrappers:
-            indicator = noncontext_wrapper.indicator
+        for wrapper in noncontext_wrappers:
+            indicator = wrapper.indicator
             if hasattr(indicator, '_get_lilypond_format_bundle'):
-                indicator_bundle = indicator._get_lilypond_format_bundle()
-                if indicator_bundle is not None:
-                    bundle.update(indicator_bundle)
+                bundle_ = indicator._get_lilypond_format_bundle()
+                if wrapper.tag:
+                    bundle_.tag_format_contributions(wrapper.tag)
+                if bundle_ is not None:
+                    bundle.update(bundle_)
 
     @staticmethod
     def _populate_context_wrapper_format_contributions(
@@ -244,12 +246,12 @@ class LilyPondFormatManager(AbjadObject):
         bundle,
         context_wrappers,
         ):
-        for context_wrapper in context_wrappers:
-            format_pieces = context_wrapper._get_format_pieces()
+        for wrapper in context_wrappers:
+            format_pieces = wrapper._get_format_pieces()
             if isinstance(format_pieces, type(bundle)):
                 bundle.update(format_pieces)
             else:
-                format_slot = context_wrapper.indicator._format_slot
+                format_slot = wrapper.indicator._format_slot
                 bundle.get(format_slot).indicators.extend(format_pieces)
 
     @staticmethod
