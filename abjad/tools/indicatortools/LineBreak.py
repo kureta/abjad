@@ -1,15 +1,15 @@
 from abjad.tools.abctools.AbjadValueObject import AbjadValueObject
 
 
-class SystemBreak(AbjadValueObject):
-    r'''System break indicator.
+class LineBreak(AbjadValueObject):
+    r'''Line break.
 
     ..  container:: example
 
-        Formats in closing slot by default:
+        Formats closing slot by default:
 
         >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-        >>> break_ = abjad.SystemBreak()
+        >>> break_ = abjad.LineBreak()
         >>> abjad.attach(break_, staff[-1])
         >>> abjad.show(staff) # doctest: +SKIP
 
@@ -36,7 +36,7 @@ class SystemBreak(AbjadValueObject):
     ### INITIALIZER ##
 
     def __init__(self, format_slot='closing'):
-        self._context = 'Staff'
+        self._context = 'Score'
         assert isinstance(format_slot, str), repr(format_slot)
         self._format_slot = format_slot
 
@@ -56,19 +56,15 @@ class SystemBreak(AbjadValueObject):
 
     @property
     def context(self):
-        r'''Gets default context of system break indicator.
+        r'''Gets line break default context.
 
         ..  container:: example
 
-            Default system break:
+            Defaults to score:
 
-            >>> break_ = abjad.SystemBreak()
+            >>> break_ = abjad.LineBreak()
             >>> break_.context
-            'Staff'
-
-        ..  todo:: Make system breaks score-contexted.
-
-        Returns staff (but should return score).
+            'Score'
 
         Returns context or string.
         '''
@@ -80,10 +76,10 @@ class SystemBreak(AbjadValueObject):
 
         ..  container:: example
 
-            Formats in closing slot by default:
+            Defaults to closing:
 
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> break_ = abjad.SystemBreak()
+            >>> break_ = abjad.LineBreak()
             >>> abjad.attach(break_, staff[-1])
             >>> abjad.show(staff) # doctest: +SKIP
 
@@ -101,7 +97,7 @@ class SystemBreak(AbjadValueObject):
             Formats before leaf like this:
 
             >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> break_ = abjad.SystemBreak(format_slot='before')
+            >>> break_ = abjad.LineBreak(format_slot='before')
             >>> abjad.attach(break_, staff[0])
             >>> abjad.show(staff) # doctest: +SKIP
 
