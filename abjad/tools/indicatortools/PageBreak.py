@@ -14,7 +14,7 @@ class PageBreak(AbjadValueObject):
         >>> abjad.show(staff) # doctest: +SKIP
 
         >>> page_break
-        PageBreak()
+        PageBreak(format_slot='closing')
 
         ..  docs::
 
@@ -33,16 +33,17 @@ class PageBreak(AbjadValueObject):
 
     __slots__ = (
         '_context',
+        '_format_slot',
         )
-
-    _format_slot = 'closing'
 
     _time_orientation = Right
 
     ### INITIALIZER ##
 
-    def __init__(self):
+    def __init__(self, format_slot='closing'):
         self._context = 'Score'
+        assert isinstance(format_slot, str), repr(format_slot)
+        self._format_slot = format_slot
 
     ### PRIVATE METHODS ###
 
@@ -72,3 +73,18 @@ class PageBreak(AbjadValueObject):
         Returns context or string.
         '''
         return self._context
+
+    @property
+    def format_slot(self):
+        r'''Gets format slot.
+
+        ..  container:: example
+
+            Defaults to closing:
+
+            >>> abjad.PageBreak().format_slot
+            'closing'
+
+        Returns string.
+        '''
+        return self._format_slot
