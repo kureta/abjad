@@ -6,7 +6,7 @@ class PageBreak(AbjadValueObject):
 
     ..  container:: example
 
-        Default page break:
+        Formats in closing slot by default:
 
         >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
         >>> page_break = abjad.PageBreak()
@@ -53,7 +53,8 @@ class PageBreak(AbjadValueObject):
     def _get_lilypond_format_bundle(self, component=None):
         import abjad
         bundle = abjad.LilyPondFormatBundle()
-        bundle.after.commands.append(self._get_lilypond_format())
+        slot = bundle.get(self.format_slot)
+        slot.commands.append(self._get_lilypond_format())
         return bundle
 
     ### PUBLIC PROPERTIES ###
@@ -82,8 +83,40 @@ class PageBreak(AbjadValueObject):
 
             Defaults to closing:
 
-            >>> abjad.PageBreak().format_slot
-            'closing'
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> page_break = abjad.PageBreak()
+            >>> abjad.attach(page_break, staff[-1])
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            >>> page_break
+            PageBreak(format_slot='closing')
+
+            >>> abjad.f(staff)
+            \new Staff {
+                c'4
+                d'4
+                e'4
+                f'4
+                \pageBreak
+            }
+
+        ..  container:: example
+
+            Formats before leaf like this:
+
+            >>> staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> page_break = abjad.PageBreak(format_slot='before')
+            >>> abjad.attach(page_break, staff[0])
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            >>> abjad.f(staff)
+            \new Staff {
+                \pageBreak
+                c'4
+                d'4
+                e'4
+                f'4
+            }
 
         Returns string.
         '''
