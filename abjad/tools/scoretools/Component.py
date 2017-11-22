@@ -331,6 +331,10 @@ class Component(AbjadObject):
             include_self=True,
             grace_notes=True,
             ):
+            #print('PARENT', parent)
+            #print('DEP', parent._dependent_wrappers)
+            #print('DIR', parent._indicator_wrappers)
+            #print()
             for wrapper in parent._dependent_wrappers:
                 if wrapper.is_annotation:
                     continue
@@ -340,9 +344,6 @@ class Component(AbjadObject):
             for wrapper in parent._indicator_wrappers:
                 if wrapper.is_annotation:
                     continue
-                # TODO: remove?
-                #if wrapper.context is not None:
-                #    continue
                 if isinstance(wrapper.indicator, prototype):
                     offset = wrapper.start_offset
                     candidate_wrappers.setdefault(offset, []).append(wrapper)
