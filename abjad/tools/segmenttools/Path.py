@@ -559,18 +559,25 @@ class Path(pathlib.PosixPath):
             In build directory:
 
             >>> path.builds('letter').coerce('back cover.tex')
-            'back-cover.tex'
+            'back cover.tex'
             >>> path.builds('letter').coerce('Back Cover.tex')
-            'back-cover.tex'
+            'Back Cover.tex'
             >>> path.builds('letter').coerce('BACK_COVER.tex')
-            'back-cover.tex'
+            'BACK_COVER.tex'
 
             >>> path.builds('letter').coerce('new music.ly')
-            'new-music.ly'
+            'new music.ly'
             >>> path.builds('letter').coerce('New Music.ly')
-            'new-music.ly'
+            'New Music.ly'
             >>> path.builds('letter').coerce('NEW_MUSIC.ly')
-            'new-music.ly'
+            'NEW_MUSIC.ly'
+
+            >>> path.builds('letter').coerce('page_layout.py')
+            'page_layout.py'
+            >>> path.builds('letter').coerce('Page Layout.py')
+            'Page Layout.py'
+            >>> path.builds('letter').coerce('PAGE_LAYOUT.py')
+            'PAGE_LAYOUT.py'
 
         ..  container:: example
 
@@ -663,8 +670,10 @@ class Path(pathlib.PosixPath):
             name = stem.to_snake_case()
         elif self.is_external():
             pass
+        elif self.is__segments():
+            pass
         elif self.is_build():
-            name = stem.to_dash_case() + suffix
+            pass
         elif self.is_builds():
             name = stem.to_dash_case()
         elif self.is_contents():
@@ -890,7 +899,7 @@ class Path(pathlib.PosixPath):
         elif self.is_wrapper():
             return
         elif self.is_build():
-            return abjad.String.is_dash_case_file_name
+            return
         elif self.is_builds():
             return abjad.String.is_build_directory_name
         elif self.is_builds_segments():
@@ -1102,6 +1111,22 @@ class Path(pathlib.PosixPath):
             result = self.get_metadatum('title')
             result = result or '(untitled score)'
             return result
+
+    def is__segments(self):
+        r'''Is true when path is _segments directory.
+
+        ..  container:: example
+
+            >>> path = abjad.Path(
+            ...     '/path/to/scores/my_score/my_score',
+            ...     scores='/path/to/scores',
+            ...     )
+            >>> path._segments.is__segments()
+            True
+
+        Returns true or false.
+        '''
+        return self.name == '_segments'
 
     def is_build(self):
         '''Is true when path is build directory.

@@ -619,6 +619,24 @@ class TimeSignature(AbjadValueObject):
 
     ### PUBLIC METHODS ###
 
+    @staticmethod
+    def from_string(string):
+        r'''Makes new time signature from fraction `string`.
+
+        ..  container:: example
+
+            >>> abjad.TimeSignature.from_string('6/8')
+            TimeSignature((6, 8))
+
+        Returns new time signature.
+        '''
+        assert isinstance(string, str), repr(string)
+        parts = string.split('/')
+        assert len(parts) == 2, repr(parts)
+        parts = [int(_) for _ in parts]
+        numerator, denominator = parts
+        return TimeSignature((numerator, denominator))
+
     def with_power_of_two_denominator(self, contents_multiplier=1):
         r'''Makes new time signature equivalent to current
         time signature with power-of-two denominator.
