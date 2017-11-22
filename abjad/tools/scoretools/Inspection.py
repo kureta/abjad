@@ -507,6 +507,75 @@ class Inspection(abctools.AbjadObject):
             >>> abjad.inspect(staff).get_effective(str, n=-1)
             'red'
 
+        ..  container:: example
+
+            Gets effective time signature:
+
+            >>> staff = abjad.Staff("c'4 d' e' f'")
+            >>> leaves = abjad.select(staff).leaves()
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), leaves[0])
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    \time 3/8
+                    c'4
+                    d'4
+                    e'4
+                    f'4
+                }
+
+            >>> prototype = abjad.TimeSignature
+            >>> for component in abjad.iterate(staff).components():
+            ...     inspection = abjad.inspect(component)
+            ...     time_signature = inspection.get_effective(prototype)
+            ...     print(component, time_signature)
+            ...
+            Staff("c'4 d'4 e'4 f'4") 3/8
+            c'4 3/8
+            d'4 3/8
+            e'4 3/8
+            f'4 3/8
+
+            REGRESSION. Survives mutation:
+
+            >>> staff = abjad.Staff("c'4 d' e' f'")
+            >>> leaves = abjad.select(staff).leaves()
+            >>> abjad.attach(abjad.TimeSignature((3, 8)), leaves[0])
+            >>> container = abjad.Container()
+            >>> abjad.mutate(leaves).wrap(container)
+            >>> abjad.show(staff) # doctest: +SKIP
+
+            ..  docs::
+
+                >>> abjad.f(staff)
+                \new Staff {
+                    {
+                        \time 3/8
+                        c'4
+                        d'4
+                        e'4
+                        f'4
+                    }
+                }
+
+            >>> prototype = abjad.TimeSignature
+            >>> for component in abjad.iterate(staff).components():
+            ...     inspection = abjad.inspect(component)
+            ...     time_signature = inspection.get_effective(prototype)
+            ...     print(component, time_signature)
+            ...
+            <Staff{1}> None
+            Container("c'4 d'4 e'4 f'4") None
+            c'4 3/8
+            d'4 None
+            e'4 None
+            f'4 None
+
+            ..  todo:: FIXME: above should return 3/8 for every component.
+
         Returns indicator or none.
         '''
         if hasattr(self.client, '_get_effective'):

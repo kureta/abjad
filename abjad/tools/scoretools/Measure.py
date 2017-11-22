@@ -335,6 +335,7 @@ class Measure(Container):
             )
 
     def _get_format_specification(self):
+        import abjad
         names = []
         if self.implicit_scaling:
             names.append('implicit_scaling')
