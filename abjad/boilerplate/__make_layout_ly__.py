@@ -47,8 +47,14 @@ if __name__ == '__main__':
             )
         lilypond_file = maker.run()
         context = lilypond_file['GlobalSkips']
-        for skip in baca.select(context).skips():
+        skips = baca.select(context).skips()
+        command = abjad.LilyPondCommand('autoPageBreaksOff', 'before')
+        abjad.attach(command, skips[0])
+        for skip in skips:
             abjad.detach(abjad.TimeSignature, skip)
+            if not abjad.inspect(skip).has_indicator(baca.LBSD):
+                literal = abjad.LilyPondLiteral(r'\noBreak', 'before')
+                abjad.attach(literal, skip)
         score = lilypond_file['Score']
         del(score['MusicContext'])
     except:
