@@ -391,15 +391,16 @@ class IndicatorWrapper(AbjadValueObject):
             wrapper.context is not None and
             wrapper.indicator != self.indicator):
             if wrapper.start_offset == self.start_offset:
-                message = 'can not attach {} to ...\n\n{}'
-                message += '\n\n... because {} is already attached to ...\n\n'
-                message += '{}\n\nsee wrapper: {!r}.'
+                message = 'Can not attach ...\n\n{}\n\n...to ...\n\n{}'
+                message += '\n\n... because ...\n\n{}\n\n'
+                message += '... is already attached to ...\n\n'
+                message += '{}\n\nSee:\n\n{}'
                 message = message.format(
                     self.indicator,
                     component,
                     wrapper.indicator,
                     wrapper.component,
-                    wrapper,
+                    format(wrapper),
                     )
                 raise Exception(message)
 
