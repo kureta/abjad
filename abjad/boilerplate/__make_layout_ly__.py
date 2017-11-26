@@ -18,8 +18,12 @@ if __name__ == '__main__':
 
     try:
         file_ = pathlib.Path(os.path.realpath(__file__))
-        builds = file_.parent.parent
-        time_signatures = builds / '_segments' / 'time_signatures.py'
+        build_directory = file_.parent
+        build_name = build_directory.name
+        builds_directory = build_directory.parent
+        score_name = builds_directory.parent.name
+        score_path = abjad.Path(score_name)
+        time_signatures = score_path._segments('time_signatures.py')
         text = time_signatures.read_text()
         exec(text)
         prototype = abjad.TypedOrderedDict
@@ -65,7 +69,7 @@ if __name__ == '__main__':
         score = lilypond_file['Score']
         text = format(score)
         text = text.replace('GlobalSkips', 'PageLayout')
-        layout_ly = file_.parent / 'layout.ly'
+        layout_ly = build_directory / 'layout.ly'
         layout_ly.write_text(text)
         print(f'Writing {layout_ly} ...')
     except:
@@ -80,11 +84,11 @@ if __name__ == '__main__':
             if abjad.inspect(skip).has_indicator(prototype):
                 measure_number = i + 1
                 break_measures.append(measure_number)
-        text = ''.join([f'    {_},\n' for _ in break_measures])
-        text = f'break_measures = [\n{text}    ]'
-        break_measures_py = file_.parent / 'break_measures.py'
-        break_measures_py.write_text(text)
-        print(f'Writing {break_measures_py} ...')
+        build_metadata = score_path.builds.get_metadatum(build_name)
+        build_metadata = build_metadata or abjad.TypedOrderedDict()
+        build_metadata['break_measures'] = break_measures
+        score_path.builds.add_metadatum(build_name, build_metadata)
+        print(f'Writing build metadata ...')
     except:
         traceback.print_exc()
         sys.exit(1)
