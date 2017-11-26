@@ -72,4 +72,21 @@ if __name__ == '__main__':
         traceback.print_exc()
         sys.exit(1)
 
+    try:
+        break_measures = []
+        prototype = (abjad.LineBreak, abjad.PageBreak)
+        skips = abjad.iterate(score['GlobalSkips']).leaves(abjad.Skip)
+        for i, skip in enumerate(skips):
+            if abjad.inspect(skip).has_indicator(prototype):
+                measure_number = i + 1
+                break_measures.append(measure_number)
+        text = ''.join([f'    {_},\n' for _ in break_measures])
+        text = f'break_measures = [\n{text}    ]'
+        break_measures_py = file_.parent / 'break_measures.py'
+        break_measures_py.write_text(text)
+        print(f'Writing {break_measures_py} ...')
+    except:
+        traceback.print_exc()
+        sys.exit(1)
+
     sys.exit(0)
