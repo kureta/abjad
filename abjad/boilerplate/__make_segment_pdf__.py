@@ -32,7 +32,6 @@ if __name__ == '__main__':
         segment_directory = pathlib.Path(os.path.realpath(__file__)).parent
         builds_directory = segment_directory.parent.parent / 'builds'
         builds_directory = ide.Path(builds_directory)
-        print('Builds directory: ', builds_directory)
         builds_metadata = builds_directory._get_metadata()
     except:
         traceback.print_exc()
