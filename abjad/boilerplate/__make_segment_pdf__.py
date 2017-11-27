@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 import abjad
 import ide
+import os
+import pathlib
 import sys
 import time
 import traceback
@@ -27,7 +29,10 @@ if __name__ == '__main__':
         sys.exit(1)
 
     try:
-        builds_directory = ide.Path(__file__).builds
+        segment_directory = pathlib.Path(os.path.realpath(__file__)).parent
+        builds_directory = segment_directory.parent.parent / 'builds'
+        builds_directory = ide.Path(builds_directory)
+        print('Builds directory: ', builds_directory)
         builds_metadata = builds_directory._get_metadata()
     except:
         traceback.print_exc()
