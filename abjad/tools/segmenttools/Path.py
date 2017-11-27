@@ -708,8 +708,12 @@ class Path(pathlib.PosixPath):
                 if tag not in line:
                     lines.append(line)
                     continue
-                if line.startswith(' '):
-                    line = line.replace(' ', '%', 1)
+                first_nonwhitespace_index = len(line) - len(line.lstrip())
+                index = first_nonwhitespace_index
+                if line[index] != '%':
+                    line = list(line)
+                    line[index:index] = '%%% '
+                    line = ''.join(line)
                     count += 1
                 else:
                     skipped += 1
@@ -1736,8 +1740,12 @@ class Path(pathlib.PosixPath):
                 if tag not in line:
                     lines.append(line)
                     continue
-                if line.startswith('%'):
-                    line = line.replace('%', ' ', 1)
+                first_nonwhitespace_index = len(line) - len(line.lstrip())
+                index = first_nonwhitespace_index
+                if line[index:index+4] == '%%% ':
+                    line = list(line)
+                    line[index:index+4] = []
+                    line = ''.join(line)
                     count += 1
                 else:
                     skipped += 1
