@@ -73,7 +73,6 @@ class PersistenceManager(abctools.AbjadObject):
         assert ly_file_path.endswith('.ly'), ly_file_path
         timer = abjad.Timer()
         with timer:
-            #lilypond_format = format(lilypond_file, 'lilypond')
             format_specification = 'lilypond'
             if strict:
                 format_specification += ':strict'

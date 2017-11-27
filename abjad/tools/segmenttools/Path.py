@@ -181,26 +181,6 @@ class Path(pathlib.PosixPath):
             if path.is_file():
                 return path
 
-    def _get_metadata(self):
-        import abjad
-        metadata_py_path = self('__metadata__.py')
-        metadata = None
-        if metadata_py_path.is_file():
-            file_contents_string = metadata_py_path.read_text()
-            try:
-                result = abjad.IOManager.execute_string(
-                    file_contents_string,
-                    attribute_names=('metadata',),
-                    )
-            except NameError as e:
-                raise Exception(repr(metadata_py_path), e)
-            if result:
-                metadata = result[0]
-            else:
-                metadata = None
-        metadata = metadata or abjad.TypedOrderedDict()
-        return metadata
-
     def _get_score_pdf(self):
         path = self.distribution._get_file_path_ending_with('score.pdf')
         if not path:
@@ -540,7 +520,7 @@ class Path(pathlib.PosixPath):
         Returns none.
         '''
         assert ' ' not in name, repr(name)
-        metadata = self._get_metadata()
+        metadata = self.get_metadata()
         metadata[name] = value
         self.write_metadata_py(metadata)
 
@@ -709,6 +689,34 @@ class Path(pathlib.PosixPath):
             raise ValueError(self)
         return name
 
+    def comment_out_tag(self, tag):
+        r'''Comments out `tag` in LilyPond file.
+
+        Returns text, count, skipped triple.
+
+        Text gives processed file contents ready to be written.
+
+        Count gives the number of tags commented out.
+
+        Skipped gives number of tags already commented out (and therefore
+        skipped).
+        '''
+        assert self.is_file()
+        lines, count, skipped = [], 0, 0
+        with self.open() as file_pointer:
+            for line in file_pointer.readlines():
+                if tag not in line:
+                    lines.append(line)
+                    continue
+                if line.startswith(' '):
+                    line = line.replace(' ', '%', 1)
+                    count += 1
+                else:
+                    skipped += 1
+                lines.append(line)
+        lines = ''.join(lines)
+        return lines, count, skipped
+
     def get_asset_type(self):
         r'''Gets asset identifier.
 
@@ -831,6 +839,29 @@ class Path(pathlib.PosixPath):
             result = self.name
         return abjad.String(result)
 
+    def get_metadata(self):
+        r'''Gets __metadata__.py file in path.
+
+        Returns ordered dictionary.
+        '''
+        import abjad
+        metadata_py_path = self('__metadata__.py')
+        metadata = None
+        if metadata_py_path.is_file():
+            file_contents_string = metadata_py_path.read_text()
+            try:
+                result = abjad.IOManager.execute_string(
+                    file_contents_string,
+                    attribute_names=('metadata',),
+                    )
+            except NameError as e:
+                raise Exception(repr(metadata_py_path), e)
+            if result:
+                metadata = result[0]
+            else:
+                metadata = None
+        return abjad.TypedOrderedDict(metadata)
+
     def get_metadatum(self, metadatum_name, default=None):
         r'''Gets metadatum.
 
@@ -846,7 +877,7 @@ class Path(pathlib.PosixPath):
 
         Returns object.
         '''
-        metadata = self._get_metadata()
+        metadata = self.get_metadata()
         metadatum = metadata.get(metadatum_name)
         if not metadatum:
             metadatum = default
@@ -1610,7 +1641,7 @@ class Path(pathlib.PosixPath):
         Returns none.
         '''
         assert ' ' not in name, repr(name)
-        metadata = self._get_metadata()
+        metadata = self.get_metadata()
         try:
             metadata.pop(name)
         except KeyError:
@@ -1685,6 +1716,34 @@ class Path(pathlib.PosixPath):
         if str(path) == '.':
             return str(self)
         return str(path)
+
+    def uncomment_tag(self, tag):
+        r'''Uncomments `tag` in LilyPond file.
+
+        Returns text, count, skipped triple.
+
+        Text gives the processed file.
+
+        Count gives the number of tags uncommented.
+
+        Skipped gives the number of tags already uncommented (and therefore
+        skipped).
+        '''
+        assert self.is_file()
+        lines, count, skipped = [], 0, 0
+        with self.open() as file_pointer:
+            for line in file_pointer.readlines():
+                if tag not in line:
+                    lines.append(line)
+                    continue
+                if line.startswith('%'):
+                    line = line.replace('%', ' ', 1)
+                    count += 1
+                else:
+                    skipped += 1
+                lines.append(line)
+        text = ''.join(lines)
+        return text, count, skipped
 
     def update_order_dependent_segment_metadata(self):
         r'''Updates order-dependent segment metadata.
