@@ -69,7 +69,7 @@ class Clef(AbjadValueObject):
 
         >>> abjad.f(staff)
         \new Staff {
-            \clef "treble" % SEGMENT
+            \clef "treble" % SEGMENT:1
             c'4
             d'4
             e'4

@@ -90,10 +90,10 @@ class Markup(AbjadValueObject):
         >>> abjad.f(staff)
         \new Staff {
             c'4
-                ^ \markup { % SEGMENT
-                    \italic % SEGMENT
-                        Allegro % SEGMENT
-                    } % SEGMENT
+                ^ \markup { % SEGMENT:1
+                    \italic % SEGMENT:1
+                        Allegro % SEGMENT:1
+                    } % SEGMENT:1
             d'4
             e'4
             f'4
@@ -117,10 +117,10 @@ class Markup(AbjadValueObject):
                                 {
                                     Allegro
                                 }
-                            \line % SEGMENT
-                                { % SEGMENT
-                                    "non troppo" % SEGMENT
-                                } % SEGMENT
+                            \line % SEGMENT:1
+                                { % SEGMENT:1
+                                    "non troppo" % SEGMENT:1
+                                } % SEGMENT:1
                         }
                     }
             d'4

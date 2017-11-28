@@ -2746,57 +2746,57 @@ class MetronomeMarkSpanner(Spanner):
                 \new Staff {
                     \time 3/8
                     c'8.
-                    ^ \markup { % RED
-                        \fontsize % RED
-                            #-6 % RED
-                            \general-align % RED
-                                #Y % RED
-                                #DOWN % RED
-                                \note-by-number % RED
-                                    #2 % RED
-                                    #0 % RED
-                                    #1 % RED
-                        \upright % RED
-                            { % RED
-                                = % RED
-                                60 % RED
-                            } % RED
-                        } % RED
+                    ^ \markup { % RED:1
+                        \fontsize % RED:1
+                            #-6 % RED:1
+                            \general-align % RED:1
+                                #Y % RED:1
+                                #DOWN % RED:1
+                                \note-by-number % RED:1
+                                    #2 % RED:1
+                                    #0 % RED:1
+                                    #1 % RED:1
+                        \upright % RED:1
+                            { % RED:1
+                                = % RED:1
+                                60 % RED:1
+                            } % RED:1
+                        } % RED:1
                     d'8.
                     e'4.
-                    ^ \markup { % BLUE
-                        \fontsize % BLUE
-                            #-6 % BLUE
-                            \general-align % BLUE
-                                #Y % BLUE
-                                #DOWN % BLUE
-                                \note-by-number % BLUE
-                                    #2 % BLUE
-                                    #0 % BLUE
-                                    #1 % BLUE
-                        \upright % BLUE
-                            { % BLUE
-                                = % BLUE
-                                90 % BLUE
-                            } % BLUE
-                        } % BLUE
+                    ^ \markup { % BLUE:1
+                        \fontsize % BLUE:1
+                            #-6 % BLUE:1
+                            \general-align % BLUE:1
+                                #Y % BLUE:1
+                                #DOWN % BLUE:1
+                                \note-by-number % BLUE:1
+                                    #2 % BLUE:1
+                                    #0 % BLUE:1
+                                    #1 % BLUE:1
+                        \upright % BLUE:1
+                            { % BLUE:1
+                                = % BLUE:1
+                                90 % BLUE:1
+                            } % BLUE:1
+                        } % BLUE:1
                     g'8.
-                    ^ \markup { % YELLOW
-                        \fontsize % YELLOW
-                            #-6 % YELLOW
-                            \general-align % YELLOW
-                                #Y % YELLOW
-                                #DOWN % YELLOW
-                                \note-by-number % YELLOW
-                                    #2 % YELLOW
-                                    #0 % YELLOW
-                                    #1 % YELLOW
-                        \upright % YELLOW
-                            { % YELLOW
-                                = % YELLOW
-                                72 % YELLOW
-                            } % YELLOW
-                        } % YELLOW
+                    ^ \markup { % YELLOW:1
+                        \fontsize % YELLOW:1
+                            #-6 % YELLOW:1
+                            \general-align % YELLOW:1
+                                #Y % YELLOW:1
+                                #DOWN % YELLOW:1
+                                \note-by-number % YELLOW:1
+                                    #2 % YELLOW:1
+                                    #0 % YELLOW:1
+                                    #1 % YELLOW:1
+                        \upright % YELLOW:1
+                            { % YELLOW:1
+                                = % YELLOW:1
+                                72 % YELLOW:1
+                            } % YELLOW:1
+                        } % YELLOW:1
                     f'8.
                     ef'4.
                     ^ \markup {

@@ -100,7 +100,7 @@ class TimeSignature(AbjadValueObject):
         >>> abjad.f(score)
         \new Score <<
             \new Staff {
-                \time 3/8 % RED
+                \time 3/8 % RED:1
                 c'8
                 d'8
                 e'8

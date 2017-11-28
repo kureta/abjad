@@ -37,14 +37,14 @@ class Flute(Instrument):
 
         >>> abjad.f(staff)
         \new Staff {
-            \set Staff.instrumentName = \markup { % RED
-                \italic % RED
-                    Flauto % RED
-                } % RED
-            \set Staff.shortInstrumentName = \markup { % RED
-                \italic % RED
-                    Fl. % RED
-                } % RED
+            \set Staff.instrumentName = \markup { % RED:1
+                \italic % RED:1
+                    Flauto % RED:1
+                } % RED:1
+            \set Staff.shortInstrumentName = \markup { % RED:1
+                \italic % RED:1
+                    Fl. % RED:1
+                } % RED:1
             c'4
             d'4
             e'4

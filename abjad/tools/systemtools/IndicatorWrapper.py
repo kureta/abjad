@@ -179,7 +179,7 @@ class IndicatorWrapper(AbjadValueObject):
             >>> abjad.attach(abjad.Clef('alto'), old_staff[0], tag='SEGMENT')
             >>> abjad.f(old_staff)
             \new Staff {
-                \clef "alto" % SEGMENT
+                \clef "alto" % SEGMENT:1
                 c'4
                 d'4
                 e'4
@@ -190,16 +190,16 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto" % SEGMENT\nc\'4'),
+                component=abjad.Note('\\clef "alto" % SEGMENT:1\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
-                tag='SEGMENT',
+                tag='SEGMENT:1',
                 )
 
             >>> new_staff = abjad.mutate(old_staff).copy()
             >>> abjad.f(new_staff)
             \new Staff {
-                \clef "alto" % SEGMENT
+                \clef "alto" % SEGMENT:1
                 c'4
                 d'4
                 e'4
@@ -210,10 +210,10 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto" % SEGMENT\nc\'4'),
+                component=abjad.Note('\\clef "alto" % SEGMENT:1\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
-                tag='SEGMENT',
+                tag='SEGMENT:1',
                 )
 
         Copies indicator and context.
@@ -226,6 +226,11 @@ class IndicatorWrapper(AbjadValueObject):
 
         Returns new indicator wrapper.
         '''
+        if self.tag:
+            stop = self.tag.rfind(':')
+            tag = self.tag[:stop]
+        else:
+            tag = None
         new = type(self)(
             component=None,
             context=self.context,
@@ -234,7 +239,7 @@ class IndicatorWrapper(AbjadValueObject):
             is_piecewise=self.is_piecewise,
             name=self.name,
             synthetic_offset=self.synthetic_offset,
-            tag=self.tag,
+            tag=tag,
             )
         return new
 
@@ -253,6 +258,9 @@ class IndicatorWrapper(AbjadValueObject):
     def _bind_to_component(self, component):
         import abjad
         self._warn_duplicate_indicator(component)
+        if self.tag is not None:
+            tag_number = self._find_maximum_tag_number(component) + 1
+            self._tag = self.tag + ':' + str(tag_number)
         self._unbind_component()
         self._component = component
         self._update_effective_context()
@@ -287,6 +295,21 @@ class IndicatorWrapper(AbjadValueObject):
             message = '{!r} must be context type, context name or none.'
             message = message.format(context)
             raise TypeError(message)
+
+    @staticmethod
+    def _find_maximum_tag_number(component):
+        import abjad
+        tag_numbers = [0]
+        for wrapper in abjad.inspect(component).get_indicators(unwrap=False):
+            if wrapper.tag is not None:
+                index = wrapper.tag.rfind(':') + 1
+                tag_number = wrapper.tag[index:]
+                try:
+                    tag_number = int(tag_number)
+                except ValueError:
+                    raise Exception(wrapper.tag)
+                tag_numbers.append(tag_number)
+        return max(tag_numbers)
 
     def _get_effective_context(self):
         if self.component is not None:
