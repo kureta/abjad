@@ -2344,10 +2344,30 @@ class Markup(AbjadValueObject):
 
             >>> abjad.show(markup) # doctest: +SKIP
 
+        ..  container:: example
+
+            X-11 colors are supported:
+
+            >>> markup = abjad.Markup('Allegro assai')
+            >>> markup = markup.with_color(abjad.SchemeColor('LimeGreen'))
+            >>> abjad.f(markup)
+            \markup {
+                \with-color
+                    #(x11-color 'LimeGreen)
+                    "Allegro assai"
+                }
+
+            >>> abjad.show(markup) # doctest: +SKIP
+
         Returns new markup.
         '''
         contents = self._parse_markup_command_argument(self)
-        color = schemetools.Scheme(color)
+        if isinstance(color, str):
+            color = schemetools.Scheme(color)
+        elif isinstance(color, schemetools.SchemeColor):
+            pass
+        else:
+            raise TypeError(color)
         command = MarkupCommand('with-color', color, contents)
         return new(self, contents=command)
 
