@@ -4085,4 +4085,6 @@ class Label(abctools.AbjadObject):
                 label = label.fontsize(font_size)
             abjad.attach(label, logical_tie.head, tag=self.tag)
         total_duration = abjad.Duration(timespan.stop_offset)
+        if global_offset is not None:
+            total_duration += global_offset
         return total_duration
