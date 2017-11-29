@@ -78,7 +78,7 @@ if __name__ == '__main__':
     try:
         segment = ide.Path(__file__).parent
         ly = segment('illustration.ly')
-        tag = 'BUILD:'
+        tag = 'BUILD'
         text, count, skipped = ly.comment_out_tag(tag)
         if 0 < count:
             counter = abjad.String('tag').pluralize(count)

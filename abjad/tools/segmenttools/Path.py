@@ -703,20 +703,28 @@ class Path(pathlib.PosixPath):
         '''
         assert self.is_file()
         lines, count, skipped = [], 0, 0
+        current_tag_number = None
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
                 if tag not in line:
+                    current_tag_number = None
                     lines.append(line)
                     continue
+                start = line.rfind(':') + 1
+                tag_number = int(line[start:])
                 first_nonwhitespace_index = len(line) - len(line.lstrip())
                 index = first_nonwhitespace_index
                 if line[index] != '%':
                     line = list(line)
                     line[index:index] = '%%% '
                     line = ''.join(line)
-                    count += 1
+                    if tag_number != current_tag_number:
+                        current_tag_number = tag_number
+                        count += 1
                 else:
-                    skipped += 1
+                    if tag_number != current_tag_number:
+                        current_tag_number = tag_number
+                        skipped += 1
                 lines.append(line)
         lines = ''.join(lines)
         return lines, count, skipped
@@ -1735,20 +1743,28 @@ class Path(pathlib.PosixPath):
         '''
         assert self.is_file()
         lines, count, skipped = [], 0, 0
+        current_tag_number = None
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
                 if tag not in line:
+                    current_tag_number = None
                     lines.append(line)
                     continue
+                start = line.rfind(':') + 1
+                tag_number = int(line[start:])
                 first_nonwhitespace_index = len(line) - len(line.lstrip())
                 index = first_nonwhitespace_index
                 if line[index:index+4] == '%%% ':
                     line = list(line)
                     line[index:index+4] = []
                     line = ''.join(line)
-                    count += 1
+                    if tag_number != current_tag_number:
+                        current_tag_number = tag_number
+                        count += 1
                 else:
-                    skipped += 1
+                    if tag_number != current_tag_number:
+                        current_tag_number = tag_number
+                        skipped += 1
                 lines.append(line)
         text = ''.join(lines)
         return text, count, skipped
