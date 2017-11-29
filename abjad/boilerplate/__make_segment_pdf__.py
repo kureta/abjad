@@ -78,21 +78,37 @@ if __name__ == '__main__':
     try:
         segment = ide.Path(__file__).parent
         ly = segment('illustration.ly')
-        text, count, skipped = ly.comment_out_tag('BUILD:')
-        counter = 'build tag'
+        tag = 'BUILD:'
+        text, count, skipped = ly.comment_out_tag(tag)
         if 0 < count:
-            counter_ = abjad.String(counter).pluralize(count)
-            message = f'Deactivating {{count}} {{counter_}}'
+            counter = abjad.String('tag').pluralize(count)
+            message = f'Deactivating {{count}} {{tag}} {{counter}}'
             message += f' in {{ly.trim()}} ...'
             print(message)
         if 0 < skipped:
-            counter_ = abjad.String(counter).pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{counter_}}'
+            counter = abjad.String('tag').pluralize(skipped)
+            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
             message += f' in {{ly.trim()}} ...'
             print(message)
         if count == skipped == 0:
-            counter_ = abjad.String(counter).pluralize(0)
-            print(f'No {{counter_}} found in {{ly.trim()}} ...')
+            counter = abjad.String('tag').pluralize(0)
+            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
+        ly.write_text(text)
+        tag = 'STAGE-NUMBER'
+        text, count, skipped = ly.comment_out_tag(tag)
+        if 0 < count:
+            counter = abjad.String('tag').pluralize(count)
+            message = f'Deactivating {{count}} {{tag}} {{counter}}'
+            message += f' in {{ly.trim()}} ...'
+            print(message)
+        if 0 < skipped:
+            counter = abjad.String('tag').pluralize(skipped)
+            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
+            message += f' in {{ly.trim()}} ...'
+            print(message)
+        if count == skipped == 0:
+            counter = abjad.String('tag').pluralize(0)
+            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
         ly.write_text(text)
     except:
         traceback.print_exc()
