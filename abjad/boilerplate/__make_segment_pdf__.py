@@ -79,11 +79,11 @@ if __name__ == '__main__':
         segment = ide.Path(__file__).parent
         ly = segment('illustration.ly')
         for tag in (
-            'BUILD',
+            'BUILD:FERMATA_BAR_LINE',
             'STAGE_NUMBER',
             'FIGURE_NAME', 
             'CLOCK_TIME',
-            'SEGMENT:SPACING:MARKUP',
+            'SEGMENT:SPACING_MARKUP',
             ):
             text, count, skipped = ly.comment_out_tag(tag)
             messages = ide.AbjadIDE._message_deactivate(
