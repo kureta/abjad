@@ -704,9 +704,10 @@ class Path(pathlib.PosixPath):
         assert self.is_file()
         lines, count, skipped = [], 0, 0
         current_tag_number = None
+        tag_parts = tag.split(':')
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
-                if tag not in line:
+                if any(_ not in line for _ in tag_parts):
                     current_tag_number = None
                     lines.append(line)
                     continue
@@ -1744,9 +1745,10 @@ class Path(pathlib.PosixPath):
         assert self.is_file()
         lines, count, skipped = [], 0, 0
         current_tag_number = None
+        tag_parts = tag.split(':')
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
-                if tag not in line:
+                if any(_ not in line for _ in tag_parts):
                     current_tag_number = None
                     lines.append(line)
                     continue

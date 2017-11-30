@@ -20,6 +20,12 @@ if __name__ == '__main__':
         file_ = pathlib.Path(os.path.realpath(__file__))
         build_directory = file_.parent
         build_name = build_directory.name
+        layout = abjad.new(layout, build=build_name)
+    except:
+        traceback.print_exc()
+        sys.exit(1)
+        
+    try:
         builds_directory = build_directory.parent
         score_name = builds_directory.parent.name
         score_path = abjad.Path(score_name)

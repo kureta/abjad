@@ -87,7 +87,7 @@ if __name__ == '__main__':
             ):
             text, count, skipped = ly.comment_out_tag(tag)
             messages = ide.AbjadIDE._message_deactivate(
-                ly,
+                None,
                 tag,
                 count,
                 skipped,
