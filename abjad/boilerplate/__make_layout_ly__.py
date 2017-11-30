@@ -46,6 +46,8 @@ if __name__ == '__main__':
     try:
         maker = baca.SegmentMaker(
             layout_measure_map=layout,
+            omit_empty_start_bar=True,
+            omit_stage_number_markup=True,
             score_template=baca.SingleStaffScoreTemplate(),
             time_signatures=time_signatures,
             )
