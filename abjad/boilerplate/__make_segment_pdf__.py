@@ -78,86 +78,24 @@ if __name__ == '__main__':
     try:
         segment = ide.Path(__file__).parent
         ly = segment('illustration.ly')
-        tag = 'BUILD'
-        text, count, skipped = ly.comment_out_tag(tag)
-        if 0 < count:
-            counter = abjad.String('tag').pluralize(count)
-            message = f'Deactivating {{count}} {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if 0 < skipped:
-            counter = abjad.String('tag').pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if count == skipped == 0:
-            counter = abjad.String('tag').pluralize(0)
-            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
-        ly.write_text(text)
-        tag = 'STAGE-NUMBER'
-        text, count, skipped = ly.comment_out_tag(tag)
-        if 0 < count:
-            counter = abjad.String('tag').pluralize(count)
-            message = f'Deactivating {{count}} {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if 0 < skipped:
-            counter = abjad.String('tag').pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if count == skipped == 0:
-            counter = abjad.String('tag').pluralize(0)
-            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
-        ly.write_text(text)
-        tag = 'FIGURE-NAME'
-        text, count, skipped = ly.comment_out_tag(tag)
-        if 0 < count:
-            counter = abjad.String('tag').pluralize(count)
-            message = f'Deactivating {{count}} {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if 0 < skipped:
-            counter = abjad.String('tag').pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if count == skipped == 0:
-            counter = abjad.String('tag').pluralize(0)
-            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
-        ly.write_text(text)
-        tag = 'CLOCK-TIME'
-        text, count, skipped = ly.comment_out_tag(tag)
-        if 0 < count:
-            counter = abjad.String('tag').pluralize(count)
-            message = f'Deactivating {{count}} {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if 0 < skipped:
-            counter = abjad.String('tag').pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if count == skipped == 0:
-            counter = abjad.String('tag').pluralize(0)
-            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
-        ly.write_text(text)
-        tag = 'SEGMENT:SPACING:MARKUP'
-        text, count, skipped = ly.comment_out_tag(tag)
-        if 0 < count:
-            counter = abjad.String('tag').pluralize(count)
-            message = f'Deactivating {{count}} {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if 0 < skipped:
-            counter = abjad.String('tag').pluralize(skipped)
-            message = f'Skipping {{skipped}} inactive {{tag}} {{counter}}'
-            message += f' in {{ly.trim()}} ...'
-            print(message)
-        if count == skipped == 0:
-            counter = abjad.String('tag').pluralize(0)
-            print(f'No {{tag}} {{counter}} found in {{ly.trim()}} ...')
-        ly.write_text(text)
+        for tag in (
+            'BUILD',
+            'STAGE_NUMBER',
+            'FIGURE_NAME', 
+            'CLOCK_TIME',
+            'SEGMENT:SPACING:MARKUP',
+            ):
+            text, count, skipped = ly.comment_out_tag(tag)
+            messages = ide.AbjadIDE._message_deactivate(
+                ly,
+                tag,
+                count,
+                skipped,
+                skip_empty=True,
+                )
+            for message in messages:
+                print(abjad.String(message).capitalize_start())
+            ly.write_text(text)
     except:
         traceback.print_exc()
         sys.exit(1)
