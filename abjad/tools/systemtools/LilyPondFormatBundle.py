@@ -121,7 +121,7 @@ class LilyPondFormatBundle(AbjadObject):
         self.opening.tag(tag)
         self.closing.tag(tag)
         self.right.tag(tag)
-        tag = ' % ' + tag
+        tag = ' %! ' + tag
         self._context_settings = [_ + tag for _ in self.context_settings]
         self._grob_overrides = [_ + tag for _ in self.grob_overrides]
         self._grob_reverts = [_ + tag for _ in self.grob_reverts]

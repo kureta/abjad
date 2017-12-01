@@ -84,16 +84,16 @@ class Markup(AbjadValueObject):
 
         >>> staff = abjad.Staff("c'4 d' e' f'")
         >>> markup = abjad.Markup('Allegro', abjad.Up).italic()
-        >>> abjad.attach(markup, staff[0], tag='SEGMENT')
+        >>> abjad.attach(markup, staff[0], tag='RED')
         >>> abjad.show(staff) # doctest: +SKIP
 
         >>> abjad.f(staff)
         \new Staff {
             c'4
-                ^ \markup { % SEGMENT:1
-                    \italic % SEGMENT:1
-                        Allegro % SEGMENT:1
-                    } % SEGMENT:1
+                ^ \markup { %! RED:1
+                    \italic %! RED:1
+                        Allegro %! RED:1
+                    } %! RED:1
             d'4
             e'4
             f'4
@@ -104,7 +104,7 @@ class Markup(AbjadValueObject):
 
         >>> staff = abjad.Staff("c'4 d' e' f'")
         >>> abjad.attach(abjad.Markup('Allegro'), staff[0])
-        >>> abjad.attach(abjad.Markup('non troppo'), staff[0], tag='SEGMENT')
+        >>> abjad.attach(abjad.Markup('non troppo'), staff[0], tag='RED')
         >>> abjad.show(staff) # doctest: +SKIP
 
         >>> abjad.f(staff)
@@ -117,10 +117,10 @@ class Markup(AbjadValueObject):
                                 {
                                     Allegro
                                 }
-                            \line % SEGMENT:1
-                                { % SEGMENT:1
-                                    "non troppo" % SEGMENT:1
-                                } % SEGMENT:1
+                            \line % RED:1
+                                { % RED:1
+                                    "non troppo" % RED:1
+                                } % RED:1
                         }
                     }
             d'4

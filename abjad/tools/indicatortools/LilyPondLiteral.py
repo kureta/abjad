@@ -71,7 +71,7 @@ class LilyPondLiteral(AbjadValueObject):
 
         >>> abjad.f(staff)
         \new Staff {
-            \slurDotted % RED:1
+            \slurDotted %! RED:1
             c'8 (
             d'8
             e'8

@@ -176,10 +176,10 @@ class IndicatorWrapper(AbjadValueObject):
             Preserves tag:
 
             >>> old_staff = abjad.Staff("c'4 d'4 e'4 f'4")
-            >>> abjad.attach(abjad.Clef('alto'), old_staff[0], tag='SEGMENT')
+            >>> abjad.attach(abjad.Clef('alto'), old_staff[0], tag='RED')
             >>> abjad.f(old_staff)
             \new Staff {
-                \clef "alto" % SEGMENT:1
+                \clef "alto" %! RED:1
                 c'4
                 d'4
                 e'4
@@ -190,16 +190,16 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto" % SEGMENT:1\nc\'4'),
+                component=abjad.Note('\\clef "alto" %! RED:1\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
-                tag='SEGMENT:1',
+                tag='RED:1',
                 )
 
             >>> new_staff = abjad.mutate(old_staff).copy()
             >>> abjad.f(new_staff)
             \new Staff {
-                \clef "alto" % SEGMENT:1
+                \clef "alto" %! RED:1
                 c'4
                 d'4
                 e'4
@@ -210,10 +210,10 @@ class IndicatorWrapper(AbjadValueObject):
             >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
             >>> abjad.f(wrapper)
             abjad.IndicatorWrapper(
-                component=abjad.Note('\\clef "alto" % SEGMENT:1\nc\'4'),
+                component=abjad.Note('\\clef "alto" %! RED:1\nc\'4'),
                 context='Staff',
                 indicator=abjad.Clef('alto'),
-                tag='SEGMENT:1',
+                tag='RED:1',
                 )
 
         Copies indicator and context.
@@ -334,7 +334,7 @@ class IndicatorWrapper(AbjadValueObject):
         except TypeError:
             lilypond_format = self.indicator._get_lilypond_format()
         if self.tag:
-            tag = ' % ' + self.tag
+            tag = ' %! ' + self.tag
         if isinstance(lilypond_format, (tuple, list)):
             if self.tag:
                 lilypond_format = [_ + tag for _ in lilypond_format]

@@ -166,7 +166,7 @@ class SlotContributions(AbjadObject):
     def tag(self, tag):
         r'''Tags contributions.
         '''
-        tag = ' % ' + tag
+        tag = ' %! ' + tag
         self._articulations = [_ + tag for _ in self.articulations]
         self._commands = [_ + tag for _ in self.commands]
         self._comments = [_ + tag for _ in self.comments]

@@ -64,12 +64,12 @@ class Clef(AbjadValueObject):
         Clefs can be tagged:
 
         >>> staff = abjad.Staff("c'4 d' e' f'")
-        >>> abjad.attach(abjad.Clef('treble'), staff[0], tag='SEGMENT')
+        >>> abjad.attach(abjad.Clef('treble'), staff[0], tag='RED')
         >>> abjad.show(staff) # doctest: +SKIP
 
         >>> abjad.f(staff)
         \new Staff {
-            \clef "treble" % SEGMENT:1
+            \clef "treble" %! RED:1
             c'4
             d'4
             e'4

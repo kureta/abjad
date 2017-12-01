@@ -220,7 +220,7 @@ class LilyPondFormatManager(AbjadObject):
                     markup = wrapper.indicator
                 format_pieces = markup._get_format_pieces()
                 if wrapper.tag:
-                    tag = ' % ' + wrapper.tag
+                    tag = ' %! ' + wrapper.tag
                     format_pieces = [_ + tag for _ in format_pieces]
                 bundle.right.markup.extend(format_pieces)
 
