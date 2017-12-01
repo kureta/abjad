@@ -109,22 +109,31 @@ class LilyPondFormatBundle(AbjadObject):
         self._grob_overrides = tuple(sorted(set(self.grob_overrides)))
         self._grob_reverts = tuple(sorted(set(self.grob_reverts)))
 
-    def tag_format_contributions(self, tag):
+    def tag_format_contributions(self, tag, deactivate):
         r'''Tags format contributions with string `tag`.
 
         Returns none.
         '''
-        self.absolute_before.tag(tag)
-        self.absolute_after.tag(tag)
-        self.before.tag(tag)
-        self.after.tag(tag)
-        self.opening.tag(tag)
-        self.closing.tag(tag)
-        self.right.tag(tag)
+        self.absolute_before.tag(tag, deactivate)
+        self.absolute_after.tag(tag, deactivate)
+        self.before.tag(tag, deactivate)
+        self.after.tag(tag, deactivate)
+        self.opening.tag(tag, deactivate)
+        self.closing.tag(tag, deactivate)
+        self.right.tag(tag, deactivate)
         tag = ' %! ' + tag
-        self._context_settings = [_ + tag for _ in self.context_settings]
-        self._grob_overrides = [_ + tag for _ in self.grob_overrides]
-        self._grob_reverts = [_ + tag for _ in self.grob_reverts]
+        context_settings = [_ + tag for _ in self.context_settings]
+        if deactivate:
+            context_settings = ['%%% ' + _ for _ in context_settings]
+        self._context_settings = context_settings
+        grob_overrides = [_ + tag for _ in self.grob_overrides]
+        if deactivate:
+            grob_overrides = ['%%% ' + _ for _ in grob_overrides]
+        self._grob_overrides = grob_overrides
+        grob_reverts = [_ + tag for _ in self.grob_reverts]
+        if deactivate:
+            grob_reverts = ['%%% ' + _ for _ in grob_reverts]
+        self._grob_reverts = grob_reverts
 
     def update(self, format_bundle):
         r'''Updates format bundle with all format contributions in

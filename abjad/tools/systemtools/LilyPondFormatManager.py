@@ -222,6 +222,8 @@ class LilyPondFormatManager(AbjadObject):
                 if wrapper.tag:
                     tag = ' %! ' + wrapper.tag
                     format_pieces = [_ + tag for _ in format_pieces]
+                    if wrapper.deactivate:
+                        format_pieces = ['%%% ' + _ for _ in format_pieces]
                 bundle.right.markup.extend(format_pieces)
 
     @staticmethod
@@ -235,7 +237,10 @@ class LilyPondFormatManager(AbjadObject):
             if hasattr(indicator, '_get_lilypond_format_bundle'):
                 bundle_ = indicator._get_lilypond_format_bundle()
                 if wrapper.tag:
-                    bundle_.tag_format_contributions(wrapper.tag)
+                    bundle_.tag_format_contributions(
+                        wrapper.tag,
+                        wrapper.deactivate,
+                        )
                 if bundle_ is not None:
                     bundle.update(bundle_)
 

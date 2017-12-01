@@ -2,6 +2,7 @@ def attach(
     indicator,
     argument,
     context=None,
+    deactivate=None,
     is_piecewise=None,
     is_annotation=None,
     name=None,
@@ -130,10 +131,11 @@ def attach(
         raise Exception(message)
 
     if isinstance(indicator, abjad.IndicatorWrapper):
+        context = context or indicator.context
+        deactivate = deactivate or indicator.deactivate
         is_annotation = is_annotation or indicator.is_annotation
         is_piecewise = indicator.is_piecewise
         name = name or indicator.name
-        context = context or indicator.context
         synthetic_offset = synthetic_offset or indicator.synthetic_offset
         tag = tag or indicator.tag
         indicator._detach()
@@ -145,6 +147,7 @@ def attach(
     wrapper = abjad.IndicatorWrapper(
         component=component,
         context=context,
+        deactivate=deactivate,
         indicator=indicator,
         is_annotation=is_annotation,
         is_piecewise=is_piecewise,

@@ -28,6 +28,7 @@ class IndicatorWrapper(AbjadValueObject):
     __slots__ = (
         '_component',
         '_context',
+        '_deactivate',
         '_effective_context',
         '_indicator',
         '_is_annotation',
@@ -46,6 +47,7 @@ class IndicatorWrapper(AbjadValueObject):
         self,
         component=None,
         context=None,
+        deactivate=None,
         indicator=None,
         is_annotation=None,
         is_piecewise=None,
@@ -60,6 +62,9 @@ class IndicatorWrapper(AbjadValueObject):
             prototype = (abjad.Component, abjad.Spanner)
             assert isinstance(component, prototype)
         self._component = component
+        if deactivate is not None:
+            deactivate = bool(deactivate)
+        self._deactivate = deactivate
         self._effective_context = None
         self._indicator = indicator
         if is_annotation is not None:
@@ -216,6 +221,58 @@ class IndicatorWrapper(AbjadValueObject):
                 tag='RED:1',
                 )
 
+        ..  container:: example
+
+            Preserves deactivate flag:
+
+            >>> old_staff = abjad.Staff("c'4 d'4 e'4 f'4")
+            >>> abjad.attach(
+            ...     abjad.Clef('alto'),
+            ...     old_staff[0],
+            ...     deactivate=True,
+            ...     tag='RED',
+            ...     )
+            >>> abjad.f(old_staff)
+            \new Staff {
+                %%% \clef "alto" %! RED:1
+                c'4
+                d'4
+                e'4
+                f'4
+            }
+
+            >>> leaf = old_staff[0]
+            >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
+            >>> abjad.f(wrapper)
+            abjad.IndicatorWrapper(
+                component=abjad.Note('%%% \\clef "alto" %! RED:1\nc\'4'),
+                context='Staff',
+                deactivate=True,
+                indicator=abjad.Clef('alto'),
+                tag='RED:1',
+                )
+
+            >>> new_staff = abjad.mutate(old_staff).copy()
+            >>> abjad.f(new_staff)
+            \new Staff {
+                %%% \clef "alto" %! RED:1
+                c'4
+                d'4
+                e'4
+                f'4
+            }
+
+            >>> leaf = new_staff[0]
+            >>> wrapper = abjad.inspect(leaf).get_indicator(unwrap=False)
+            >>> abjad.f(wrapper)
+            abjad.IndicatorWrapper(
+                component=abjad.Note('%%% \\clef "alto" %! RED:1\nc\'4'),
+                context='Staff',
+                deactivate=True,
+                indicator=abjad.Clef('alto'),
+                tag='RED:1',
+                )
+
         Copies indicator and context.
 
         Does not copy start component.
@@ -234,6 +291,7 @@ class IndicatorWrapper(AbjadValueObject):
         new = type(self)(
             component=None,
             context=self.context,
+            deactivate=self.deactivate,
             indicator=copy.copy(self.indicator),
             is_annotation=self.is_annotation,
             is_piecewise=self.is_piecewise,
@@ -324,7 +382,7 @@ class IndicatorWrapper(AbjadValueObject):
         if hasattr(self.indicator, '_get_lilypond_format_bundle'):
             bundle = self.indicator._get_lilypond_format_bundle(self.component)
             if self.tag:
-                bundle.tag_format_contributions(self.tag)
+                bundle.tag_format_contributions(self.tag, self.deactivate)
             return bundle
         try:
             context = self._get_effective_context()
@@ -450,6 +508,14 @@ class IndicatorWrapper(AbjadValueObject):
         Returns context or string.
         '''
         return self._context
+
+    @property
+    def deactivate(self):
+        r'''Is true when wrapper deactivates tag.
+
+        Returns true, false or none.
+        '''
+        return self._deactivate
 
     @property
     def indicator(self):
