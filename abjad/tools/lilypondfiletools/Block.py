@@ -268,3 +268,14 @@ class Block(AbjadObject):
         Returns string.
         '''
         return self._name
+
+    ### PUBLIC METHODS ###
+
+    def empty(self):
+        r'''Is true when block contains no items and has no user attributes.
+
+        Returns true or false.
+        '''
+        if not self.items and not self._get_formatted_user_attributes():
+            return True
+        return False
