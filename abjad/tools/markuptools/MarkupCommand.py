@@ -129,6 +129,7 @@ class MarkupCommand(AbjadValueObject):
 
     __slots__ = (
         '_arguments',
+        '_deactivate',
         '_force_quotes',
         '_name',
         '_tag',
@@ -142,8 +143,9 @@ class MarkupCommand(AbjadValueObject):
             name = 'draw-circle'
             assert len(arguments) == 0
         self._arguments = tuple(arguments)
-        assert isinstance(name, str) and len(name) and name.find(' ') == -1
+        self._deactivate = None
         self._force_quotes = False
+        assert isinstance(name, str) and len(name) and name.find(' ') == -1
         self._name = name
         self._tag = None
 
@@ -369,8 +371,10 @@ class MarkupCommand(AbjadValueObject):
         parts = [r'\{}'.format(self.name)]
         parts.extend(recurse(self.arguments))
         if self.tag:
-            tag = ' % ' + self.tag
+            tag = ' %! ' + self.tag
             parts = [_ + tag for _ in parts]
+            if self.deactivate:
+                parts = ['%%% ' + _ for _ in parts]
         return parts
 
     def _get_format_specification(self):
@@ -401,6 +405,20 @@ class MarkupCommand(AbjadValueObject):
         Returns tuple.
         '''
         return self._arguments
+
+    @property
+    def deactivate(self):
+        r'''Is true when markup command deactivates tag.
+
+        Returns true, false or none.
+        '''
+        return self._deactivate
+
+    @deactivate.setter
+    def deactivate(self, argument):
+        if argument is not None:
+            argument = bool(argument)
+        self._deactivate = argument
 
     @property
     def force_quotes(self):

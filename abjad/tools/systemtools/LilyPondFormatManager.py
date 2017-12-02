@@ -206,7 +206,11 @@ class LilyPondFormatManager(AbjadObject):
                 wrappers = wrappers[:]
                 wrappers.sort(key=lambda _: -_.indicator.stack_priority)
                 lines = [
-                    abjad.Markup.line([_.indicator], tag=_.tag)
+                    abjad.Markup.line(
+                        [_.indicator],
+                        deactivate=_.deactivate,
+                        tag=_.tag,
+                        )
                     for _ in wrappers
                     ]
                 markup = abjad.Markup.column(lines, direction=direction)
