@@ -220,8 +220,6 @@ class Label(abctools.AbjadObject):
             raise TypeError(message)
         self._client = client
         self._expression = None
-        if tag is not None:
-            assert isinstance(tag, str), repr(tag)
         self._tag = tag
 
     ### PRIVATE METHODS ###

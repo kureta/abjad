@@ -689,7 +689,7 @@ class Path(pathlib.PosixPath):
             raise ValueError(self)
         return name
 
-    def comment_out_tag(self, tag):
+    def comment_out_tag(self, tag, greedy=False):
         r'''Comments out `tag` in LilyPond file.
 
         Returns text, count, skipped triple.
@@ -700,6 +700,9 @@ class Path(pathlib.PosixPath):
 
         Skipped gives number of tags already commented out (and therefore
         skipped).
+
+        Matches all of `tag` when `greedy` is false; matches `tag` anywhere in
+        tag when `greedy` is true.
         '''
         assert self.is_file()
         lines, count, skipped = [], 0, 0
@@ -707,7 +710,9 @@ class Path(pathlib.PosixPath):
         tag_parts = tag.split(':')
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
-                if any(_ not in line for _ in tag_parts):
+                if ((greedy is True and tag not in line) or
+                    (greedy is not True and
+                    any(_ not in line for _ in tag_parts))):
                     current_tag_number = None
                     lines.append(line)
                     continue
@@ -1730,7 +1735,7 @@ class Path(pathlib.PosixPath):
             return str(self)
         return str(path)
 
-    def uncomment_tag(self, tag):
+    def uncomment_tag(self, tag, greedy=False):
         r'''Uncomments `tag` in LilyPond file.
 
         Returns text, count, skipped triple.
@@ -1741,6 +1746,9 @@ class Path(pathlib.PosixPath):
 
         Skipped gives the number of tags already uncommented (and therefore
         skipped).
+
+        Matches all of `tag` when `greedy` is false; matches `tag` anywhere in
+        tag when `greedy` is true.
         '''
         assert self.is_file()
         lines, count, skipped = [], 0, 0
@@ -1748,7 +1756,9 @@ class Path(pathlib.PosixPath):
         tag_parts = tag.split(':')
         with self.open() as file_pointer:
             for line in file_pointer.readlines():
-                if any(_ not in line for _ in tag_parts):
+                if ((greedy is True and tag not in line) or
+                    (greedy is not True and
+                    any(_ not in line for _ in tag_parts))):
                     current_tag_number = None
                     lines.append(line)
                     continue
