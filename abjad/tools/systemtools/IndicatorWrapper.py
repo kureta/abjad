@@ -88,6 +88,8 @@ class IndicatorWrapper(AbjadValueObject):
         if synthetic_offset is not None:
             synthetic_offset = abjad.Offset(synthetic_offset)
         self._synthetic_offset = synthetic_offset
+        if isinstance(tag, abjad.Enumeration):
+            tag = tag.name
         if tag is not None:
             assert isinstance(tag, str), repr(tag)
         self._tag = tag
