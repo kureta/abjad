@@ -83,8 +83,8 @@ class LilyPondLiteral(AbjadValueObject):
     ### CLASS VARIABLES ###
 
     __slots__ = (
+        '_argument',
         '_format_slot',
-        '_name',
         )
 
     _allowable_format_slots = (
@@ -103,10 +103,9 @@ class LilyPondLiteral(AbjadValueObject):
 
     ### INITIALIZER ###
 
-    def __init__(self, string='', format_slot='opening'):
+    def __init__(self, argument='', format_slot='opening'):
+        self._argument = argument
         assert format_slot in self._allowable_format_slots, repr(format_slot)
-        assert isinstance(string, str), repr(string)
-        self._name = string
         self._format_slot = format_slot
 
     ### SPECIAL METHODS ###
@@ -120,14 +119,8 @@ class LilyPondLiteral(AbjadValueObject):
         if format_specification in ('', 'storage'):
             return abjad.StorageFormatManager(self).get_storage_format()
         elif format_specification == 'lilypond':
-            return self._get_lilypond_format()
+            return self.argument
         return str(self)
-
-    ### PRIVATE PROPERTIES ###
-
-    @property
-    def _contents_repr_string(self):
-        return repr(self.string)
 
     ### PRIVATE METHODS ###
 
@@ -138,19 +131,22 @@ class LilyPondLiteral(AbjadValueObject):
             names.append('format_slot')
         return abjad.FormatSpecification(
             client=self,
-            storage_format_args_values=[self.string],
+            storage_format_args_values=[self.argument],
             storage_format_kwargs_names=names,
             storage_format_is_indented=False,
             )
 
-    def _get_lilypond_format(self):
-        return self.string
+#    def _get_lilypond_format(self):
+#        return self.string
 
     def _get_lilypond_format_bundle(self, component=None):
         import abjad
         bundle = abjad.LilyPondFormatBundle()
         format_slot = bundle.get(self.format_slot)
-        format_slot.commands.append(self._get_lilypond_format())
+        if isinstance(self.argument, str):
+            format_slot.commands.append(self.argument)
+        elif isinstance(self.argument, list):
+            format_slot.commands.extend(self.argument)
         return bundle
 
     ### PUBLIC METHODS ###
@@ -179,6 +175,20 @@ class LilyPondLiteral(AbjadValueObject):
     ### PUBLIC PROPERTIES ###
 
     @property
+    def argument(self):
+        r'''Gets argument of LilyPond literal.
+
+        ..  container:: example
+
+            >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
+            >>> literal.argument
+            '\\slurDotted'
+
+        Returns string or list of string.
+        '''
+        return self._argument
+
+    @property
     def format_slot(self):
         r'''Gets format slot of LilyPond literal.
 
@@ -193,17 +203,3 @@ class LilyPondLiteral(AbjadValueObject):
         Returns string.
         '''
         return self._format_slot
-
-    @property
-    def string(self):
-        r'''Gets string of LilyPond literal.
-
-        ..  container:: example
-
-            >>> literal = abjad.LilyPondLiteral(r'\slurDotted')
-            >>> literal.string
-            '\\slurDotted'
-
-        Returns string.
-        '''
-        return self._name
