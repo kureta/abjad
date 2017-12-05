@@ -468,6 +468,8 @@ class IndicatorWrapper(AbjadValueObject):
         import abjad
         if isinstance(component, abjad.Spanner):
             return
+        if isinstance(self.indicator, abjad.LilyPondLiteral):
+            return
         prototype = type(self.indicator)
         wrapper = component._get_effective(prototype, unwrap=False)
         if (wrapper is not None and
