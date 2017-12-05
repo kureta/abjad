@@ -91,7 +91,6 @@ if __name__ == '__main__':
                 tag,
                 count,
                 skipped,
-                skip_empty=True,
                 )
             for message in messages:
                 print(abjad.String(message).capitalize_start())
