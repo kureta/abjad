@@ -78,6 +78,32 @@ class LilyPondLiteral(AbjadValueObject):
             f'8 )
         }
 
+    ..  container:: example
+
+        Multiline input is allowed:
+
+        >>> staff = abjad.Staff("c'8 d'8 e'8 f'8")
+        >>> abjad.attach(abjad.Slur(), staff[:])
+        >>> lines = [
+        ...     r'\stopStaff',
+        ...     r'\startStaff',
+        ...     r'\once \override Staff.StaffSymbol.color = #red',
+        ...     ]
+        >>> literal = abjad.LilyPondLiteral(lines)
+        >>> abjad.attach(literal, staff[2], tag='RED')
+        >>> abjad.show(staff) # doctest: +SKIP
+
+        >>> abjad.f(staff)
+        \new Staff {
+            c'8 (
+            d'8
+            \stopStaff %! RED:1
+            \startStaff %! RED:1
+            \once \override Staff.StaffSymbol.color = #red %! RED:1
+            e'8
+            f'8 )
+        }
+
     '''
 
     ### CLASS VARIABLES ###
