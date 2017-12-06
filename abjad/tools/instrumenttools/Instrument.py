@@ -116,7 +116,9 @@ class Instrument(AbjadValueObject):
                 name_markup,
                 direction=None,
                 )
-        if context is not None:
+        if isinstance(context, str):
+            pass
+        elif context is not None:
             context = context.context_name
         else:
             context = self._context_name
